@@ -166,12 +166,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .wheel-wrap{position:relative;width:min(90vw,360px);height:min(90vw,360px);margin:24px auto}
 #wheel{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 30px rgba(91,67,54,.18))}
 .wheel-pointer{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid var(--dark);z-index:4;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
-.wheel-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFFFF,#F5E8DE 60%,#E8C88A);z-index:3;display:flex;align-items:center;justify-content:center;font-size:32px;border:2px solid rgba(212,168,90,.5);box-shadow:0 4px 24px rgba(212,168,90,.35);animation:heartbeat 2s ease}
--in-out infinite}
-@keyframes heartbeat{0%,100%{transform:translate(-50%,-50%) scale(1)}20%{transform:translate(-50%,-50%) scale(1.08)}40%{transform:translate(-50%,-50%) scale(1)}60%{transform:translate(-50%,-50%) scale(1.06)}80%{transform:translate(-50%,.result-50%) scale(1)}}
-.spin-button-box{display:block;margin:0{m auto;min-width:240px;padding:16arginpx 28px;border-radius:40px;background-top:linear-gradient(145deg,#3e322c,#2d241f);color:white;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:inherit;box-shadow:0 6px 24px rgba(58,46,42,.3);position:relative;overflow:hidden}
+.wheel-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFFFF,#F5E8DE 60%,#E8C88A);z-index:3;display:flex;align-items:center;justify-content:center;font-size:32px;border:2px solid rgba(212,168,90,.5);box-shadow:0 4px 24px rgba(212,168,90,.35);animation:heartbeat 2s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:translate(-50%,-50%) scale(1)}20%{transform:translate(-50%,-50%) scale(1.08)}40%{transform:translate(-50%,-50%) scale(1)}60%{transform:translate(-50%,-50%) scale(1.06)}80%{transform:translate(-50%,-50%) scale(1)}}
+.spin-button{display:block;margin:0 auto;min-width:240px;padding:16px 28px;border-radius:40px;background:linear-gradient(145deg,#3e322c,#2d241f);color:white;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:inherit;box-shadow:0 6px 24px rgba(58,46,42,.3);position:relative;overflow:hidden}
 .spin-button:active{transform:scale(.96)}
-.spin-button:disabled{background:#c8bfb8;cursor:not-allowed;box-shadow:none:16px;padding:22px 18px;border-radius:22px;background:linear-gradient(145deg,rgba(250,234,240,.95),rgba(245,221,227,.95));text-align:center;border:1px solid var(--rose)}
+.spin-button:disabled{background:#c8bfb8;cursor:not-allowed;box-shadow:none}
+.result-box{margin-top:16px;padding:22px 18px;border-radius:22px;background:linear-gradient(145deg,rgba(250,234,240,.95),rgba(245,221,227,.95));text-align:center;border:1px solid var(--rose)}
 .result-box .result-text{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.4;margin-bottom:16px;font-weight:500}
 .input-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid var(--line);background:rgba(255,255,255,.85);font-family:inherit;font-size:13px;outline:none;margin-bottom:12px}
 .input-line:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,168,90,.15)}
@@ -264,7 +264,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .activity-status-dot.offline{background:#c9c0b8;color:#c9c0b8}
 @keyframes statusPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.7}}
 
-/* SPLASH */
 .splash-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#FDF7F1 0%,#F9F0E8 50%,#F3E4DE 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
 .splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .splash-logo{width:140px;height:140px;border-radius:50%;background:linear-gradient(145deg,#FAF5E8,#F2EBD9);display:flex;align-items:center;justify-content:center;box-shadow:0 15px 40px rgba(212,168,90,.35),0 0 0 1px rgba(212,168,90,.2) inset;animation:splashLogoIn 1s cubic-bezier(.34,1.5,.64,1);position:relative}
@@ -290,7 +289,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .calendar-day.today::before{content:'';position:absolute;inset:-4px;border-radius:18px;border:2px solid rgba(212,168,90,.5);pointer-events:none;animation:todayGlow 2.8s ease-in-out infinite}
 @keyframes todayGlow{0%,100%{transform:scale(1);opacity:.6;box-shadow:0 0 0 0 rgba(212,168,90,.4)}50%{transform:scale(1.04);opacity:.2;box-shadow:0 0 18px 4px rgba(212,168,90,.35)}}
 
-/* Маркерное сердечко */
 .calendar-day.done-emotional::after,
 .calendar-day.done-physical::after,
 .calendar-day.done-lightDate::after,
@@ -310,7 +308,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 }
 @keyframes markerPop{0%{transform:rotate(-15deg) scale(0) translateY(-8px);opacity:0}60%{transform:rotate(-15deg) scale(1.3) translateY(0);opacity:1}100%{transform:rotate(-15deg) scale(1) translateY(0);opacity:1}}
 
-/* ТАЙМЛАЙН */
 .timeline{position:relative;padding-left:36px;margin-top:8px}
 .timeline::before{content:'';position:absolute;left:14px;top:10px;bottom:10px;width:2px;background:linear-gradient(180deg,transparent,rgba(212,168,90,.45),rgba(212,168,90,.45),transparent)}
 .timeline-item{position:relative;padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.2);box-shadow:0 4px 14px rgba(91,67,54,.08);display:flex;gap:14px;align-items:flex-start;animation:timelineIn .5s cubic-bezier(.34,1.4,.64,1) backwards}
@@ -325,7 +322,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .timeline-item .tl-photo{margin-top:8px;border-radius:12px;overflow:hidden;max-width:200px;border:1px solid rgba(212,168,90,.3);cursor:pointer;box-shadow:0 3px 10px rgba(91,67,54,.15)}
 .timeline-item .tl-photo img{display:block;width:100%;height:auto;max-height:180px;object-fit:cover}
 
-/* ФОТО-МОДАЛКА */
 .photo-modal{position:fixed;inset:0;z-index:1300;background:rgba(20,15,12,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
 .photo-modal.active{display:flex}
 .photo-modal img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -336,7 +332,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .photo-preview img{width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid rgba(212,168,90,.3)}
 .photo-preview .remove-photo{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(224,96,96,.95);color:#fff;font-size:14px;border:none;cursor:pointer;font-family:inherit}
 
-/* ДЕРЕВО ЛЮБВИ */
 .love-tree-card{margin-top:22px;padding:22px 18px 20px;border-radius:24px;background:linear-gradient(160deg,rgba(250,245,232,.6),rgba(242,235,217,.35));border:1px solid rgba(212,168,90,.22);box-shadow:0 8px 30px rgba(91,67,54,.08);text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(4px)}
 .love-tree-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 95%,rgba(141,189,171,.14) 0%,transparent 65%);pointer-events:none}
 .love-tree-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2A2420;position:relative}
@@ -351,12 +346,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .love-tree-progress-track{height:6px;border-radius:20px;background:rgba(141,189,171,.22);overflow:hidden;position:relative}
 .love-tree-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#8dbdab,#d4a85a);border-radius:20px;transition:width 1.2s cubic-bezier(.34,1.2,.64,1)}
 
-/* ОФФЛАЙН */
-.offline-indicator{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(145deg,#5a3d28,#3e2c1e);color:#fff8ef;padding:8px 18px;border-radius:40px;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;z-index:800;box-shadow:0 6px 20px rgba(0,0,0,.3);transition:transform .4s cubic-bezier(.34,1.5,.64,1);pointer-events:none;display:flex;align-items:center;gap:8px}
-.offline-indicator.show{transform:translateX(-50%) translateY(0)}
-.offline-indicator .dot{width:8px;height:8px;border-radius:50%;background:#e06060;animation:statusPulse 1.6s ease-in-out infinite}
-
-/* ДОСТИЖЕНИЯ */
 .achievements-block{margin-top:20px;padding:20px 18px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.25);box-shadow:0 6px 22px rgba(91,67,54,.08)}
 .achievements-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;text-align:center;letter-spacing:2px;text-transform:uppercase;color:#3A2E2A;margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed rgba(212,168,90,.35)}
 .achievements-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -370,7 +359,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .achievement .ach-name{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:600;color:#3A2E2A;line-height:1.2}
 .achievement .ach-desc{font-size:8px;color:#8C7A6E;margin-top:4px;line-height:1.3;letter-spacing:.3px}
 
-/* ПРАЗДНИК МЕСЯЦА */
 .month-celebration{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(58,46,42,.65);backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:.5s;cursor:pointer;padding:20px}
 .month-celebration.active{opacity:1;visibility:visible}
 .month-celebration-card{max-width:400px;width:100%;padding:40px 28px 32px;border-radius:32px;background:linear-gradient(160deg,rgba(253,251,247,.98),rgba(245,232,222,.96));border:1px solid rgba(212,168,90,.35);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1)}
@@ -381,12 +369,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .month-celebration-card p{font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.6;color:#5b4a3e;margin-bottom:20px}
 .month-celebration-card .mc-bonus{display:inline-block;padding:10px 24px;border-radius:40px;background:linear-gradient(145deg,#e0bb6d,#c89b4a);color:white;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:1px;box-shadow:0 6px 18px rgba(212,168,90,.4);margin-bottom:18px}
 
-/* ХОТЕЛКИ — кнопки уровней */
 .wish-tier{display:flex;gap:6px;margin:14px 0}
 .wish-tier button{flex:1;padding:12px 6px;border-radius:16px;color:#3a3028;background:rgba(255,250,240,.9);border:1px solid rgba(212,168,90,.35);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.5px}
 .wish-tier button.active{background:linear-gradient(145deg,#3e322c,#2d241f);color:#fff8ef;border-color:#2d241f}
 
-/* ЦВЕТЫ ТАЙНОГО САДА */
 .garden-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:6px}
 .garden-flower{padding:18px 12px 14px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.25);box-shadow:0 4px 18px rgba(91,67,54,.08);text-align:center;position:relative;overflow:hidden;transition:transform .25s}
 .garden-flower:active{transform:scale(.97)}
@@ -404,7 +390,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .garden-flower .flower-actions{display:flex;gap:6px;margin-top:10px;justify-content:center}
 .garden-flower .flower-actions button{background:none;border:none;font-size:11px;color:#6b5a4e;cursor:pointer;padding:2px 6px;font-family:inherit;text-decoration:underline}
 
-/* ВИНТАЖНАЯ ТЕМА */
 :root{--ivory:#F2EBD9;--sage-dark:#3A3230;--dark-btn:#3D2F28;--line-vintage:#D9CCC3}
 body{background:linear-gradient(180deg,rgba(168,164,144,.55) 0%,rgba(168,164,144,.72) 100%),url('https://i.ibb.co/v6KB6w9B/IMG-4278.jpg') center/cover fixed no-repeat !important;animation:none !important;color:var(--sage-dark);display:block !important;padding:12px 12px 24px 12px !important;min-height:100vh !important}
 body::before{background:none !important}
@@ -454,7 +439,6 @@ body::before{background:none !important}
 .btn-primary,.btn-gold,.spin-button,.primary-button{background:var(--dark-btn) !important;color:var(--ivory) !important;border-radius:60px !important;padding:16px 28px !important;font-family:'Cormorant Garamond',serif !important;font-size:13px !important;font-weight:500 !important;letter-spacing:4px !important;text-transform:uppercase !important;box-shadow:0 6px 20px rgba(58,46,42,.28) !important;border:none !important}
 .btn-secondary{background:transparent !important;color:var(--sage-dark) !important;border:1.5px solid var(--sage-dark) !important;border-radius:60px !important;letter-spacing:3px !important;text-transform:uppercase !important;font-family:'Cormorant Garamond',serif !important}
 
-/* ФИКС ТАПОВ (Android + iOS) */
 button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-item, .month-arrow, .close-button, .flower-btn, .tab-btn, .settings-menu button, .add-row button, .del-btn {
   touch-action: manipulation;
   -webkit-appearance: none;
@@ -472,7 +456,6 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 .month-arrow, .close-button { min-width: 44px !important; min-height: 44px !important; }
 .overlay { backdrop-filter: none !important; }
 
-/* ПЛАНЫ В КАЛЕНДАРЕ */
 .calendar-day.planned-day {
   border: 2px dashed var(--gold) !important;
   background: linear-gradient(145deg,#fff8e6,#ffefc8) !important;
@@ -488,7 +471,6 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
   opacity: 0.9;
 }
 </style>
-
 </head>
 <body>
 
@@ -550,10 +532,6 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 </div>
 
 <div class="role-badge" id="roleBadge">👁 Режим просмотра</div>
-
-<div class="offline-indicator" id="offlineIndicator">
-<span class="dot"></span> Нет сети · работаем офлайн
-</div>
 
 <div class="notification-banner" id="notificationBanner">
 <span class="icon">📅</span>
@@ -889,6 +867,7 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 <span class="text" id="toastText"></span>
 <button class="close-x" id="toastClose" type="button">✕</button>
 </div>
+
 <script type="module">
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, onSnapshot } from 'firebase/firestore';
@@ -1095,17 +1074,10 @@ function compressImage(file, maxDim, quality) {
 }
 
 function updateOnlineStatus() {
-  const wasOnline = isOnline;
-  isOnline = navigator.onLine;
+  // Отключено из-за ложных срабатываний navigator.onLine на iOS
+  isOnline = true;
   const indicator = document.getElementById('offlineIndicator');
-  if (indicator) {
-    if (isOnline) indicator.classList.remove('show');
-    else indicator.classList.add('show');
-  }
-  if (!wasOnline && isOnline) {
-    showToast('📡', 'Снова онлайн! Синхронизируем…');
-    saveState();
-  }
+  if (indicator) indicator.classList.remove('show');
 }
 
 function showToast(emoji, text) {
@@ -1405,7 +1377,6 @@ function applyRoleView() {
   const isVanya = state.viewingAs === 'vanya';
   const badge = document.getElementById('roleBadge');
   document.querySelectorAll('[data-page="wishes"]').forEach(el => { el.style.display = isVanya ? '' : 'none'; });
-  /* Кнопка настроек только для Насти */
   const hotzone = document.getElementById('settingsHotzone');
   const settingsBtn = document.getElementById('settingsToggle');
   const sm = document.getElementById('settingsMenu');
@@ -1757,7 +1728,6 @@ function openPhotoAttach(onSave) {
   overlay.classList.add('active');
 }
 
-/* Планирование */
 function planEvent(year, month, day, type, text, points, isInitiative) {
   const key = year+'-'+month+'-'+day;
   if (!state.plannedDays) state.plannedDays = {};
@@ -2716,7 +2686,6 @@ document.addEventListener('DOMContentLoaded', () => {
     openPhotoAttach(() => { planEvent(year, month, day, item.type, item.text, pts, isInit); });
   };
 
-  /* Проверка вчерашних планов */
   function checkYesterdayPlanned() {
     if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
     const yesterday = new Date();
@@ -2819,7 +2788,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 60000);
 
   setTimeout(checkYesterdayPlanned, 2000);
-  
 });
 </script>
 </body>
