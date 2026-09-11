@@ -2819,10 +2819,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 60000);
 
   setTimeout(checkYesterdayPlanned, 2000);
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW reg error:', err));
-  }
+  
 });
 </script>
 </body>
