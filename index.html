@@ -98,18 +98,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .btn-secondary:disabled{opacity:.4}
 .btn-gold{width:100%;padding:15px;border-radius:40px;background:linear-gradient(145deg,#e0bb6d,#c89b4a);color:white;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:inherit;position:relative;z-index:3;box-shadow:0 4px 18px rgba(212,168,90,.35)}
 .btn-gold:active{transform:scale(.97)}
-.overlay{position:fixed;inset:0;background:rgba(58,46,42,.55);backdrop-filter:blur(10px);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:.35s;z-index:100}
+.overlay{position:fixed;inset:0;background:rgba(58,46,42,.55);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:.35s;z-index:100}
 .overlay.active{opacity:1;visibility:visible}
-.modal{width:100%;max-width:520px;max-height:calc(100vh - 30px);overflow-y:auto;background:linear-gradient(180deg,#FDFBF7 0%,#F9F3EC 100%);border-radius:32px 32px 0 0;padding:30px 20px 40px;position:relative;transform:translateY(60px) scale(.96);opacity:0;transition:.45s cubic-bezier(.34,1.4,.64,1);border-top:1px solid rgba(255,255,255,.8);box-shadow:0 -20px 60px rgba(0,0,0,.15)}
+.modal{width:100%;max-width:520px;max-height:calc(100vh - 30px);overflow-y:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(180deg,#FDFBF7 0%,#F9F3EC 100%);border-radius:32px 32px 0 0;padding:30px 20px 40px;position:relative;transform:translateY(60px) scale(.96);opacity:0;transition:.45s cubic-bezier(.34,1.4,.64,1);border-top:1px solid rgba(255,255,255,.8);box-shadow:0 -20px 60px rgba(0,0,0,.15)}
 .overlay.active .modal{transform:translateY(0) scale(1);opacity:1}
-.close-button{position:absolute;right:16px;top:16px;width:34px;height:34px;border-radius:50%;background:rgba(58,46,42,.05);color:var(--muted);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-family:inherit}
+.close-button{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:50%;background:rgba(58,46,42,.05);color:var(--muted);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-family:inherit;z-index:10}
 .close-button:active{transform:scale(.9) rotate(90deg)}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;text-align:center;letter-spacing:1.5px;text-transform:uppercase}
 .modal-subtitle{text-align:center;color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
 .overlay.center{align-items:center;padding:20px}
 .overlay.center .modal{border-radius:32px;max-width:440px;transform:translateY(20px) scale(.92)}
 .overlay.center.active .modal{transform:translateY(0) scale(1)}
-.daily-overlay{position:fixed;inset:0;background:rgba(58,46,42,.65);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
+.daily-overlay{position:fixed;inset:0;background:rgba(58,46,42,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
 .daily-overlay.active{opacity:1;visibility:visible}
 .daily-card{background:linear-gradient(160deg,#FDFBF7 0%,#F9F0E8 100%);border-radius:36px;padding:50px 30px 40px;max-width:400px;width:100%;text-align:center;position:relative;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1);border:1px solid rgba(212,168,90,.3);box-shadow:0 30px 80px rgba(0,0,0,.25)}
 .daily-overlay.active .daily-card{transform:scale(1)}
@@ -166,12 +166,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .wheel-wrap{position:relative;width:min(90vw,360px);height:min(90vw,360px);margin:24px auto}
 #wheel{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 30px rgba(91,67,54,.18))}
 .wheel-pointer{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid var(--dark);z-index:4;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
-.wheel-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFFFF,#F5E8DE 60%,#E8C88A);z-index:3;display:flex;align-items:center;justify-content:center;font-size:32px;border:2px solid rgba(212,168,90,.5);box-shadow:0 4px 24px rgba(212,168,90,.35);animation:heartbeat 2s ease-in-out infinite}
-@keyframes heartbeat{0%,100%{transform:translate(-50%,-50%) scale(1)}20%{transform:translate(-50%,-50%) scale(1.08)}40%{transform:translate(-50%,-50%) scale(1)}60%{transform:translate(-50%,-50%) scale(1.06)}80%{transform:translate(-50%,-50%) scale(1)}}
-.spin-button{display:block;margin:0 auto;min-width:240px;padding:16px 28px;border-radius:40px;background:linear-gradient(145deg,#3e322c,#2d241f);color:white;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:inherit;box-shadow:0 6px 24px rgba(58,46,42,.3);position:relative;overflow:hidden}
+.wheel-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFFFF,#F5E8DE 60%,#E8C88A);z-index:3;display:flex;align-items:center;justify-content:center;font-size:32px;border:2px solid rgba(212,168,90,.5);box-shadow:0 4px 24px rgba(212,168,90,.35);animation:heartbeat 2s ease}
+-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:translate(-50%,-50%) scale(1)}20%{transform:translate(-50%,-50%) scale(1.08)}40%{transform:translate(-50%,-50%) scale(1)}60%{transform:translate(-50%,-50%) scale(1.06)}80%{transform:translate(-50%,.result-50%) scale(1)}}
+.spin-button-box{display:block;margin:0{m auto;min-width:240px;padding:16arginpx 28px;border-radius:40px;background-top:linear-gradient(145deg,#3e322c,#2d241f);color:white;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:inherit;box-shadow:0 6px 24px rgba(58,46,42,.3);position:relative;overflow:hidden}
 .spin-button:active{transform:scale(.96)}
-.spin-button:disabled{background:#c8bfb8;cursor:not-allowed;box-shadow:none}
-.result-box{margin-top:16px;padding:22px 18px;border-radius:22px;background:linear-gradient(145deg,rgba(250,234,240,.95),rgba(245,221,227,.95));text-align:center;border:1px solid var(--rose)}
+.spin-button:disabled{background:#c8bfb8;cursor:not-allowed;box-shadow:none:16px;padding:22px 18px;border-radius:22px;background:linear-gradient(145deg,rgba(250,234,240,.95),rgba(245,221,227,.95));text-align:center;border:1px solid var(--rose)}
 .result-box .result-text{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.4;margin-bottom:16px;font-weight:500}
 .input-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid var(--line);background:rgba(255,255,255,.85);font-family:inherit;font-size:13px;outline:none;margin-bottom:12px}
 .input-line:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,168,90,.15)}
@@ -453,11 +453,45 @@ body::before{background:none !important}
 }
 .btn-primary,.btn-gold,.spin-button,.primary-button{background:var(--dark-btn) !important;color:var(--ivory) !important;border-radius:60px !important;padding:16px 28px !important;font-family:'Cormorant Garamond',serif !important;font-size:13px !important;font-weight:500 !important;letter-spacing:4px !important;text-transform:uppercase !important;box-shadow:0 6px 20px rgba(58,46,42,.28) !important;border:none !important}
 .btn-secondary{background:transparent !important;color:var(--sage-dark) !important;border:1.5px solid var(--sage-dark) !important;border-radius:60px !important;letter-spacing:3px !important;text-transform:uppercase !important;font-family:'Cormorant Garamond',serif !important}
+
+/* ФИКС ТАПОВ (Android + iOS) */
+button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-item, .month-arrow, .close-button, .flower-btn, .tab-btn, .settings-menu button, .add-row button, .del-btn {
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.btn-secondary, .btn-primary, .btn-gold, .spin-button, .role-btn {
+  min-height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.2 !important;
+}
+.month-arrow, .close-button { min-width: 44px !important; min-height: 44px !important; }
+.overlay { backdrop-filter: none !important; }
+
+/* ПЛАНЫ В КАЛЕНДАРЕ */
+.calendar-day.planned-day {
+  border: 2px dashed var(--gold) !important;
+  background: linear-gradient(145deg,#fff8e6,#ffefc8) !important;
+  color: #8a6a2a !important;
+  position: relative;
+}
+.calendar-day.planned-day::after {
+  content: "⏰";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  font-size: 14px;
+  opacity: 0.9;
+}
 </style>
+
 </head>
 <body>
 
-<!-- SPLASH -->
 <div class="splash-screen" id="splashScreen">
   <div class="splash-logo">
     <svg viewBox="0 0 32 32" fill="none" stroke="#d4a85a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -713,7 +747,7 @@ body::before{background:none !important}
 <option value="bigDate">🏆 Большое свидание (150 б.)</option>
 </select>
 <div style="text-align:center;font-size:12px;color:var(--gold);padding:10px;background:rgba(212,168,90,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="freeTotalPoints">35</span> баллов</div>
-<button class="btn-gold" id="freeCustomDone" type="button">Добавить</button>
+<button class="btn-gold" id="freeCustomDone" type="button">Запланировать</button>
 </div>
 </div>
 <div id="typeBlock" style="display:none;margin-top:20px">
@@ -734,12 +768,41 @@ body::before{background:none !important}
 <option value="bigDate">🏆 Большое свидание (150 б.)</option>
 </select>
 <div style="text-align:center;font-size:12px;color:var(--gold);padding:10px;background:rgba(212,168,90,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="typeTotalPoints">35</span> баллов</div>
-<button class="btn-gold" id="typeInitiativeDone" type="button">Добавить</button>
+<button class="btn-gold" id="typeInitiativeDone" type="button">Запланировать</button>
 </div>
 <div id="moveBlockType" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
 <label style="font-size:12px;display:block;margin-bottom:8px">Новая дата</label>
 <input type="date" class="input-line" id="moveDateInputType" style="border-radius:14px">
 <button class="btn-primary" id="moveDayBtnType" type="button">Перенести</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="overlay center" id="confirmYesterdayOverlay">
+<div class="modal">
+<div class="modal-title">Вчерашний план 📆</div>
+<div class="modal-subtitle">Состоялось ли то, что ты выбрал?</div>
+<div style="margin:20px 0;padding:18px;background:rgba(212,168,90,.1);border-radius:16px;border:1px solid rgba(212,168,90,.25)">
+<div id="confirmYesterdayText" style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;text-align:center;line-height:1.4"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<button class="btn-primary" id="confirmYesBtn" type="button">✓ Да, состоялось</button>
+<button class="btn-secondary" id="confirmNoBtn" type="button">✕ Нет, не состоялось</button>
+</div>
+</div>
+</div>
+
+<div class="overlay center" id="rescheduleOverlay">
+<div class="modal">
+<div class="modal-title">Перенести 📅</div>
+<div class="modal-subtitle">Выбери новую дату</div>
+<div style="margin-top:20px">
+<label style="font-size:12px;display:block;margin-bottom:8px">Новая дата</label>
+<input type="date" class="input-line" id="rescheduleDateInput" style="border-radius:14px">
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<button class="btn-gold" id="rescheduleConfirmBtn" type="button">Перенести</button>
+<button class="btn-secondary" id="rescheduleCancelBtn" type="button">Отмена</button>
 </div>
 </div>
 </div>
@@ -783,7 +846,7 @@ body::before{background:none !important}
 <div id="spinsLeft" style="text-align:center;color:var(--muted);font-size:10px;margin-top:8px;letter-spacing:1px"></div>
 <div id="resultBox" class="result-box" style="display:none">
 <div class="result-text" id="resultText"></div>
-<button class="btn-primary" id="doneBtn" type="button">Сделать это ❤️</button>
+<button class="btn-primary" id="doneBtn" type="button">Запланировать 🗓</button>
 <button class="btn-secondary" id="respinBtn" type="button">🔄 Перекрутить</button>
 </div>
 </div>
@@ -967,7 +1030,9 @@ let state = {
   counters: { login:0, task_done:0, spin:0, wish_add:0, wish_activate:0, page_calendar:0, page_history:0, page_wishes:0, page_stats:0, page_system:0, settings_open:0, day_open:0 },
   todayCounters: { date:null, spin:0, task_done:0, page_opens:0, day_opens:0, settings_opens:0, logins:0 },
   schedules: {},
-  pendingPhoto: null
+  pendingPhoto: null,
+  plannedDays: {},
+  pendingReschedule: null
 };
 
 let lastLevelName = localStorage.getItem('lastLevelName') || null;
@@ -1194,6 +1259,7 @@ function logActivity(action, detail) {
   if (state.activityLog.length > 200) state.activityLog = state.activityLog.slice(0, 200);
   saveState();
 }
+
 function startVanyaSession() {
   const todayKey = new Date().toISOString().slice(0,10);
   if (state.vanyaSession.todayDate !== todayKey) {
@@ -1205,6 +1271,12 @@ function startVanyaSession() {
   state.vanyaSession.online = true;
   state.vanyaSession.sessionStart = Date.now();
   logActivity('login', 'Открыл приложение');
+}
+function isVanyaReallyOnline() {
+  if (!state.vanyaSession || !state.vanyaSession.online) return false;
+  const last = state.vanyaSession.lastActiveAt || 0;
+  const secondsSince = (Date.now() - last) / 1000;
+  return secondsSince < 180;
 }
 function endVanyaSession() {
   if (state.vanyaSession.sessionStart) {
@@ -1241,6 +1313,7 @@ async function saveState() {
     localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
     localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
     localStorage.setItem('achievements', JSON.stringify(state.achievements));
+    localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
     if (!navigator.onLine) { isSaving = false; return; }
     const schedules = {};
     for (let key in localStorage) {
@@ -1253,6 +1326,7 @@ async function saveState() {
       quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
       wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
       activityLog: state.activityLog.slice(0, 200), achievements: state.achievements,
+      plannedDays: state.plannedDays,
       lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
       counters: state.counters, todayCounters: state.todayCounters,
       currentMonth: getCurrentMonthKey(),
@@ -1289,6 +1363,7 @@ function subscribeToFirestore() {
       state.notificationsForNastya = d.notificationsForNastya || [];
       state.activityLog = d.activityLog || [];
       state.achievements = d.achievements || [];
+      state.plannedDays = d.plannedDays || {};
       state.lastCelebrationMonth = d.lastCelebrationMonth || null;
       state.vanyaSession = d.vanyaSession || state.vanyaSession;
       state.counters = d.counters || state.counters;
@@ -1330,6 +1405,18 @@ function applyRoleView() {
   const isVanya = state.viewingAs === 'vanya';
   const badge = document.getElementById('roleBadge');
   document.querySelectorAll('[data-page="wishes"]').forEach(el => { el.style.display = isVanya ? '' : 'none'; });
+  /* Кнопка настроек только для Насти */
+  const hotzone = document.getElementById('settingsHotzone');
+  const settingsBtn = document.getElementById('settingsToggle');
+  const sm = document.getElementById('settingsMenu');
+  if (isVanya) {
+    if (hotzone) { hotzone.style.display = 'none'; hotzone.style.pointerEvents = 'none'; }
+    if (settingsBtn) { settingsBtn.classList.remove('visible'); settingsBtn.style.display = 'none'; }
+    if (sm) sm.classList.remove('open');
+  } else {
+    if (hotzone) { hotzone.style.display = 'block'; hotzone.style.pointerEvents = 'auto'; }
+    if (settingsBtn) settingsBtn.style.display = '';
+  }
   renderSettingsMenu();
   if (state.role === 'nastya' && state.viewingAs === 'vanya') { badge.textContent = '👁 Режим просмотра: Ваня'; badge.classList.add('show'); }
   else if (state.role === 'vanya' && state.viewingAs === 'nastya') { badge.textContent = '👁 Режим просмотра: Настя'; badge.classList.add('show'); }
@@ -1416,7 +1503,7 @@ function renderSettingsMenu() {
     b9.onclick = () => {
       if (!confirm('УДАЛИТЬ ВСЁ?')) return;
       localStorage.clear();
-      setDoc(mainDocRef, { welcomeShown:false, points:0, totalPoints:0, history:[], completedDays:{}, achievements:[], lastCelebrationMonth:null }, { merge:true })
+      setDoc(mainDocRef, { welcomeShown:false, points:0, totalPoints:0, history:[], completedDays:{}, achievements:[], plannedDays:{}, lastCelebrationMonth:null }, { merge:true })
         .then(() => location.reload()).catch(() => location.reload());
     };
     menu.appendChild(b9);
@@ -1498,6 +1585,7 @@ function generateMonthSchedule(year, month) {
 function getDayType(year, month, day) {
   const key = year+'-'+month+'-'+day;
   if (state.completedDays[key] && state.completedDays[key].length>0) return state.completedDays[key][0].type;
+  if (state.plannedDays && state.plannedDays[key]) return state.plannedDays[key].type;
   return generateMonthSchedule(year, month)[day] || 'free';
 }
 function getCompletedEvents(y,m,d) { return state.completedDays[y+'-'+m+'-'+d] || []; }
@@ -1519,11 +1607,14 @@ function renderCalendar() {
     const el = document.createElement('div'); el.className='calendar-day';
     const events = getCompletedEvents(year,month,d);
     const isDone = events.length>0;
+    const plannedKey = year+'-'+month+'-'+d;
+    const isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
     const type = getDayType(year,month,d);
     if (isDone) {
       const types=[]; events.forEach(ev => { if (types.indexOf(ev.type)===-1) types.push(ev.type); });
       el.classList.add('done-'+types[0]);
     } else { el.classList.add(type); }
+    if (isPlanned) el.classList.add('planned-day');
     el.dataset.day = d; el.dataset.type = type;
     const num = document.createElement('span'); num.className='day-number'; num.textContent = d; el.appendChild(num);
     if (d===today.getDate() && month===today.getMonth() && year===today.getFullYear()) el.classList.add('today');
@@ -1537,7 +1628,8 @@ function renderCalendar() {
 }
 function onDayClick(day, type, isDone) {
   state.editingDay = { year:state.currentDate.getFullYear(), month:state.currentDate.getMonth(), day:day, type:type, isDone:isDone };
-  logActivity('day_open', '📅 Открыл день ' + day + ' ' + monthNames[state.currentDate.getMonth()]);
+  const typeName = TYPE_INFO[type] ? TYPE_INFO[type].name : 'свободный';
+  logActivity('day_open', '📅 Открыл день ' + day + ' ' + monthNames[state.currentDate.getMonth()] + ' (тип: ' + typeName + ')');
   openEditModal();
 }
 
@@ -1564,7 +1656,7 @@ function openEditModal() {
       const c = document.getElementById('freeCustomCategory').value;
       if (!t) { alert('Введите название'); return; }
       const p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-      openPhotoAttach(() => addEventToDay(year,month,day,c,t,p,true).then(() => overlay.classList.remove('active')));
+      openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(() => overlay.classList.remove('active')));
     };
     overlay.classList.add('active'); return;
   }
@@ -1604,6 +1696,7 @@ function openEditModal() {
   document.getElementById('typeClearBtn').onclick = () => {
     if (confirm('Очистить '+day+' '+monthNames[month]+'?')) {
       delete state.completedDays[year+'-'+month+'-'+day];
+      delete state.plannedDays[year+'-'+month+'-'+day];
       saveState().then(() => { renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active'); });
     }
   };
@@ -1612,7 +1705,7 @@ function openEditModal() {
     const c = document.getElementById('typeInitiativeCategory').value;
     if (!t) { alert('Введите название'); return; }
     const p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-    openPhotoAttach(() => addEventToDay(year,month,day,c,t,p,true).then(() => overlay.classList.remove('active')));
+    openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(() => overlay.classList.remove('active')));
   };
   document.getElementById('moveDayBtnType').onclick = () => {
     const v = document.getElementById('moveDateInputType').value;
@@ -1622,6 +1715,7 @@ function openEditModal() {
     const nk = ny+'-'+nm+'-'+nd;
     const sk = year+'-'+month+'-'+day;
     if (state.completedDays[sk]) { state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
+    if (state.plannedDays[sk]) { state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
     saveState().then(() => { renderCalendar(); overlay.classList.remove('active'); });
   };
   overlay.classList.add('active');
@@ -1663,6 +1757,31 @@ function openPhotoAttach(onSave) {
   overlay.classList.add('active');
 }
 
+/* Планирование */
+function planEvent(year, month, day, type, text, points, isInitiative) {
+  const key = year+'-'+month+'-'+day;
+  if (!state.plannedDays) state.plannedDays = {};
+  const event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
+  if (state.pendingPhoto) event.photo = state.pendingPhoto;
+  state.pendingPhoto = null;
+  state.plannedDays[key] = event;
+  state.notificationsForNastya.push({
+    id: Date.now(),
+    type: 'planned',
+    title: text,
+    cost: points,
+    tier: type,
+    dateKey: key,
+    seen: false,
+    createdAt: Date.now()
+  });
+  logActivity('planned', '🗓 Запланировал: «' + text + '» (' + (TYPE_INFO[type] ? TYPE_INFO[type].name : '') + ', ' + points + ' б.) на ' + day + '.' + (month+1) + '.' + year);
+  return saveState().then(() => {
+    renderCalendar(); renderHistory();
+    showToast('🗓', 'Запланировано: ' + text);
+  });
+}
+
 function addEventToDay(year, month, day, type, text, points, isInitiative) {
   const key = year+'-'+month+'-'+day;
   if (!state.completedDays[key]) state.completedDays[key] = [];
@@ -1678,7 +1797,7 @@ function addEventToDay(year, month, day, type, text, points, isInitiative) {
     category:isInitiative?TYPE_INFO[type].name+' (инициатива)':TYPE_INFO[type].name,
     emoji:isInitiative?'⭐':TYPE_INFO[type].emoji, points:points, photo: event.photo || null
   });
-  logActivity('task_done', TYPE_INFO[type].emoji + ' ' + text + ' (+' + points + ' б.)');
+  logActivity('task_done', '✅ Подтвердил: «' + text + '» (' + (TYPE_INFO[type] ? TYPE_INFO[type].name : '') + ', +' + points + ' б.)');
   return saveState().then(() => {
     renderCalendar(); updateStats(); checkUpcomingDates();
     renderHistory(); renderLoveTree();
@@ -2081,6 +2200,23 @@ function checkUpcomingDates() {
 function renderNotificationsForNastya() {
   if (state.viewingAs !== 'nastya') return;
   const banner = document.getElementById('notificationBanner');
+  const planned = state.notificationsForNastya.filter(n => n.type === 'planned' && !n.seen);
+  if (planned.length > 0) {
+    const p = planned[0];
+    document.getElementById('notifTitle').textContent = '🗓 Ваня что-то запланировал!';
+    document.getElementById('notifSub').textContent = '«' + p.title + '» · ' + p.cost + ' б.';
+    document.getElementById('notifAction').textContent = 'Ок';
+    document.getElementById('notifAction').onclick = () => {
+      let idx = -1;
+      for (let i = 0; i < state.notificationsForNastya.length; i++) {
+        if (state.notificationsForNastya[i].id === p.id) { idx = i; break; }
+      }
+      if (idx !== -1) state.notificationsForNastya[idx].seen = true;
+      saveState().then(() => { banner.classList.remove('show'); renderNotificationsForNastya(); });
+    };
+    banner.classList.add('show');
+    return;
+  }
   const fresh = state.notificationsForNastya.filter(n => !n.seen);
   if (fresh.length === 0) return;
   const n = fresh[0];
@@ -2231,7 +2367,8 @@ function doSpin() {
   spinVelocity = 0.28 + Math.random()*0.15;
   animate();
   updateSpinsUI();
-  logActivity('spin', '🎡 Крутил колесо (' + (price > 0 ? '−' + price + ' б.' : 'бесплатно') + ')');
+  const spinCat = state.currentType ? (TYPE_INFO[state.currentType] ? TYPE_INFO[state.currentType].name : '') : '';
+  logActivity('spin', '🎡 Крутил колесо' + (spinCat ? ' [' + spinCat + ']' : '') + (price > 0 ? ', −' + price + ' б.' : ', бесплатно'));
 }
 
 let activeEditorTab = 'emotional';
@@ -2250,6 +2387,7 @@ function renderActionLists() {
         if (!state.userRemoved[cat]) state.userRemoved[cat] = [];
         if (state.userRemoved[cat].indexOf(txt) === -1) state.userRemoved[cat].push(txt);
       } else { state.userAdded[cat] = (state.userAdded[cat]||[]).filter(x => x !== txt); }
+      logActivity('action_removed', '🗑 Удалил из «' + (TYPE_INFO[cat] ? TYPE_INFO[cat].name : cat) + '»: ' + txt.slice(0, 60));
       saveState().then(() => { renderActionLists(); showToast('✓','Действие удалено'); });
     };
   });
@@ -2259,7 +2397,7 @@ function openVanyaActivity() {
   if (state.role !== 'nastya') return;
   const overlay = document.createElement('div');
   overlay.className = 'overlay center active';
-  const isOn = state.vanyaSession.online;
+  const isOn = isVanyaReallyOnline();
   const log = state.activityLog || [];
   const c = state.counters || {};
   const t = state.todayCounters || {};
@@ -2301,6 +2439,10 @@ function openVanyaActivity() {
         else if (item.action === 'wish_add') ico = '✿';
         else if (item.action === 'wish_activate') ico = '💎';
         else if (item.action === 'spin') ico = '🎡';
+        else if (item.action === 'planned') ico = '🗓';
+        else if (item.action === 'planned_moved') ico = '📅';
+        else if (item.action === 'planned_cancelled') ico = '✕';
+        else if (item.action === 'action_removed') ico = '🗑';
         else if (item.action === 'manual_points') ico = '💌';
         else if (item.action.indexOf('page_') === 0) ico = '📱';
         else if (item.action === 'day_open') ico = '📅';
@@ -2474,7 +2616,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
     addPoints(WISH_BONUS);
-    logActivity('wish_add', '✿ Записал хотелку: ' + v);
+    logActivity('wish_add', '✿ Записал хотелку (' + WISH_TIER_LABEL[state.currentWishTier] + '): «' + v + '»');
     saveState().then(() => { renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements(); });
   };
 
@@ -2491,6 +2633,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsHotzone = document.getElementById('settingsHotzone');
   let tapCount = 0, tapTimer = null, lastTouchTime = 0;
   function registerHotzoneTap() {
+    if (state.viewingAs === 'vanya' || state.role === 'vanya') return;
     tapCount++;
     if (tapTimer) clearTimeout(tapTimer);
     tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
@@ -2570,8 +2713,88 @@ document.addEventListener('DOMContentLoaded', () => {
     const isInit = events.some(e => e.type === item.type);
     const pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
     document.getElementById('wheelOverlay').classList.remove('active');
-    openPhotoAttach(() => { addEventToDay(year, month, day, item.type, item.text, pts, isInit); });
+    openPhotoAttach(() => { planEvent(year, month, day, item.type, item.text, pts, isInit); });
   };
+
+  /* Проверка вчерашних планов */
+  function checkYesterdayPlanned() {
+    if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const key = yesterday.getFullYear() + '-' + yesterday.getMonth() + '-' + yesterday.getDate();
+    const plan = state.plannedDays && state.plannedDays[key];
+    if (!plan) return;
+    window._pendingPlanKey = key;
+    const d = new Date(yesterday);
+    const dateStr = String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0');
+    document.getElementById('confirmYesterdayText').textContent = '«' + plan.text + '» — ' + dateStr;
+    document.getElementById('confirmYesterdayOverlay').classList.add('active');
+  }
+
+  document.getElementById('confirmYesBtn').onclick = () => {
+    const key = window._pendingPlanKey;
+    if (!key) return;
+    const plan = state.plannedDays[key];
+    if (!plan) return;
+    const parts = key.split('-').map(n => parseInt(n));
+    document.getElementById('confirmYesterdayOverlay').classList.remove('active');
+    delete state.plannedDays[key];
+    addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
+    window._pendingPlanKey = null;
+  };
+  document.getElementById('confirmNoBtn').onclick = () => {
+    const key = window._pendingPlanKey;
+    if (!key) return;
+    const plan = state.plannedDays[key];
+    if (!plan) return;
+    document.getElementById('confirmYesterdayOverlay').classList.remove('active');
+    window._pendingReschedule = { key: key, plan: plan };
+    const t = new Date();
+    const tomorrow = new Date(t);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const val = tomorrow.getFullYear() + '-' + String(tomorrow.getMonth()+1).padStart(2,'0') + '-' + String(tomorrow.getDate()).padStart(2,'0');
+    document.getElementById('rescheduleDateInput').min = val;
+    document.getElementById('rescheduleDateInput').value = val;
+    document.getElementById('rescheduleOverlay').classList.add('active');
+  };
+  document.getElementById('rescheduleConfirmBtn').onclick = () => {
+    const v = document.getElementById('rescheduleDateInput').value;
+    if (!v) { alert('Выбери дату'); return; }
+    const parts = v.split('-').map(n => parseInt(n));
+    const newKey = parts[0] + '-' + (parts[1]-1) + '-' + parts[2];
+    const pr = window._pendingReschedule;
+    if (!pr) return;
+    if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text) {
+      if (!confirm('На этот день уже есть план. Заменить?')) return;
+    }
+    state.plannedDays[newKey] = pr.plan;
+    delete state.plannedDays[pr.key];
+    logActivity('planned_moved', '📅 Перенёс план «' + pr.plan.text + '» на ' + parts[2] + '.' + parts[1] + '.' + parts[0]);
+    window._pendingReschedule = null;
+    window._pendingPlanKey = null;
+    saveState().then(() => {
+      renderCalendar();
+      document.getElementById('rescheduleOverlay').classList.remove('active');
+      showToast('📅', 'Перенесено на новую дату');
+    });
+  };
+  document.getElementById('rescheduleCancelBtn').onclick = () => {
+    const pr = window._pendingReschedule;
+    if (pr) {
+      delete state.plannedDays[pr.key];
+      logActivity('planned_cancelled', '✕ Отменил план: «' + pr.plan.text + '»');
+      saveState().then(() => {
+        renderCalendar();
+        document.getElementById('rescheduleOverlay').classList.remove('active');
+        showToast('✕', 'План отменён');
+      });
+    } else {
+      document.getElementById('rescheduleOverlay').classList.remove('active');
+    }
+    window._pendingReschedule = null;
+    window._pendingPlanKey = null;
+  };
+
   window.addEventListener('resize', resizeCanvas);
   window.addEventListener('online', updateOnlineStatus);
   window.addEventListener('offline', updateOnlineStatus);
@@ -2581,9 +2804,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.hidden) endVanyaSession();
     else startVanyaSession();
   });
+  window.addEventListener('pagehide', () => {
+    if (state.role === 'vanya') endVanyaSession();
+  });
   window.addEventListener('beforeunload', () => {
     if (state.role === 'vanya') endVanyaSession();
   });
+  setInterval(() => {
+    if (state.role !== 'vanya') return;
+    if (document.hidden) return;
+    state.vanyaSession.lastActiveAt = Date.now();
+    state.vanyaSession.online = true;
+    saveState();
+  }, 60000);
+
+  setTimeout(checkYesterdayPlanned, 2000);
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err => console.log('SW reg error:', err));
