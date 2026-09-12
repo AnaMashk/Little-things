@@ -38,8 +38,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .header-subtitle{margin-top:10px;font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase}
 .nav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.75);margin-top:10px;position:relative;z-index:4;backdrop-filter:blur(10px)}
 .nav-item{padding:12px 2px 10px;background:none;color:var(--muted);font-size:8px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid transparent;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-family:inherit;border:none;transition:transform .2s,color .2s}
-.nav:-item .nav-icon{fontcenter-size:16px;transition:transform .3s}
-;.nav-item.active{color:varjust(--dark);border-bottom-color:var(--gold);ifybackground:linear-gradient(180deg,rgba-content(212,168,90,.08),transparent)}
+.nav-item .nav-icon{font-size:16px;transition:transform .3s}
+.nav-item.active{color:var(--dark);border-bottom-color:var(--gold);background:linear-gradient(180deg,rgba(212,168,90,.08),transparent)}
 .nav-item.active .nav-icon{transform:scale(1.15)}
 .nav-item:active .nav-icon{transform:scale(.9)}
 .page{display:none;padding:22px 16px 20px;animation:fadeIn .45s cubic-bezier(.34,1.2,.64,1);position:relative;z-index:2}
@@ -109,7 +109,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .overlay.center{align-items:center;padding:20px}
 .overlay.center .modal{border-radius:32px;max-width:440px;transform:translateY(20px) scale(.92)}
 .overlay.center.active .modal{transform:translateY(0) scale(1)}
-.daily-overlay{position:fixed;inset:0;background:rgba(58,46,42,.65);display:flex;align-items:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
+.daily-overlay{position:fixed;inset:0;background:rgba(58,46,42,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
 .daily-overlay.active{opacity:1;visibility:visible}
 .daily-card{background:linear-gradient(160deg,#FDFBF7 0%,#F9F0E8 100%);border-radius:36px;padding:50px 30px 40px;max-width:400px;width:100%;text-align:center;position:relative;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1);border:1px solid rgba(212,168,90,.3);box-shadow:0 30px 80px rgba(0,0,0,.25)}
 .daily-overlay.active .daily-card{transform:scale(1)}
@@ -304,8 +304,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .love-tree-svg-wrap svg{display:block;width:100%;height:auto;overflow:visible}
 .love-tree-svg-wrap .tree-sway{transform-origin:center 90%;animation:treeSway 7s ease-in-out infinite}
 @keyframes treeSway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
-.love-tree-svg-wrap .leaf-fall{animation:leafFall 3.5s ease-in-out infinite;transform-origin:center}
-@keyframes leafFall{0%{transform:translateY(0) rotate(0deg);opacity:1}50%{transform:translateY(6px) rotate(20deg);opacity:.85}100%{transform:translateY(0) rotate(0deg);opacity:1}}
 .love-tree-progress-text{font-size:11px;color:#6B5C52;margin:6px 0 10px;letter-spacing:.5px;position:relative;font-weight:600}
 .love-tree-progress-track{height:6px;border-radius:20px;background:rgba(141,189,171,.22);overflow:hidden;position:relative}
 .love-tree-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#8dbdab,#d4a85a);border-radius:20px;transition:width 1.2s cubic-bezier(.34,1.2,.64,1)}
@@ -381,28 +379,408 @@ body::before{background:none !important}
 .section-sub{color:#3a3028 !important;font-weight:600 !important;font-size:11px !important;letter-spacing:1px !important;text-transform:none !important;background:linear-gradient(135deg,rgba(255,250,240,.95),rgba(250,245,232,.9)) !important;border:1px solid rgba(212,168,90,.3) !important;border-radius:20px !important;padding:10px 18px !important;box-shadow:0 3px 12px rgba(58,46,42,.08) !important;display:block !important;width:100% !important;box-sizing:border-box !important;margin:6px 0 18px 0 !important;text-align:center !important}
 .btn-primary,.btn-gold,.spin-button,.primary-button{background:var(--dark-btn) !important;color:var(--ivory) !important;border-radius:60px !important;padding:16px 28px !important;font-family:'Cormorant Garamond',serif !important;font-size:13px !important;font-weight:500 !important;letter-spacing:4px !important;text-transform:uppercase !important;box-shadow:0 6px 20px rgba(58,46,42,.28) !important;border:none !important}
 .btn-secondary{background:transparent !important;color:var(--sage-dark) !important;border:1.5px solid var(--sage-dark) !important;border-radius:60px !important;letter-spacing:3px !important;text-transform:uppercase !important;font-family:'Cormorant Garamond',serif !important}
-button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-item, .month-arrow, .close-button, .flower-btn, .tab-btn, .settings-menu button, .add-row button, .del-btn {touch-action: manipulation;-webkit-appearance: none;-webkit-user-select: none;user-select: none;cursor: pointer;}
-.btn-secondary, .btn-primary, .btn-gold, .spin-button, .role-btn {min-height: 56px !important;display: flex !important;align-items: center !important;justify-content: center !important;line-height: 1.2 !important;}
-.month-arrow, .close-button { min-width: 44px !important; min-height: 44px !important; }
-.overlay { backdrop-filter: none !important; }
-
-/* ==== ЗАПЛАНИРОВАННЫЙ ДЕНЬ: сохраняем цвет типа дня, добавляем только пунктир + часы ==== */
-.calendar-day.planned-day {
-  position: relative;
-  outline: 2px dashed var(--gold);
-  outline-offset: -3px;
-}
-.calendar-day.planned-day::after {
-  content: "⏰";
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  font-size: 14px;
-  opacity: 0.9;
-  z-index: 3;
-}
+button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-item, .month-arrow, .close-button, .flower-btn, .tab-btn, .settings-menu button, .add-row button, .del-btn {touch-action: manipulation;-webkit-appearance: none;-webkit-user-select: none;user-select: none;cursor: pointer}
+.btn-secondary, .btn-primary, .btn-gold, .spin-button, .role-btn {min-height: 56px !important;display: flex !important;align-items: center !important;justify-content: center !important;line-height: 1.2 !important}
+.month-arrow, .close-button { min-width: 44px !important; min-height: 44px !important }
+.overlay { backdrop-filter: none !important }
+.calendar-day.planned-day { position: relative; outline: 2px dashed var(--gold); outline-offset: -3px }
+.calendar-day.planned-day::after { content: "⏰"; position: absolute; right: 3px; bottom: 3px; font-size: 14px; opacity: 0.9; z-index: 3 }
 </style>
 </head>
+
+<body>
+
+<div class="splash-screen" id="splashScreen">
+  <div class="splash-logo">
+    <svg viewBox="0 0 32 32" fill="none" stroke="#d4a85a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 26.5 C 6.5 19.8, 3 14.2, 5.6 9.4 C 8.2 4.6, 13.8 5.4, 16 11 C 18.2 5.4, 23.8 4.6, 26.4 9.4 C 29 14.2, 25.5 19.8, 16 26.5 Z" fill="rgba(212,168,90,.15)"/>
+    </svg>
+  </div>
+  <div class="splash-title">Наши маленькие вещи</div>
+  <div class="splash-sub">приложение для двоих</div>
+</div>
+
+<div class="petals-layer" id="petalsLayer"></div>
+<div class="app" id="appRoot">
+
+<div class="daily-overlay" id="dailyOverlay">
+<div class="daily-card">
+<div class="daily-emoji" id="dailyEmoji">🌸</div>
+<div class="daily-message" id="dailyMessage">Ты — моя самая любимая причина улыбаться.</div>
+<div class="daily-hint">Коснись, чтобы закрыть</div>
+</div>
+</div>
+
+<div class="month-celebration" id="monthCelebration">
+<div class="month-celebration-card">
+<div class="mc-emoji" id="mcEmoji">🎉</div>
+<h2 id="mcTitle">Восхитительно!</h2>
+<p id="mcText">Ты выполнил 15 дней за месяц!<br>Настя гордится тобой.</p>
+<div class="mc-bonus" id="mcBonus">+100 баллов</div>
+<div class="daily-hint" style="opacity:.6">Коснись, чтобы закрыть</div>
+</div>
+</div>
+
+<div class="overlay center role-overlay active" id="roleOverlay">
+<div class="modal">
+<div class="modal-title">Наши маленькие вещи</div>
+<div class="modal-subtitle">Кто открыл приложение?</div>
+<div class="role-buttons">
+<button class="role-btn nastya" id="roleNastya" type="button"><span class="role-emoji">❤️</span><span>Я — Настя</span></button>
+<button class="role-btn vanya" id="roleVanya" type="button"><span class="role-emoji">🍞</span><span>Я — Ваня</span></button>
+</div>
+</div>
+</div>
+
+<div class="overlay center welcome-overlay" id="welcomeOverlay">
+<div class="modal">
+<div class="modal-title">❤️ Добро пожаловать</div>
+<div class="modal-subtitle">Наши маленькие вещи</div>
+<div style="text-align:left;font-size:12.5px;line-height:1.9;background:rgba(255,255,255,.6);padding:18px;border-radius:18px;margin:16px 0;border:1px solid rgba(212,168,90,.2)">
+<p style="margin-bottom:10px">Привет, сухарь. 🍞</p>
+<p style="margin-bottom:10px">Это приложение — наша маленькая игра. Здесь ты будешь заботиться обо мне, а я — удивлять тебя.</p>
+<p style="margin-bottom:10px">Крути колесо, выполняй задания, копи баллы. Наберёшь <b>1000</b> — сможешь загадать своё желание в «Тайном саду».</p>
+<p style="margin-bottom:10px">Договорились? ❤️</p>
+<div style="text-align:right;font-style:italic;color:var(--muted);margin-top:6px">Твоя Настя</div>
+</div>
+<button class="btn-gold" id="welcomeAgree" type="button">Готов начать</button>
+</div>
+</div>
+
+<div class="role-badge" id="roleBadge">👁 Режим просмотра</div>
+
+<div class="notification-banner" id="notificationBanner">
+<span class="icon">📅</span>
+<div class="content">
+<div class="title" id="notifTitle">Скоро ваше свидание!</div>
+<div class="sub" id="notifSub">Покрути колесо 🎡</div>
+</div>
+<button class="action-link" id="notifAction" type="button">🎡 Крутить</button>
+<button class="close-btn" id="notifClose" type="button">✕</button>
+</div>
+
+<div class="header">
+<h1 class="header-title">Наши маленькие вещи</h1>
+<div class="header-names">Анастасия &amp; Иван</div>
+<div class="header-subtitle">Давай иногда выбирать друг друга специально</div>
+</div>
+
+<nav class="nav">
+<button class="nav-item active" data-page="calendar" type="button"><span class="nav-icon">✦</span>Месяц</button>
+<button class="nav-item" data-page="history" type="button"><span class="nav-icon">♥</span>История</button>
+<button class="nav-item" data-page="wishes" type="button"><span class="nav-icon">✿</span>Хотелки</button>
+<button class="nav-item" data-page="stats" type="button"><span class="nav-icon">⭐</span>Баллы</button>
+<button class="nav-item" data-page="system" type="button"><span class="nav-icon">📖</span>Система</button>
+</nav>
+
+<section class="page active" id="page-calendar">
+<div class="month-header">
+<button class="month-arrow" id="prevMonth" type="button">‹</button>
+<div><div class="month-name" id="monthName">Сентябрь</div><div class="month-year" id="monthYear">2026</div></div>
+<button class="month-arrow" id="nextMonth" type="button">›</button>
+</div>
+<div class="weekdays">
+<div class="weekday">ПН</div>
+<div class="weekday">ВТ</div>
+<div class="weekday">СР</div>
+<div class="weekday">ЧТ</div>
+<div class="weekday">ПТ</div>
+<div class="weekday">СБ</div>
+<div class="weekday">ВС</div>
+</div>
+<div class="calendar" id="calendar"></div>
+<div class="legend">
+<div class="legend-item"><span class="legend-dot emotional"></span>💙 Эмоц. +5</div>
+<div class="legend-item"><span class="legend-dot physical"></span>💜 Физ. +10</div>
+<div class="legend-item"><span class="legend-dot lightDate"></span>💗 Лёгкое +50</div>
+<div class="legend-item"><span class="legend-dot bigDate"></span>🏆 Большое +150</div>
+<div class="legend-item"><span class="legend-dot custom"></span>⭐ Своё +30</div>
+</div>
+<div class="manage-panel">
+<div class="manage-panel-title">Хочешь её порадовать? ❤️</div>
+<div class="manage-panel-text">Нажми на любой день, чтобы изменить его или отметить выполненным</div>
+<button class="btn-primary" id="openRandomBtn" type="button">Выбрать сегодня</button>
+</div>
+</section>
+
+<section class="page" id="page-history">
+<div class="section-title">Наша история</div>
+<div class="section-sub">То, что мы уже выбрали друг для друга</div>
+<div class="timeline" id="timelineList"></div>
+</section>
+
+<section class="page" id="page-wishes">
+<div class="section-title">Тайный сад</div>
+<div class="section-sub">Запиши, чего хочешь ты · +15 баллов</div>
+<div class="wish-tier" id="wishTierBlock">
+<button data-tier="small" class="active" type="button">🌱 Мелкое (50)</button>
+<button data-tier="medium" type="button">🌿 Среднее (150)</button>
+<button data-tier="big" type="button">🌳 Крупное (500)</button>
+</div>
+<div class="add-row">
+<input type="text" id="wishInput" placeholder="Например: блинчики с вишней">
+<button id="wishAddBtn" type="button">＋</button>
+</div>
+<div class="garden-wrap" id="wishGarden"></div>
+<div style="margin-top:22px;padding:18px;background:rgba(255,250,240,.92);border-radius:18px;font-size:11.5px;color:#3a3028;line-height:1.8;border:1px solid rgba(212,168,90,.35);position:relative;z-index:3;font-weight:500">
+<b style="color:#1a1410">Как это работает:</b><br>• Записал желание → +15 баллов<br>• Копишь 1000 баллов → активируешь<br>• Она его выполняет ❤️
+</div>
+</section>
+
+<section class="page" id="page-stats">
+<div class="section-title">Мои баллы</div>
+<div class="points-card">
+<div class="points-number" id="pointsNumber">0</div>
+<div class="points-caption">баллов за этот месяц</div>
+<div class="total-points">Всего за всё время: <span id="totalPointsDisplay">0</span></div>
+<div class="level-badge"><span class="emoji" id="levelEmoji">🌿</span><span class="name" id="levelName">Первый шаг</span></div>
+<div class="points-to-next" id="pointsToNext"></div>
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+<div id="pointsToGo" style="color:var(--muted);font-size:10px;margin-top:12px;letter-spacing:1px"></div>
+</div>
+<div class="achievements-block">
+<div class="achievements-title">✦ Достижения ✦</div>
+<div class="achievements-grid" id="achievementsGrid"></div>
+</div>
+<div class="love-tree-card">
+<div class="love-tree-title">🌳 Наше дерево</div>
+<div class="love-tree-stage" id="treeStage">Семечко</div>
+<div class="love-tree-svg-wrap" id="treeSvgWrap"></div>
+<div class="love-tree-progress-text" id="treeProgressText">До следующей стадии: 5 заданий</div>
+<div class="love-tree-progress-track">
+<div class="love-tree-progress-fill" id="treeProgressFill"></div>
+</div>
+</div>
+<div class="motivation-block"><strong>Ты сам создаёшь эту историю.</strong><br>Выполнил — заработал. Придумал своё — заработал больше. Записал хотелку — снова плюс.<br>Копи 1000 → активируй в «Тайном саду». ❤️</div>
+<div class="system-note" style="position:relative;z-index:3;margin-top:16px">
+⚠️ <b>Важно:</b> баллы «за месяц» сгорают 1-го числа каждого месяца.
+</div>
+</section>
+
+<section class="page" id="page-system">
+<div class="section-title">Как всё работает</div>
+<div class="section-sub">Полный гайд по баллам, спину и наградам</div>
+<div class="system-intro"><h3>✦ Наша маленькая экономика</h3><p>Каждое твоё действие превращается в баллы. Баллы можно копить и обменивать на свои желания.</p></div>
+<div class="system-section">
+<div class="system-section-title"><span class="ico">🌿</span>1. Как заработать баллы</div>
+<div class="system-row"><span class="lbl">💙 Эмоциональная забота</span><span class="val">+5</span></div>
+<div class="system-row"><span class="lbl">💜 Физическая забота</span><span class="val">+10</span></div>
+<div class="system-row"><span class="lbl">💗 Лёгкое свидание</span><span class="val">+50</span></div>
+<div class="system-row"><span class="lbl">🏆 Большое свидание</span><span class="val">+150</span></div>
+<div class="system-row"><span class="lbl">⭐ Своя инициатива</span><span class="val">+30</span></div>
+<div class="system-row"><span class="lbl">✿ Своя хотелка</span><span class="val">+15</span></div>
+<div class="system-row"><span class="lbl">📅 Ежедневный вход</span><span class="val">+5</span></div>
+</div>
+<div class="system-section">
+<div class="system-section-title"><span class="ico">🎡</span>2. Спин колеса</div>
+<div class="system-row"><span class="lbl">Первое вращение на дату</span><span class="val free">Бесплатно</span></div>
+<div class="system-row"><span class="lbl">2-е вращение</span><span class="val minus">−50</span></div>
+<div class="system-row"><span class="lbl">3-е вращение</span><span class="val minus">−150</span></div>
+<div class="system-row"><span class="lbl">4-е и далее</span><span class="val minus">−250</span></div>
+</div>
+<div class="system-section">
+<div class="system-section-title"><span class="ico">💎</span>3. Куда потратить</div>
+<div class="system-tier">
+<div class="card"><span class="e">🌱</span><span class="nm">Мелкое</span><span class="pr">50</span></div>
+<div class="card"><span class="e">🌿</span><span class="nm">Среднее</span><span class="pr">150</span></div>
+<div class="card"><span class="e">🌳</span><span class="nm">Крупное</span><span class="pr">500</span></div>
+</div>
+</div>
+<div class="system-section">
+<div class="system-section-title"><span class="ico">🏆</span>4. Уровни</div>
+<div class="system-level"><span class="e">🌿</span><div class="info"><div class="name">Первый шаг</div><div class="range">0 — 199</div></div></div>
+<div class="system-level"><span class="e">💓</span><div class="info"><div class="name">Трепет</div><div class="range">200 — 399</div></div></div>
+<div class="system-level"><span class="e">✨</span><div class="info"><div class="name">Притяжение</div><div class="range">400 — 599</div></div></div>
+<div class="system-level"><span class="e">🌸</span><div class="info"><div class="name">Гармония</div><div class="range">600 — 799</div></div></div>
+<div class="system-level"><span class="e">🌟</span><div class="info"><div class="name">Почти совершенство</div><div class="range">800 — 999</div></div></div>
+<div class="system-level"><span class="e">♾️</span><div class="info"><div class="name">Вечность</div><div class="range">1000+</div></div></div>
+</div>
+<div class="system-section">
+<div class="system-section-title"><span class="ico">🔥</span>5. Когда сгорают</div>
+<div class="system-row"><span class="lbl">Баллы «за месяц»</span><span class="val minus">1-го числа</span></div>
+<div class="system-row"><span class="lbl">Баллы «всего»</span><span class="val free">Не сгорают</span></div>
+</div>
+</section>
+
+</div>
+
+<div class="overlay" id="choiceOverlay">
+<div class="modal">
+<button class="close-button" data-close="choiceOverlay" type="button">×</button>
+<div class="modal-title" id="choiceTitle">Что для неё?</div>
+<div class="modal-subtitle" id="choiceSubtitle">Выбери направление</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+<button class="role-btn" data-choice="emotional" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">💙</span>Эмоциональная забота (+5)</button>
+<button class="role-btn" data-choice="physical" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">💜</span>Физическая забота (+10)</button>
+<button class="role-btn" data-choice="lightDate" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">💗</span>Лёгкое свидание (+50)</button>
+<button class="role-btn" data-choice="bigDate" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">🏆</span>Большое свидание (+150)</button>
+<button class="role-btn" data-choice="random" type="button" style="padding:16px 20px;font-size:13px;background:var(--dark);color:white;border-color:var(--dark)"><span class="role-emoji" style="font-size:20px">🎲</span>Пусть выберет колесо</button>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="editDayOverlay">
+<div class="modal">
+<button class="close-button" data-close="editDayOverlay" type="button">×</button>
+<div class="modal-title" id="editDayTitle">День</div>
+<div class="modal-subtitle" id="editDaySubtitle"></div>
+<div id="freeChoiceBlock" style="display:none;margin-top:20px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<button class="btn-primary" id="freeWheelBtn" type="button">🎡 Крутить колесо</button>
+<button class="btn-secondary" id="freeCustomBtn" type="button">⭐ Моя инициатива</button>
+</div>
+<div id="freeCustomFields" style="display:none;margin-top:16px">
+<input type="text" class="input-line" id="freeCustomTitle" placeholder="Название дела">
+<select class="select-line" id="freeCustomCategory">
+<option value="emotional">💙 Эмоциональная (5 б.)</option>
+<option value="physical">💜 Физическая (10 б.)</option>
+<option value="lightDate">💗 Лёгкое свидание (50 б.)</option>
+<option value="bigDate">🏆 Большое свидание (150 б.)</option>
+</select>
+<div style="text-align:center;font-size:12px;color:var(--gold);padding:10px;background:rgba(212,168,90,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="freeTotalPoints">35</span> баллов</div>
+<button class="btn-gold" id="freeCustomDone" type="button">Запланировать</button>
+</div>
+</div>
+<div id="typeBlock" style="display:none;margin-top:20px">
+<div class="day-info-block"><div class="day-label">Тип дня</div><div class="day-title" id="typeNameDisplay">Эмоциональная</div></div>
+<ul class="event-list" id="eventListCompact"></ul>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+<button class="btn-primary" id="typeWheelBtn" type="button">🎡 Крутить колесо</button>
+<button class="btn-secondary" id="typeInitiativeBtn" type="button">⭐ Добавить инициативу</button>
+<button class="btn-secondary" id="typeMoveBtn" type="button">📅 Перенести дату</button>
+<button class="btn-secondary" id="typeClearBtn" type="button" style="display:none;color:var(--red);border-color:var(--red)">🗑 Очистить</button>
+</div>
+<div id="typeInitiativeFields" style="display:none;margin-top:16px">
+<input type="text" class="input-line" id="typeInitiativeTitle" placeholder="Название дела">
+<select class="select-line" id="typeInitiativeCategory">
+<option value="emotional">💙 Эмоциональная (5 б.)</option>
+<option value="physical">💜 Физическая (10 б.)</option>
+<option value="lightDate">💗 Лёгкое свидание (50 б.)</option>
+<option value="bigDate">🏆 Большое свидание (150 б.)</option>
+</select>
+<div style="text-align:center;font-size:12px;color:var(--gold);padding:10px;background:rgba(212,168,90,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="typeTotalPoints">35</span> баллов</div>
+<button class="btn-gold" id="typeInitiativeDone" type="button">Запланировать</button>
+</div>
+<div id="moveBlockType" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
+<label style="font-size:12px;display:block;margin-bottom:8px">Новая дата</label>
+<input type="date" class="input-line" id="moveDateInputType" style="border-radius:14px">
+<button class="btn-primary" id="moveDayBtnType" type="button">Перенести</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="overlay center" id="confirmYesterdayOverlay">
+<div class="modal">
+<div class="modal-title">Вчерашний план 📆</div>
+<div class="modal-subtitle">Состоялось ли то, что ты выбрал?</div>
+<div style="margin:20px 0;padding:18px;background:rgba(212,168,90,.1);border-radius:16px;border:1px solid rgba(212,168,90,.25)">
+<div id="confirmYesterdayText" style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;text-align:center;line-height:1.4"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<button class="btn-primary" id="confirmYesBtn" type="button">✓ Да, состоялось</button>
+<button class="btn-secondary" id="confirmNoBtn" type="button">✕ Нет, не состоялось</button>
+</div>
+</div>
+</div>
+
+<div class="overlay center" id="rescheduleOverlay">
+<div class="modal">
+<div class="modal-title">Перенести 📅</div>
+<div class="modal-subtitle">Выбери новую дату</div>
+<div style="margin-top:20px">
+<label style="font-size:12px;display:block;margin-bottom:8px">Новая дата</label>
+<input type="date" class="input-line" id="rescheduleDateInput" style="border-radius:14px">
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<button class="btn-gold" id="rescheduleConfirmBtn" type="button">Перенести</button>
+<button class="btn-secondary" id="rescheduleCancelBtn" type="button">Отмена</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="photoAttachOverlay">
+<div class="modal">
+<button class="close-button" data-close="photoAttachOverlay" type="button">×</button>
+<div class="modal-title">📸 Фото момента</div>
+<div class="modal-subtitle">Добавь, если хочешь сохранить момент</div>
+<div style="margin-top:18px">
+<label class="add-photo-btn" style="display:block;text-align:center" for="photoInput">📷 Выбрать фото</label>
+<input type="file" id="photoInput" accept="image/*" style="display:none">
+<div class="photo-preview" id="photoPreview">
+<img id="photoPreviewImg" alt="">
+<button class="remove-photo" id="removePhotoBtn" type="button">✕</button>
+</div>
+<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+<button class="btn-gold" id="photoSaveBtn" type="button" disabled>Сохранить с фото</button>
+<button class="btn-secondary" id="photoSkipBtn" type="button">Сохранить без фото</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="photo-modal" id="photoViewModal">
+<img id="photoViewImg" alt="">
+</div>
+
+<div class="overlay" id="wheelOverlay">
+<div class="modal">
+<button class="close-button" data-close="wheelOverlay" type="button">×</button>
+<div class="modal-title" id="wheelTitle">Колесо</div>
+<div id="wheelCategory" style="text-align:center;color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:2px;text-transform:uppercase">Категория</div>
+<div class="wheel-wrap">
+<div class="wheel-pointer"></div>
+<canvas id="wheel"></canvas>
+<div class="wheel-center">♥</div>
+</div>
+<button class="spin-button" id="spinBtn" type="button">Крутить колесо</button>
+<div id="spinsLeft" style="text-align:center;color:var(--muted);font-size:10px;margin-top:8px;letter-spacing:1px"></div>
+<div id="resultBox" class="result-box" style="display:none">
+<div class="result-text" id="resultText"></div>
+<button class="btn-primary" id="doneBtn" type="button">Запланировать 🗓</button>
+<button class="btn-secondary" id="respinBtn" type="button">🔄 Перекрутить</button>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="actionEditorOverlay">
+<div class="modal">
+<button class="close-button" data-close="actionEditorOverlay" type="button">×</button>
+<div class="modal-title">Управление действиями</div>
+<div class="modal-subtitle">Добавляй и удаляй задания</div>
+<div class="tabs">
+<button class="tab-btn active" data-tab="emotional" type="button">💙 Эмоц</button>
+<button class="tab-btn" data-tab="physical" type="button">💜 Физ</button>
+<button class="tab-btn" data-tab="lightDate" type="button">💗 Лёгк</button>
+<button class="tab-btn" data-tab="bigDate" type="button">🏆 Больш</button>
+</div>
+<div class="add-row"><input type="text" id="newActionInput" placeholder="Например: ⛸ На каток"><button id="addActionBtn" type="button">＋</button></div>
+<div class="tab-content active" id="tab-emotional"><ul class="action-list" id="list-emotional"></ul></div>
+<div class="tab-content" id="tab-physical"><ul class="action-list" id="list-physical"></ul></div>
+<div class="tab-content" id="tab-lightDate"><ul class="action-list" id="list-lightDate"></ul></div>
+<div class="tab-content" id="tab-bigDate"><ul class="action-list" id="list-bigDate"></ul></div>
+</div>
+</div>
+
+<div class="overlay" id="quarantineOverlay">
+<div class="modal">
+<button class="close-button" data-close="quarantineOverlay" type="button">×</button>
+<div class="modal-title">Карантин</div>
+<div class="modal-subtitle">Эти задания сейчас отдыхают</div>
+<div id="quarantineList" style="margin-top:20px"></div>
+</div>
+</div>
+
+<div class="settings-hotzone" id="settingsHotzone"></div>
+<button class="settings-toggle" id="settingsToggle" type="button">⚙</button>
+<div class="settings-menu" id="settingsMenu"></div>
+
+<div class="toast" id="toast">
+<span class="emoji" id="toastEmoji">✨</span>
+<span class="text" id="toastText"></span>
+<button class="close-x" id="toastClose" type="button">✕</button>
+</div>
+
 <body>
 
 <div class="splash-screen" id="splashScreen">
@@ -858,7 +1236,52 @@ const DAILY_MESSAGES = [
   { e:"🎶", t:"Спасибо за твой смех. Он — моя любимая музыка." },
   { e:"🌺", t:"Спасибо, что ты мой." },
   { e:"✨", t:"Спасибо, что не сдаёшься. Ни в чём." },
-  { e:"❤️", t:"Спасибо, что ты у меня есть." }
+  { e:"❤️", t:"Спасибо, что ты у меня есть." },
+  { e:"💋", t:"Обожаю твои поцелуи. В них — весь ты." },
+  { e:"🫂", t:"Мне так хорошо в твоих объятиях. Не хочется выходить." },
+  { e:"🤲", t:"Обожаю, как ты меня касаешься. Бережно. По-своему." },
+  { e:"🥰", t:"Мне нравится, как ты гладишь меня по голове. Это моё место силы." },
+  { e:"💗", t:"Мне так спокойно засыпать рядом с тобой. И просыпаться." },
+  { e:"🌸", t:"Обожаю, как ты обнимаешь меня сзади. Мурашки каждый раз." },
+  { e:"💋", t:"Твои поцелуи в лоб — моё самое любимое." },
+  { e:"🤍", t:"Мне нравится, как ты держишь меня за руку. Надёжно." },
+  { e:"🥹", t:"Обожаю, как ты смотришь на меня, когда думаешь, что я не вижу." },
+  { e:"💫", t:"Мне так спокойно, когда ты рядом. Даже в тишине." },
+  { e:"🌙", t:"Обожаю, как ты меня укрываешь. Заботишься. Это чувствуется." },
+  { e:"💕", t:"Мне нравится, как ты прижимаешь меня к себе. Как будто никому не отдашь." },
+  { e:"🫶", t:"Обожаю твой запах. Мой самый родной." },
+  { e:"💋", t:"Мне нравится, как ты целуешь меня в макушку. Таю." },
+  { e:"❤️", t:"Твои прикосновения — мой личный источник тепла." },
+  { e:"🚀", t:"Не бойся пробовать. Я с тобой." },
+  { e:"🎯", t:"Мечтай громко. Я помогу." },
+  { e:"🌈", t:"Всё возможно, если верить. И делать." },
+  { e:"🔥", t:"Ты можешь больше. Давай попробуем?" },
+  { e:"⭐️", t:"Твой потенциал — безграничен." },
+  { e:"🌟", t:"Шаг за шагом — и ты на вершине." },
+  { e:"🦁", t:"Иди вперёд. Даже если страшно." },
+  { e:"💪", t:"Сегодня — хороший день, чтобы начать." },
+  { e:"🚀", t:"Твоё время пришло. Просто начни." },
+  { e:"🏆", t:"Ты достоин большего. И я это знаю." },
+  { e:"🌊", t:"Не бойся глубины. Ты умеешь плавать." },
+  { e:"🎯", t:"Действуй. Я — за твоей спиной." },
+  { e:"🔆", t:"Твои мечты стоят того, чтобы за них бороться." },
+  { e:"🌟", t:"Пусть сегодня будет днём твоей смелости." },
+  { e:"🦋", t:"Расправь крылья. Ты готов." },
+  { e:"☕", t:"Сегодня — только для тебя. Сделай что-то приятное." },
+  { e:"🍃", t:"Вдохни глубже. Всё идёт как надо." },
+  { e:"🌸", t:"Улыбнись. Ты прекрасен, когда улыбаешься." },
+  { e:"🌞", t:"Пусть этот день будет мягким." },
+  { e:"🍀", t:"Сегодня твой день. Просто верь." },
+  { e:"🌷", t:"Замедлись. Насладись моментом." },
+  { e:"🌙", t:"Пусть вечер будет тёплым. Ты это заслужил." },
+  { e:"🎶", t:"Пусть твоя душа сегодня поёт." },
+  { e:"🕊", t:"Пусть тревоги уйдут. Хотя бы на час." },
+  { e:"🌸", t:"Ты — в порядке. Всё будет хорошо." },
+  { e:"💫", t:"Пусть сегодня случится что-то приятное." },
+  { e:"✨", t:"Просто будь. И этого достаточно." },
+  { e:"🌻", t:"Я думаю о тебе прямо сейчас." },
+  { e:"💕", t:"Ты — моя самая тёплая мысль." },
+  { e:"🌸", t:"Ты даришь мне радость. Каждый день. Спасибо." }
 ];
 
 const DEFAULT_TASKS = {
@@ -947,13 +1370,9 @@ let state = {
 let lastLevelName = localStorage.getItem('lastLevelName') || null;
 let reachedMilestones = JSON.parse(localStorage.getItem('reachedMilestones') || '[]');
 let unsubscribeFirestore = null;
-let isOnline = true;
-
-/* ==== ЗАЩИТА ОТ ПОТЕРИ ДАННЫХ ==== */
 let stateLoaded = false;
 let pendingSave = false;
 let isSaving = false;
-let saveTimeout = null;
 
 function currentActor(){ return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
 
@@ -966,26 +1385,26 @@ function mergeHistory(a, b){
     const k = _histKey(h);
     const ex = map.get(k);
     if (ex && ex.photo && !h.photo) return;
-    map.set(k, ex ? { ...ex, ...h, photo: h.photo || ex.photo } : h);
+    map.set(k, ex ? Object.assign({}, ex, h, { photo: h.photo || ex.photo }) : h);
   });
   return Array.from(map.values()).sort((x,y)=>(y.eventDate||0)-(x.eventDate||0));
 }
 function mergeCompletedDays(a, b){
   const out = {};
-  const keys = new Set([...Object.keys(a||{}), ...Object.keys(b||{})]);
+  const keys = new Set([].concat(Object.keys(a||{}), Object.keys(b||{})));
   keys.forEach(k => {
     const ev = new Map();
-    (a && a[k] || []).forEach(e => ev.set(e.timestamp, e));
-    (b && b[k] || []).forEach(e => {
+    ((a && a[k]) || []).forEach(e => ev.set(e.timestamp, e));
+    ((b && b[k]) || []).forEach(e => {
       const ex = ev.get(e.timestamp);
-      ev.set(e.timestamp, ex ? { ...ex, ...e, photo: e.photo || ex.photo } : e);
+      ev.set(e.timestamp, ex ? Object.assign({}, ex, e, { photo: e.photo || ex.photo }) : e);
     });
     out[k] = Array.from(ev.values()).sort((x,y)=>x.timestamp-y.timestamp);
   });
   return out;
 }
 function mergePlannedDays(a, b){
-  const out = { ...(a||{}) };
+  const out = Object.assign({}, a||{});
   for (const k in (b||{})){
     const ex = out[k], nw = b[k];
     if (!ex) out[k] = nw;
@@ -998,7 +1417,7 @@ function mergeWishes(a, b){
   (a||[]).forEach(w => map.set(w.createdAt, w));
   (b||[]).forEach(w => {
     const ex = map.get(w.createdAt);
-    map.set(w.createdAt, ex ? { ...ex, ...w } : w);
+    map.set(w.createdAt, ex ? Object.assign({}, ex, w) : w);
   });
   return Array.from(map.values()).sort((x,y)=>(x.createdAt||0)-(y.createdAt||0));
 }
@@ -1007,7 +1426,7 @@ function mergeNotifications(a, b){
   (a||[]).forEach(n => map.set(n.id, n));
   (b||[]).forEach(n => {
     const ex = map.get(n.id);
-    map.set(n.id, ex ? { ...ex, ...n } : n);
+    map.set(n.id, ex ? Object.assign({}, ex, n) : n);
   });
   return Array.from(map.values()).sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));
 }
@@ -1102,7 +1521,6 @@ function compressImage(file, maxDim, quality){
 }
 
 /* ===== УТИЛИТЫ ===== */
-function updateOnlineStatus(){ isOnline = true; }
 function showToast(emoji, text){
   const t = document.getElementById('toast');
   document.getElementById('toastEmoji').textContent = emoji;
@@ -1201,16 +1619,10 @@ function animateNumber(el, from, to, duration){
 }
 
 const burstStyleEl = document.createElement('style');
-burstStyleEl.textContent = `
-.burst-heart{position:fixed;width:32px;height:32px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%23ff2d5b'><path d='M16 27 C 6 20, 2 14, 5 9 C 8 4, 14 5, 16 11 C 18 5, 24 4, 27 9 C 30 14, 26 20, 16 27 Z'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 1.1s cubic-bezier(.34,1,.64,1) forwards}
-@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(0.2) rotate(0deg);opacity:1}70%{opacity:1}100%{transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by))) scale(1.1) rotate(var(--br,180deg));opacity:0}}
-.burst-star{position:fixed;width:18px;height:18px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffd76b'><path d='M12 2 L13.5 9 L20 10.5 L13.5 12 L12 19 L10.5 12 L4 10.5 L10.5 9 Z'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 0.95s cubic-bezier(.34,1,.64,1) forwards}
-.burst-ring{position:fixed;border:2.5px solid rgba(255,45,91,.85);border-radius:50%;pointer-events:none;z-index:1240;width:40px;height:40px;transform:translate(-50%,-50%) scale(0.2);animation:ringExpand .7s ease-out forwards}
-@keyframes ringExpand{0%{transform:translate(-50%,-50%) scale(0.15);opacity:1;border-width:4px}100%{transform:translate(-50%,-50%) scale(3.2);opacity:0;border-width:1px}}
-`;
+burstStyleEl.textContent = '.burst-heart{position:fixed;width:32px;height:32px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' fill=\'%23ff2d5b\'><path d=\'M16 27 C 6 20, 2 14, 5 9 C 8 4, 14 5, 16 11 C 18 5, 24 4, 27 9 C 30 14, 26 20, 16 27 Z\'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 1.1s cubic-bezier(.34,1,.64,1) forwards}@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(0.2) rotate(0deg);opacity:1}70%{opacity:1}100%{transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by))) scale(1.1) rotate(var(--br,180deg));opacity:0}}.burst-star{position:fixed;width:18px;height:18px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23ffd76b\'><path d=\'M12 2 L13.5 9 L20 10.5 L13.5 12 L12 19 L10.5 12 L4 10.5 L10.5 9 Z\'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 0.95s cubic-bezier(.34,1,.64,1) forwards}.burst-ring{position:fixed;border:2.5px solid rgba(255,45,91,.85);border-radius:50%;pointer-events:none;z-index:1240;width:40px;height:40px;transform:translate(-50%,-50%) scale(0.2);animation:ringExpand .7s ease-out forwards}@keyframes ringExpand{0%{transform:translate(-50%,-50%) scale(0.15);opacity:1;border-width:4px}100%{transform:translate(-50%,-50%) scale(3.2);opacity:0;border-width:1px}}';
 document.head.appendChild(burstStyleEl);
 
-/* ===== ЛОГ АКТИВНОСТИ С УЧЁТОМ АКТОРА ===== */
+/* ===== ЛОГ АКТИВНОСТИ ===== */
 function logActivity(action, detail){
   const now = Date.now();
   const actor = currentActor();
@@ -1219,7 +1631,7 @@ function logActivity(action, detail){
 
   const todayKey = new Date().toISOString().slice(0,10);
   if (state.todayCounters[actor].date !== todayKey){
-    state.todayCounters[actor] = { ...emptyToday(), date: todayKey };
+    state.todayCounters[actor] = Object.assign({}, emptyToday(), { date: todayKey });
   }
   const tc = state.todayCounters[actor];
   if (action === 'spin') tc.spin++;
@@ -1263,63 +1675,55 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
-/* ===== СОХРАНЕНИЕ ===== */
+/* ===== МГНОВЕННОЕ СОХРАНЕНИЕ ===== */
 async function saveState(){
   if (!stateLoaded){ pendingSave = true; return; }
-  if (saveTimeout) clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(async () => {
-    if (isSaving){ saveState(); return; }
-    isSaving = true;
 
-    localStorage.setItem('monthPoints', state.points);
-    localStorage.setItem('totalPoints', state.totalPoints);
-    localStorage.setItem('history', JSON.stringify(state.history));
-    localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
-    localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
-    localStorage.setItem('currentMonth', getCurrentMonthKey());
-    localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
-    localStorage.setItem('counters', JSON.stringify(state.counters));
-    localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
-    localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
-    localStorage.setItem('wishes', JSON.stringify(state.wishes));
-    localStorage.setItem('notificationsForNastya', JSON.stringify(state.notificationsForNastya));
-    localStorage.setItem('dailyVisits', JSON.stringify(state.dailyVisits));
-    localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
-    localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
-    localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
-    localStorage.setItem('achievements', JSON.stringify(state.achievements));
-    localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+  localStorage.setItem('monthPoints', state.points);
+  localStorage.setItem('totalPoints', state.totalPoints);
+  localStorage.setItem('history', JSON.stringify(state.history));
+  localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
+  localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+  localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
+  localStorage.setItem('currentMonth', getCurrentMonthKey());
+  localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
+  localStorage.setItem('counters', JSON.stringify(state.counters));
+  localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
+  localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
+  localStorage.setItem('wishes', JSON.stringify(state.wishes));
+  localStorage.setItem('notificationsForNastya', JSON.stringify(state.notificationsForNastya));
+  localStorage.setItem('dailyVisits', JSON.stringify(state.dailyVisits));
+  localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
+  localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
+  localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
+  localStorage.setItem('achievements', JSON.stringify(state.achievements));
 
-    if (!navigator.onLine){ isSaving = false; return; }
+  if (!navigator.onLine) return;
+  if (isSaving) return;
 
-    const schedules = {};
-    for (let key in localStorage) if (key.startsWith('schedule_')) schedules[key] = localStorage.getItem(key);
+  const schedules = {};
+  for (let key in localStorage) if (key.startsWith('schedule_')) schedules[key] = localStorage.getItem(key);
 
-    const data = {
-      points: state.points, totalPoints: state.totalPoints,
-      history: state.history, completedDays: state.completedDays,
-      spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
-      quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
-      wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
-      activityLog: state.activityLog.slice(0,500), achievements: state.achievements,
-      plannedDays: state.plannedDays,
-      lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
-      counters: state.counters, todayCounters: state.todayCounters,
-      currentMonth: getCurrentMonthKey(),
-      lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
-      welcomeShown: localStorage.getItem('welcomeShown') === 'true',
-      schedules: schedules
-    };
-    if (!state.history.length) delete data.history;
-    if (!Object.keys(state.completedDays).length) delete data.completedDays;
-    if (!Object.keys(state.plannedDays).length) delete data.plannedDays;
-    if (!state.wishes.length) delete data.wishes;
-    if (!state.achievements.length) delete data.achievements;
+  const data = {
+    points: state.points, totalPoints: state.totalPoints,
+    history: state.history, completedDays: state.completedDays,
+    plannedDays: state.plannedDays,
+    spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
+    quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
+    wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
+    activityLog: state.activityLog.slice(0,500), achievements: state.achievements,
+    lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
+    counters: state.counters, todayCounters: state.todayCounters,
+    currentMonth: getCurrentMonthKey(),
+    lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
+    welcomeShown: localStorage.getItem('welcomeShown') === 'true',
+    schedules: schedules
+  };
 
-    try { await setDoc(mainDocRef, data, { merge: true }); }
-    catch(e){ console.error('Firestore:', e); }
-    finally { isSaving = false; }
-  }, 400);
+  isSaving = true;
+  try { await setDoc(mainDocRef, data, { merge: true }); }
+  catch(e){ console.error('Firestore:', e); }
+  finally { isSaving = false; }
 }
 
 function subscribeToFirestore(){
@@ -1344,13 +1748,13 @@ function subscribeToFirestore(){
       state.wishes         = mergeWishes(state.wishes, d.wishes);
       state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
       state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
-      state.achievements   = Array.from(new Set([...(state.achievements||[]), ...((d.achievements)||[])]));
+      state.achievements   = Array.from(new Set([].concat(state.achievements||[], (d.achievements)||[])));
 
-      state.spinsUsed      = { ...state.spinsUsed, ...(d.spinsUsed||{}) };
-      state.dailyVisits    = { ...state.dailyVisits, ...(d.dailyVisits||{}) };
-      state.quarantine     = { ...state.quarantine, ...(d.quarantine||{}) };
-      state.userAdded      = { emotional:[], physical:[], lightDate:[], bigDate:[], ...(state.userAdded||{}), ...(d.userAdded||{}) };
-      state.userRemoved    = { emotional:[], physical:[], lightDate:[], bigDate:[], ...(state.userRemoved||{}), ...(d.userRemoved||{}) };
+      state.spinsUsed      = Object.assign({}, state.spinsUsed, d.spinsUsed||{});
+      state.dailyVisits    = Object.assign({}, state.dailyVisits, d.dailyVisits||{});
+      state.quarantine     = Object.assign({}, state.quarantine, d.quarantine||{});
+      state.userAdded      = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userAdded||{}, d.userAdded||{});
+      state.userRemoved    = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userRemoved||{}, d.userRemoved||{});
 
       if (d.lastCelebrationMonth) state.lastCelebrationMonth = d.lastCelebrationMonth;
       if (d.vanyaSession) state.vanyaSession = d.vanyaSession;
@@ -1704,7 +2108,7 @@ function openEditModal(){
     const nk = ny+'-'+nm+'-'+nd;
     const sk = year+'-'+month+'-'+day;
     if (state.completedDays[sk]){ state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
-.p    if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
+    if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
     saveState().then(()=>{ renderCalendar(); overlay.classList.remove('active'); });
   };
   overlay.classList.add('active');
@@ -1716,7 +2120,7 @@ function openChoiceModal(title, subtitle){
 }
 
 function openPhotoAttach(onSave){
-  stateendingPhoto = null;
+  state.pendingPhoto = null;
   const overlay = document.getElementById('photoAttachOverlay');
   const input = document.getElementById('photoInput');
   const preview = document.getElementById('photoPreview');
@@ -1812,10 +2216,10 @@ function renderHistory(){
     el.onclick = () => {
       const idx = parseInt(el.dataset.photoIdx);
       const h = state.history[idx];
-      if (!h || !h.photo600) return;
-      document.getElementById('photoViewImg').">src = h.photo;
-      document.getElementById('photoДViewModal').classList.add('active');
-   о };
+      if (!h || !h.photo) return;
+      document.getElementById('photoViewImg').src = h.photo;
+      document.getElementById('photoViewModal').classList.add('active');
+    };
   });
 }
 
@@ -1837,7 +2241,7 @@ function renderWishes(){
     const btnDisabled = (w.done || w.activated || !canActivate) ? 'disabled' : '';
     let hint = '';
     if (!w.activated && !w.done && state.totalPoints < WISH_THRESHOLD){
-      hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight: порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
+      hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight:600">До порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
     }
     const actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
     return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
@@ -1894,7 +2298,8 @@ function getAchievementStats(){
     });
   }
   return {
-    totalDone, emotionalDone, physicalDone, bigDateDone, dateDone, initiativeDone,
+    totalDone: totalDone, emotionalDone: emotionalDone, physicalDone: physicalDone,
+    bigDateDone: bigDateDone, dateDone: dateDone, initiativeDone: initiativeDone,
     wishesCount: (state.wishes||[]).length,
     wishesActivated: (state.wishes||[]).filter(w=>w.activated).length,
     totalPoints: state.totalPoints || 0
@@ -1977,12 +2382,12 @@ function buildTreeSvg(stage){
     s += '<ellipse cx="'+(cx+crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
     if (hasFlowers){
       const positions = [[-0.75,-0.35],[-0.55,-0.75],[-0.35,-1.0],[0,-1.2],[0.35,-1.0],[0.55,-0.75],[0.75,-0.35],[-0.85,0.05],[-0.4,-0.2],[0,-0.4],[0.4,-0.2],[0.85,0.05],[-0.6,-0.45],[0.6,-0.45],[-0.2,-0.8],[0.2,-0.8]];
-      positions.forEach(([fx, fy]) => { s += '<circle cx="'+(cx+fx*crownR)+'" cy="'+(trunkTop+fy*crownR)+'" r="4" fill="url(#flowerGrad)"/>'; });
+      positions.forEach(function(p){ s += '<circle cx="'+(cx+p[0]*crownR)+'" cy="'+(trunkTop+p[1]*crownR)+'" r="4" fill="url(#flowerGrad)"/>'; });
     }
     if (hasFruits){
       const positions = [[-0.75,-0.35],[-0.5,-0.7],[-0.2,-0.95],[0.2,-0.95],[0.5,-0.7],[0.75,-0.35],[-0.6,-0.1],[0.6,-0.1],[0,-0.55],[-0.3,-0.3],[0.3,-0.3]];
-      positions.forEach(([fx, fy]) => {
-        const px = cx+fx*crownR, py = trunkTop+fy*crownR;
+      positions.forEach(function(p){
+        const px = cx+p[0]*crownR, py = trunkTop+p[1]*crownR;
         s += '<circle cx="'+px+'" cy="'+py+'" r="5.5" fill="url(#fruitGrad)"/>' +
           '<ellipse cx="'+(px-1.5)+'" cy="'+(py-1.5)+'" rx="1.6" ry="1.1" fill="#ffd0d0" opacity="0.85"/>';
       });
@@ -2041,7 +2446,7 @@ function checkMonthCelebration(){
     document.getElementById('mcBonus').textContent = '+'+MONTH_CELEBRATION_BONUS+' баллов';
     mc.classList.add('active');
     saveState();
-    setTimeout(()=>makeConfetti(60), 400);
+    setTimeout(function(){ makeConfetti(60); }, 400);
   } else if (!state.lastCelebrationMonth){
     state.lastCelebrationMonth = prevMonthKey;
     saveState();
@@ -2121,11 +2526,11 @@ function renderNotificationsForNastya(){
     document.getElementById('notifTitle').textContent = '🗓 Ваня что-то запланировал!';
     document.getElementById('notifSub').textContent = '«'+p.title+'» · '+p.cost+' б.';
     document.getElementById('notifAction').textContent = 'Ок';
-    document.getElementById('notifAction').onclick = () => {
+    document.getElementById('notifAction').onclick = function(){
       let idx = -1;
       for (let i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id === p.id){ idx=i; break; }
       if (idx!==-1) state.notificationsForNastya[idx].seen = true;
-      saveState().then(()=>{ banner.classList.remove('show'); renderNotificationsForNastya(); });
+      saveState().then(function(){ banner.classList.remove('show'); renderNotificationsForNastya(); });
     };
     banner.classList.add('show');
     return;
@@ -2136,11 +2541,11 @@ function renderNotificationsForNastya(){
   document.getElementById('notifTitle').textContent = '💎 Ваня активировал желание!';
   document.getElementById('notifSub').textContent = '«'+n.title+'» · '+n.cost+' б.';
   document.getElementById('notifAction').textContent = '✓ Выполнено';
-  document.getElementById('notifAction').onclick = () => {
+  document.getElementById('notifAction').onclick = function(){
     let idx=-1;
     for (let i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id===n.id){ idx=i; break; }
     if (idx!==-1) state.notificationsForNastya[idx].seen = true;
-    saveState().then(()=>{ banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya(); });
+    saveState().then(function(){ banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya(); });
   };
   banner.classList.add('show');
 }
@@ -2158,7 +2563,7 @@ function applyDailyBonus(){
 let wheelItems = [], currentAngle = 0, spinVelocity = 0, isSpinning = false, animId = null, wheelMode = 'task';
 let canvas, ctx;
 function resizeCanvas(){
-  if (!canvas){ canvas = document.getElementById('wheel'); ctx = canvas.getContext('2d'); }
+  if (!canvas){ canvas = document.getElementById('wheel'); if (canvas) ctx = canvas.getContext('2d'); }
   if (!canvas || !ctx) return;
   const size = Math.min(window.innerWidth*0.78, 340);
   const dpr = window.devicePixelRatio || 1;
@@ -2175,7 +2580,7 @@ function drawWheel(){
   const cx = size/2, cy = size/2; const r = cx - 24;
   const step = (Math.PI*2)/wheelItems.length;
   ctx.clearRect(0,0,size,size);
-  wheelItems.forEach((item, i) => {
+  wheelItems.forEach(function(item, i){
     const start = currentAngle + i*step, end = start + step;
     ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,start,end); ctx.closePath();
     const baseColor = (item.type && TYPE_INFO[item.type]) ? TYPE_INFO[item.type].color : ['#dbeaf3','#e9dff3','#f8e5e9','#f4ead0'][i%4];
@@ -2194,7 +2599,7 @@ function drawWheel(){
 }
 function openTypeWheel(){
   const types = ['emotional','physical','lightDate','bigDate'];
-  wheelItems = types.map(t => ({ text:TYPE_INFO[t].name, type:t }));
+  wheelItems = types.map(function(t){ return { text:TYPE_INFO[t].name, type:t }; });
   document.getElementById('wheelTitle').textContent = state.currentDay + ' ' + monthNames[state.currentDate.getMonth()];
   document.getElementById('wheelCategory').textContent = 'Колесо решит за тебя';
   document.getElementById('resultBox').style.display = 'none';
@@ -2208,7 +2613,7 @@ function openTypeWheel(){
 function openWheel(type){
   const info = TYPE_INFO[type];
   const available = getAvailableTasks(type);
-  wheelItems = available.map(t => ({ text:t, type:type }));
+  wheelItems = available.map(function(t){ return { text:t, type:type }; });
   document.getElementById('wheelTitle').textContent = state.currentDay + ' ' + monthNames[state.currentDate.getMonth()];
   document.getElementById('wheelCategory').textContent = info.emoji + ' ' + info.name;
   document.getElementById('resultBox').style.display = 'none';
@@ -2241,7 +2646,7 @@ function updateSpinsUI(){
   else { btn.textContent = 'Не хватает '+price+' б.'; btn.disabled = true; info.textContent = 'Нужно '+price+' баллов'; }
 }
 function animate(){
-  if (spin ifVelocity > 0.0015){
+  if (spinVelocity > 0.0015){
     currentAngle += spinVelocity; spinVelocity *= 0.991;
     drawWheel(); animId = requestAnimationFrame(animate);
   } else { isSpinning = false; spinVelocity = 0; cancelAnimationFrame(animId); determineWinner(); }
@@ -2263,7 +2668,7 @@ function doSpin(){
   if (wheelMode === 'type'){ isSpinning = true; spinVelocity = 0.25+Math.random()*0.15; animate(); return; }
   const price = getNextSpinPrice();
   if (price > 0){
-    (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
+    if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
     state.points -= price; updateStats();
     showToast('🔄','−'+price+' баллов за перекрут');
   }
@@ -2282,38 +2687,36 @@ function doSpin(){
 /* ===== УПРАВЛЕНИЕ ДЕЙСТВИЯМИ ===== */
 let activeEditorTab = 'emotional';
 function renderActionLists(){
-  ['emotional','physical','lightDate','bigDate'].forEach(cat => {
+  ['emotional','physical','lightDate','bigDate'].forEach(function(cat){
     const ul = document.getElementById('list-'+cat);
     if (!ul) return;
     const tasks = getTasksForCategory(cat);
-    ul.innerHTML = tasks.map(t => '<li><span class="txt">'+t+'</span><button class="del-btn" data-cat="'+cat+'" data-text="'+encodeURIComponent(t)+'" type="button">✕</button></li>').join('');
+    ul.innerHTML = tasks.map(function(t){ return '<li><span class="txt">'+t+'</span><button class="del-btn" data-cat="'+cat+'" data-text="'+encodeURIComponent(t)+'" type="button">✕</button></li>'; }).join('');
   });
-  document.querySelectorAll('.del-btn').forEach(b => {
-    b.onclick = () => {
+  document.querySelectorAll('.del-btn').forEach(function(b){
+    b.onclick = function(){
       const cat = b.dataset.cat; const txt = decodeURIComponent(b.dataset.text);
       if (!confirm('Удалить это действие?')) return;
       if (DEFAULT_TASKS[cat].indexOf(txt) !== -1){
         if (!state.userRemoved[cat]) state.userRemoved[cat] = [];
         if (state.userRemoved[cat].indexOf(txt) === -1) state.userRemoved[cat].push(txt);
-      } else { state.userAdded[cat] = (state.userAdded[cat]||[]).filter(x => x !== txt); }
+      } else { state.userAdded[cat] = (state.userAdded[cat]||[]).filter(function(x){ return x !== txt; }); }
       logActivity('action_removed', '🗑 Удалил из «'+(TYPE_INFO[cat]?TYPE_INFO[cat].name:cat)+'»: '+txt.slice(0, 60));
-      saveState().then(()=>{ renderActionLists(); showToast('✓','Действие удалено'); });
+      saveState().then(function(){ renderActionLists(); showToast('✓','Действие удалено'); });
     };
   });
 }
 
-/* ===== АКТИВНОСТЬ ВАНИ (ТОЛЬКО ДЕЙСТВИЯ ВАНИ) ===== */
+/* ===== АКТИВНОСТЬ ВАНИ ===== */
 function openVanyaActivity(){
   if (state.role !== 'nastya') return;
   const overlay = document.createElement('div');
   overlay.className = 'overlay center active';
   const isOn = isVanyaReallyOnline();
-
-  const log = (state.activityLog || []).filter(item => item.actor === 'vanya');
+  const log = (state.activityLog || []).filter(function(item){ return item.actor === 'vanya'; });
   const c = (state.counters && state.counters.vanya) || {};
   const t = (state.todayCounters && state.todayCounters.vanya) || emptyToday();
-
-  const statRow = (lbl, val) => '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>';
+  const statRow = function(lbl, val){ return '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>'; };
   overlay.innerHTML = '<div class="modal" style="max-height:88vh">' +
     '<button class="close-button" type="button" id="activityCloseBtn">×</button>' +
     '<div class="modal-title">Активность Вани</div>' +
@@ -2342,7 +2745,7 @@ function openVanyaActivity(){
     '</div>' +
     '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">📜 Последние действия Вани</div>' +
     '<ul class="activity-log-list">' +
-      (log.length ? log.map(item => {
+      (log.length ? log.map(function(item){
         let ico = '•';
         if (item.action === 'login') ico = '🟢';
         else if (item.action === 'logout') ico = '🔴';
@@ -2363,8 +2766,8 @@ function openVanyaActivity(){
     '</ul>' +
   '</div>';
   document.body.appendChild(overlay);
-  document.getElementById('activityCloseBtn').onclick = () => overlay.remove();
-  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  document.getElementById('activityCloseBtn').onclick = function(){ overlay.remove(); };
+  overlay.onclick = function(e){ if (e.target === overlay) overlay.remove(); };
 }
 
 /* ===== НАЧИСЛЕНИЕ БАЛЛОВ ===== */
@@ -2392,10 +2795,10 @@ function openManualPoints(){
     '</div>' +
   '</div>';
   document.body.appendChild(overlay);
-  overlay.querySelectorAll('button[data-quick]').forEach(b => { b.onclick = () => { document.getElementById('manualAmount').value = b.dataset.quick; }; });
-  document.getElementById('manualCloseBtn').onclick = () => overlay.remove();
-  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
-  document.getElementById('manualSubmitBtn').onclick = () => {
+  overlay.querySelectorAll('button[data-quick]').forEach(function(b){ b.onclick = function(){ document.getElementById('manualAmount').value = b.dataset.quick; }; });
+  document.getElementById('manualCloseBtn').onclick = function(){ overlay.remove(); };
+  overlay.onclick = function(e){ if (e.target === overlay) overlay.remove(); };
+  document.getElementById('manualSubmitBtn').onclick = function(){
     const reason = document.getElementById('manualReason').value.trim();
     const amount = parseInt(document.getElementById('manualAmount').value);
     if (!reason){ alert('Напиши, за что начисляешь баллы'); return; }
@@ -2406,7 +2809,7 @@ function openManualPoints(){
     const dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
     state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
     logActivity('manual_points', '💌 Настя начислила '+amount+' б.: '+reason);
-    saveState().then(()=>{
+    saveState().then(function(){
       updateStats(); renderHistory();
       showToast('💌', 'Начислено '+amount+' баллов!');
       makeConfetti(30);
@@ -2430,10 +2833,10 @@ function refreshAll(prevPoints){
 }
 
 /* ===== СТАРТ ===== */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function(){
   const splash = document.getElementById('splashScreen');
   const app = document.getElementById('appRoot');
-  setTimeout(() => {
+  setTimeout(function(){
     if (splash) splash.classList.add('hidden');
     if (app) app.classList.add('reveal');
   }, 1400);
@@ -2441,11 +2844,8 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas = document.getElementById('wheel');
   if (canvas) ctx = canvas.getContext('2d');
 
-  // 1) Сначала поднимаем данные из localStorage
   hydrateFromLocalStorage();
 
-  // 2) UI
-  updateOnlineStatus();
   applySeason();
   initRole();
   renderSettingsMenu();
@@ -2461,19 +2861,17 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAchievements();
   setTimeout(checkMonthCelebration, 1800);
 
-  // 3) Облако. Пока не пришёл первый снапшот, saveState не пишет в Firebase
   subscribeToFirestore();
 
-  // 4) Страховка: если Firestore не ответил за 4 секунды — разрешаем сохранять
-  setTimeout(() => {
+  setTimeout(function(){
     if (!stateLoaded){ stateLoaded = true; saveState(); }
   }, 4000);
 
-  // ==== ОБРАБОТЧИКИ ====
-  document.getElementById('roleNastya').onclick = () => setRole('nastya');
-  document.getElementById('roleVanya').onclick = () => setRole('vanya');
+  /* ==== ОБРАБОТЧИКИ ==== */
+  document.getElementById('roleNastya').onclick = function(){ setRole('nastya'); };
+  document.getElementById('roleVanya').onclick = function(){ setRole('vanya'); };
 
-  document.getElementById('welcomeAgree').onclick = () => {
+  document.getElementById('welcomeAgree').onclick = function(){
     document.getElementById('welcomeOverlay').classList.remove('active');
     localStorage.setItem('welcomeShown', 'true'); saveState();
     setTimeout(showDailyMessage, 400);
@@ -2482,10 +2880,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('monthCelebration').onclick = function(){ this.classList.remove('active'); };
 
   const pageNames = { calendar:'Месяц', history:'История', wishes:'Хотелки', stats:'Баллы', system:'Система' };
-  document.querySelectorAll('.nav-item').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(function(btn){
+    btn.onclick = function(){
+      document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
       btn.classList.add('active');
       document.getElementById('page-'+btn.dataset.page).classList.add('active');
       if (btn.dataset.page === 'history') renderHistory();
@@ -2496,14 +2894,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  document.getElementById('prevMonth').onclick = () => {
+  document.getElementById('prevMonth').onclick = function(){
     state.currentDate.setMonth(state.currentDate.getMonth()-1);
     renderCalendar();
     const cal = document.getElementById('calendar');
     cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
     cal.classList.add('slide-right');
   };
-  document.getElementById('nextMonth').onclick = () => {
+  document.getElementById('nextMonth').onclick = function(){
     state.currentDate.setMonth(state.currentDate.getMonth()+1);
     renderCalendar();
     const cal = document.getElementById('calendar');
@@ -2511,7 +2909,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cal.classList.add('slide-left');
   };
 
-  document.getElementById('openRandomBtn').onclick = () => {
+  document.getElementById('openRandomBtn').onclick = function(){
     const t = new Date();
     if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0){ showToast('❤️','Сегодня уже сделано!'); return; }
     state.currentDay = t.getDate();
@@ -2521,8 +2919,8 @@ document.addEventListener('DOMContentLoaded', () => {
     openEditModal(); renderCalendar();
   };
 
-  document.querySelectorAll('[data-choice]').forEach(btn => {
-    btn.onclick = () => {
+  document.querySelectorAll('[data-choice]').forEach(function(btn){
+    btn.onclick = function(){
       const c = btn.dataset.choice;
       document.getElementById('choiceOverlay').classList.remove('active');
       if (c === 'random') openTypeWheel();
@@ -2530,25 +2928,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
-  document.querySelectorAll('.wish-tier button').forEach(b => {
-    b.onclick = () => {
-      document.querySelectorAll('.wish-tier button').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.wish-tier button').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.wish-tier button').forEach(function(x){ x.classList.remove('active'); });
       b.classList.add('active');
       state.currentWishTier = b.dataset.tier;
     };
   });
-  document.getElementById('wishAddBtn').onclick = () => {
+  document.getElementById('wishAddBtn').onclick = function(){
     const v = document.getElementById('wishInput').value.trim();
     if (!v) return;
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
     addPoints(WISH_BONUS);
     logActivity('wish_add', '✿ Записал хотелку ('+WISH_TIER_LABEL[state.currentWishTier]+'): «'+v+'»');
-    saveState().then(()=>{ renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements(); });
+    saveState().then(function(){ renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements(); });
   };
 
-  document.querySelectorAll('[data-close]').forEach(b => { b.onclick = () => document.getElementById(b.dataset.close).classList.remove('active'); });
-  document.querySelectorAll('.overlay').forEach(ov => { ov.onclick = e => { if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
+  document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
+  document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
   document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
 
   const settingsToggle = document.getElementById('settingsToggle');
@@ -2559,7 +2957,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.viewingAs === 'vanya' || state.role === 'vanya') return;
     tapCount++;
     if (tapTimer) clearTimeout(tapTimer);
-    tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
+    tapTimer = setTimeout(function(){ tapCount = 0; }, 1000);
     if (tapCount >= 3){
       tapCount = 0; clearTimeout(tapTimer);
       settingsToggle.classList.toggle('visible');
@@ -2567,15 +2965,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   if (settingsHotzone){
-    settingsHotzone.addEventListener('touchend', e => { lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
-    settingsHotzone.addEventListener('click', e => { e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
+    settingsHotzone.addEventListener('touchend', function(e){ lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
+    settingsHotzone.addEventListener('click', function(e){ e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
   }
   let toggleClickCount = 0, toggleClickTimer = null;
-  settingsToggle.addEventListener('click', e => {
+  settingsToggle.addEventListener('click', function(e){
     e.stopPropagation();
     toggleClickCount++;
     if (toggleClickTimer) clearTimeout(toggleClickTimer);
-    toggleClickTimer = setTimeout(() => {
+    toggleClickTimer = setTimeout(function(){
       if (toggleClickCount === 1){
         renderSettingsMenu();
         const willOpen = !settingsMenu.classList.contains('open');
@@ -2588,27 +2986,27 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleClickCount = 0;
     }, 320);
   });
-  document.addEventListener('click', () => settingsMenu.classList.remove('open'));
+  document.addEventListener('click', function(){ settingsMenu.classList.remove('open'); });
 
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    b.onclick = () => {
-      document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.tab-btn').forEach(function(x){ x.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function(x){ x.classList.remove('active'); });
       b.classList.add('active');
       activeEditorTab = b.dataset.tab;
       document.getElementById('tab-'+activeEditorTab).classList.add('active');
     };
   });
-  document.getElementById('addActionBtn').onclick = () => {
+  document.getElementById('addActionBtn').onclick = function(){
     const v = document.getElementById('newActionInput').value.trim();
     if (!v) return;
     if (!state.userAdded[activeEditorTab]) state.userAdded[activeEditorTab] = [];
     state.userAdded[activeEditorTab].push(v);
     document.getElementById('newActionInput').value = '';
-    saveState().then(()=>{ renderActionLists(); showToast('✨','Действие добавлено!'); });
+    saveState().then(function(){ renderActionLists(); showToast('✨','Действие добавлено!'); });
   };
 
-  document.getElementById('notifClose').onclick = () => {
+  document.getElementById('notifClose').onclick = function(){
     const b = document.getElementById('notificationBanner');
     const ds = b.dataset.notifDate;
     if (ds){
@@ -2617,26 +3015,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     b.classList.remove('show');
   };
-  document.getElementById('toastClose').onclick = () => document.getElementById('toast').classList.remove('show');
+  document.getElementById('toastClose').onclick = function(){ document.getElementById('toast').classList.remove('show'); };
 
   document.getElementById('spinBtn').onclick = doSpin;
   document.getElementById('respinBtn').onclick = doSpin;
-  document.getElementById('doneBtn').onclick = () => {
+  document.getElementById('doneBtn').onclick = function(){
     const item = window._currentItem; if (!item) return;
     if (wheelMode === 'type'){
       document.getElementById('wheelOverlay').classList.remove('active');
       state.currentType = item.type;
-      setTimeout(() => openWheel(item.type), 300); return;
+      setTimeout(function(){ openWheel(item.type); }, 300); return;
     }
     const year = state.currentDate.getFullYear();
     const month = state.currentDate.getMonth();
     const day = state.currentDay;
     const basePts = TYPE_INFO[item.type].points;
     const events = getCompletedEvents(year, month, day);
-    const isInit = events.some(e => e.type === item.type);
+    const isInit = events.some(function(e){ return e.type === item.type; });
     const pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
     document.getElementById('wheelOverlay').classList.remove('active');
-    openPhotoAttach(() => { planEvent(year, month, day, item.type, item.text, pts, isInit); });
+    openPhotoAttach(function(){ planEvent(year, month, day, item.type, item.text, pts, isInit); });
   };
 
   function checkYesterdayPlanned(){
@@ -2653,18 +3051,18 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('confirmYesterdayOverlay').classList.add('active');
   }
 
-  document.getElementById('confirmYesBtn').onclick = () => {
+  document.getElementById('confirmYesBtn').onclick = function(){
     const key = window._pendingPlanKey;
     if (!key) return;
     const plan = state.plannedDays[key];
     if (!plan) return;
-    const parts = key.split('-').map(n => parseInt(n));
+    const parts = key.split('-').map(function(n){ return parseInt(n); });
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     delete state.plannedDays[key];
     addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
     window._pendingPlanKey = null;
   };
-  document.getElementById('confirmNoBtn').onclick = () => {
+  document.getElementById('confirmNoBtn').onclick = function(){
     const key = window._pendingPlanKey;
     if (!key) return;
     const plan = state.plannedDays[key];
@@ -2679,10 +3077,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('rescheduleDateInput').value = val;
     document.getElementById('rescheduleOverlay').classList.add('active');
   };
-  document.getElementById('rescheduleConfirmBtn').onclick = () => {
+  document.getElementById('rescheduleConfirmBtn').onclick = function(){
     const v = document.getElementById('rescheduleDateInput').value;
     if (!v){ alert('Выбери дату'); return; }
-    const parts = v.split('-').map(n => parseInt(n));
+    const parts = v.split('-').map(function(n){ return parseInt(n); });
     const newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
     const pr = window._pendingReschedule;
     if (!pr) return;
@@ -2694,18 +3092,18 @@ document.addEventListener('DOMContentLoaded', () => {
     logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'» на '+parts[2]+'.'+parts[1]+'.'+parts[0]);
     window._pendingReschedule = null;
     window._pendingPlanKey = null;
-    saveState().then(()=>{
+    saveState().then(function(){
       renderCalendar();
       document.getElementById('rescheduleOverlay').classList.remove('active');
       showToast('📅', 'Перенесено на новую дату');
     });
   };
-  document.getElementById('rescheduleCancelBtn').onclick = () => {
+  document.getElementById('rescheduleCancelBtn').onclick = function(){
     const pr = window._pendingReschedule;
     if (pr){
       delete state.plannedDays[pr.key];
       logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
-      saveState().then(()=>{
+      saveState().then(function(){
         renderCalendar();
         document.getElementById('rescheduleOverlay').classList.remove('active');
         showToast('✕', 'План отменён');
@@ -2718,17 +3116,15 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.addEventListener('resize', resizeCanvas);
-  window.addEventListener('online', updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
 
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener('visibilitychange', function(){
     if (state.role !== 'vanya') return;
     if (document.hidden) endVanyaSession();
     else startVanyaSession();
   });
-  window.addEventListener('pagehide', () => { if (state.role === 'vanya') endVanyaSession(); });
-  window.addEventListener('beforeunload', () => { if (state.role === 'vanya') endVanyaSession(); });
-  setInterval(() => {
+  window.addEventListener('pagehide', function(){ if (state.role === 'vanya') endVanyaSession(); });
+  window.addEventListener('beforeunload', function(){ if (state.role === 'vanya') endVanyaSession(); });
+  setInterval(function(){
     if (state.role !== 'vanya') return;
     if (document.hidden) return;
     state.vanyaSession.lastActiveAt = Date.now();
