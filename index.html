@@ -38,8 +38,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .header-subtitle{margin-top:10px;font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase}
 .nav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.75);margin-top:10px;position:relative;z-index:4;backdrop-filter:blur(10px)}
 .nav-item{padding:12px 2px 10px;background:none;color:var(--muted);font-size:8px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid transparent;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-family:inherit;border:none;transition:transform .2s,color .2s}
-.nav-item .nav-icon{font-size:16px;transition:transform .3s}
-.nav-item.active{color:var(--dark);border-bottom-color:var(--gold);background:linear-gradient(180deg,rgba(212,168,90,.08),transparent)}
+.nav:-item .nav-icon{fontcenter-size:16px;transition:transform .3s}
+;.nav-item.active{color:varjust(--dark);border-bottom-color:var(--gold);ifybackground:linear-gradient(180deg,rgba-content(212,168,90,.08),transparent)}
 .nav-item.active .nav-icon{transform:scale(1.15)}
 .nav-item:active .nav-icon{transform:scale(.9)}
 .page{display:none;padding:22px 16px 20px;animation:fadeIn .45s cubic-bezier(.34,1.2,.64,1);position:relative;z-index:2}
@@ -109,7 +109,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .overlay.center{align-items:center;padding:20px}
 .overlay.center .modal{border-radius:32px;max-width:440px;transform:translateY(20px) scale(.92)}
 .overlay.center.active .modal{transform:translateY(0) scale(1)}
-.daily-overlay{position:fixed;inset:0;background:rgba(58,46,42,.65);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
+.daily-overlay{position:fixed;inset:0;background:rgba(58,46,42,.65);display:flex;align-items:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
 .daily-overlay.active{opacity:1;visibility:visible}
 .daily-card{background:linear-gradient(160deg,#FDFBF7 0%,#F9F0E8 100%);border-radius:36px;padding:50px 30px 40px;max-width:400px;width:100%;text-align:center;position:relative;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1);border:1px solid rgba(212,168,90,.3);box-shadow:0 30px 80px rgba(0,0,0,.25)}
 .daily-overlay.active .daily-card{transform:scale(1)}
@@ -385,8 +385,22 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 .btn-secondary, .btn-primary, .btn-gold, .spin-button, .role-btn {min-height: 56px !important;display: flex !important;align-items: center !important;justify-content: center !important;line-height: 1.2 !important;}
 .month-arrow, .close-button { min-width: 44px !important; min-height: 44px !important; }
 .overlay { backdrop-filter: none !important; }
-.calendar-day.planned-day {border: 2px dashed var(--gold) !important;background: linear-gradient(145deg,#fff8e6,#ffefc8) !important;color: #8a6a2a !important;position: relative;}
-.calendar-day.planned-day::after {content: "⏰";position: absolute;right: 3px;bottom: 3px;font-size: 14px;opacity: 0.9;}
+
+/* ==== ЗАПЛАНИРОВАННЫЙ ДЕНЬ: сохраняем цвет типа дня, добавляем только пунктир + часы ==== */
+.calendar-day.planned-day {
+  position: relative;
+  outline: 2px dashed var(--gold);
+  outline-offset: -3px;
+}
+.calendar-day.planned-day::after {
+  content: "⏰";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  font-size: 14px;
+  opacity: 0.9;
+  z-index: 3;
+}
 </style>
 </head>
 <body>
@@ -893,16 +907,16 @@ const MILESTONES = [
 ];
 
 const ACHIEVEMENTS = [
-  { id:"first_step",    emoji:"🌱", name:"Первый шаг",       desc:"Первое дело",           check: s => s.totalDone >= 1 },
-  { id:"caring",        emoji:"💙", name:"Заботливый",       desc:"10 эмоц. дел",          check: s => s.emotionalDone >= 10 },
-  { id:"masseur",       emoji:"💜", name:"Массажист",        desc:"5 физ. дел",            check: s => s.physicalDone >= 5 },
-  { id:"romantic",      emoji:"💗", name:"Романтик",         desc:"Первое свидание",       check: s => s.dateDone >= 1 },
-  { id:"dreamer",       emoji:"✿",  name:"Мечтатель",        desc:"5 хотелок",             check: s => s.wishesCount >= 5 },
-  { id:"wisher",        emoji:"💎", name:"Исполнитель",      desc:"Хотелка активирована",  check: s => s.wishesActivated >= 1 },
-  { id:"happy_big",     emoji:"🏆", name:"Большой шаг",      desc:"Большое свидание",      check: s => s.bigDateDone >= 1 },
-  { id:"persistent",    emoji:"🔥", name:"Настойчивый",      desc:"20 дел всего",          check: s => s.totalDone >= 20 },
-  { id:"thinker",       emoji:"⭐", name:"Мыслитель",        desc:"5 инициатив",           check: s => s.initiativeDone >= 5 },
-  { id:"forever",       emoji:"♾️", name:"Вечность",         desc:"1000 баллов всего",     check: s => s.totalPoints >= 1000 }
+  { id:"first_step", emoji:"🌱", name:"Первый шаг", desc:"Первое дело", check: s => s.totalDone >= 1 },
+  { id:"caring", emoji:"💙", name:"Заботливый", desc:"10 эмоц. дел", check: s => s.emotionalDone >= 10 },
+  { id:"masseur", emoji:"💜", name:"Массажист", desc:"5 физ. дел", check: s => s.physicalDone >= 5 },
+  { id:"romantic", emoji:"💗", name:"Романтик", desc:"Первое свидание", check: s => s.dateDone >= 1 },
+  { id:"dreamer", emoji:"✿", name:"Мечтатель", desc:"5 хотелок", check: s => s.wishesCount >= 5 },
+  { id:"wisher", emoji:"💎", name:"Исполнитель", desc:"Хотелка активирована", check: s => s.wishesActivated >= 1 },
+  { id:"happy_big", emoji:"🏆", name:"Большой шаг", desc:"Большое свидание", check: s => s.bigDateDone >= 1 },
+  { id:"persistent", emoji:"🔥", name:"Настойчивый", desc:"20 дел всего", check: s => s.totalDone >= 20 },
+  { id:"thinker", emoji:"⭐", name:"Мыслитель", desc:"5 инициатив", check: s => s.initiativeDone >= 5 },
+  { id:"forever", emoji:"♾️", name:"Вечность", desc:"1000 баллов всего", check: s => s.totalPoints >= 1000 }
 ];
 
 const monthNames = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
@@ -941,9 +955,9 @@ let pendingSave = false;
 let isSaving = false;
 let saveTimeout = null;
 
-function currentActor() { return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
+function currentActor(){ return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
 
-/* ===== MERGE-функции (объединяют данные, не перезаписывают) ===== */
+/* ===== MERGE-ФУНКЦИИ ===== */
 function _histKey(h){ return (h.eventDate||0)+'|'+(h.title||'')+'|'+(h.points||0); }
 function mergeHistory(a, b){
   const map = new Map();
@@ -1004,14 +1018,14 @@ function mergeActivityLog(a, b){
   return Array.from(map.values()).sort((x,y)=>y.timestamp-x.timestamp).slice(0, 500);
 }
 function migrateCountersShape(){
-  if (state.counters && !state.counters.nastya && !state.counters.vanya) {
+  if (state.counters && !state.counters.nastya && !state.counters.vanya){
     state.counters = { nastya: state.counters || {}, vanya: {} };
   }
   if (!state.counters || typeof state.counters !== 'object') state.counters = { nastya:{}, vanya:{} };
   if (!state.counters.nastya) state.counters.nastya = {};
   if (!state.counters.vanya)  state.counters.vanya  = {};
 
-  if (state.todayCounters && !state.todayCounters.nastya && state.todayCounters.date !== undefined) {
+  if (state.todayCounters && !state.todayCounters.nastya && state.todayCounters.date !== undefined){
     state.todayCounters = { nastya: state.todayCounters, vanya: emptyToday() };
   }
   if (!state.todayCounters || typeof state.todayCounters !== 'object') state.todayCounters = { nastya:emptyToday(), vanya:emptyToday() };
@@ -1019,7 +1033,7 @@ function migrateCountersShape(){
   if (!state.todayCounters.vanya)  state.todayCounters.vanya  = emptyToday();
 }
 
-/* ===== ГИДРАТАЦИЯ ИЗ localStorage ===== */
+/* ===== ГИДРАТАЦИЯ ИЗ LOCALSTORAGE ===== */
 function hydrateFromLocalStorage(){
   const g = k => localStorage.getItem(k);
   try {
@@ -1045,7 +1059,7 @@ function hydrateFromLocalStorage(){
   migrateCountersShape();
 }
 
-/* ===== СЕЗОНЫ / ПЕТАЛИ ===== */
+/* ===== СЕЗОНЫ ===== */
 function getSeason(){ const m = new Date().getMonth(); if(m>=2&&m<=4)return 'spring'; if(m>=5&&m<=7)return 'summer'; if(m>=8&&m<=10)return 'autumn'; return 'winter'; }
 function applySeason(){ const s = getSeason(); document.body.classList.remove('season-autumn','season-winter','season-spring','season-summer'); document.body.classList.add('season-'+s); startPetals(s); }
 function startPetals(season){
@@ -1064,7 +1078,7 @@ function startPetals(season){
   }
 }
 
-/* ===== КОМПРЕССИЯ ФОТО ===== */
+/* ===== ФОТО ===== */
 function compressImage(file, maxDim, quality){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1072,8 +1086,8 @@ function compressImage(file, maxDim, quality){
       const img = new Image();
       img.onload = () => {
         let w = img.width, h = img.height;
-        if (w > h) { if (w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; } }
-        else       { if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; } }
+        if (w > h){ if (w > maxDim){ h = Math.round(h*maxDim/w); w = maxDim; } }
+        else { if (h > maxDim){ w = Math.round(w*maxDim/h); h = maxDim; } }
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -1088,7 +1102,7 @@ function compressImage(file, maxDim, quality){
 }
 
 /* ===== УТИЛИТЫ ===== */
-function updateOnlineStatus() { isOnline = true; }
+function updateOnlineStatus(){ isOnline = true; }
 function showToast(emoji, text){
   const t = document.getElementById('toast');
   document.getElementById('toastEmoji').textContent = emoji;
@@ -1120,8 +1134,7 @@ function getProgressToNext(p){
 function makeSparkles(cx, cy, count){
   count = count || 24;
   for (let i=0;i<count;i++){
-    const s = document.createElement('div');
-    s.className = 'sparkle';
+    const s = document.createElement('div'); s.className = 'sparkle';
     const angle = (i/count)*Math.PI*2 + Math.random()*0.4;
     const dist = 60 + Math.random()*80;
     s.style.left = cx+'px'; s.style.top = cy+'px';
@@ -1135,8 +1148,7 @@ function makeConfetti(count){
   count = count || 40;
   const colors = ['#d4a85a','#e8c88a','#e8b0bc','#f2ccd7','#b094d4','#a8d0e8','#8dbdab','#FDFBF7'];
   for (let i=0;i<count;i++){
-    const c = document.createElement('div');
-    c.className = 'confetti';
+    const c = document.createElement('div'); c.className = 'confetti';
     c.style.left = (Math.random()*100)+'vw';
     c.style.background = colors[Math.floor(Math.random()*colors.length)];
     c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
@@ -1198,7 +1210,7 @@ burstStyleEl.textContent = `
 `;
 document.head.appendChild(burstStyleEl);
 
-/* ===== ЛОГ АКТИВНОСТИ С УЧЁТОМ РОЛИ ===== */
+/* ===== ЛОГ АКТИВНОСТИ С УЧЁТОМ АКТОРА ===== */
 function logActivity(action, detail){
   const now = Date.now();
   const actor = currentActor();
@@ -1206,7 +1218,7 @@ function logActivity(action, detail){
   else state.counters[actor][action] = 1;
 
   const todayKey = new Date().toISOString().slice(0,10);
-  if (state.todayCounters[actor].date !== todayKey) {
+  if (state.todayCounters[actor].date !== todayKey){
     state.todayCounters[actor] = { ...emptyToday(), date: todayKey };
   }
   const tc = state.todayCounters[actor];
@@ -1225,7 +1237,7 @@ function logActivity(action, detail){
 /* ===== СЕССИЯ ВАНИ ===== */
 function startVanyaSession(){
   const todayKey = new Date().toISOString().slice(0,10);
-  if (state.vanyaSession.todayDate !== todayKey) {
+  if (state.vanyaSession.todayDate !== todayKey){
     state.vanyaSession.todayDate = todayKey;
     state.vanyaSession.todaySeconds = 0;
   }
@@ -1253,10 +1265,10 @@ function endVanyaSession(){
 
 /* ===== СОХРАНЕНИЕ ===== */
 async function saveState(){
-  if (!stateLoaded) { pendingSave = true; return; }
+  if (!stateLoaded){ pendingSave = true; return; }
   if (saveTimeout) clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
-    if (isSaving) { saveState(); return; }
+    if (isSaving){ saveState(); return; }
     isSaving = true;
 
     localStorage.setItem('monthPoints', state.points);
@@ -1278,7 +1290,7 @@ async function saveState(){
     localStorage.setItem('achievements', JSON.stringify(state.achievements));
     localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
 
-    if (!navigator.onLine) { isSaving = false; return; }
+    if (!navigator.onLine){ isSaving = false; return; }
 
     const schedules = {};
     for (let key in localStorage) if (key.startsWith('schedule_')) schedules[key] = localStorage.getItem(key);
@@ -1298,7 +1310,6 @@ async function saveState(){
       welcomeShown: localStorage.getItem('welcomeShown') === 'true',
       schedules: schedules
     };
-    // НЕ отправляем пустые массивы, чтобы не перетереть непустые
     if (!state.history.length) delete data.history;
     if (!Object.keys(state.completedDays).length) delete data.completedDays;
     if (!Object.keys(state.plannedDays).length) delete data.plannedDays;
@@ -1314,14 +1325,14 @@ async function saveState(){
 function subscribeToFirestore(){
   unsubscribeFirestore = onSnapshot(mainDocRef, async (snapshot) => {
     if (snapshot.metadata.hasPendingWrites) return;
-    if (snapshot.exists()) {
+    if (snapshot.exists()){
       const d = snapshot.data() || {};
       const prevPoints = state.points;
 
-      if (d.currentMonth && d.currentMonth !== getCurrentMonthKey()) {
+      if (d.currentMonth && d.currentMonth !== getCurrentMonthKey()){
         state.points = 0; state.spinsUsed = {};
         setDoc(mainDocRef, { points:0, currentMonth:getCurrentMonthKey(), spinsUsed:{} }, { merge:true });
-      } else if (typeof d.points === 'number') {
+      } else if (typeof d.points === 'number'){
         state.points = d.points;
       }
 
@@ -1354,7 +1365,7 @@ function subscribeToFirestore(){
       refreshAll(prevPoints);
 
       stateLoaded = true;
-      if (pendingSave) { pendingSave = false; saveState(); }
+      if (pendingSave){ pendingSave = false; saveState(); }
     } else {
       stateLoaded = true;
       saveState();
@@ -1365,7 +1376,7 @@ function subscribeToFirestore(){
 /* ===== РОЛИ ===== */
 function initRole(){
   const savedRole = localStorage.getItem('userRole');
-  if (savedRole === 'nastya' || savedRole === 'vanya') {
+  if (savedRole === 'nastya' || savedRole === 'vanya'){
     state.role = savedRole; state.viewingAs = savedRole;
     document.getElementById('roleOverlay').classList.remove('active');
     applyRoleView();
@@ -1534,7 +1545,7 @@ function getAvailableTasks(cat){
   return available;
 }
 
-/* ===== РАСПИСАНИЕ МЕСЯЦА ===== */
+/* ===== РАСПИСАНИЕ ===== */
 function generateMonthSchedule(year, month){
   const key = 'schedule_'+year+'_'+month;
   const saved = localStorage.getItem(key);
@@ -1693,7 +1704,7 @@ function openEditModal(){
     const nk = ny+'-'+nm+'-'+nd;
     const sk = year+'-'+month+'-'+day;
     if (state.completedDays[sk]){ state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
-    if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
+.p    if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
     saveState().then(()=>{ renderCalendar(); overlay.classList.remove('active'); });
   };
   overlay.classList.add('active');
@@ -1705,7 +1716,7 @@ function openChoiceModal(title, subtitle){
 }
 
 function openPhotoAttach(onSave){
-  state.pendingPhoto = null;
+  stateendingPhoto = null;
   const overlay = document.getElementById('photoAttachOverlay');
   const input = document.getElementById('photoInput');
   const preview = document.getElementById('photoPreview');
@@ -1801,10 +1812,10 @@ function renderHistory(){
     el.onclick = () => {
       const idx = parseInt(el.dataset.photoIdx);
       const h = state.history[idx];
-      if (!h || !h.photo) return;
-      document.getElementById('photoViewImg').src = h.photo;
-      document.getElementById('photoViewModal').classList.add('active');
-    };
+      if (!h || !h.photo600) return;
+      document.getElementById('photoViewImg').">src = h.photo;
+      document.getElementById('photoДViewModal').classList.add('active');
+   о };
   });
 }
 
@@ -1826,7 +1837,7 @@ function renderWishes(){
     const btnDisabled = (w.done || w.activated || !canActivate) ? 'disabled' : '';
     let hint = '';
     if (!w.activated && !w.done && state.totalPoints < WISH_THRESHOLD){
-      hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight:600">До порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
+      hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight: порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
     }
     const actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
     return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
@@ -1918,13 +1929,13 @@ function renderAchievements(){
 
 /* ===== ДЕРЕВО ===== */
 const TREE_STAGES = [
-  { name: "Семечко",        min: 0,   max: 4   },
-  { name: "Росток",         min: 5,   max: 14  },
-  { name: "Саженец",        min: 15,  max: 29  },
-  { name: "Деревце",        min: 30,  max: 49  },
-  { name: "Молодое дерево", min: 50,  max: 79  },
-  { name: "Цветущее",       min: 80,  max: 119 },
-  { name: "Плодоносящее",   min: 120, max: Infinity }
+  { name: "Семечко", min: 0, max: 4 },
+  { name: "Росток", min: 5, max: 14 },
+  { name: "Саженец", min: 15, max: 29 },
+  { name: "Деревце", min: 30, max: 49 },
+  { name: "Молодое дерево", min: 50, max: 79 },
+  { name: "Цветущее", min: 80, max: 119 },
+  { name: "Плодоносящее", min: 120, max: Infinity }
 ];
 function buildTreeSvg(stage){
   const W = 300, H = 260, cx = W/2, groundY = H-18;
@@ -2230,7 +2241,7 @@ function updateSpinsUI(){
   else { btn.textContent = 'Не хватает '+price+' б.'; btn.disabled = true; info.textContent = 'Нужно '+price+' баллов'; }
 }
 function animate(){
-  if (spinVelocity > 0.0015){
+  if (spin ifVelocity > 0.0015){
     currentAngle += spinVelocity; spinVelocity *= 0.991;
     drawWheel(); animId = requestAnimationFrame(animate);
   } else { isSpinning = false; spinVelocity = 0; cancelAnimationFrame(animId); determineWinner(); }
@@ -2252,7 +2263,7 @@ function doSpin(){
   if (wheelMode === 'type'){ isSpinning = true; spinVelocity = 0.25+Math.random()*0.15; animate(); return; }
   const price = getNextSpinPrice();
   if (price > 0){
-    if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
+    (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
     state.points -= price; updateStats();
     showToast('🔄','−'+price+' баллов за перекрут');
   }
@@ -2291,14 +2302,13 @@ function renderActionLists(){
   });
 }
 
-/* ===== АКТИВНОСТЬ ВАНИ (ТОЛЬКО ЕГО ДЕЙСТВИЯ) ===== */
+/* ===== АКТИВНОСТЬ ВАНИ (ТОЛЬКО ДЕЙСТВИЯ ВАНИ) ===== */
 function openVanyaActivity(){
   if (state.role !== 'nastya') return;
   const overlay = document.createElement('div');
   overlay.className = 'overlay center active';
   const isOn = isVanyaReallyOnline();
 
-  // ФИЛЬТР: только логи актора «vanya»
   const log = (state.activityLog || []).filter(item => item.actor === 'vanya');
   const c = (state.counters && state.counters.vanya) || {};
   const t = (state.todayCounters && state.todayCounters.vanya) || emptyToday();
@@ -2357,7 +2367,7 @@ function openVanyaActivity(){
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
 }
 
-/* ===== НАЧИСЛЕНИЕ БАЛЛОВ ВРУЧНУЮ ===== */
+/* ===== НАЧИСЛЕНИЕ БАЛЛОВ ===== */
 function openManualPoints(){
   if (state.role !== 'nastya') return;
   const overlay = document.createElement('div');
@@ -2431,7 +2441,7 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas = document.getElementById('wheel');
   if (canvas) ctx = canvas.getContext('2d');
 
-  // 1) Поднимаем из localStorage
+  // 1) Сначала поднимаем данные из localStorage
   hydrateFromLocalStorage();
 
   // 2) UI
@@ -2451,7 +2461,7 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAchievements();
   setTimeout(checkMonthCelebration, 1800);
 
-  // 3) Облако. Пока не пришёл снапшот — saveState не пишет в Firebase
+  // 3) Облако. Пока не пришёл первый снапшот, saveState не пишет в Firebase
   subscribeToFirestore();
 
   // 4) Страховка: если Firestore не ответил за 4 секунды — разрешаем сохранять
