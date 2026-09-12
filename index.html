@@ -390,398 +390,15 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 
 <body>
 
-<div class="splash-screen" id="splashScreen">
-  <div class="splash-logo">
-    <svg viewBox="0 0 32 32" fill="none" stroke="#d4a85a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 26.5 C 6.5 19.8, 3 14.2, 5.6 9.4 C 8.2 4.6, 13.8 5.4, 16 11 C 18.2 5.4, 23.8 4.6, 26.4 9.4 C 29 14.2, 25.5 19.8, 16 26.5 Z" fill="rgba(212,168,90,.15)"/>
-    </svg>
-  </div>
-  <div class="splash-title">Наши маленькие вещи</div>
-  <div class="splash-sub">приложение для двоих</div>
-</div>
-
-<div class="petals-layer" id="petalsLayer"></div>
-<div class="app" id="appRoot">
-
-<div class="daily-overlay" id="dailyOverlay">
-<div class="daily-card">
-<div class="daily-emoji" id="dailyEmoji">🌸</div>
-<div class="daily-message" id="dailyMessage">Ты — моя самая любимая причина улыбаться.</div>
-<div class="daily-hint">Коснись, чтобы закрыть</div>
-</div>
-</div>
-
-<div class="month-celebration" id="monthCelebration">
-<div class="month-celebration-card">
-<div class="mc-emoji" id="mcEmoji">🎉</div>
-<h2 id="mcTitle">Восхитительно!</h2>
-<p id="mcText">Ты выполнил 15 дней за месяц!<br>Настя гордится тобой.</p>
-<div class="mc-bonus" id="mcBonus">+100 баллов</div>
-<div class="daily-hint" style="opacity:.6">Коснись, чтобы закрыть</div>
-</div>
-</div>
-
-<div class="overlay center role-overlay active" id="roleOverlay">
-<div class="modal">
-<div class="modal-title">Наши маленькие вещи</div>
-<div class="modal-subtitle">Кто открыл приложение?</div>
-<div class="role-buttons">
-<button class="role-btn nastya" id="roleNastya" type="button"><span class="role-emoji">❤️</span><span>Я — Настя</span></button>
-<button class="role-btn vanya" id="roleVanya" type="button"><span class="role-emoji">🍞</span><span>Я — Ваня</span></button>
-</div>
-</div>
-</div>
-
-<div class="overlay center welcome-overlay" id="welcomeOverlay">
-<div class="modal">
-<div class="modal-title">❤️ Добро пожаловать</div>
-<div class="modal-subtitle">Наши маленькие вещи</div>
-<div style="text-align:left;font-size:12.5px;line-height:1.9;background:rgba(255,255,255,.6);padding:18px;border-radius:18px;margin:16px 0;border:1px solid rgba(212,168,90,.2)">
-<p style="margin-bottom:10px">Привет, сухарь. 🍞</p>
-<p style="margin-bottom:10px">Это приложение — наша маленькая игра. Здесь ты будешь заботиться обо мне, а я — удивлять тебя.</p>
-<p style="margin-bottom:10px">Крути колесо, выполняй задания, копи баллы. Наберёшь <b>1000</b> — сможешь загадать своё желание в «Тайном саду».</p>
-<p style="margin-bottom:10px">Договорились? ❤️</p>
-<div style="text-align:right;font-style:italic;color:var(--muted);margin-top:6px">Твоя Настя</div>
-</div>
-<button class="btn-gold" id="welcomeAgree" type="button">Готов начать</button>
-</div>
-</div>
-
-<div class="role-badge" id="roleBadge">👁 Режим просмотра</div>
-
-<div class="notification-banner" id="notificationBanner">
-<span class="icon">📅</span>
-<div class="content">
-<div class="title" id="notifTitle">Скоро ваше свидание!</div>
-<div class="sub" id="notifSub">Покрути колесо 🎡</div>
-</div>
-<button class="action-link" id="notifAction" type="button">🎡 Крутить</button>
-<button class="close-btn" id="notifClose" type="button">✕</button>
-</div>
-
-<div class="header">
-<h1 class="header-title">Наши маленькие вещи</h1>
-<div class="header-names">Анастасия &amp; Иван</div>
-<div class="header-subtitle">Давай иногда выбирать друг друга специально</div>
-</div>
-
-<nav class="nav">
-<button class="nav-item active" data-page="calendar" type="button"><span class="nav-icon">✦</span>Месяц</button>
-<button class="nav-item" data-page="history" type="button"><span class="nav-icon">♥</span>История</button>
-<button class="nav-item" data-page="wishes" type="button"><span class="nav-icon">✿</span>Хотелки</button>
-<button class="nav-item" data-page="stats" type="button"><span class="nav-icon">⭐</span>Баллы</button>
-<button class="nav-item" data-page="system" type="button"><span class="nav-icon">📖</span>Система</button>
-</nav>
-
-<section class="page active" id="page-calendar">
-<div class="month-header">
-<button class="month-arrow" id="prevMonth" type="button">‹</button>
-<div><div class="month-name" id="monthName">Сентябрь</div><div class="month-year" id="monthYear">2026</div></div>
-<button class="month-arrow" id="nextMonth" type="button">›</button>
-</div>
-<div class="weekdays">
-<div class="weekday">ПН</div>
-<div class="weekday">ВТ</div>
-<div class="weekday">СР</div>
-<div class="weekday">ЧТ</div>
-<div class="weekday">ПТ</div>
-<div class="weekday">СБ</div>
-<div class="weekday">ВС</div>
-</div>
-<div class="calendar" id="calendar"></div>
-<div class="legend">
-<div class="legend-item"><span class="legend-dot emotional"></span>💙 Эмоц. +5</div>
-<div class="legend-item"><span class="legend-dot physical"></span>💜 Физ. +10</div>
-<div class="legend-item"><span class="legend-dot lightDate"></span>💗 Лёгкое +50</div>
-<div class="legend-item"><span class="legend-dot bigDate"></span>🏆 Большое +150</div>
-<div class="legend-item"><span class="legend-dot custom"></span>⭐ Своё +30</div>
-</div>
-<div class="manage-panel">
-<div class="manage-panel-title">Хочешь её порадовать? ❤️</div>
-<div class="manage-panel-text">Нажми на любой день, чтобы изменить его или отметить выполненным</div>
-<button class="btn-primary" id="openRandomBtn" type="button">Выбрать сегодня</button>
-</div>
-</section>
-
-<section class="page" id="page-history">
-<div class="section-title">Наша история</div>
-<div class="section-sub">То, что мы уже выбрали друг для друга</div>
-<div class="timeline" id="timelineList"></div>
-</section>
-
-<section class="page" id="page-wishes">
-<div class="section-title">Тайный сад</div>
-<div class="section-sub">Запиши, чего хочешь ты · +15 баллов</div>
-<div class="wish-tier" id="wishTierBlock">
-<button data-tier="small" class="active" type="button">🌱 Мелкое (50)</button>
-<button data-tier="medium" type="button">🌿 Среднее (150)</button>
-<button data-tier="big" type="button">🌳 Крупное (500)</button>
-</div>
-<div class="add-row">
-<input type="text" id="wishInput" placeholder="Например: блинчики с вишней">
-<button id="wishAddBtn" type="button">＋</button>
-</div>
-<div class="garden-wrap" id="wishGarden"></div>
-<div style="margin-top:22px;padding:18px;background:rgba(255,250,240,.92);border-radius:18px;font-size:11.5px;color:#3a3028;line-height:1.8;border:1px solid rgba(212,168,90,.35);position:relative;z-index:3;font-weight:500">
-<b style="color:#1a1410">Как это работает:</b><br>• Записал желание → +15 баллов<br>• Копишь 1000 баллов → активируешь<br>• Она его выполняет ❤️
-</div>
-</section>
-
-<section class="page" id="page-stats">
-<div class="section-title">Мои баллы</div>
-<div class="points-card">
-<div class="points-number" id="pointsNumber">0</div>
-<div class="points-caption">баллов за этот месяц</div>
-<div class="total-points">Всего за всё время: <span id="totalPointsDisplay">0</span></div>
-<div class="level-badge"><span class="emoji" id="levelEmoji">🌿</span><span class="name" id="levelName">Первый шаг</span></div>
-<div class="points-to-next" id="pointsToNext"></div>
-<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
-<div id="pointsToGo" style="color:var(--muted);font-size:10px;margin-top:12px;letter-spacing:1px"></div>
-</div>
-<div class="achievements-block">
-<div class="achievements-title">✦ Достижения ✦</div>
-<div class="achievements-grid" id="achievementsGrid"></div>
-</div>
-<div class="love-tree-card">
-<div class="love-tree-title">🌳 Наше дерево</div>
-<div class="love-tree-stage" id="treeStage">Семечко</div>
-<div class="love-tree-svg-wrap" id="treeSvgWrap"></div>
-<div class="love-tree-progress-text" id="treeProgressText">До следующей стадии: 5 заданий</div>
-<div class="love-tree-progress-track">
-<div class="love-tree-progress-fill" id="treeProgressFill"></div>
-</div>
-</div>
-<div class="motivation-block"><strong>Ты сам создаёшь эту историю.</strong><br>Выполнил — заработал. Придумал своё — заработал больше. Записал хотелку — снова плюс.<br>Копи 1000 → активируй в «Тайном саду». ❤️</div>
-<div class="system-note" style="position:relative;z-index:3;margin-top:16px">
-⚠️ <b>Важно:</b> баллы «за месяц» сгорают 1-го числа каждого месяца.
-</div>
-</section>
-
-<section class="page" id="page-system">
-<div class="section-title">Как всё работает</div>
-<div class="section-sub">Полный гайд по баллам, спину и наградам</div>
-<div class="system-intro"><h3>✦ Наша маленькая экономика</h3><p>Каждое твоё действие превращается в баллы. Баллы можно копить и обменивать на свои желания.</p></div>
-<div class="system-section">
-<div class="system-section-title"><span class="ico">🌿</span>1. Как заработать баллы</div>
-<div class="system-row"><span class="lbl">💙 Эмоциональная забота</span><span class="val">+5</span></div>
-<div class="system-row"><span class="lbl">💜 Физическая забота</span><span class="val">+10</span></div>
-<div class="system-row"><span class="lbl">💗 Лёгкое свидание</span><span class="val">+50</span></div>
-<div class="system-row"><span class="lbl">🏆 Большое свидание</span><span class="val">+150</span></div>
-<div class="system-row"><span class="lbl">⭐ Своя инициатива</span><span class="val">+30</span></div>
-<div class="system-row"><span class="lbl">✿ Своя хотелка</span><span class="val">+15</span></div>
-<div class="system-row"><span class="lbl">📅 Ежедневный вход</span><span class="val">+5</span></div>
-</div>
-<div class="system-section">
-<div class="system-section-title"><span class="ico">🎡</span>2. Спин колеса</div>
-<div class="system-row"><span class="lbl">Первое вращение на дату</span><span class="val free">Бесплатно</span></div>
-<div class="system-row"><span class="lbl">2-е вращение</span><span class="val minus">−50</span></div>
-<div class="system-row"><span class="lbl">3-е вращение</span><span class="val minus">−150</span></div>
-<div class="system-row"><span class="lbl">4-е и далее</span><span class="val minus">−250</span></div>
-</div>
-<div class="system-section">
-<div class="system-section-title"><span class="ico">💎</span>3. Куда потратить</div>
-<div class="system-tier">
-<div class="card"><span class="e">🌱</span><span class="nm">Мелкое</span><span class="pr">50</span></div>
-<div class="card"><span class="e">🌿</span><span class="nm">Среднее</span><span class="pr">150</span></div>
-<div class="card"><span class="e">🌳</span><span class="nm">Крупное</span><span class="pr">500</span></div>
-</div>
-</div>
-<div class="system-section">
-<div class="system-section-title"><span class="ico">🏆</span>4. Уровни</div>
-<div class="system-level"><span class="e">🌿</span><div class="info"><div class="name">Первый шаг</div><div class="range">0 — 199</div></div></div>
-<div class="system-level"><span class="e">💓</span><div class="info"><div class="name">Трепет</div><div class="range">200 — 399</div></div></div>
-<div class="system-level"><span class="e">✨</span><div class="info"><div class="name">Притяжение</div><div class="range">400 — 599</div></div></div>
-<div class="system-level"><span class="e">🌸</span><div class="info"><div class="name">Гармония</div><div class="range">600 — 799</div></div></div>
-<div class="system-level"><span class="e">🌟</span><div class="info"><div class="name">Почти совершенство</div><div class="range">800 — 999</div></div></div>
-<div class="system-level"><span class="e">♾️</span><div class="info"><div class="name">Вечность</div><div class="range">1000+</div></div></div>
-</div>
-<div class="system-section">
-<div class="system-section-title"><span class="ico">🔥</span>5. Когда сгорают</div>
-<div class="system-row"><span class="lbl">Баллы «за месяц»</span><span class="val minus">1-го числа</span></div>
-<div class="system-row"><span class="lbl">Баллы «всего»</span><span class="val free">Не сгорают</span></div>
-</div>
-</section>
-
-</div>
-
-<div class="overlay" id="choiceOverlay">
-<div class="modal">
-<button class="close-button" data-close="choiceOverlay" type="button">×</button>
-<div class="modal-title" id="choiceTitle">Что для неё?</div>
-<div class="modal-subtitle" id="choiceSubtitle">Выбери направление</div>
-<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
-<button class="role-btn" data-choice="emotional" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">💙</span>Эмоциональная забота (+5)</button>
-<button class="role-btn" data-choice="physical" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">💜</span>Физическая забота (+10)</button>
-<button class="role-btn" data-choice="lightDate" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">💗</span>Лёгкое свидание (+50)</button>
-<button class="role-btn" data-choice="bigDate" type="button" style="padding:16px 20px;font-size:13px"><span class="role-emoji" style="font-size:20px">🏆</span>Большое свидание (+150)</button>
-<button class="role-btn" data-choice="random" type="button" style="padding:16px 20px;font-size:13px;background:var(--dark);color:white;border-color:var(--dark)"><span class="role-emoji" style="font-size:20px">🎲</span>Пусть выберет колесо</button>
-</div>
-</div>
-</div>
-
-<div class="overlay" id="editDayOverlay">
-<div class="modal">
-<button class="close-button" data-close="editDayOverlay" type="button">×</button>
-<div class="modal-title" id="editDayTitle">День</div>
-<div class="modal-subtitle" id="editDaySubtitle"></div>
-<div id="freeChoiceBlock" style="display:none;margin-top:20px">
-<div style="display:flex;flex-direction:column;gap:10px">
-<button class="btn-primary" id="freeWheelBtn" type="button">🎡 Крутить колесо</button>
-<button class="btn-secondary" id="freeCustomBtn" type="button">⭐ Моя инициатива</button>
-</div>
-<div id="freeCustomFields" style="display:none;margin-top:16px">
-<input type="text" class="input-line" id="freeCustomTitle" placeholder="Название дела">
-<select class="select-line" id="freeCustomCategory">
-<option value="emotional">💙 Эмоциональная (5 б.)</option>
-<option value="physical">💜 Физическая (10 б.)</option>
-<option value="lightDate">💗 Лёгкое свидание (50 б.)</option>
-<option value="bigDate">🏆 Большое свидание (150 б.)</option>
-</select>
-<div style="text-align:center;font-size:12px;color:var(--gold);padding:10px;background:rgba(212,168,90,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="freeTotalPoints">35</span> баллов</div>
-<button class="btn-gold" id="freeCustomDone" type="button">Запланировать</button>
-</div>
-</div>
-<div id="typeBlock" style="display:none;margin-top:20px">
-<div class="day-info-block"><div class="day-label">Тип дня</div><div class="day-title" id="typeNameDisplay">Эмоциональная</div></div>
-<ul class="event-list" id="eventListCompact"></ul>
-<div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
-<button class="btn-primary" id="typeWheelBtn" type="button">🎡 Крутить колесо</button>
-<button class="btn-secondary" id="typeInitiativeBtn" type="button">⭐ Добавить инициативу</button>
-<button class="btn-secondary" id="typeMoveBtn" type="button">📅 Перенести дату</button>
-<button class="btn-secondary" id="typeClearBtn" type="button" style="display:none;color:var(--red);border-color:var(--red)">🗑 Очистить</button>
-</div>
-<div id="typeInitiativeFields" style="display:none;margin-top:16px">
-<input type="text" class="input-line" id="typeInitiativeTitle" placeholder="Название дела">
-<select class="select-line" id="typeInitiativeCategory">
-<option value="emotional">💙 Эмоциональная (5 б.)</option>
-<option value="physical">💜 Физическая (10 б.)</option>
-<option value="lightDate">💗 Лёгкое свидание (50 б.)</option>
-<option value="bigDate">🏆 Большое свидание (150 б.)</option>
-</select>
-<div style="text-align:center;font-size:12px;color:var(--gold);padding:10px;background:rgba(212,168,90,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="typeTotalPoints">35</span> баллов</div>
-<button class="btn-gold" id="typeInitiativeDone" type="button">Запланировать</button>
-</div>
-<div id="moveBlockType" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
-<label style="font-size:12px;display:block;margin-bottom:8px">Новая дата</label>
-<input type="date" class="input-line" id="moveDateInputType" style="border-radius:14px">
-<button class="btn-primary" id="moveDayBtnType" type="button">Перенести</button>
-</div>
-</div>
-</div>
-</div>
-
-<div class="overlay center" id="confirmYesterdayOverlay">
-<div class="modal">
-<div class="modal-title">Вчерашний план 📆</div>
-<div class="modal-subtitle">Состоялось ли то, что ты выбрал?</div>
-<div style="margin:20px 0;padding:18px;background:rgba(212,168,90,.1);border-radius:16px;border:1px solid rgba(212,168,90,.25)">
-<div id="confirmYesterdayText" style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;text-align:center;line-height:1.4"></div>
-</div>
-<div style="display:flex;flex-direction:column;gap:10px">
-<button class="btn-primary" id="confirmYesBtn" type="button">✓ Да, состоялось</button>
-<button class="btn-secondary" id="confirmNoBtn" type="button">✕ Нет, не состоялось</button>
-</div>
-</div>
-</div>
-
-<div class="overlay center" id="rescheduleOverlay">
-<div class="modal">
-<div class="modal-title">Перенести 📅</div>
-<div class="modal-subtitle">Выбери новую дату</div>
-<div style="margin-top:20px">
-<label style="font-size:12px;display:block;margin-bottom:8px">Новая дата</label>
-<input type="date" class="input-line" id="rescheduleDateInput" style="border-radius:14px">
-<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
-<button class="btn-gold" id="rescheduleConfirmBtn" type="button">Перенести</button>
-<button class="btn-secondary" id="rescheduleCancelBtn" type="button">Отмена</button>
-</div>
-</div>
-</div>
-</div>
-
-<div class="overlay" id="photoAttachOverlay">
-<div class="modal">
-<button class="close-button" data-close="photoAttachOverlay" type="button">×</button>
-<div class="modal-title">📸 Фото момента</div>
-<div class="modal-subtitle">Добавь, если хочешь сохранить момент</div>
-<div style="margin-top:18px">
-<label class="add-photo-btn" style="display:block;text-align:center" for="photoInput">📷 Выбрать фото</label>
-<input type="file" id="photoInput" accept="image/*" style="display:none">
-<div class="photo-preview" id="photoPreview">
-<img id="photoPreviewImg" alt="">
-<button class="remove-photo" id="removePhotoBtn" type="button">✕</button>
-</div>
-<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
-<button class="btn-gold" id="photoSaveBtn" type="button" disabled>Сохранить с фото</button>
-<button class="btn-secondary" id="photoSkipBtn" type="button">Сохранить без фото</button>
-</div>
-</div>
-</div>
-</div>
-
-<div class="photo-modal" id="photoViewModal">
-<img id="photoViewImg" alt="">
-</div>
-
-<div class="overlay" id="wheelOverlay">
-<div class="modal">
-<button class="close-button" data-close="wheelOverlay" type="button">×</button>
-<div class="modal-title" id="wheelTitle">Колесо</div>
-<div id="wheelCategory" style="text-align:center;color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:2px;text-transform:uppercase">Категория</div>
-<div class="wheel-wrap">
-<div class="wheel-pointer"></div>
-<canvas id="wheel"></canvas>
-<div class="wheel-center">♥</div>
-</div>
-<button class="spin-button" id="spinBtn" type="button">Крутить колесо</button>
-<div id="spinsLeft" style="text-align:center;color:var(--muted);font-size:10px;margin-top:8px;letter-spacing:1px"></div>
-<div id="resultBox" class="result-box" style="display:none">
-<div class="result-text" id="resultText"></div>
-<button class="btn-primary" id="doneBtn" type="button">Запланировать 🗓</button>
-<button class="btn-secondary" id="respinBtn" type="button">🔄 Перекрутить</button>
-</div>
-</div>
-</div>
-
-<div class="overlay" id="actionEditorOverlay">
-<div class="modal">
-<button class="close-button" data-close="actionEditorOverlay" type="button">×</button>
-<div class="modal-title">Управление действиями</div>
-<div class="modal-subtitle">Добавляй и удаляй задания</div>
-<div class="tabs">
-<button class="tab-btn active" data-tab="emotional" type="button">💙 Эмоц</button>
-<button class="tab-btn" data-tab="physical" type="button">💜 Физ</button>
-<button class="tab-btn" data-tab="lightDate" type="button">💗 Лёгк</button>
-<button class="tab-btn" data-tab="bigDate" type="button">🏆 Больш</button>
-</div>
-<div class="add-row"><input type="text" id="newActionInput" placeholder="Например: ⛸ На каток"><button id="addActionBtn" type="button">＋</button></div>
-<div class="tab-content active" id="tab-emotional"><ul class="action-list" id="list-emotional"></ul></div>
-<div class="tab-content" id="tab-physical"><ul class="action-list" id="list-physical"></ul></div>
-<div class="tab-content" id="tab-lightDate"><ul class="action-list" id="list-lightDate"></ul></div>
-<div class="tab-content" id="tab-bigDate"><ul class="action-list" id="list-bigDate"></ul></div>
-</div>
-</div>
-
-<div class="overlay" id="quarantineOverlay">
-<div class="modal">
-<button class="close-button" data-close="quarantineOverlay" type="button">×</button>
-<div class="modal-title">Карантин</div>
-<div class="modal-subtitle">Эти задания сейчас отдыхают</div>
-<div id="quarantineList" style="margin-top:20px"></div>
-</div>
-</div>
-
-<div class="settings-hotzone" id="settingsHotzone"></div>
-<button class="settings-toggle" id="settingsToggle" type="button">⚙</button>
-<div class="settings-menu" id="settingsMenu"></div>
-
-<div class="toast" id="toast">
-<span class="emoji" id="toastEmoji">✨</span>
-<span class="text" id="toastText"></span>
-<button class="close-x" id="toastClose" type="button">✕</button>
-</div>
-
-<body>
+<script>
+/* Аварийное скрытие заставки через 2.5 секунды, если основной модуль не запустился */
+setTimeout(function(){
+  var s = document.getElementById('splashScreen');
+  var a = document.getElementById('appRoot');
+  if (s) s.classList.add('hidden');
+  if (a) a.classList.add('reveal');
+}, 2500);
+</script>
 
 <div class="splash-screen" id="splashScreen">
   <div class="splash-logo">
@@ -1236,52 +853,7 @@ const DAILY_MESSAGES = [
   { e:"🎶", t:"Спасибо за твой смех. Он — моя любимая музыка." },
   { e:"🌺", t:"Спасибо, что ты мой." },
   { e:"✨", t:"Спасибо, что не сдаёшься. Ни в чём." },
-  { e:"❤️", t:"Спасибо, что ты у меня есть." },
-  { e:"💋", t:"Обожаю твои поцелуи. В них — весь ты." },
-  { e:"🫂", t:"Мне так хорошо в твоих объятиях. Не хочется выходить." },
-  { e:"🤲", t:"Обожаю, как ты меня касаешься. Бережно. По-своему." },
-  { e:"🥰", t:"Мне нравится, как ты гладишь меня по голове. Это моё место силы." },
-  { e:"💗", t:"Мне так спокойно засыпать рядом с тобой. И просыпаться." },
-  { e:"🌸", t:"Обожаю, как ты обнимаешь меня сзади. Мурашки каждый раз." },
-  { e:"💋", t:"Твои поцелуи в лоб — моё самое любимое." },
-  { e:"🤍", t:"Мне нравится, как ты держишь меня за руку. Надёжно." },
-  { e:"🥹", t:"Обожаю, как ты смотришь на меня, когда думаешь, что я не вижу." },
-  { e:"💫", t:"Мне так спокойно, когда ты рядом. Даже в тишине." },
-  { e:"🌙", t:"Обожаю, как ты меня укрываешь. Заботишься. Это чувствуется." },
-  { e:"💕", t:"Мне нравится, как ты прижимаешь меня к себе. Как будто никому не отдашь." },
-  { e:"🫶", t:"Обожаю твой запах. Мой самый родной." },
-  { e:"💋", t:"Мне нравится, как ты целуешь меня в макушку. Таю." },
-  { e:"❤️", t:"Твои прикосновения — мой личный источник тепла." },
-  { e:"🚀", t:"Не бойся пробовать. Я с тобой." },
-  { e:"🎯", t:"Мечтай громко. Я помогу." },
-  { e:"🌈", t:"Всё возможно, если верить. И делать." },
-  { e:"🔥", t:"Ты можешь больше. Давай попробуем?" },
-  { e:"⭐️", t:"Твой потенциал — безграничен." },
-  { e:"🌟", t:"Шаг за шагом — и ты на вершине." },
-  { e:"🦁", t:"Иди вперёд. Даже если страшно." },
-  { e:"💪", t:"Сегодня — хороший день, чтобы начать." },
-  { e:"🚀", t:"Твоё время пришло. Просто начни." },
-  { e:"🏆", t:"Ты достоин большего. И я это знаю." },
-  { e:"🌊", t:"Не бойся глубины. Ты умеешь плавать." },
-  { e:"🎯", t:"Действуй. Я — за твоей спиной." },
-  { e:"🔆", t:"Твои мечты стоят того, чтобы за них бороться." },
-  { e:"🌟", t:"Пусть сегодня будет днём твоей смелости." },
-  { e:"🦋", t:"Расправь крылья. Ты готов." },
-  { e:"☕", t:"Сегодня — только для тебя. Сделай что-то приятное." },
-  { e:"🍃", t:"Вдохни глубже. Всё идёт как надо." },
-  { e:"🌸", t:"Улыбнись. Ты прекрасен, когда улыбаешься." },
-  { e:"🌞", t:"Пусть этот день будет мягким." },
-  { e:"🍀", t:"Сегодня твой день. Просто верь." },
-  { e:"🌷", t:"Замедлись. Насладись моментом." },
-  { e:"🌙", t:"Пусть вечер будет тёплым. Ты это заслужил." },
-  { e:"🎶", t:"Пусть твоя душа сегодня поёт." },
-  { e:"🕊", t:"Пусть тревоги уйдут. Хотя бы на час." },
-  { e:"🌸", t:"Ты — в порядке. Всё будет хорошо." },
-  { e:"💫", t:"Пусть сегодня случится что-то приятное." },
-  { e:"✨", t:"Просто будь. И этого достаточно." },
-  { e:"🌻", t:"Я думаю о тебе прямо сейчас." },
-  { e:"💕", t:"Ты — моя самая тёплая мысль." },
-  { e:"🌸", t:"Ты даришь мне радость. Каждый день. Спасибо." }
+  { e:"❤️", t:"Спасибо, что ты у меня есть." }
 ];
 
 const DEFAULT_TASKS = {
@@ -1330,23 +902,23 @@ const MILESTONES = [
 ];
 
 const ACHIEVEMENTS = [
-  { id:"first_step", emoji:"🌱", name:"Первый шаг", desc:"Первое дело", check: s => s.totalDone >= 1 },
-  { id:"caring", emoji:"💙", name:"Заботливый", desc:"10 эмоц. дел", check: s => s.emotionalDone >= 10 },
-  { id:"masseur", emoji:"💜", name:"Массажист", desc:"5 физ. дел", check: s => s.physicalDone >= 5 },
-  { id:"romantic", emoji:"💗", name:"Романтик", desc:"Первое свидание", check: s => s.dateDone >= 1 },
-  { id:"dreamer", emoji:"✿", name:"Мечтатель", desc:"5 хотелок", check: s => s.wishesCount >= 5 },
-  { id:"wisher", emoji:"💎", name:"Исполнитель", desc:"Хотелка активирована", check: s => s.wishesActivated >= 1 },
-  { id:"happy_big", emoji:"🏆", name:"Большой шаг", desc:"Большое свидание", check: s => s.bigDateDone >= 1 },
-  { id:"persistent", emoji:"🔥", name:"Настойчивый", desc:"20 дел всего", check: s => s.totalDone >= 20 },
-  { id:"thinker", emoji:"⭐", name:"Мыслитель", desc:"5 инициатив", check: s => s.initiativeDone >= 5 },
-  { id:"forever", emoji:"♾️", name:"Вечность", desc:"1000 баллов всего", check: s => s.totalPoints >= 1000 }
+  { id:"first_step", emoji:"🌱", name:"Первый шаг", desc:"Первое дело", check: function(s){ return s.totalDone >= 1; } },
+  { id:"caring", emoji:"💙", name:"Заботливый", desc:"10 эмоц. дел", check: function(s){ return s.emotionalDone >= 10; } },
+  { id:"masseur", emoji:"💜", name:"Массажист", desc:"5 физ. дел", check: function(s){ return s.physicalDone >= 5; } },
+  { id:"romantic", emoji:"💗", name:"Романтик", desc:"Первое свидание", check: function(s){ return s.dateDone >= 1; } },
+  { id:"dreamer", emoji:"✿", name:"Мечтатель", desc:"5 хотелок", check: function(s){ return s.wishesCount >= 5; } },
+  { id:"wisher", emoji:"💎", name:"Исполнитель", desc:"Хотелка активирована", check: function(s){ return s.wishesActivated >= 1; } },
+  { id:"happy_big", emoji:"🏆", name:"Большой шаг", desc:"Большое свидание", check: function(s){ return s.bigDateDone >= 1; } },
+  { id:"persistent", emoji:"🔥", name:"Настойчивый", desc:"20 дел всего", check: function(s){ return s.totalDone >= 20; } },
+  { id:"thinker", emoji:"⭐", name:"Мыслитель", desc:"5 инициатив", check: function(s){ return s.initiativeDone >= 5; } },
+  { id:"forever", emoji:"♾️", name:"Вечность", desc:"1000 баллов всего", check: function(s){ return s.totalPoints >= 1000; } }
 ];
 
 const monthNames = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
 
-const emptyToday = () => ({ date:null, spin:0, task_done:0, page_opens:0, day_opens:0, settings_opens:0, logins:0 });
+function emptyToday(){ return { date:null, spin:0, task_done:0, page_opens:0, day_opens:0, settings_opens:0, logins:0 }; }
 
-let state = {
+var state = {
   role:null, viewingAs:null, currentDate:new Date(),
   points:0, totalPoints:0, history:[], completedDays:{},
   spinsUsed:{}, dailyVisits:{}, quarantine:{},
@@ -1367,74 +939,77 @@ let state = {
   pendingReschedule: null
 };
 
-let lastLevelName = localStorage.getItem('lastLevelName') || null;
-let reachedMilestones = JSON.parse(localStorage.getItem('reachedMilestones') || '[]');
-let unsubscribeFirestore = null;
-let stateLoaded = false;
-let pendingSave = false;
-let isSaving = false;
+var lastLevelName = localStorage.getItem('lastLevelName') || null;
+var reachedMilestones = JSON.parse(localStorage.getItem('reachedMilestones') || '[]');
+var unsubscribeFirestore = null;
+var isOnline = true;
+
+var stateLoaded = false;
+var pendingSave = false;
+var isSaving = false;
+var saveTimeout = null;
 
 function currentActor(){ return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
 
 /* ===== MERGE-ФУНКЦИИ ===== */
 function _histKey(h){ return (h.eventDate||0)+'|'+(h.title||'')+'|'+(h.points||0); }
 function mergeHistory(a, b){
-  const map = new Map();
-  (a||[]).forEach(h => map.set(_histKey(h), h));
-  (b||[]).forEach(h => {
-    const k = _histKey(h);
-    const ex = map.get(k);
+  var map = new Map();
+  (a||[]).forEach(function(h){ map.set(_histKey(h), h); });
+  (b||[]).forEach(function(h){
+    var k = _histKey(h);
+    var ex = map.get(k);
     if (ex && ex.photo && !h.photo) return;
     map.set(k, ex ? Object.assign({}, ex, h, { photo: h.photo || ex.photo }) : h);
   });
-  return Array.from(map.values()).sort((x,y)=>(y.eventDate||0)-(x.eventDate||0));
+  return Array.from(map.values()).sort(function(x,y){ return (y.eventDate||0)-(x.eventDate||0); });
 }
 function mergeCompletedDays(a, b){
-  const out = {};
-  const keys = new Set([].concat(Object.keys(a||{}), Object.keys(b||{})));
-  keys.forEach(k => {
-    const ev = new Map();
-    ((a && a[k]) || []).forEach(e => ev.set(e.timestamp, e));
-    ((b && b[k]) || []).forEach(e => {
-      const ex = ev.get(e.timestamp);
+  var out = {};
+  var keys = new Set([].concat(Object.keys(a||{}), Object.keys(b||{})));
+  keys.forEach(function(k){
+    var ev = new Map();
+    ((a && a[k]) || []).forEach(function(e){ ev.set(e.timestamp, e); });
+    ((b && b[k]) || []).forEach(function(e){
+      var ex = ev.get(e.timestamp);
       ev.set(e.timestamp, ex ? Object.assign({}, ex, e, { photo: e.photo || ex.photo }) : e);
     });
-    out[k] = Array.from(ev.values()).sort((x,y)=>x.timestamp-y.timestamp);
+    out[k] = Array.from(ev.values()).sort(function(x,y){ return x.timestamp-y.timestamp; });
   });
   return out;
 }
 function mergePlannedDays(a, b){
-  const out = Object.assign({}, a||{});
-  for (const k in (b||{})){
-    const ex = out[k], nw = b[k];
+  var out = Object.assign({}, a||{});
+  for (var k in (b||{})){
+    var ex = out[k], nw = b[k];
     if (!ex) out[k] = nw;
     else out[k] = (nw.timestamp||0) > (ex.timestamp||0) ? nw : ex;
   }
   return out;
 }
 function mergeWishes(a, b){
-  const map = new Map();
-  (a||[]).forEach(w => map.set(w.createdAt, w));
-  (b||[]).forEach(w => {
-    const ex = map.get(w.createdAt);
+  var map = new Map();
+  (a||[]).forEach(function(w){ map.set(w.createdAt, w); });
+  (b||[]).forEach(function(w){
+    var ex = map.get(w.createdAt);
     map.set(w.createdAt, ex ? Object.assign({}, ex, w) : w);
   });
-  return Array.from(map.values()).sort((x,y)=>(x.createdAt||0)-(y.createdAt||0));
+  return Array.from(map.values()).sort(function(x,y){ return (x.createdAt||0)-(y.createdAt||0); });
 }
 function mergeNotifications(a, b){
-  const map = new Map();
-  (a||[]).forEach(n => map.set(n.id, n));
-  (b||[]).forEach(n => {
-    const ex = map.get(n.id);
+  var map = new Map();
+  (a||[]).forEach(function(n){ map.set(n.id, n); });
+  (b||[]).forEach(function(n){
+    var ex = map.get(n.id);
     map.set(n.id, ex ? Object.assign({}, ex, n) : n);
   });
-  return Array.from(map.values()).sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));
+  return Array.from(map.values()).sort(function(x,y){ return (y.createdAt||0)-(x.createdAt||0); });
 }
 function mergeActivityLog(a, b){
-  const map = new Map();
-  (a||[]).forEach(l => map.set(l.id, l));
-  (b||[]).forEach(l => map.set(l.id, l));
-  return Array.from(map.values()).sort((x,y)=>y.timestamp-x.timestamp).slice(0, 500);
+  var map = new Map();
+  (a||[]).forEach(function(l){ map.set(l.id, l); });
+  (b||[]).forEach(function(l){ map.set(l.id, l); });
+  return Array.from(map.values()).sort(function(x,y){ return y.timestamp-x.timestamp; }).slice(0, 500);
 }
 function migrateCountersShape(){
   if (state.counters && !state.counters.nastya && !state.counters.vanya){
@@ -1443,7 +1018,6 @@ function migrateCountersShape(){
   if (!state.counters || typeof state.counters !== 'object') state.counters = { nastya:{}, vanya:{} };
   if (!state.counters.nastya) state.counters.nastya = {};
   if (!state.counters.vanya)  state.counters.vanya  = {};
-
   if (state.todayCounters && !state.todayCounters.nastya && state.todayCounters.date !== undefined){
     state.todayCounters = { nastya: state.todayCounters, vanya: emptyToday() };
   }
@@ -1454,7 +1028,7 @@ function migrateCountersShape(){
 
 /* ===== ГИДРАТАЦИЯ ИЗ LOCALSTORAGE ===== */
 function hydrateFromLocalStorage(){
-  const g = k => localStorage.getItem(k);
+  var g = function(k){ return localStorage.getItem(k); };
   try {
     if (g('monthPoints')) state.points = parseInt(g('monthPoints')) || 0;
     if (g('totalPoints')) state.totalPoints = parseInt(g('totalPoints')) || 0;
@@ -1472,22 +1046,22 @@ function hydrateFromLocalStorage(){
     state.notificationsForNastya = JSON.parse(g('notificationsForNastya') || '[]');
     state.counters       = JSON.parse(g('counters') || '{"nastya":{},"vanya":{}}');
     state.todayCounters  = JSON.parse(g('todayCounters') || 'null') || { nastya:emptyToday(), vanya:emptyToday() };
-    const vs = JSON.parse(g('vanyaSession') || 'null');
+    var vs = JSON.parse(g('vanyaSession') || 'null');
     if (vs) state.vanyaSession = vs;
   } catch(e){ console.error('hydrate:', e); }
   migrateCountersShape();
 }
 
 /* ===== СЕЗОНЫ ===== */
-function getSeason(){ const m = new Date().getMonth(); if(m>=2&&m<=4)return 'spring'; if(m>=5&&m<=7)return 'summer'; if(m>=8&&m<=10)return 'autumn'; return 'winter'; }
-function applySeason(){ const s = getSeason(); document.body.classList.remove('season-autumn','season-winter','season-spring','season-summer'); document.body.classList.add('season-'+s); startPetals(s); }
+function getSeason(){ var m = new Date().getMonth(); if(m>=2&&m<=4)return 'spring'; if(m>=5&&m<=7)return 'summer'; if(m>=8&&m<=10)return 'autumn'; return 'winter'; }
+function applySeason(){ var s = getSeason(); document.body.classList.remove('season-autumn','season-winter','season-spring','season-summer'); document.body.classList.add('season-'+s); startPetals(s); }
 function startPetals(season){
-  const layer = document.getElementById('petalsLayer'); if (!layer) return;
+  var layer = document.getElementById('petalsLayer'); if (!layer) return;
   layer.innerHTML = '';
-  for (let i = 0; i < 16; i++) {
-    const p = document.createElement('div');
+  for (var i = 0; i < 16; i++) {
+    var p = document.createElement('div');
     p.className = 'petal petal-' + season;
-    let size = 12 + Math.random() * 14;
+    var size = 12 + Math.random() * 14;
     if (season === 'winter') size = 10 + Math.random() * 12;
     p.style.width = size + 'px'; p.style.height = size + 'px';
     p.style.left = (Math.random() * 100) + '%';
@@ -1499,15 +1073,15 @@ function startPetals(season){
 
 /* ===== ФОТО ===== */
 function compressImage(file, maxDim, quality){
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        let w = img.width, h = img.height;
+  return new Promise(function(resolve, reject){
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var img = new Image();
+      img.onload = function(){
+        var w = img.width, h = img.height;
         if (w > h){ if (w > maxDim){ h = Math.round(h*maxDim/w); w = maxDim; } }
         else { if (h > maxDim){ w = Math.round(w*maxDim/h); h = maxDim; } }
-        const canvas = document.createElement('canvas');
+        var canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
         try { resolve(canvas.toDataURL('image/jpeg', quality)); } catch(err){ reject(err); }
@@ -1521,119 +1095,108 @@ function compressImage(file, maxDim, quality){
 }
 
 /* ===== УТИЛИТЫ ===== */
+function updateOnlineStatus(){ isOnline = true; }
 function showToast(emoji, text){
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   document.getElementById('toastEmoji').textContent = emoji;
   document.getElementById('toastText').textContent = text;
   t.classList.add('show');
   clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(() => t.classList.remove('show'), 5000);
+  window._toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 5000);
 }
-function formatTime(ts){ if (!ts) return '—'; const d = new Date(ts); return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
-function formatDuration(sec){ if (!sec || sec < 0) return '0 сек'; const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60; if (h>0) return h+' ч '+m+' мин'; if (m>0) return m+' мин '+s+' сек'; return s+' сек'; }
+function formatTime(ts){ if (!ts) return '—'; var d = new Date(ts); return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function formatDuration(sec){ if (!sec || sec < 0) return '0 сек'; var h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60; if (h>0) return h+' ч '+m+' мин'; if (m>0) return m+' мин '+s+' сек'; return s+' сек'; }
 function getDaysWord(n){ if (n%10===1 && n%100!==11) return 'день'; if (n%10>=2 && n%10<=4 && (n%100<10||n%100>=20)) return 'дня'; return 'дней'; }
-function getCurrentMonthKey(){ const n = new Date(); return n.getFullYear()+'-'+n.getMonth(); }
+function getCurrentMonthKey(){ var n = new Date(); return n.getFullYear()+'-'+n.getMonth(); }
 function getVanyaTodaySeconds(){
-  const todayKey = new Date().toISOString().slice(0,10);
-  let base = 0;
+  var todayKey = new Date().toISOString().slice(0,10);
+  var base = 0;
   if (state.vanyaSession.todayDate === todayKey) base = state.vanyaSession.todaySeconds || 0;
   if (state.vanyaSession.sessionStart && state.vanyaSession.online) base += Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
   return base;
 }
-function getLevel(p){ for (let i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return LEVELS[LEVELS.length-1]; }
-function getNextLevel(p){ for (let i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return null; }
+function getLevel(p){ for (var i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return LEVELS[LEVELS.length-1]; }
+function getNextLevel(p){ for (var i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return null; }
 function getProgressToNext(p){
-  const cur = getLevel(p); const idx = LEVELS.indexOf(cur);
+  var cur = getLevel(p); var idx = LEVELS.indexOf(cur);
   if (idx === LEVELS.length-1) return 100;
-  const next = LEVELS[idx+1];
-  const prevMax = idx===0 ? 0 : LEVELS[idx-1].max + 1;
+  var next = LEVELS[idx+1];
+  var prevMax = idx===0 ? 0 : LEVELS[idx-1].max + 1;
   return Math.min(100, Math.max(0, ((p-prevMax)/(next.max-prevMax+1))*100));
 }
 function makeSparkles(cx, cy, count){
   count = count || 24;
-  for (let i=0;i<count;i++){
-    const s = document.createElement('div'); s.className = 'sparkle';
-    const angle = (i/count)*Math.PI*2 + Math.random()*0.4;
-    const dist = 60 + Math.random()*80;
+  for (var i=0;i<count;i++){
+    var s = document.createElement('div'); s.className = 'sparkle';
+    var angle = (i/count)*Math.PI*2 + Math.random()*0.4;
+    var dist = 60 + Math.random()*80;
     s.style.left = cx+'px'; s.style.top = cy+'px';
     s.style.setProperty('--sx', (Math.cos(angle)*dist)+'px');
     s.style.setProperty('--sy', (Math.sin(angle)*dist)+'px');
     document.body.appendChild(s);
-    setTimeout(() => { if (s.parentNode) s.parentNode.removeChild(s); }, 1200);
+    setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(s), 1200);
   }
 }
 function makeConfetti(count){
   count = count || 40;
-  const colors = ['#d4a85a','#e8c88a','#e8b0bc','#f2ccd7','#b094d4','#a8d0e8','#8dbdab','#FDFBF7'];
-  for (let i=0;i<count;i++){
-    const c = document.createElement('div'); c.className = 'confetti';
+  var colors = ['#d4a85a','#e8c88a','#e8b0bc','#f2ccd7','#b094d4','#a8d0e8','#8dbdab','#FDFBF7'];
+  for (var i=0;i<count;i++){
+    var c = document.createElement('div'); c.className = 'confetti';
     c.style.left = (Math.random()*100)+'vw';
     c.style.background = colors[Math.floor(Math.random()*colors.length)];
     c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
     c.style.width = (6+Math.random()*8)+'px'; c.style.height = (6+Math.random()*8)+'px';
     document.body.appendChild(c);
-    setTimeout(() => { if (c.parentNode) c.parentNode.removeChild(c); }, 4500);
+    setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(c), 4500);
   }
 }
 function fireBurst(x, y){
-  const ring = document.createElement('div'); ring.className='burst-ring';
+  var ring = document.createElement('div'); ring.className='burst-ring';
   ring.style.left = x+'px'; ring.style.top = y+'px';
   document.body.appendChild(ring);
-  setTimeout(()=>{ if (ring.parentNode) ring.parentNode.removeChild(ring); }, 750);
-  for (let i=0;i<6;i++){
-    const angle = (i/6)*Math.PI*2 + Math.random()*0.3;
-    const dist = 60 + Math.random()*40;
-    const h = document.createElement('div'); h.className='burst-heart';
+  setTimeout(function(){ if (ring.parentNode) ring.parentNode.removeChild(ring); }, 750);
+  for (var i=0;i<6;i++){
+    var angle = (i/6)*Math.PI*2 + Math.random()*0.3;
+    var dist = 60 + Math.random()*40;
+    var h = document.createElement('div'); h.className='burst-heart';
     h.style.left = x+'px'; h.style.top = y+'px';
     h.style.setProperty('--bx', (Math.cos(angle)*dist)+'px');
     h.style.setProperty('--by', (Math.sin(angle)*dist)+'px');
     h.style.setProperty('--br', (360*(Math.random()>0.5?1:-1))+'deg');
     h.style.width = (24+Math.random()*14)+'px'; h.style.height = h.style.width;
     document.body.appendChild(h);
-    setTimeout(()=>{ if (h.parentNode) h.parentNode.removeChild(h); }, 1150);
-  }
-  for (let i=0;i<8;i++){
-    const angle = Math.random()*Math.PI*2;
-    const dist = 40 + Math.random()*90;
-    const s = document.createElement('div'); s.className='burst-star';
-    s.style.left = x+'px'; s.style.top = y+'px';
-    s.style.setProperty('--bx', (Math.cos(angle)*dist)+'px');
-    s.style.setProperty('--by', (Math.sin(angle)*dist)+'px');
-    s.style.setProperty('--br', (360*(Math.random()>0.5?1:-1))+'deg');
-    s.style.width = (14+Math.random()*10)+'px'; s.style.height = s.style.width;
-    document.body.appendChild(s);
-    setTimeout(()=>{ if (s.parentNode) s.parentNode.removeChild(s); }, 1100);
+    setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(h), 1150);
   }
   makeSparkles(x, y, 22);
 }
 function animateNumber(el, from, to, duration){
   duration = duration || 900;
-  const start = performance.now();
+  var start = performance.now();
   function tick(now){
-    const t = Math.min(1, (now-start)/duration);
-    const eased = 1 - Math.pow(1-t, 3);
+    var t = Math.min(1, (now-start)/duration);
+    var eased = 1 - Math.pow(1-t, 3);
     el.textContent = Math.round(from + (to-from)*eased);
     if (t<1) requestAnimationFrame(tick); else el.textContent = to;
   }
   requestAnimationFrame(tick);
 }
 
-const burstStyleEl = document.createElement('style');
-burstStyleEl.textContent = '.burst-heart{position:fixed;width:32px;height:32px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' fill=\'%23ff2d5b\'><path d=\'M16 27 C 6 20, 2 14, 5 9 C 8 4, 14 5, 16 11 C 18 5, 24 4, 27 9 C 30 14, 26 20, 16 27 Z\'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 1.1s cubic-bezier(.34,1,.64,1) forwards}@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(0.2) rotate(0deg);opacity:1}70%{opacity:1}100%{transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by))) scale(1.1) rotate(var(--br,180deg));opacity:0}}.burst-star{position:fixed;width:18px;height:18px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23ffd76b\'><path d=\'M12 2 L13.5 9 L20 10.5 L13.5 12 L12 19 L10.5 12 L4 10.5 L10.5 9 Z\'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 0.95s cubic-bezier(.34,1,.64,1) forwards}.burst-ring{position:fixed;border:2.5px solid rgba(255,45,91,.85);border-radius:50%;pointer-events:none;z-index:1240;width:40px;height:40px;transform:translate(-50%,-50%) scale(0.2);animation:ringExpand .7s ease-out forwards}@keyframes ringExpand{0%{transform:translate(-50%,-50%) scale(0.15);opacity:1;border-width:4px}100%{transform:translate(-50%,-50%) scale(3.2);opacity:0;border-width:1px}}';
+var burstStyleEl = document.createElement('style');
+burstStyleEl.textContent = '.burst-heart{position:fixed;width:32px;height:32px;pointer-events:none;z-index:1250;background-image:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' fill=\'%23ff2d5b\'><path d=\'M16 27 C 6 20, 2 14, 5 9 C 8 4, 14 5, 16 11 C 18 5, 24 4, 27 9 C 30 14, 26 20, 16 27 Z\'/></svg>");background-repeat:no-repeat;background-size:contain;animation:burstFly 1.1s cubic-bezier(.34,1,.64,1) forwards}@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(0.2) rotate(0deg);opacity:1}70%{opacity:1}100%{transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by))) scale(1.1) rotate(var(--br,180deg));opacity:0}}.burst-ring{position:fixed;border:2.5px solid rgba(255,45,91,.85);border-radius:50%;pointer-events:none;z-index:1240;width:40px;height:40px;transform:translate(-50%,-50%) scale(0.2);animation:ringExpand .7s ease-out forwards}@keyframes ringExpand{0%{transform:translate(-50%,-50%) scale(0.15);opacity:1;border-width:4px}100%{transform:translate(-50%,-50%) scale(3.2);opacity:0;border-width:1px}}';
 document.head.appendChild(burstStyleEl);
 
 /* ===== ЛОГ АКТИВНОСТИ ===== */
 function logActivity(action, detail){
-  const now = Date.now();
-  const actor = currentActor();
+  var now = Date.now();
+  var actor = currentActor();
   if (state.counters[actor][action] !== undefined) state.counters[actor][action]++;
   else state.counters[actor][action] = 1;
 
-  const todayKey = new Date().toISOString().slice(0,10);
+  var todayKey = new Date().toISOString().slice(0,10);
   if (state.todayCounters[actor].date !== todayKey){
     state.todayCounters[actor] = Object.assign({}, emptyToday(), { date: todayKey });
   }
-  const tc = state.todayCounters[actor];
+  var tc = state.todayCounters[actor];
   if (action === 'spin') tc.spin++;
   if (action === 'task_done') tc.task_done++;
   if (action === 'login') tc.logins++;
@@ -1648,7 +1211,7 @@ function logActivity(action, detail){
 
 /* ===== СЕССИЯ ВАНИ ===== */
 function startVanyaSession(){
-  const todayKey = new Date().toISOString().slice(0,10);
+  var todayKey = new Date().toISOString().slice(0,10);
   if (state.vanyaSession.todayDate !== todayKey){
     state.vanyaSession.todayDate = todayKey;
     state.vanyaSession.todaySeconds = 0;
@@ -1661,12 +1224,12 @@ function startVanyaSession(){
 }
 function isVanyaReallyOnline(){
   if (!state.vanyaSession || !state.vanyaSession.online) return false;
-  const last = state.vanyaSession.lastActiveAt || 0;
+  var last = state.vanyaSession.lastActiveAt || 0;
   return (Date.now() - last)/1000 < 180;
 }
 function endVanyaSession(){
   if (state.vanyaSession.sessionStart){
-    const elapsed = Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
+    var elapsed = Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
     state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds||0) + elapsed;
     state.vanyaSession.sessionStart = null;
   }
@@ -1676,62 +1239,72 @@ function endVanyaSession(){
 }
 
 /* ===== МГНОВЕННОЕ СОХРАНЕНИЕ ===== */
-async function saveState(){
+function saveState(){
   if (!stateLoaded){ pendingSave = true; return; }
+  if (saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(function(){
+    if (isSaving){ saveState(); return; }
+    isSaving = true;
 
-  localStorage.setItem('monthPoints', state.points);
-  localStorage.setItem('totalPoints', state.totalPoints);
-  localStorage.setItem('history', JSON.stringify(state.history));
-  localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
-  localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
-  localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
-  localStorage.setItem('currentMonth', getCurrentMonthKey());
-  localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
-  localStorage.setItem('counters', JSON.stringify(state.counters));
-  localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
-  localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
-  localStorage.setItem('wishes', JSON.stringify(state.wishes));
-  localStorage.setItem('notificationsForNastya', JSON.stringify(state.notificationsForNastya));
-  localStorage.setItem('dailyVisits', JSON.stringify(state.dailyVisits));
-  localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
-  localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
-  localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
-  localStorage.setItem('achievements', JSON.stringify(state.achievements));
+    try {
+      localStorage.setItem('monthPoints', state.points);
+      localStorage.setItem('totalPoints', state.totalPoints);
+      localStorage.setItem('history', JSON.stringify(state.history));
+      localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
+      localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+      localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
+      localStorage.setItem('currentMonth', getCurrentMonthKey());
+      localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
+      localStorage.setItem('counters', JSON.stringify(state.counters));
+      localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
+      localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
+      localStorage.setItem('wishes', JSON.stringify(state.wishes));
+      localStorage.setItem('notificationsForNastya', JSON.stringify(state.notificationsForNastya));
+      localStorage.setItem('dailyVisits', JSON.stringify(state.dailyVisits));
+      localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
+      localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
+      localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
+      localStorage.setItem('achievements', JSON.stringify(state.achievements));
+    } catch(e){ console.warn('ls', e); }
 
-  if (!navigator.onLine) return;
-  if (isSaving) return;
+    if (!navigator.onLine){ isSaving = false; return; }
 
-  const schedules = {};
-  for (let key in localStorage) if (key.startsWith('schedule_')) schedules[key] = localStorage.getItem(key);
+    var schedules = {};
+    for (var key in localStorage) if (key.indexOf('schedule_') === 0) schedules[key] = localStorage.getItem(key);
 
-  const data = {
-    points: state.points, totalPoints: state.totalPoints,
-    history: state.history, completedDays: state.completedDays,
-    plannedDays: state.plannedDays,
-    spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
-    quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
-    wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
-    activityLog: state.activityLog.slice(0,500), achievements: state.achievements,
-    lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
-    counters: state.counters, todayCounters: state.todayCounters,
-    currentMonth: getCurrentMonthKey(),
-    lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
-    welcomeShown: localStorage.getItem('welcomeShown') === 'true',
-    schedules: schedules
-  };
+    var data = {
+      points: state.points, totalPoints: state.totalPoints,
+      history: state.history, completedDays: state.completedDays,
+      plannedDays: state.plannedDays,
+      spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
+      quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
+      wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
+      activityLog: state.activityLog.slice(0,500), achievements: state.achievements,
+      lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
+      counters: state.counters, todayCounters: state.todayCounters,
+      currentMonth: getCurrentMonthKey(),
+      lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
+      welcomeShown: localStorage.getItem('welcomeShown') === 'true',
+      schedules: schedules
+    };
+    if (!state.history.length) delete data.history;
+    if (!Object.keys(state.completedDays).length) delete data.completedDays;
+    if (!Object.keys(state.plannedDays).length) delete data.plannedDays;
+    if (!state.wishes.length) delete data.wishes;
+    if (!state.achievements.length) delete data.achievements;
 
-  isSaving = true;
-  try { await setDoc(mainDocRef, data, { merge: true }); }
-  catch(e){ console.error('Firestore:', e); }
-  finally { isSaving = false; }
+    setDoc(mainDocRef, data, { merge: true })
+      .then(function(){ isSaving = false; })
+      .catch(function(e){ console.warn('fs', e); isSaving = false; });
+  }, 250);
 }
 
 function subscribeToFirestore(){
-  unsubscribeFirestore = onSnapshot(mainDocRef, async (snapshot) => {
-    if (snapshot.metadata.hasPendingWrites) return;
+  unsubscribeFirestore = onSnapshot(mainDocRef, function(snapshot){
+    if (snapshot.metadata && snapshot.metadata.hasPendingWrites) return;
     if (snapshot.exists()){
-      const d = snapshot.data() || {};
-      const prevPoints = state.points;
+      var d = snapshot.data() || {};
+      var prevPoints = state.points;
 
       if (d.currentMonth && d.currentMonth !== getCurrentMonthKey()){
         state.points = 0; state.spinsUsed = {};
@@ -1748,7 +1321,7 @@ function subscribeToFirestore(){
       state.wishes         = mergeWishes(state.wishes, d.wishes);
       state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
       state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
-      state.achievements   = Array.from(new Set([].concat(state.achievements||[], (d.achievements)||[])));
+      state.achievements   = Array.from(new Set([].concat(state.achievements||[], d.achievements||[])));
 
       state.spinsUsed      = Object.assign({}, state.spinsUsed, d.spinsUsed||{});
       state.dailyVisits    = Object.assign({}, state.dailyVisits, d.dailyVisits||{});
@@ -1763,7 +1336,7 @@ function subscribeToFirestore(){
       if (d.lastLevelName){ lastLevelName = d.lastLevelName; localStorage.setItem('lastLevelName', lastLevelName); }
       if (d.reachedMilestones){ reachedMilestones = d.reachedMilestones; localStorage.setItem('reachedMilestones', JSON.stringify(reachedMilestones)); }
       if (d.welcomeShown !== undefined) localStorage.setItem('welcomeShown', d.welcomeShown ? 'true':'false');
-      if (d.schedules) for (let key in d.schedules) localStorage.setItem(key, d.schedules[key]);
+      if (d.schedules) for (var key in d.schedules) localStorage.setItem(key, d.schedules[key]);
 
       migrateCountersShape();
       refreshAll(prevPoints);
@@ -1774,12 +1347,12 @@ function subscribeToFirestore(){
       stateLoaded = true;
       saveState();
     }
-  }, err => console.error('Firestore sub:', err));
+  }, function(err){ console.warn('snap', err); stateLoaded = true; });
 }
 
 /* ===== РОЛИ ===== */
 function initRole(){
-  const savedRole = localStorage.getItem('userRole');
+  var savedRole = localStorage.getItem('userRole');
   if (savedRole === 'nastya' || savedRole === 'vanya'){
     state.role = savedRole; state.viewingAs = savedRole;
     document.getElementById('roleOverlay').classList.remove('active');
@@ -1802,12 +1375,12 @@ function setRole(role){
   }
 }
 function applyRoleView(){
-  const isVanya = state.viewingAs === 'vanya';
-  const badge = document.getElementById('roleBadge');
-  document.querySelectorAll('[data-page="wishes"]').forEach(el => { el.style.display = isVanya ? '' : 'none'; });
-  const hotzone = document.getElementById('settingsHotzone');
-  const settingsBtn = document.getElementById('settingsToggle');
-  const sm = document.getElementById('settingsMenu');
+  var isVanya = state.viewingAs === 'vanya';
+  var badge = document.getElementById('roleBadge');
+  document.querySelectorAll('[data-page="wishes"]').forEach(function(el){ el.style.display = isVanya ? '' : 'none'; });
+  var hotzone = document.getElementById('settingsHotzone');
+  var settingsBtn = document.getElementById('settingsToggle');
+  var sm = document.getElementById('settingsMenu');
   if (isVanya){
     if (hotzone){ hotzone.style.display='none'; hotzone.style.pointerEvents='none'; }
     if (settingsBtn){ settingsBtn.classList.remove('visible'); settingsBtn.style.display='none'; }
@@ -1832,13 +1405,13 @@ function toggleRoleView(){
 /* ===== ПРИВЕТСТВИЕ ДНЯ ===== */
 function showDailyMessage(){
   if (state.viewingAs !== 'vanya') return;
-  const todayKey = new Date().toISOString().slice(0,10);
+  var todayKey = new Date().toISOString().slice(0,10);
   if (localStorage.getItem('lastDailyMessage') === todayKey) return;
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now-start)/86400000);
-  const idx = ((dayOfYear-1)%DAILY_MESSAGES.length + DAILY_MESSAGES.length)%DAILY_MESSAGES.length;
-  const msg = DAILY_MESSAGES[idx];
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var dayOfYear = Math.floor((now-start)/86400000);
+  var idx = ((dayOfYear-1)%DAILY_MESSAGES.length + DAILY_MESSAGES.length)%DAILY_MESSAGES.length;
+  var msg = DAILY_MESSAGES[idx];
   document.getElementById('dailyEmoji').textContent = msg.e;
   document.getElementById('dailyMessage').textContent = msg.t;
   document.getElementById('dailyOverlay').classList.add('active');
@@ -1847,65 +1420,65 @@ function showDailyMessage(){
 
 /* ===== НАСТРОЙКИ ===== */
 function renderSettingsMenu(){
-  const menu = document.getElementById('settingsMenu');
+  var menu = document.getElementById('settingsMenu');
   if (!menu) return;
   menu.innerHTML = '';
   if (state.role === 'nastya'){
-    const add = (txt, color, fn) => {
-      const b = document.createElement('button'); b.type='button'; b.textContent = txt;
+    var add = function(txt, color, fn){
+      var b = document.createElement('button'); b.type='button'; b.textContent = txt;
       if (color){ b.style.color = color; b.style.fontWeight='600'; }
       b.onclick = fn; menu.appendChild(b);
     };
-    const div = () => { const d = document.createElement('div'); d.className='divider'; menu.appendChild(d); };
-    add('💌 Показать приветственное письмо','var(--gold)',()=>{ menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
-    add('💰 Начислить баллы вручную','var(--gold)',()=>{ menu.classList.remove('open'); openManualPoints(); });
-    add('👁 Активность Вани','var(--blue)',()=>{ menu.classList.remove('open'); openVanyaActivity(); });
-    add('🔄 Переключить на Ваню','var(--purple)',()=>{ menu.classList.remove('open'); toggleRoleView(); });
+    var div = function(){ var d = document.createElement('div'); d.className='divider'; menu.appendChild(d); };
+    add('💌 Показать приветственное письмо','var(--gold)',function(){ menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
+    add('💰 Начислить баллы вручную','var(--gold)',function(){ menu.classList.remove('open'); openManualPoints(); });
+    add('👁 Активность Вани','var(--blue)',function(){ menu.classList.remove('open'); openVanyaActivity(); });
+    add('🔄 Переключить на Ваню','var(--purple)',function(){ menu.classList.remove('open'); toggleRoleView(); });
     div();
-    add('✏ Управление действиями',null,()=>{ renderActionLists(); document.getElementById('actionEditorOverlay').classList.add('active'); menu.classList.remove('open'); });
-    add('⏸ Карантин',null,()=>{ openQuarantineList(); menu.classList.remove('open'); });
-    add('↺ Сбросить карантин',null,()=>{ if (!confirm('Сбросить карантин?')) return; state.quarantine={}; saveState().then(()=>showToast('↺','Карантин сброшен!')); menu.classList.remove('open'); });
-    add('🔄 Сбросить расписание',null,()=>{ if (!confirm('Сбросить расписание?')) return; Object.keys(localStorage).forEach(k=>{ if (k.indexOf('schedule_')===0) localStorage.removeItem(k); }); saveState().then(()=>location.reload()); });
+    add('✏ Управление действиями',null,function(){ renderActionLists(); document.getElementById('actionEditorOverlay').classList.add('active'); menu.classList.remove('open'); });
+    add('⏸ Карантин',null,function(){ openQuarantineList(); menu.classList.remove('open'); });
+    add('↺ Сбросить карантин',null,function(){ if (!confirm('Сбросить карантин?')) return; state.quarantine={}; saveState(); showToast('↺','Карантин сброшен!'); menu.classList.remove('open'); });
+    add('🔄 Сбросить расписание',null,function(){ if (!confirm('Сбросить расписание?')) return; Object.keys(localStorage).forEach(function(k){ if (k.indexOf('schedule_')===0) localStorage.removeItem(k); }); saveState(); location.reload(); });
     div();
-    add('📤 Копировать данные',null,()=>{
-      const data = JSON.parse(JSON.stringify(state)); data.currentMonth = getCurrentMonthKey();
-      const json = JSON.stringify(data);
-      if (navigator.clipboard) navigator.clipboard.writeText(json).then(()=>showToast('📤','Скопировано!')).catch(()=>prompt('Скопируй:', json));
+    add('📤 Копировать данные',null,function(){
+      var data = JSON.parse(JSON.stringify(state)); data.currentMonth = getCurrentMonthKey();
+      var json = JSON.stringify(data);
+      if (navigator.clipboard) navigator.clipboard.writeText(json).then(function(){ showToast('📤','Скопировано!'); }).catch(function(){ prompt('Скопируй:', json); });
       else prompt('Скопируй:', json);
       menu.classList.remove('open');
     });
-    add('📥 Вставить из буфера',null,()=>{
+    add('📥 Вставить из буфера',null,function(){
       if (!navigator.clipboard){ alert('Буфер недоступен'); return; }
-      navigator.clipboard.readText().then(text=>{
+      navigator.clipboard.readText().then(function(text){
         try {
-          const data = JSON.parse(text);
+          var data = JSON.parse(text);
           if (data.points === undefined){ showToast('❌','Неверный формат'); return; }
           if (!confirm('Импорт заменит все данные. Продолжить?')) return;
-          for (let k in data) if (data.hasOwnProperty(k)) state[k] = data[k];
+          for (var k in data) if (data.hasOwnProperty(k)) state[k] = data[k];
           migrateCountersShape();
-          saveState().then(()=>{ refreshAll(); showToast('📥','Импортировано!'); });
+          saveState(); refreshAll(); showToast('📥','Импортировано!');
         } catch(e){ showToast('❌','Ошибка импорта'); }
       });
       menu.classList.remove('open');
     });
     div();
-    const b9 = document.createElement('button');
+    var b9 = document.createElement('button');
     b9.type='button'; b9.textContent='🗑 Сбросить всё'; b9.className='danger';
-    b9.onclick = () => {
+    b9.onclick = function(){
       if (!confirm('УДАЛИТЬ ВСЁ?')) return;
       localStorage.clear();
-      const emptyData = {
+      var emptyData = {
         points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, wishes:[],
         achievements:[], activityLog:[], quarantine:{}, dailyVisits:{}, spinsUsed:{},
         notificationsForNastya:[], counters:{nastya:{},vanya:{}}, todayCounters:{nastya:emptyToday(),vanya:emptyToday()},
         lastCelebrationMonth:null, welcomeShown:false, schedules:{}
       };
       setDoc(mainDocRef, emptyData, { merge:false })
-        .then(()=>location.reload()).catch(()=>location.reload());
+        .then(function(){ location.reload(); }).catch(function(){ location.reload(); });
     };
     menu.appendChild(b9);
   } else {
-    const notice = document.createElement('div');
+    var notice = document.createElement('div');
     notice.className='empty-menu-notice';
     notice.innerHTML = '<span class="big">🌿</span>Здесь пусто<span class="small">Настройки доступны только Насте</span>';
     menu.appendChild(notice);
@@ -1913,20 +1486,20 @@ function renderSettingsMenu(){
 }
 
 /* ===== КАРАНТИН ===== */
-function isInQuarantine(taskText, cat){ const q = state.quarantine[taskText]; if (!q) return false; return (Date.now()-q.doneAt)/(1000*60*60*24) < (QUARANTINE_DAYS[cat]||14); }
+function isInQuarantine(taskText, cat){ var q = state.quarantine[taskText]; if (!q) return false; return (Date.now()-q.doneAt)/(1000*60*60*24) < (QUARANTINE_DAYS[cat]||14); }
 function putInQuarantine(taskText, cat){ state.quarantine[taskText] = { type:cat, doneAt:Date.now() }; saveState(); }
 function openQuarantineList(){
-  const list = document.getElementById('quarantineList');
-  const items = [];
-  for (let k in state.quarantine){
+  var list = document.getElementById('quarantineList');
+  var items = [];
+  for (var k in state.quarantine){
     if (state.quarantine.hasOwnProperty(k) && isInQuarantine(k, state.quarantine[k].type)) items.push([k, state.quarantine[k]]);
   }
   if (!items.length) list.innerHTML = '<div class="empty-state">Все задания доступны</div>';
   else {
-    list.innerHTML = items.map(pair => {
-      const txt = pair[0], q = pair[1];
-      const days = QUARANTINE_DAYS[q.type]||14;
-      const left = Math.ceil(days - (Date.now()-q.doneAt)/(1000*60*60*24));
+    list.innerHTML = items.map(function(pair){
+      var txt = pair[0], q = pair[1];
+      var days = QUARANTINE_DAYS[q.type]||14;
+      var left = Math.ceil(days - (Date.now()-q.doneAt)/(1000*60*60*24));
       return '<div class="quarantine-item"><span>'+txt+'</span><span class="days">'+left+' дн.</span></div>';
     }).join('');
   }
@@ -1935,48 +1508,48 @@ function openQuarantineList(){
 
 /* ===== ЗАДАНИЯ ===== */
 function getTasksForCategory(cat){
-  const base = DEFAULT_TASKS[cat] || [];
-  const added = state.userAdded[cat] || [];
-  const removed = state.userRemoved[cat] || [];
-  return base.concat(added).filter(t => removed.indexOf(t) === -1);
+  var base = DEFAULT_TASKS[cat] || [];
+  var added = state.userAdded[cat] || [];
+  var removed = state.userRemoved[cat] || [];
+  return base.concat(added).filter(function(t){ return removed.indexOf(t) === -1; });
 }
 function getAvailableTasks(cat){
-  const all = getTasksForCategory(cat);
-  const available = all.filter(t => !isInQuarantine(t, cat));
+  var all = getTasksForCategory(cat);
+  var available = all.filter(function(t){ return !isInQuarantine(t, cat); });
   if (available.length === 0){
-    return all.slice().sort((a,b) => (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0)).slice(0,5);
+    return all.slice().sort(function(a,b){ return (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0); }).slice(0,5);
   }
   return available;
 }
 
 /* ===== РАСПИСАНИЕ ===== */
 function generateMonthSchedule(year, month){
-  const key = 'schedule_'+year+'_'+month;
-  const saved = localStorage.getItem(key);
+  var key = 'schedule_'+year+'_'+month;
+  var saved = localStorage.getItem(key);
   if (saved) return JSON.parse(saved);
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const schedule = {}; const weeks = []; let cur = [];
-  for (let d=1; d<=daysInMonth; d++){
+  var daysInMonth = new Date(year, month+1, 0).getDate();
+  var schedule = {}; var weeks = []; var cur = [];
+  for (var d=1; d<=daysInMonth; d++){
     cur.push(d);
     if (new Date(year,month,d).getDay()===0 || d===daysInMonth){ weeks.push(cur); cur=[]; }
   }
-  weeks.forEach(w => {
-    const sh = w.slice().sort(()=>Math.random()-0.5);
+  weeks.forEach(function(w){
+    var sh = w.slice().sort(function(){ return Math.random()-0.5; });
     if (sh.length>=1) schedule[sh[0]]='emotional';
     if (sh.length>=2) schedule[sh[1]]='emotional';
     if (sh.length>=3) schedule[sh[2]]='physical';
     if (sh.length>=4) schedule[sh[3]]='physical';
-    for (let i=4;i<sh.length;i++) schedule[sh[i]]='free';
+    for (var i=4;i<sh.length;i++) schedule[sh[i]]='free';
   });
-  const midC=[]; for (let d1=13; d1<=Math.min(17,daysInMonth); d1++) midC.push(d1);
+  var midC=[]; for (var d1=13; d1<=Math.min(17,daysInMonth); d1++) midC.push(d1);
   if (midC.length) schedule[midC[Math.floor(Math.random()*midC.length)]]='bigDate';
-  const endC=[]; for (let d2=25; d2<=Math.min(30,daysInMonth); d2++) endC.push(d2);
+  var endC=[]; for (var d2=25; d2<=Math.min(30,daysInMonth); d2++) endC.push(d2);
   if (endC.length) schedule[endC[Math.floor(Math.random()*endC.length)]]='lightDate';
   localStorage.setItem(key, JSON.stringify(schedule));
   return schedule;
 }
 function getDayType(year, month, day){
-  const key = year+'-'+month+'-'+day;
+  var key = year+'-'+month+'-'+day;
   if (state.completedDays[key] && state.completedDays[key].length>0) return state.completedDays[key][0].type;
   if (state.plannedDays && state.plannedDays[key]) return state.plannedDays[key].type;
   return generateMonthSchedule(year, month)[day] || 'free';
@@ -1985,131 +1558,131 @@ function getCompletedEvents(y,m,d){ return state.completedDays[y+'-'+m+'-'+d] ||
 
 /* ===== КАЛЕНДАРЬ ===== */
 function renderCalendar(){
-  const year = state.currentDate.getFullYear();
-  const month = state.currentDate.getMonth();
+  var year = state.currentDate.getFullYear();
+  var month = state.currentDate.getMonth();
   document.getElementById('monthName').textContent = monthNames[month];
   document.getElementById('monthYear').textContent = year;
-  const firstDay = new Date(year,month,1);
-  const daysInMonth = new Date(year,month+1,0).getDate();
-  let startDay = firstDay.getDay()-1; if (startDay===-1) startDay=6;
-  const lastDow = new Date(year,month,daysInMonth).getDay();
-  const trailing = lastDow===0 ? 0 : 7-lastDow;
-  const cal = document.getElementById('calendar'); cal.innerHTML = '';
-  for (let i=0;i<startDay;i++){ const e = document.createElement('div'); e.className='calendar-day empty'; cal.appendChild(e); }
-  const today = new Date();
-  for (let d=1; d<=daysInMonth; d++){
-    const el = document.createElement('div'); el.className='calendar-day';
-    const events = getCompletedEvents(year,month,d);
-    const isDone = events.length>0;
-    const plannedKey = year+'-'+month+'-'+d;
-    const isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
-    const type = getDayType(year,month,d);
+  var firstDay = new Date(year,month,1);
+  var daysInMonth = new Date(year,month+1,0).getDate();
+  var startDay = firstDay.getDay()-1; if (startDay===-1) startDay=6;
+  var lastDow = new Date(year,month,daysInMonth).getDay();
+  var trailing = lastDow===0 ? 0 : 7-lastDow;
+  var cal = document.getElementById('calendar'); cal.innerHTML = '';
+  for (var i=0;i<startDay;i++){ var e = document.createElement('div'); e.className='calendar-day empty'; cal.appendChild(e); }
+  var today = new Date();
+  for (var d=1; d<=daysInMonth; d++){
+    var el = document.createElement('div'); el.className='calendar-day';
+    var events = getCompletedEvents(year,month,d);
+    var isDone = events.length>0;
+    var plannedKey = year+'-'+month+'-'+d;
+    var isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
+    var type = getDayType(year,month,d);
     if (isDone){
-      const types=[]; events.forEach(ev => { if (types.indexOf(ev.type)===-1) types.push(ev.type); });
+      var types=[]; events.forEach(function(ev){ if (types.indexOf(ev.type)===-1) types.push(ev.type); });
       el.classList.add('done-'+types[0]);
     } else { el.classList.add(type); }
     if (isPlanned) el.classList.add('planned-day');
     el.dataset.day = d; el.dataset.type = type;
-    const num = document.createElement('span'); num.className='day-number'; num.textContent = d; el.appendChild(num);
+    var num = document.createElement('span'); num.className='day-number'; num.textContent = d; el.appendChild(num);
     if (d===today.getDate() && month===today.getMonth() && year===today.getFullYear()) el.classList.add('today');
     el.onclick = (function(day,t,isD){ return function(){ onDayClick(day,t,isD); }; })(d,type,isDone);
     cal.appendChild(el);
   }
-  for (let j=1;j<=trailing;j++){
-    const e2 = document.createElement('div'); e2.className='calendar-day next-month';
-    const n2 = document.createElement('span'); n2.className='day-number'; n2.textContent = j; e2.appendChild(n2); cal.appendChild(e2);
+  for (var j=1;j<=trailing;j++){
+    var e2 = document.createElement('div'); e2.className='calendar-day next-month';
+    var n2 = document.createElement('span'); n2.className='day-number'; n2.textContent = j; e2.appendChild(n2); cal.appendChild(e2);
   }
 }
 function onDayClick(day, type, isDone){
   state.editingDay = { year:state.currentDate.getFullYear(), month:state.currentDate.getMonth(), day:day, type:type, isDone:isDone };
-  const typeName = TYPE_INFO[type] ? TYPE_INFO[type].name : 'свободный';
+  var typeName = TYPE_INFO[type] ? TYPE_INFO[type].name : 'свободный';
   logActivity('day_open', '📅 Открыл день ' + day + ' ' + monthNames[state.currentDate.getMonth()] + ' (тип: ' + typeName + ')');
   openEditModal();
 }
-function updateFreePointsPreview(){ const c = document.getElementById('freeCustomCategory').value; document.getElementById('freeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
-function updateTypePointsPreview(){ const c = document.getElementById('typeInitiativeCategory').value; document.getElementById('typeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
+function updateFreePointsPreview(){ var c = document.getElementById('freeCustomCategory').value; document.getElementById('freeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
+function updateTypePointsPreview(){ var c = document.getElementById('typeInitiativeCategory').value; document.getElementById('typeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
 
 function openEditModal(){
-  const ed = state.editingDay;
-  const year=ed.year, month=ed.month, day=ed.day, type=ed.type, isDone=ed.isDone;
-  const overlay = document.getElementById('editDayOverlay');
+  var ed = state.editingDay;
+  var year=ed.year, month=ed.month, day=ed.day, type=ed.type, isDone=ed.isDone;
+  var overlay = document.getElementById('editDayOverlay');
   document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
-  const freeBlock = document.getElementById('freeChoiceBlock');
-  const typeBlock = document.getElementById('typeBlock');
+  var freeBlock = document.getElementById('freeChoiceBlock');
+  var typeBlock = document.getElementById('typeBlock');
   if (type === 'free' && !isDone){
     freeBlock.style.display='block'; typeBlock.style.display='none';
     document.getElementById('editDaySubtitle').textContent = 'Выбери, как провести день';
     document.getElementById('freeCustomFields').style.display = 'none';
     updateFreePointsPreview();
     document.getElementById('freeCustomCategory').onchange = updateFreePointsPreview;
-    document.getElementById('freeWheelBtn').onclick = () => { overlay.classList.remove('active'); state.currentDay = day; openChoiceModal(day+' '+monthNames[month], "Выбери направление"); };
-    document.getElementById('freeCustomBtn').onclick = () => { document.getElementById('freeCustomFields').style.display = 'block'; };
-    document.getElementById('freeCustomDone').onclick = () => {
-      const t = document.getElementById('freeCustomTitle').value.trim();
-      const c = document.getElementById('freeCustomCategory').value;
+    document.getElementById('freeWheelBtn').onclick = function(){ overlay.classList.remove('active'); state.currentDay = day; openChoiceModal(day+' '+monthNames[month], "Выбери направление"); };
+    document.getElementById('freeCustomBtn').onclick = function(){ document.getElementById('freeCustomFields').style.display = 'block'; };
+    document.getElementById('freeCustomDone').onclick = function(){
+      var t = document.getElementById('freeCustomTitle').value.trim();
+      var c = document.getElementById('freeCustomCategory').value;
       if (!t){ alert('Введите название'); return; }
-      const p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-      openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(()=>overlay.classList.remove('active')));
+      var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
+      openPhotoAttach(function(){ planEvent(year,month,day,c,t,p,true); overlay.classList.remove('active'); });
     };
     overlay.classList.add('active'); return;
   }
   freeBlock.style.display='none'; typeBlock.style.display='block';
   document.getElementById('editDaySubtitle').textContent = isDone ? 'Уже выполнено' : 'Выбери действие';
-  const ti = TYPE_INFO[type] || TYPE_INFO.custom;
+  var ti = TYPE_INFO[type] || TYPE_INFO.custom;
   document.getElementById('typeNameDisplay').textContent = ti.name;
-  const events = getCompletedEvents(year,month,day);
-  const list = document.getElementById('eventListCompact');
+  var events = getCompletedEvents(year,month,day);
+  var list = document.getElementById('eventListCompact');
   if (events.length>0){
-    list.innerHTML = events.map(e => {
-      const info = TYPE_INFO[e.type]||TYPE_INFO.custom;
-      const photoIcon = e.photo ? ' 📸' : '';
+    list.innerHTML = events.map(function(e){
+      var info = TYPE_INFO[e.type]||TYPE_INFO.custom;
+      var photoIcon = e.photo ? ' 📸' : '';
       return '<li><span>'+info.emoji+' '+info.short+' '+e.text+photoIcon+'</span><span>+'+e.points+' б.</span></li>';
     }).join('');
   } else list.innerHTML = '<li><span style="color:var(--muted)">Пока ничего</span></li>';
   document.getElementById('typeClearBtn').style.display = events.length>0 ? 'block' : 'none';
   document.getElementById('typeInitiativeFields').style.display = 'none';
   document.getElementById('moveBlockType').style.display = 'none';
-  document.getElementById('typeWheelBtn').onclick = () => { overlay.classList.remove('active'); state.currentType = type; state.currentDay = day; openWheel(type); };
-  document.getElementById('typeInitiativeBtn').onclick = () => {
-    const f = document.getElementById('typeInitiativeFields');
+  document.getElementById('typeWheelBtn').onclick = function(){ overlay.classList.remove('active'); state.currentType = type; state.currentDay = day; openWheel(type); };
+  document.getElementById('typeInitiativeBtn').onclick = function(){
+    var f = document.getElementById('typeInitiativeFields');
     f.style.display = f.style.display==='block' ? 'none' : 'block';
     updateTypePointsPreview();
     document.getElementById('typeInitiativeCategory').onchange = updateTypePointsPreview;
   };
-  document.getElementById('typeMoveBtn').onclick = () => {
-    const mb = document.getElementById('moveBlockType');
+  document.getElementById('typeMoveBtn').onclick = function(){
+    var mb = document.getElementById('moveBlockType');
     mb.style.display = mb.style.display==='block' ? 'none' : 'block';
     if (mb.style.display==='block'){
-      const t = new Date();
-      const val = t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+      var t = new Date();
+      var val = t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
       document.getElementById('moveDateInputType').min = val;
       document.getElementById('moveDateInputType').value = val;
     }
   };
-  document.getElementById('typeClearBtn').onclick = () => {
+  document.getElementById('typeClearBtn').onclick = function(){
     if (confirm('Очистить '+day+' '+monthNames[month]+'?')){
       delete state.completedDays[year+'-'+month+'-'+day];
       delete state.plannedDays[year+'-'+month+'-'+day];
-      saveState().then(()=>{ renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active'); });
+      saveState(); renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active');
     }
   };
-  document.getElementById('typeInitiativeDone').onclick = () => {
-    const t = document.getElementById('typeInitiativeTitle').value.trim();
-    const c = document.getElementById('typeInitiativeCategory').value;
+  document.getElementById('typeInitiativeDone').onclick = function(){
+    var t = document.getElementById('typeInitiativeTitle').value.trim();
+    var c = document.getElementById('typeInitiativeCategory').value;
     if (!t){ alert('Введите название'); return; }
-    const p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-    openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(()=>overlay.classList.remove('active')));
+    var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
+    openPhotoAttach(function(){ planEvent(year,month,day,c,t,p,true); overlay.classList.remove('active'); });
   };
-  document.getElementById('moveDayBtnType').onclick = () => {
-    const v = document.getElementById('moveDateInputType').value;
+  document.getElementById('moveDayBtnType').onclick = function(){
+    var v = document.getElementById('moveDateInputType').value;
     if (!v){ alert('Выберите дату'); return; }
-    const parts = v.split('-').map(n=>parseInt(n));
-    const ny=parts[0], nm=parts[1]-1, nd=parts[2];
-    const nk = ny+'-'+nm+'-'+nd;
-    const sk = year+'-'+month+'-'+day;
+    var parts = v.split('-').map(function(n){ return parseInt(n); });
+    var ny=parts[0], nm=parts[1]-1, nd=parts[2];
+    var nk = ny+'-'+nm+'-'+nd;
+    var sk = year+'-'+month+'-'+day;
     if (state.completedDays[sk]){ state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
     if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
-    saveState().then(()=>{ renderCalendar(); overlay.classList.remove('active'); });
+    saveState(); renderCalendar(); overlay.classList.remove('active');
   };
   overlay.classList.add('active');
 }
@@ -2121,37 +1694,36 @@ function openChoiceModal(title, subtitle){
 
 function openPhotoAttach(onSave){
   state.pendingPhoto = null;
-  const overlay = document.getElementById('photoAttachOverlay');
-  const input = document.getElementById('photoInput');
-  const preview = document.getElementById('photoPreview');
-  const previewImg = document.getElementById('photoPreviewImg');
-  const saveBtn = document.getElementById('photoSaveBtn');
-  const skipBtn = document.getElementById('photoSkipBtn');
+  var overlay = document.getElementById('photoAttachOverlay');
+  var input = document.getElementById('photoInput');
+  var preview = document.getElementById('photoPreview');
+  var previewImg = document.getElementById('photoPreviewImg');
+  var saveBtn = document.getElementById('photoSaveBtn');
+  var skipBtn = document.getElementById('photoSkipBtn');
   preview.classList.remove('show');
   saveBtn.disabled = true;
   input.value = '';
-  input.onchange = async (e) => {
-    const file = e.target.files && e.target.files[0];
+  input.onchange = function(e){
+    var file = e.target.files && e.target.files[0];
     if (!file) return;
-    try {
-      const dataUrl = await compressImage(file, PHOTO_MAX_DIM, PHOTO_JPEG_QUALITY);
+    compressImage(file, PHOTO_MAX_DIM, PHOTO_JPEG_QUALITY).then(function(dataUrl){
       state.pendingPhoto = dataUrl;
       previewImg.src = dataUrl;
       preview.classList.add('show');
       saveBtn.disabled = false;
-    } catch(err){ showToast('❌', 'Не удалось загрузить фото'); }
+    }).catch(function(){ showToast('❌', 'Не удалось загрузить фото'); });
   };
-  document.getElementById('removePhotoBtn').onclick = () => { state.pendingPhoto = null; preview.classList.remove('show'); input.value = ''; saveBtn.disabled = true; };
-  saveBtn.onclick = () => { overlay.classList.remove('active'); onSave(); };
-  skipBtn.onclick = () => { state.pendingPhoto = null; overlay.classList.remove('active'); onSave(); };
+  document.getElementById('removePhotoBtn').onclick = function(){ state.pendingPhoto = null; preview.classList.remove('show'); input.value = ''; saveBtn.disabled = true; };
+  saveBtn.onclick = function(){ overlay.classList.remove('active'); onSave(); };
+  skipBtn.onclick = function(){ state.pendingPhoto = null; overlay.classList.remove('active'); onSave(); };
   overlay.classList.add('active');
 }
 
 /* ===== ПЛАНЫ И СОБЫТИЯ ===== */
 function planEvent(year, month, day, type, text, points, isInitiative){
-  const key = year+'-'+month+'-'+day;
+  var key = year+'-'+month+'-'+day;
   if (!state.plannedDays) state.plannedDays = {};
-  const event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
+  var event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
   if (state.pendingPhoto) event.photo = state.pendingPhoto;
   state.pendingPhoto = null;
   state.plannedDays[key] = event;
@@ -2160,47 +1732,45 @@ function planEvent(year, month, day, type, text, points, isInitiative){
     dateKey: key, seen: false, createdAt: Date.now()
   });
   logActivity('planned', '🗓 Запланировал: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', '+points+' б.) на '+day+'.'+(month+1)+'.'+year);
-  return saveState().then(()=>{
-    renderCalendar(); renderHistory();
-    showToast('🗓', 'Запланировано: '+text);
-  });
+  saveState();
+  renderCalendar(); renderHistory();
+  showToast('🗓', 'Запланировано: '+text);
 }
 function addEventToDay(year, month, day, type, text, points, isInitiative){
-  const key = year+'-'+month+'-'+day;
+  var key = year+'-'+month+'-'+day;
   if (!state.completedDays[key]) state.completedDays[key] = [];
-  const event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
+  var event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
   if (state.pendingPhoto) event.photo = state.pendingPhoto;
   state.pendingPhoto = null;
   state.completedDays[key].push(event);
   addPoints(points);
   putInQuarantine(text, type);
-  const dateStr = String(day).padStart(2,'0')+'.'+String(month+1).padStart(2,'0')+'.'+year;
+  var dateStr = String(day).padStart(2,'0')+'.'+String(month+1).padStart(2,'0')+'.'+year;
   state.history.unshift({
     date:dateStr, eventDate:new Date(year,month,day).getTime(), title:text,
     category:isInitiative?TYPE_INFO[type].name+' (инициатива)':TYPE_INFO[type].name,
     emoji:isInitiative?'⭐':TYPE_INFO[type].emoji, points:points, photo: event.photo || null
   });
   logActivity('task_done', '✅ Подтвердил: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', +'+points+' б.)');
-  return saveState().then(()=>{
-    renderCalendar(); updateStats(); checkUpcomingDates();
-    renderHistory(); renderLoveTree();
-    showToast(TYPE_INFO[type].emoji, '+'+points+' баллов! '+text);
-    fireBurst(window.innerWidth/2, window.innerHeight/2);
-    checkAchievements();
-    checkMonthCelebration();
-  });
+  saveState();
+  renderCalendar(); updateStats(); checkUpcomingDates();
+  renderHistory(); renderLoveTree();
+  showToast(TYPE_INFO[type].emoji, '+'+points+' баллов! '+text);
+  fireBurst(window.innerWidth/2, window.innerHeight/2);
+  checkAchievements();
+  checkMonthCelebration();
 }
 function addPoints(amount){ state.points += amount; state.totalPoints += amount; saveState(); }
 
 /* ===== ИСТОРИЯ ===== */
 function renderHistory(){
-  const list = document.getElementById('timelineList');
+  var list = document.getElementById('timelineList');
   if (!list) return;
   if (!state.history.length){ list.innerHTML = '<div class="empty-state">Пока пусто.<br>Нажми на день в календаре ❤️</div>'; return; }
-  list.innerHTML = state.history.map((h, i) => {
-    const emoji = h.emoji || '❤️';
-    const delay = Math.min(i*0.04, 0.8);
-    const photoBlock = h.photo ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+h.photo+'" alt=""></div>' : '';
+  list.innerHTML = state.history.map(function(h, i){
+    var emoji = h.emoji || '❤️';
+    var delay = Math.min(i*0.04, 0.8);
+    var photoBlock = h.photo ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+h.photo+'" alt=""></div>' : '';
     return '<div class="timeline-item" style="animation-delay:'+delay+'s">' +
       '<div class="tl-icon">'+emoji+'</div>' +
       '<div class="tl-body">' +
@@ -2212,10 +1782,10 @@ function renderHistory(){
       '<div class="tl-points">+'+h.points+'</div>' +
     '</div>';
   }).join('');
-  list.querySelectorAll('.tl-photo').forEach(el => {
-    el.onclick = () => {
-      const idx = parseInt(el.dataset.photoIdx);
-      const h = state.history[idx];
+  list.querySelectorAll('.tl-photo').forEach(function(el){
+    el.onclick = function(){
+      var idx = parseInt(el.dataset.photoIdx);
+      var h = state.history[idx];
       if (!h || !h.photo) return;
       document.getElementById('photoViewImg').src = h.photo;
       document.getElementById('photoViewModal').classList.add('active');
@@ -2225,25 +1795,25 @@ function renderHistory(){
 
 /* ===== ХОТЕЛКИ ===== */
 function renderWishes(){
-  const garden = document.getElementById('wishGarden');
+  var garden = document.getElementById('wishGarden');
   if (!garden) return;
   if (!state.wishes.length){ garden.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Пока пусто.<br>Запиши первое желание ☝</div>'; return; }
-  garden.innerHTML = state.wishes.map((w, i) => {
-    const canActivate = state.totalPoints >= WISH_THRESHOLD && state.points >= w.cost && !w.activated && !w.done;
-    let flowerEmoji = WISH_TIER_FLOWER[w.tier] || '🌼';
+  garden.innerHTML = state.wishes.map(function(w, i){
+    var canActivate = state.totalPoints >= WISH_THRESHOLD && state.points >= w.cost && !w.activated && !w.done;
+    var flowerEmoji = WISH_TIER_FLOWER[w.tier] || '🌼';
     if (w.activated && !w.done) flowerEmoji = WISH_TIER_FLOWER_ACTIVE[w.tier] || '🌷';
     if (w.done) flowerEmoji = '🌸';
-    let statusLabel = 'Активировать';
-    let btnClass = '';
+    var statusLabel = 'Активировать';
+    var btnClass = '';
     if (w.done) statusLabel = '✓ Исполнено';
     else if (w.activated) statusLabel = '⏳ Ждёт';
     else if (canActivate) btnClass = 'ready';
-    const btnDisabled = (w.done || w.activated || !canActivate) ? 'disabled' : '';
-    let hint = '';
+    var btnDisabled = (w.done || w.activated || !canActivate) ? 'disabled' : '';
+    var hint = '';
     if (!w.activated && !w.done && state.totalPoints < WISH_THRESHOLD){
       hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight:600">До порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
     }
-    const actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
+    var actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
     return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
       '<span class="flower-emoji">'+flowerEmoji+'</span>' +
       '<div class="flower-title">'+w.title+'</div>' +
@@ -2253,9 +1823,9 @@ function renderWishes(){
       actions +
     '</div>';
   }).join('');
-  garden.querySelectorAll('.flower-btn').forEach(b => {
-    b.onclick = () => {
-      const i = parseInt(b.dataset.idx); const w = state.wishes[i];
+  garden.querySelectorAll('.flower-btn').forEach(function(b){
+    b.onclick = function(){
+      var i = parseInt(b.dataset.idx); var w = state.wishes[i];
       if (!w || w.activated || w.done) return;
       if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
       if (state.points < w.cost){ showToast('💔','Недостаточно баллов'); return; }
@@ -2265,19 +1835,20 @@ function renderWishes(){
       state.wishes[i].activatedAt = Date.now();
       state.notificationsForNastya.push({ id:Date.now(), title:w.title, cost:w.cost, tier:w.tier, seen:false, createdAt:Date.now() });
       logActivity('wish_activate', '💎 Активировал: '+w.title+' (−'+w.cost+' б.)');
-      saveState().then(()=>{ updateStats(); renderWishes(); showToast('💎','Желание активировано!'); makeConfetti(25); checkAchievements(); });
+      saveState(); updateStats(); renderWishes();
+      showToast('💎','Желание активировано!'); makeConfetti(25); checkAchievements();
     };
   });
-  garden.querySelectorAll('.flower-actions button').forEach(b => {
-    b.onclick = () => {
-      const i = parseInt(b.dataset.idx); const action = b.dataset.action; const w = state.wishes[i];
+  garden.querySelectorAll('.flower-actions button').forEach(function(b){
+    b.onclick = function(){
+      var i = parseInt(b.dataset.idx); var action = b.dataset.action; var w = state.wishes[i];
       if (action === 'edit'){
-        const nv = prompt('Изменить желание:', w.title);
-        if (nv && nv.trim()){ state.wishes[i].title = nv.trim(); saveState().then(()=>{ renderWishes(); showToast('✏️','Изменено'); }); }
+        var nv = prompt('Изменить желание:', w.title);
+        if (nv && nv.trim()){ state.wishes[i].title = nv.trim(); saveState(); renderWishes(); showToast('✏️','Изменено'); }
       } else if (action === 'delete'){
         if (!confirm('Удалить желание?')) return;
         state.wishes.splice(i, 1);
-        saveState().then(()=>{ renderWishes(); showToast('🗑','Удалено'); });
+        saveState(); renderWishes(); showToast('🗑','Удалено');
       }
     };
   });
@@ -2285,10 +1856,10 @@ function renderWishes(){
 
 /* ===== ДОСТИЖЕНИЯ ===== */
 function getAchievementStats(){
-  let emotionalDone=0, physicalDone=0, bigDateDone=0, dateDone=0, initiativeDone=0, totalDone=0;
-  for (let k in state.completedDays){
+  var emotionalDone=0, physicalDone=0, bigDateDone=0, dateDone=0, initiativeDone=0, totalDone=0;
+  for (var k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
-    state.completedDays[k].forEach(e => {
+    state.completedDays[k].forEach(function(e){
       totalDone++;
       if (e.type === 'emotional') emotionalDone++;
       if (e.type === 'physical') physicalDone++;
@@ -2301,14 +1872,14 @@ function getAchievementStats(){
     totalDone: totalDone, emotionalDone: emotionalDone, physicalDone: physicalDone,
     bigDateDone: bigDateDone, dateDone: dateDone, initiativeDone: initiativeDone,
     wishesCount: (state.wishes||[]).length,
-    wishesActivated: (state.wishes||[]).filter(w=>w.activated).length,
+    wishesActivated: (state.wishes||[]).filter(function(w){ return w.activated; }).length,
     totalPoints: state.totalPoints || 0
   };
 }
 function checkAchievements(){
-  const s = getAchievementStats();
-  const unlockedNow = [];
-  ACHIEVEMENTS.forEach(a => {
+  var s = getAchievementStats();
+  var unlockedNow = [];
+  ACHIEVEMENTS.forEach(function(a){
     if (state.achievements.indexOf(a.id) === -1 && a.check(s)){
       state.achievements.push(a.id);
       unlockedNow.push(a);
@@ -2316,14 +1887,14 @@ function checkAchievements(){
   });
   if (unlockedNow.length){
     saveState(); renderAchievements();
-    unlockedNow.forEach((a, i) => { setTimeout(()=>{ showToast(a.emoji, 'Новое достижение: '+a.name+'!'); }, i*700); });
+    unlockedNow.forEach(function(a, i){ setTimeout(function(){ showToast(a.emoji, 'Новое достижение: '+a.name+'!'); }, i*700); });
   }
 }
 function renderAchievements(){
-  const grid = document.getElementById('achievementsGrid');
+  var grid = document.getElementById('achievementsGrid');
   if (!grid) return;
-  grid.innerHTML = ACHIEVEMENTS.map(a => {
-    const unlocked = state.achievements.indexOf(a.id) !== -1;
+  grid.innerHTML = ACHIEVEMENTS.map(function(a){
+    var unlocked = state.achievements.indexOf(a.id) !== -1;
     return '<div class="achievement '+(unlocked?'unlocked':'locked')+'">' +
       '<span class="ach-emoji">'+a.emoji+'</span>' +
       '<div class="ach-name">'+a.name+'</div>' +
@@ -2333,7 +1904,7 @@ function renderAchievements(){
 }
 
 /* ===== ДЕРЕВО ===== */
-const TREE_STAGES = [
+var TREE_STAGES = [
   { name: "Семечко", min: 0, max: 4 },
   { name: "Росток", min: 5, max: 14 },
   { name: "Саженец", min: 15, max: 29 },
@@ -2343,77 +1914,51 @@ const TREE_STAGES = [
   { name: "Плодоносящее", min: 120, max: Infinity }
 ];
 function buildTreeSvg(stage){
-  const W = 300, H = 260, cx = W/2, groundY = H-18;
-  let s = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">' +
+  var W = 300, H = 260, cx = W/2, groundY = H-18;
+  var s = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">' +
     '<defs>' +
       '<radialGradient id="groundGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#8dbdab" stop-opacity="0.45"/><stop offset="100%" stop-color="#8dbdab" stop-opacity="0"/></radialGradient>' +
       '<linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5a3d28"/><stop offset="35%" stop-color="#7a5436"/><stop offset="55%" stop-color="#8a6042"/><stop offset="100%" stop-color="#4a3020"/></linearGradient>' +
       '<radialGradient id="crownGrad1" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#a8d4b8"/><stop offset="55%" stop-color="#7aab8d"/><stop offset="100%" stop-color="#4a7a5c"/></radialGradient>' +
       '<radialGradient id="crownGrad2" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#b8dfc5"/><stop offset="60%" stop-color="#8dbdab"/><stop offset="100%" stop-color="#5a8d75"/></radialGradient>' +
       '<radialGradient id="crownGradDark" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#7aab8d"/><stop offset="100%" stop-color="#3d6b50"/></radialGradient>' +
-      '<radialGradient id="flowerGrad" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#ffe4ec"/><stop offset="70%" stop-color="#f8cdd6"/><stop offset="100%" stop-color="#e8a8b8"/></radialGradient>' +
-      '<radialGradient id="fruitGrad" cx="30%" cy="25%" r="80%"><stop offset="0%" stop-color="#ff9a9a"/><stop offset="60%" stop-color="#e06060"/><stop offset="100%" stop-color="#a03030"/></radialGradient>' +
     '</defs>' +
     '<ellipse cx="'+cx+'" cy="'+(groundY+4)+'" rx="120" ry="18" fill="url(#groundGrad)"/>' +
     '<ellipse cx="'+cx+'" cy="'+(groundY+2)+'" rx="70" ry="8" fill="#6da892" opacity="0.22"/>';
   if (stage === 1){
     s += '<ellipse cx="'+cx+'" cy="'+(groundY-6)+'" rx="16" ry="10" fill="#6b4f3a"/>' +
-      '<ellipse cx="'+(cx-4)+'" cy="'+(groundY-9)+'" rx="5" ry="3" fill="#8a6a4a" opacity="0.6"/>' +
-      '<path d="M '+(cx+2)+' '+(groundY-14)+' q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
-      '<ellipse cx="'+(cx-3)+'" cy="'+(groundY-26)+'" rx="6" ry="3.4" fill="#a8cfb8" transform="rotate(-30 '+(cx-3)+' '+(groundY-26)+')"/>' +
-      '<ellipse cx="'+(cx+5)+'" cy="'+(groundY-22)+'" rx="5" ry="3" fill="#8dbdab" transform="rotate(25 '+(cx+5)+' '+(groundY-22)+')"/>';
+      '<path d="M '+(cx+2)+' '+(groundY-14)+' q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
   } else if (stage === 2){
     s += '<path d="M '+cx+' '+groundY+' Q '+(cx-1)+' '+(groundY-30)+' '+cx+' '+(groundY-62)+'" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>' +
-      '<ellipse cx="'+(cx-15)+'" cy="'+(groundY-48)+'" rx="13" ry="7" fill="url(#crownGrad2)" transform="rotate(-35 '+(cx-15)+' '+(groundY-48)+')"/>' +
-      '<ellipse cx="'+(cx+15)+'" cy="'+(groundY-56)+'" rx="13" ry="7" fill="url(#crownGrad1)" transform="rotate(35 '+(cx+15)+' '+(groundY-56)+')"/>' +
-      '<ellipse cx="'+(cx-8)+'" cy="'+(groundY-64)+'" rx="10" ry="5.5" fill="url(#crownGrad2)" transform="rotate(-25 '+(cx-8)+' '+(groundY-64)+')"/>' +
-      '<ellipse cx="'+(cx+10)+'" cy="'+(groundY-68)+'" rx="10" ry="5.5" fill="url(#crownGrad1)" transform="rotate(25 '+(cx+10)+' '+(groundY-68)+')"/>';
+      '<ellipse cx="'+(cx-15)+'" cy="'+(groundY-48)+'" rx="13" ry="7" fill="url(#crownGrad2)"/>' +
+      '<ellipse cx="'+(cx+15)+'" cy="'+(groundY-56)+'" rx="13" ry="7" fill="url(#crownGrad1)"/>';
   } else {
-    const trunkH = 40 + (stage-2)*22, trunkTop = groundY - trunkH, crownR = 22 + (stage-2)*10;
-    const hasBranches = stage >= 4, hasFlowers = stage === 6, hasFruits = stage === 7;
+    var trunkH = 40 + (stage-2)*22, trunkTop = groundY - trunkH, crownR = 22 + (stage-2)*10;
     s += '<path d="M '+(cx-8)+' '+groundY+' Q '+(cx-5)+' '+(groundY-trunkH/2)+' '+(cx-2)+' '+(trunkTop+crownR*0.3)+' L '+(cx+2)+' '+(trunkTop+crownR*0.3)+' Q '+(cx+5)+' '+(groundY-trunkH/2)+' '+(cx+8)+' '+groundY+' Z" fill="url(#trunkGrad)"/>';
-    if (hasBranches){
-      s += '<path d="M '+(cx-1)+' '+(trunkTop+30)+' Q '+(cx-26)+' '+(trunkTop+14)+' '+(cx-42)+' '+(trunkTop-6)+'" stroke="url(#trunkGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-        '<path d="M '+(cx+1)+' '+(trunkTop+30)+' Q '+(cx+26)+' '+(trunkTop+14)+' '+(cx+42)+' '+(trunkTop-6)+'" stroke="url(#trunkGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>';
-    }
-    s += '<g class="tree-sway">';
     s += '<ellipse cx="'+cx+'" cy="'+(trunkTop-crownR*0.15)+'" rx="'+(crownR*1.25)+'" ry="'+(crownR*1.05)+'" fill="url(#crownGradDark)" opacity="0.85"/>';
     s += '<ellipse cx="'+(cx-crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
     s += '<ellipse cx="'+(cx+crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
-    if (hasFlowers){
-      const positions = [[-0.75,-0.35],[-0.55,-0.75],[-0.35,-1.0],[0,-1.2],[0.35,-1.0],[0.55,-0.75],[0.75,-0.35],[-0.85,0.05],[-0.4,-0.2],[0,-0.4],[0.4,-0.2],[0.85,0.05],[-0.6,-0.45],[0.6,-0.45],[-0.2,-0.8],[0.2,-0.8]];
-      positions.forEach(function(p){ s += '<circle cx="'+(cx+p[0]*crownR)+'" cy="'+(trunkTop+p[1]*crownR)+'" r="4" fill="url(#flowerGrad)"/>'; });
-    }
-    if (hasFruits){
-      const positions = [[-0.75,-0.35],[-0.5,-0.7],[-0.2,-0.95],[0.2,-0.95],[0.5,-0.7],[0.75,-0.35],[-0.6,-0.1],[0.6,-0.1],[0,-0.55],[-0.3,-0.3],[0.3,-0.3]];
-      positions.forEach(function(p){
-        const px = cx+p[0]*crownR, py = trunkTop+p[1]*crownR;
-        s += '<circle cx="'+px+'" cy="'+py+'" r="5.5" fill="url(#fruitGrad)"/>' +
-          '<ellipse cx="'+(px-1.5)+'" cy="'+(py-1.5)+'" rx="1.6" ry="1.1" fill="#ffd0d0" opacity="0.85"/>';
-      });
-    }
-    s += '</g>';
   }
   s += '</svg>';
   return s;
 }
 function renderLoveTree(){
-  const wrap = document.getElementById('treeSvgWrap');
+  var wrap = document.getElementById('treeSvgWrap');
   if (!wrap) return;
-  const count = (state.history||[]).length;
-  let stageIdx = 0;
-  for (let i=0;i<TREE_STAGES.length;i++){ if (count>=TREE_STAGES[i].min && count<=TREE_STAGES[i].max){ stageIdx=i; break; } }
-  const stage = stageIdx+1;
-  const info = TREE_STAGES[stageIdx];
-  const next = TREE_STAGES[stageIdx+1] || null;
+  var count = (state.history||[]).length;
+  var stageIdx = 0;
+  for (var i=0;i<TREE_STAGES.length;i++){ if (count>=TREE_STAGES[i].min && count<=TREE_STAGES[i].max){ stageIdx=i; break; } }
+  var stage = stageIdx+1;
+  var info = TREE_STAGES[stageIdx];
+  var next = TREE_STAGES[stageIdx+1] || null;
   document.getElementById('treeStage').textContent = info.name;
   wrap.innerHTML = buildTreeSvg(stage);
   if (next){
-    const curMin = info.min, nextMin = next.min;
-    const done = count - curMin, total = nextMin - curMin;
-    const pct = Math.max(4, Math.min(100, (done/total)*100));
-    const toNext = nextMin - count;
-    const word = toNext === 1 ? 'задание' : (toNext >= 2 && toNext <= 4 ? 'задания' : 'заданий');
+    var curMin = info.min, nextMin = next.min;
+    var done = count - curMin, total = nextMin - curMin;
+    var pct = Math.max(4, Math.min(100, (done/total)*100));
+    var toNext = nextMin - count;
+    var word = toNext === 1 ? 'задание' : (toNext >= 2 && toNext <= 4 ? 'задания' : 'заданий');
     document.getElementById('treeProgressText').textContent = 'До стадии «'+next.name+'» — '+toNext+' '+word;
     document.getElementById('treeProgressFill').style.width = pct + '%';
   } else {
@@ -2425,22 +1970,22 @@ function renderLoveTree(){
 /* ===== МЕСЯЧНЫЙ ПРАЗДНИК ===== */
 function checkMonthCelebration(){
   if (state.viewingAs !== 'vanya') return;
-  const now = new Date();
-  const prevMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
-  const prevMonthKey = prevMonth.getFullYear()+'-'+prevMonth.getMonth();
+  var now = new Date();
+  var prevMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
+  var prevMonthKey = prevMonth.getFullYear()+'-'+prevMonth.getMonth();
   if (state.lastCelebrationMonth === prevMonthKey) return;
-  let countPrevMonth = 0;
-  for (let k in state.completedDays){
+  var countPrevMonth = 0;
+  for (var k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
-    const parts = k.split('-');
-    const y = parseInt(parts[0]); const m = parseInt(parts[1]);
+    var parts = k.split('-');
+    var y = parseInt(parts[0]); var m = parseInt(parts[1]);
     if (y===prevMonth.getFullYear() && m===prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
   }
   if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
     state.lastCelebrationMonth = prevMonthKey;
     state.points += MONTH_CELEBRATION_BONUS;
     state.totalPoints += MONTH_CELEBRATION_BONUS;
-    const mc = document.getElementById('monthCelebration');
+    var mc = document.getElementById('monthCelebration');
     document.getElementById('mcTitle').textContent = 'Восхитительно!';
     document.getElementById('mcText').innerHTML = 'Ты выполнил <b>'+countPrevMonth+'</b> дел за прошлый месяц!<br>Настя гордится тобой.';
     document.getElementById('mcBonus').textContent = '+'+MONTH_CELEBRATION_BONUS+' баллов';
@@ -2453,14 +1998,14 @@ function checkMonthCelebration(){
   }
 }
 function checkLevelAndMilestones(p){
-  const cur = getLevel(p);
+  var cur = getLevel(p);
   if (cur.name !== lastLevelName && lastLevelName !== null){
     showToast(cur.emoji, 'Уровень «'+cur.name+'»! '+cur.text);
     makeConfetti(50);
   }
   lastLevelName = cur.name;
   localStorage.setItem('lastLevelName', lastLevelName);
-  MILESTONES.forEach(m => {
+  MILESTONES.forEach(function(m){
     if (p >= m.points && reachedMilestones.indexOf(m.points) === -1){
       showToast(m.emoji, m.text); makeConfetti(30);
       reachedMilestones.push(m.points);
@@ -2469,38 +2014,38 @@ function checkLevelAndMilestones(p){
   });
 }
 function updateStats(prevPoints){
-  const pointsEl = document.getElementById('pointsNumber');
-  const totalEl = document.getElementById('totalPointsDisplay');
-  const fromP = (typeof prevPoints === 'number') ? prevPoints : state.points;
+  var pointsEl = document.getElementById('pointsNumber');
+  var totalEl = document.getElementById('totalPointsDisplay');
+  var fromP = (typeof prevPoints === 'number') ? prevPoints : state.points;
   animateNumber(pointsEl, fromP, state.points, 900);
   animateNumber(totalEl, 0, state.totalPoints, 1200);
-  const lvl = getLevel(state.points);
+  var lvl = getLevel(state.points);
   document.getElementById('levelEmoji').textContent = lvl.emoji;
   document.getElementById('levelName').textContent = lvl.name;
   document.getElementById('progressBar').style.width = getProgressToNext(state.points)+'%';
-  const next = getNextLevel(state.points);
+  var next = getNextLevel(state.points);
   if (next && next.max !== Infinity) document.getElementById('pointsToNext').textContent = 'До уровня «'+next.name+'» — '+(next.max-state.points+1)+' б.';
   else document.getElementById('pointsToNext').textContent = lvl.text;
-  const to1000 = WISH_THRESHOLD - state.points;
+  var to1000 = WISH_THRESHOLD - state.points;
   document.getElementById('pointsToGo').textContent = to1000<=0 ? '✦ Цель 1000 достигнута! Иди в «Хотелки»' : 'До цели 1000 баллов: '+to1000;
   checkLevelAndMilestones(state.points);
 }
 
 /* ===== УВЕДОМЛЕНИЯ ===== */
 function checkUpcomingDates(){
-  const today = new Date(); today.setHours(0,0,0,0);
-  const banner = document.getElementById('notificationBanner');
-  const dismissed = JSON.parse(localStorage.getItem('dismissed_notifications')||'[]');
-  for (let i=0;i<=5;i++){
-    const cd = new Date(today); cd.setDate(today.getDate()+i);
-    const y=cd.getFullYear(), m=cd.getMonth(), d=cd.getDate();
-    const type = getDayType(y,m,d);
-    const key = y+'-'+m+'-'+d;
-    const events = getCompletedEvents(y,m,d);
+  var today = new Date(); today.setHours(0,0,0,0);
+  var banner = document.getElementById('notificationBanner');
+  var dismissed = JSON.parse(localStorage.getItem('dismissed_notifications')||'[]');
+  for (var i=0;i<=5;i++){
+    var cd = new Date(today); cd.setDate(today.getDate()+i);
+    var y=cd.getFullYear(), m=cd.getMonth(), d=cd.getDate();
+    var type = getDayType(y,m,d);
+    var key = y+'-'+m+'-'+d;
+    var events = getCompletedEvents(y,m,d);
     if ((type==='bigDate'||type==='lightDate') && events.length===0 && dismissed.indexOf(key)===-1){
-      const label = i===0 ? 'Сегодня' : 'Через '+i+' '+getDaysWord(i);
-      const tn = type==='bigDate' ? 'Большое' : 'Лёгкое';
-      const em = type==='bigDate' ? '🏆' : '💗';
+      var label = i===0 ? 'Сегодня' : 'Через '+i+' '+getDaysWord(i);
+      var tn = type==='bigDate' ? 'Большое' : 'Лёгкое';
+      var em = type==='bigDate' ? '🏆' : '💗';
       document.getElementById('notifTitle').textContent = em+' '+label+' — '+tn+' свидание!';
       document.getElementById('notifSub').textContent = 'Покрути колесо 🎡';
       banner.dataset.notifDate = key;
@@ -2519,39 +2064,39 @@ function checkUpcomingDates(){
 }
 function renderNotificationsForNastya(){
   if (state.viewingAs !== 'nastya') return;
-  const banner = document.getElementById('notificationBanner');
-  const planned = state.notificationsForNastya.filter(n => n.type === 'planned' && !n.seen);
+  var banner = document.getElementById('notificationBanner');
+  var planned = state.notificationsForNastya.filter(function(n){ return n.type === 'planned' && !n.seen; });
   if (planned.length > 0){
-    const p = planned[0];
+    var p = planned[0];
     document.getElementById('notifTitle').textContent = '🗓 Ваня что-то запланировал!';
     document.getElementById('notifSub').textContent = '«'+p.title+'» · '+p.cost+' б.';
     document.getElementById('notifAction').textContent = 'Ок';
     document.getElementById('notifAction').onclick = function(){
-      let idx = -1;
-      for (let i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id === p.id){ idx=i; break; }
+      var idx = -1;
+      for (var i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id === p.id){ idx=i; break; }
       if (idx!==-1) state.notificationsForNastya[idx].seen = true;
-      saveState().then(function(){ banner.classList.remove('show'); renderNotificationsForNastya(); });
+      saveState(); banner.classList.remove('show'); renderNotificationsForNastya();
     };
     banner.classList.add('show');
     return;
   }
-  const fresh = state.notificationsForNastya.filter(n => !n.seen);
+  var fresh = state.notificationsForNastya.filter(function(n){ return !n.seen; });
   if (fresh.length === 0) return;
-  const n = fresh[0];
+  var n = fresh[0];
   document.getElementById('notifTitle').textContent = '💎 Ваня активировал желание!';
   document.getElementById('notifSub').textContent = '«'+n.title+'» · '+n.cost+' б.';
   document.getElementById('notifAction').textContent = '✓ Выполнено';
   document.getElementById('notifAction').onclick = function(){
-    let idx=-1;
-    for (let i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id===n.id){ idx=i; break; }
+    var idx=-1;
+    for (var i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id===n.id){ idx=i; break; }
     if (idx!==-1) state.notificationsForNastya[idx].seen = true;
-    saveState().then(function(){ banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya(); });
+    saveState(); banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya();
   };
   banner.classList.add('show');
 }
 function applyDailyBonus(){
   if (state.viewingAs !== 'vanya') return;
-  const today = new Date().toISOString().slice(0,10);
+  var today = new Date().toISOString().slice(0,10);
   if (!state.dailyVisits[today]){
     state.dailyVisits[today] = true;
     addPoints(DAILY_BONUS);
@@ -2560,45 +2105,40 @@ function applyDailyBonus(){
 }
 
 /* ===== КОЛЕСО ===== */
-let wheelItems = [], currentAngle = 0, spinVelocity = 0, isSpinning = false, animId = null, wheelMode = 'task';
-let canvas, ctx;
+var wheelItems = [], currentAngle = 0, spinVelocity = 0, isSpinning = false, animId = null, wheelMode = 'task';
+var canvas, ctx;
 function resizeCanvas(){
   if (!canvas){ canvas = document.getElementById('wheel'); if (canvas) ctx = canvas.getContext('2d'); }
   if (!canvas || !ctx) return;
-  const size = Math.min(window.innerWidth*0.78, 340);
-  const dpr = window.devicePixelRatio || 1;
+  var size = Math.min(window.innerWidth*0.78, 340);
+  var dpr = window.devicePixelRatio || 1;
   canvas.width = size*dpr; canvas.height = size*dpr;
   canvas.style.width = size+'px'; canvas.style.height = size+'px';
   ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
   drawWheel();
 }
-function lighten(hex, amount){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.min(255,Math.round(r+(255-r)*amount))+','+Math.min(255,Math.round(g+(255-g)*amount))+','+Math.min(255,Math.round(b+(255-b)*amount))+')'; }
-function darken(hex, amount){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.max(0,Math.round(r*(1-amount)))+','+Math.max(0,Math.round(g*(1-amount)))+','+Math.max(0,Math.round(b*(1-amount)))+')'; }
+function lighten(hex, amount){ var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.min(255,Math.round(r+(255-r)*amount))+','+Math.min(255,Math.round(g+(255-g)*amount))+','+Math.min(255,Math.round(b+(255-b)*amount))+')'; }
+function darken(hex, amount){ var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.max(0,Math.round(r*(1-amount)))+','+Math.max(0,Math.round(g*(1-amount)))+','+Math.max(0,Math.round(b*(1-amount)))+')'; }
 function drawWheel(){
   if (!wheelItems.length || !ctx) return;
-  const size = parseInt(canvas.style.width);
-  const cx = size/2, cy = size/2; const r = cx - 24;
-  const step = (Math.PI*2)/wheelItems.length;
+  var size = parseInt(canvas.style.width);
+  var cx = size/2, cy = size/2; var r = cx - 24;
+  var step = (Math.PI*2)/wheelItems.length;
   ctx.clearRect(0,0,size,size);
   wheelItems.forEach(function(item, i){
-    const start = currentAngle + i*step, end = start + step;
+    var start = currentAngle + i*step, end = start + step;
     ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,start,end); ctx.closePath();
-    const baseColor = (item.type && TYPE_INFO[item.type]) ? TYPE_INFO[item.type].color : ['#dbeaf3','#e9dff3','#f8e5e9','#f4ead0'][i%4];
-    const grad = ctx.createRadialGradient(cx, cy, r*0.15, cx, cy, r);
+    var baseColor = (item.type && TYPE_INFO[item.type]) ? TYPE_INFO[item.type].color : ['#dbeaf3','#e9dff3','#f8e5e9','#f4ead0'][i%4];
+    var grad = ctx.createRadialGradient(cx, cy, r*0.15, cx, cy, r);
     grad.addColorStop(0, lighten(baseColor, 0.7));
     grad.addColorStop(0.5, lighten(baseColor, 0.3));
     grad.addColorStop(1, darken(baseColor, 0.05));
     ctx.fillStyle = grad; ctx.fill();
     ctx.strokeStyle = "rgba(232,200,138,0.75)"; ctx.lineWidth = 1.2; ctx.stroke();
   });
-  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.strokeStyle = "rgba(58,46,42,0.12)"; ctx.lineWidth = 1; ctx.stroke();
-  ctx.beginPath(); ctx.arc(cx,cy,30,0,Math.PI*2);
-  ctx.fillStyle = "#FDFBF7"; ctx.fill();
-  ctx.strokeStyle = "rgba(212,168,90,0.5)"; ctx.lineWidth = 1; ctx.stroke();
 }
 function openTypeWheel(){
-  const types = ['emotional','physical','lightDate','bigDate'];
+  var types = ['emotional','physical','lightDate','bigDate'];
   wheelItems = types.map(function(t){ return { text:TYPE_INFO[t].name, type:t }; });
   document.getElementById('wheelTitle').textContent = state.currentDay + ' ' + monthNames[state.currentDate.getMonth()];
   document.getElementById('wheelCategory').textContent = 'Колесо решит за тебя';
@@ -2611,8 +2151,8 @@ function openTypeWheel(){
   document.getElementById('spinBtn').textContent = 'Крутить колесо';
 }
 function openWheel(type){
-  const info = TYPE_INFO[type];
-  const available = getAvailableTasks(type);
+  var info = TYPE_INFO[type];
+  var available = getAvailableTasks(type);
   wheelItems = available.map(function(t){ return { text:t, type:type }; });
   document.getElementById('wheelTitle').textContent = state.currentDay + ' ' + monthNames[state.currentDate.getMonth()];
   document.getElementById('wheelCategory').textContent = info.emoji + ' ' + info.name;
@@ -2624,11 +2164,11 @@ function openWheel(type){
 }
 function getSpinsKeyForTarget(){
   if (state.currentDate && state.currentDay) return 'target-'+state.currentDate.getFullYear()+'-'+state.currentDate.getMonth()+'-'+state.currentDay;
-  const d = new Date();
+  var d = new Date();
   return 'target-'+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
 }
 function getSpinsUsed(){ return state.spinsUsed[getSpinsKeyForTarget()] || 0; }
-function getNextSpinPrice(){ const used = getSpinsUsed(); return SPIN_PRICES[Math.min(used, SPIN_PRICES.length-1)]; }
+function getNextSpinPrice(){ var used = getSpinsUsed(); return SPIN_PRICES[Math.min(used, SPIN_PRICES.length-1)]; }
 function updateSpinsUI(){
   if (wheelMode === 'type'){
     document.getElementById('spinBtn').disabled = false;
@@ -2636,11 +2176,11 @@ function updateSpinsUI(){
     document.getElementById('spinsLeft').textContent = 'Выбор категории бесплатный';
     return;
   }
-  const price = getNextSpinPrice();
-  const btn = document.getElementById('spinBtn');
-  const info = document.getElementById('spinsLeft');
-  const used = getSpinsUsed();
-  const targetDay = state.currentDay;
+  var price = getNextSpinPrice();
+  var btn = document.getElementById('spinBtn');
+  var info = document.getElementById('spinsLeft');
+  var used = getSpinsUsed();
+  var targetDay = state.currentDay;
   if (used === 0){ btn.textContent = 'Крутить колесо'; btn.disabled = false; info.textContent = 'Первая попытка для ' + targetDay + '-го — бесплатно ✨'; }
   else if (state.points >= price){ btn.textContent = 'Крутить ещё (−'+price+' б.)'; btn.disabled = false; info.textContent = 'Перекрут: −'+price+' б.'; }
   else { btn.textContent = 'Не хватает '+price+' б.'; btn.disabled = true; info.textContent = 'Нужно '+price+' баллов'; }
@@ -2652,10 +2192,10 @@ function animate(){
   } else { isSpinning = false; spinVelocity = 0; cancelAnimationFrame(animId); determineWinner(); }
 }
 function determineWinner(){
-  const n = wheelItems.length; const step = (Math.PI*2)/n;
-  const norm = ((Math.PI*2)-(currentAngle%(Math.PI*2)))%(Math.PI*2);
-  const pa = (norm + Math.PI*1.5) % (Math.PI*2);
-  let idx = Math.floor(pa/step)%n; if (idx < 0) idx = 0;
+  var n = wheelItems.length; var step = (Math.PI*2)/n;
+  var norm = ((Math.PI*2)-(currentAngle%(Math.PI*2)))%(Math.PI*2);
+  var pa = (norm + Math.PI*1.5) % (Math.PI*2);
+  var idx = Math.floor(pa/step)%n; if (idx < 0) idx = 0;
   showResult(wheelItems[idx]);
 }
 function showResult(item){
@@ -2666,13 +2206,13 @@ function showResult(item){
 function doSpin(){
   if (isSpinning) return;
   if (wheelMode === 'type'){ isSpinning = true; spinVelocity = 0.25+Math.random()*0.15; animate(); return; }
-  const price = getNextSpinPrice();
+  var price = getNextSpinPrice();
   if (price > 0){
     if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
     state.points -= price; updateStats();
     showToast('🔄','−'+price+' баллов за перекрут');
   }
-  const k = getSpinsKeyForTarget();
+  var k = getSpinsKeyForTarget();
   state.spinsUsed[k] = (state.spinsUsed[k]||0)+1;
   saveState();
   isSpinning = true;
@@ -2680,29 +2220,29 @@ function doSpin(){
   spinVelocity = 0.28+Math.random()*0.15;
   animate();
   updateSpinsUI();
-  const spinCat = state.currentType ? (TYPE_INFO[state.currentType]?TYPE_INFO[state.currentType].name:'') : '';
+  var spinCat = state.currentType ? (TYPE_INFO[state.currentType]?TYPE_INFO[state.currentType].name:'') : '';
   logActivity('spin', '🎡 Крутил колесо'+(spinCat?' ['+spinCat+']':'')+(price>0?', −'+price+' б.':', бесплатно'));
 }
 
 /* ===== УПРАВЛЕНИЕ ДЕЙСТВИЯМИ ===== */
-let activeEditorTab = 'emotional';
+var activeEditorTab = 'emotional';
 function renderActionLists(){
   ['emotional','physical','lightDate','bigDate'].forEach(function(cat){
-    const ul = document.getElementById('list-'+cat);
+    var ul = document.getElementById('list-'+cat);
     if (!ul) return;
-    const tasks = getTasksForCategory(cat);
+    var tasks = getTasksForCategory(cat);
     ul.innerHTML = tasks.map(function(t){ return '<li><span class="txt">'+t+'</span><button class="del-btn" data-cat="'+cat+'" data-text="'+encodeURIComponent(t)+'" type="button">✕</button></li>'; }).join('');
   });
   document.querySelectorAll('.del-btn').forEach(function(b){
     b.onclick = function(){
-      const cat = b.dataset.cat; const txt = decodeURIComponent(b.dataset.text);
+      var cat = b.dataset.cat; var txt = decodeURIComponent(b.dataset.text);
       if (!confirm('Удалить это действие?')) return;
       if (DEFAULT_TASKS[cat].indexOf(txt) !== -1){
         if (!state.userRemoved[cat]) state.userRemoved[cat] = [];
         if (state.userRemoved[cat].indexOf(txt) === -1) state.userRemoved[cat].push(txt);
       } else { state.userAdded[cat] = (state.userAdded[cat]||[]).filter(function(x){ return x !== txt; }); }
       logActivity('action_removed', '🗑 Удалил из «'+(TYPE_INFO[cat]?TYPE_INFO[cat].name:cat)+'»: '+txt.slice(0, 60));
-      saveState().then(function(){ renderActionLists(); showToast('✓','Действие удалено'); });
+      saveState(); renderActionLists(); showToast('✓','Действие удалено');
     };
   });
 }
@@ -2710,13 +2250,13 @@ function renderActionLists(){
 /* ===== АКТИВНОСТЬ ВАНИ ===== */
 function openVanyaActivity(){
   if (state.role !== 'nastya') return;
-  const overlay = document.createElement('div');
+  var overlay = document.createElement('div');
   overlay.className = 'overlay center active';
-  const isOn = isVanyaReallyOnline();
-  const log = (state.activityLog || []).filter(function(item){ return item.actor === 'vanya'; });
-  const c = (state.counters && state.counters.vanya) || {};
-  const t = (state.todayCounters && state.todayCounters.vanya) || emptyToday();
-  const statRow = function(lbl, val){ return '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>'; };
+  var isOn = isVanyaReallyOnline();
+  var log = (state.activityLog || []).filter(function(item){ return item.actor === 'vanya'; });
+  var c = (state.counters && state.counters.vanya) || {};
+  var t = (state.todayCounters && state.todayCounters.vanya) || emptyToday();
+  var statRow = function(lbl, val){ return '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>'; };
   overlay.innerHTML = '<div class="modal" style="max-height:88vh">' +
     '<button class="close-button" type="button" id="activityCloseBtn">×</button>' +
     '<div class="modal-title">Активность Вани</div>' +
@@ -2746,7 +2286,7 @@ function openVanyaActivity(){
     '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">📜 Последние действия Вани</div>' +
     '<ul class="activity-log-list">' +
       (log.length ? log.map(function(item){
-        let ico = '•';
+        var ico = '•';
         if (item.action === 'login') ico = '🟢';
         else if (item.action === 'logout') ico = '🔴';
         else if (item.action === 'task_done') ico = '✅';
@@ -2773,7 +2313,7 @@ function openVanyaActivity(){
 /* ===== НАЧИСЛЕНИЕ БАЛЛОВ ===== */
 function openManualPoints(){
   if (state.role !== 'nastya') return;
-  const overlay = document.createElement('div');
+  var overlay = document.createElement('div');
   overlay.className = 'overlay center active';
   overlay.innerHTML = '<div class="modal">' +
     '<button class="close-button" type="button" id="manualCloseBtn">×</button>' +
@@ -2799,22 +2339,20 @@ function openManualPoints(){
   document.getElementById('manualCloseBtn').onclick = function(){ overlay.remove(); };
   overlay.onclick = function(e){ if (e.target === overlay) overlay.remove(); };
   document.getElementById('manualSubmitBtn').onclick = function(){
-    const reason = document.getElementById('manualReason').value.trim();
-    const amount = parseInt(document.getElementById('manualAmount').value);
+    var reason = document.getElementById('manualReason').value.trim();
+    var amount = parseInt(document.getElementById('manualAmount').value);
     if (!reason){ alert('Напиши, за что начисляешь баллы'); return; }
     if (!amount || amount < 1){ alert('Введи число баллов'); return; }
     if (amount > 9999){ alert('Максимум 9999'); return; }
     state.points += amount; state.totalPoints += amount;
-    const now = new Date();
-    const dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
+    var now = new Date();
+    var dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
     state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
     logActivity('manual_points', '💌 Настя начислила '+amount+' б.: '+reason);
-    saveState().then(function(){
-      updateStats(); renderHistory();
-      showToast('💌', 'Начислено '+amount+' баллов!');
-      makeConfetti(30);
-      overlay.remove();
-    });
+    saveState(); updateStats(); renderHistory();
+    showToast('💌', 'Начислено '+amount+' баллов!');
+    makeConfetti(30);
+    overlay.remove();
   };
 }
 
@@ -2834,12 +2372,12 @@ function refreshAll(prevPoints){
 
 /* ===== СТАРТ ===== */
 document.addEventListener('DOMContentLoaded', function(){
-  const splash = document.getElementById('splashScreen');
-  const app = document.getElementById('appRoot');
+  var splash = document.getElementById('splashScreen');
+  var app = document.getElementById('appRoot');
   setTimeout(function(){
     if (splash) splash.classList.add('hidden');
     if (app) app.classList.add('reveal');
-  }, 1400);
+  }, 1200);
 
   canvas = document.getElementById('wheel');
   if (canvas) ctx = canvas.getContext('2d');
@@ -2879,7 +2417,7 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('dailyOverlay').onclick = function(){ this.classList.remove('active'); };
   document.getElementById('monthCelebration').onclick = function(){ this.classList.remove('active'); };
 
-  const pageNames = { calendar:'Месяц', history:'История', wishes:'Хотелки', stats:'Баллы', system:'Система' };
+  var pageNames = { calendar:'Месяц', history:'История', wishes:'Хотелки', stats:'Баллы', system:'Система' };
   document.querySelectorAll('.nav-item').forEach(function(btn){
     btn.onclick = function(){
       document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
@@ -2897,31 +2435,31 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('prevMonth').onclick = function(){
     state.currentDate.setMonth(state.currentDate.getMonth()-1);
     renderCalendar();
-    const cal = document.getElementById('calendar');
+    var cal = document.getElementById('calendar');
     cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
     cal.classList.add('slide-right');
   };
   document.getElementById('nextMonth').onclick = function(){
     state.currentDate.setMonth(state.currentDate.getMonth()+1);
     renderCalendar();
-    const cal = document.getElementById('calendar');
+    var cal = document.getElementById('calendar');
     cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
     cal.classList.add('slide-left');
   };
 
   document.getElementById('openRandomBtn').onclick = function(){
-    const t = new Date();
+    var t = new Date();
     if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0){ showToast('❤️','Сегодня уже сделано!'); return; }
     state.currentDay = t.getDate();
     state.currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-    const type = getDayType(t.getFullYear(), t.getMonth(), t.getDate());
+    var type = getDayType(t.getFullYear(), t.getMonth(), t.getDate());
     state.editingDay = { year:t.getFullYear(), month:t.getMonth(), day:t.getDate(), type:type, isDone:false };
     openEditModal(); renderCalendar();
   };
 
   document.querySelectorAll('[data-choice]').forEach(function(btn){
     btn.onclick = function(){
-      const c = btn.dataset.choice;
+      var c = btn.dataset.choice;
       document.getElementById('choiceOverlay').classList.remove('active');
       if (c === 'random') openTypeWheel();
       else { state.currentType = c; state.currentDay = state.currentDay || new Date().getDate(); openWheel(c); }
@@ -2936,23 +2474,23 @@ document.addEventListener('DOMContentLoaded', function(){
     };
   });
   document.getElementById('wishAddBtn').onclick = function(){
-    const v = document.getElementById('wishInput').value.trim();
+    var v = document.getElementById('wishInput').value.trim();
     if (!v) return;
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
     addPoints(WISH_BONUS);
     logActivity('wish_add', '✿ Записал хотелку ('+WISH_TIER_LABEL[state.currentWishTier]+'): «'+v+'»');
-    saveState().then(function(){ renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements(); });
+    saveState(); renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements();
   };
 
   document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
   document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
   document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
 
-  const settingsToggle = document.getElementById('settingsToggle');
-  const settingsMenu = document.getElementById('settingsMenu');
-  const settingsHotzone = document.getElementById('settingsHotzone');
-  let tapCount = 0, tapTimer = null, lastTouchTime = 0;
+  var settingsToggle = document.getElementById('settingsToggle');
+  var settingsMenu = document.getElementById('settingsMenu');
+  var settingsHotzone = document.getElementById('settingsHotzone');
+  var tapCount = 0, tapTimer = null, lastTouchTime = 0;
   function registerHotzoneTap(){
     if (state.viewingAs === 'vanya' || state.role === 'vanya') return;
     tapCount++;
@@ -2968,7 +2506,7 @@ document.addEventListener('DOMContentLoaded', function(){
     settingsHotzone.addEventListener('touchend', function(e){ lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
     settingsHotzone.addEventListener('click', function(e){ e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
   }
-  let toggleClickCount = 0, toggleClickTimer = null;
+  var toggleClickCount = 0, toggleClickTimer = null;
   settingsToggle.addEventListener('click', function(e){
     e.stopPropagation();
     toggleClickCount++;
@@ -2976,7 +2514,7 @@ document.addEventListener('DOMContentLoaded', function(){
     toggleClickTimer = setTimeout(function(){
       if (toggleClickCount === 1){
         renderSettingsMenu();
-        const willOpen = !settingsMenu.classList.contains('open');
+        var willOpen = !settingsMenu.classList.contains('open');
         settingsMenu.classList.toggle('open');
         if (willOpen && state.role === 'nastya') logActivity('settings_open', '⚙️ Открыл настройки');
       } else if (toggleClickCount >= 2){
@@ -2998,19 +2536,19 @@ document.addEventListener('DOMContentLoaded', function(){
     };
   });
   document.getElementById('addActionBtn').onclick = function(){
-    const v = document.getElementById('newActionInput').value.trim();
+    var v = document.getElementById('newActionInput').value.trim();
     if (!v) return;
     if (!state.userAdded[activeEditorTab]) state.userAdded[activeEditorTab] = [];
     state.userAdded[activeEditorTab].push(v);
     document.getElementById('newActionInput').value = '';
-    saveState().then(function(){ renderActionLists(); showToast('✨','Действие добавлено!'); });
+    saveState(); renderActionLists(); showToast('✨','Действие добавлено!');
   };
 
   document.getElementById('notifClose').onclick = function(){
-    const b = document.getElementById('notificationBanner');
-    const ds = b.dataset.notifDate;
+    var b = document.getElementById('notificationBanner');
+    var ds = b.dataset.notifDate;
     if (ds){
-      const d = JSON.parse(localStorage.getItem('dismissed_notifications')||'[]');
+      var d = JSON.parse(localStorage.getItem('dismissed_notifications')||'[]');
       if (d.indexOf(ds) === -1){ d.push(ds); localStorage.setItem('dismissed_notifications', JSON.stringify(d)); }
     }
     b.classList.remove('show');
@@ -3020,69 +2558,69 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('spinBtn').onclick = doSpin;
   document.getElementById('respinBtn').onclick = doSpin;
   document.getElementById('doneBtn').onclick = function(){
-    const item = window._currentItem; if (!item) return;
+    var item = window._currentItem; if (!item) return;
     if (wheelMode === 'type'){
       document.getElementById('wheelOverlay').classList.remove('active');
       state.currentType = item.type;
       setTimeout(function(){ openWheel(item.type); }, 300); return;
     }
-    const year = state.currentDate.getFullYear();
-    const month = state.currentDate.getMonth();
-    const day = state.currentDay;
-    const basePts = TYPE_INFO[item.type].points;
-    const events = getCompletedEvents(year, month, day);
-    const isInit = events.some(function(e){ return e.type === item.type; });
-    const pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
+    var year = state.currentDate.getFullYear();
+    var month = state.currentDate.getMonth();
+    var day = state.currentDay;
+    var basePts = TYPE_INFO[item.type].points;
+    var events = getCompletedEvents(year, month, day);
+    var isInit = events.some(function(e){ return e.type === item.type; });
+    var pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
     document.getElementById('wheelOverlay').classList.remove('active');
     openPhotoAttach(function(){ planEvent(year, month, day, item.type, item.text, pts, isInit); });
   };
 
   function checkYesterdayPlanned(){
     if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
-    const yesterday = new Date();
+    var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const key = yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate();
-    const plan = state.plannedDays && state.plannedDays[key];
+    var key = yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate();
+    var plan = state.plannedDays && state.plannedDays[key];
     if (!plan) return;
     window._pendingPlanKey = key;
-    const d = new Date(yesterday);
-    const dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0');
+    var d = new Date(yesterday);
+    var dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0');
     document.getElementById('confirmYesterdayText').textContent = '«'+plan.text+'» — '+dateStr;
     document.getElementById('confirmYesterdayOverlay').classList.add('active');
   }
 
   document.getElementById('confirmYesBtn').onclick = function(){
-    const key = window._pendingPlanKey;
+    var key = window._pendingPlanKey;
     if (!key) return;
-    const plan = state.plannedDays[key];
+    var plan = state.plannedDays[key];
     if (!plan) return;
-    const parts = key.split('-').map(function(n){ return parseInt(n); });
+    var parts = key.split('-').map(function(n){ return parseInt(n); });
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     delete state.plannedDays[key];
     addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
     window._pendingPlanKey = null;
   };
   document.getElementById('confirmNoBtn').onclick = function(){
-    const key = window._pendingPlanKey;
+    var key = window._pendingPlanKey;
     if (!key) return;
-    const plan = state.plannedDays[key];
+    var plan = state.plannedDays[key];
     if (!plan) return;
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     window._pendingReschedule = { key: key, plan: plan };
-    const t = new Date();
-    const tomorrow = new Date(t);
+    var t = new Date();
+    var tomorrow = new Date(t);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const val = tomorrow.getFullYear()+'-'+String(tomorrow.getMonth()+1).padStart(2,'0')+'-'+String(tomorrow.getDate()).padStart(2,'0');
+    var val = tomorrow.getFullYear()+'-'+String(tomorrow.getMonth()+1).padStart(2,'0')+'-'+String(tomorrow.getDate()).padStart(2,'0');
     document.getElementById('rescheduleDateInput').min = val;
     document.getElementById('rescheduleDateInput').value = val;
     document.getElementById('rescheduleOverlay').classList.add('active');
   };
   document.getElementById('rescheduleConfirmBtn').onclick = function(){
-    const v = document.getElementById('rescheduleDateInput').value;
+    var v = document.getElementById('rescheduleDateInput').value;
     if (!v){ alert('Выбери дату'); return; }
-    const parts = v.split('-').map(function(n){ return parseInt(n); });
-    const newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
-    const pr = window._pendingReschedule;
+    var parts = v.split('-').map(function(n){ return parseInt(n); });
+    var newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
+    var pr = window._pendingReschedule;
     if (!pr) return;
     if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text){
       if (!confirm('На этот день уже есть план. Заменить?')) return;
@@ -3092,22 +2630,18 @@ document.addEventListener('DOMContentLoaded', function(){
     logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'» на '+parts[2]+'.'+parts[1]+'.'+parts[0]);
     window._pendingReschedule = null;
     window._pendingPlanKey = null;
-    saveState().then(function(){
-      renderCalendar();
-      document.getElementById('rescheduleOverlay').classList.remove('active');
-      showToast('📅', 'Перенесено на новую дату');
-    });
+    saveState(); renderCalendar();
+    document.getElementById('rescheduleOverlay').classList.remove('active');
+    showToast('📅', 'Перенесено на новую дату');
   };
   document.getElementById('rescheduleCancelBtn').onclick = function(){
-    const pr = window._pendingReschedule;
+    var pr = window._pendingReschedule;
     if (pr){
       delete state.plannedDays[pr.key];
       logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
-      saveState().then(function(){
-        renderCalendar();
-        document.getElementById('rescheduleOverlay').classList.remove('active');
-        showToast('✕', 'План отменён');
-      });
+      saveState(); renderCalendar();
+      document.getElementById('rescheduleOverlay').classList.remove('active');
+      showToast('✕', 'План отменён');
     } else {
       document.getElementById('rescheduleOverlay').classList.remove('active');
     }
