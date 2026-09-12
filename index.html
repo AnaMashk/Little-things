@@ -229,23 +229,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .empty-state{text-align:center;padding:50px 20px;color:#5a4a3e;font-size:12px;letter-spacing:.5px;line-height:1.8;font-weight:500}
 .section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;text-align:center;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;position:relative;display:inline-block;width:100%;color:#1a1410;text-shadow:0 1px 0 rgba(255,255,255,.65),0 2px 6px rgba(58,46,42,.12)}
 .section-title::after{content:'';display:block;width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:8px auto 0}
-.section-sub{
-  color:#3a3028;
-  font-weight:600;
-  font-size:11px;
-  letter-spacing:1px;
-  text-transform:none;
-  background:linear-gradient(135deg,rgba(255,250,240,.95),rgba(250,245,232,.9));
-  border:1px solid rgba(212,168,90,.3);
-  border-radius:20px;
-  padding:10px 18px;
-  box-shadow:0 3px 12px rgba(58,46,42,.08);
-  display:block;
-  width:100%;
-  box-sizing:border-box;
-  margin:6px 0 18px 0;
-  text-align:center;
-}
+.section-sub{color:#3a3028;font-weight:600;font-size:11px;letter-spacing:1px;text-transform:none;background:linear-gradient(135deg,rgba(255,250,240,.95),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.3);border-radius:20px;padding:10px 18px;box-shadow:0 3px 12px rgba(58,46,42,.08);display:block;width:100%;box-sizing:border-box;margin:6px 0 18px 0;text-align:center}
 .sparkle{position:fixed;width:8px;height:8px;background:radial-gradient(circle,#FFFFFF 0%,#E8C88A 60%,transparent 100%);border-radius:50%;pointer-events:none;z-index:1200;animation:sparkleOut .9s ease-out forwards}
 @keyframes sparkleOut{0%{transform:scale(0) translate(0,0);opacity:1}70%{opacity:1}100%{transform:scale(1.5) translate(var(--sx),var(--sy));opacity:0}}
 .confetti{position:fixed;width:10px;height:10px;pointer-events:none;z-index:1100;will-change:transform;animation:confettiFall 3s ease-out forwards}
@@ -263,7 +247,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .activity-status-dot.online{background:#6fcf7f;color:#6fcf7f;animation:statusPulse 1.6s ease-in-out infinite}
 .activity-status-dot.offline{background:#c9c0b8;color:#c9c0b8}
 @keyframes statusPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.7}}
-
 .splash-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#FDF7F1 0%,#F9F0E8 50%,#F3E4DE 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
 .splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .splash-logo{width:140px;height:140px;border-radius:50%;background:linear-gradient(145deg,#FAF5E8,#F2EBD9);display:flex;align-items:center;justify-content:center;box-shadow:0 15px 40px rgba(212,168,90,.35),0 0 0 1px rgba(212,168,90,.2) inset;animation:splashLogoIn 1s cubic-bezier(.34,1.5,.64,1);position:relative}
@@ -274,40 +257,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .splash-sub{font-family:'Cormorant Garamond',serif;font-size:13px;color:#8C7A6E;letter-spacing:4px;text-transform:uppercase;margin-top:8px;animation:splashTextIn 1s .4s cubic-bezier(.34,1.5,.64,1) backwards}
 @keyframes splashLogoIn{from{transform:scale(.3) rotate(-45deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
 @keyframes splashTextIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-
 .app.reveal .header{animation:revealUp .8s .1s cubic-bezier(.34,1.4,.64,1) backwards}
 .app.reveal .nav{animation:revealUp .8s .25s cubic-bezier(.34,1.4,.64,1) backwards}
 .app.reveal .page.active{animation:revealUp .9s .4s cubic-bezier(.34,1.4,.64,1) backwards}
 @keyframes revealUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
-
 .calendar.slide-left{animation:slideL .4s cubic-bezier(.4,0,.2,1)}
 .calendar.slide-right{animation:slideR .4s cubic-bezier(.4,0,.2,1)}
 @keyframes slideL{from{transform:translateX(30px);opacity:.4}to{transform:translateX(0);opacity:1}}
 @keyframes slideR{from{transform:translateX(-30px);opacity:.4}to{transform:translateX(0);opacity:1}}
-
 .calendar-day.today{position:relative}
 .calendar-day.today::before{content:'';position:absolute;inset:-4px;border-radius:18px;border:2px solid rgba(212,168,90,.5);pointer-events:none;animation:todayGlow 2.8s ease-in-out infinite}
 @keyframes todayGlow{0%,100%{transform:scale(1);opacity:.6;box-shadow:0 0 0 0 rgba(212,168,90,.4)}50%{transform:scale(1.04);opacity:.2;box-shadow:0 0 18px 4px rgba(212,168,90,.35)}}
-
 .calendar-day.done-emotional::after,
 .calendar-day.done-physical::after,
 .calendar-day.done-lightDate::after,
 .calendar-day.done-bigDate::after,
-.calendar-day.done-custom::after{
-  content:"" !important;
-  position:absolute !important;
-  right:-6px !important;bottom:-6px !important;
-  width:32px !important;height:32px !important;
-  font-size:0 !important;color:transparent !important;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%23ff2d5b' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><path d='M16 26.5 C 6.5 19.8, 3 14.2, 5.6 9.4 C 8.2 4.6, 13.8 5.4, 16 11 C 18.2 5.4, 23.8 4.6, 26.4 9.4 C 29 14.2, 25.5 19.8, 16 26.5 Z'/></svg>") !important;
-  background-repeat:no-repeat !important;background-size:contain !important;
-  transform:rotate(-15deg) !important;
-  filter:drop-shadow(0 2px 2px rgba(255,45,91,.35)) !important;
-  pointer-events:none !important;z-index:3 !important;
-  animation:markerPop .5s cubic-bezier(.34,1.7,.64,1) !important;
-}
+.calendar-day.done-custom::after{content:"" !important;position:absolute !important;right:-6px !important;bottom:-6px !important;width:32px !important;height:32px !important;font-size:0 !important;color:transparent !important;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%23ff2d5b' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><path d='M16 26.5 C 6.5 19.8, 3 14.2, 5.6 9.4 C 8.2 4.6, 13.8 5.4, 16 11 C 18.2 5.4, 23.8 4.6, 26.4 9.4 C 29 14.2, 25.5 19.8, 16 26.5 Z'/></svg>") !important;background-repeat:no-repeat !important;background-size:contain !important;transform:rotate(-15deg) !important;filter:drop-shadow(0 2px 2px rgba(255,45,91,.35)) !important;pointer-events:none !important;z-index:3 !important;animation:markerPop .5s cubic-bezier(.34,1.7,.64,1) !important}
 @keyframes markerPop{0%{transform:rotate(-15deg) scale(0) translateY(-8px);opacity:0}60%{transform:rotate(-15deg) scale(1.3) translateY(0);opacity:1}100%{transform:rotate(-15deg) scale(1) translateY(0);opacity:1}}
-
 .timeline{position:relative;padding-left:36px;margin-top:8px}
 .timeline::before{content:'';position:absolute;left:14px;top:10px;bottom:10px;width:2px;background:linear-gradient(180deg,transparent,rgba(212,168,90,.45),rgba(212,168,90,.45),transparent)}
 .timeline-item{position:relative;padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.2);box-shadow:0 4px 14px rgba(91,67,54,.08);display:flex;gap:14px;align-items:flex-start;animation:timelineIn .5s cubic-bezier(.34,1.4,.64,1) backwards}
@@ -321,7 +287,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .timeline-item .tl-points{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:#c89b4a;white-space:nowrap}
 .timeline-item .tl-photo{margin-top:8px;border-radius:12px;overflow:hidden;max-width:200px;border:1px solid rgba(212,168,90,.3);cursor:pointer;box-shadow:0 3px 10px rgba(91,67,54,.15)}
 .timeline-item .tl-photo img{display:block;width:100%;height:auto;max-height:180px;object-fit:cover}
-
 .photo-modal{position:fixed;inset:0;z-index:1300;background:rgba(20,15,12,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
 .photo-modal.active{display:flex}
 .photo-modal img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -331,7 +296,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .photo-preview.show{display:block}
 .photo-preview img{width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid rgba(212,168,90,.3)}
 .photo-preview .remove-photo{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(224,96,96,.95);color:#fff;font-size:14px;border:none;cursor:pointer;font-family:inherit}
-
 .love-tree-card{margin-top:22px;padding:22px 18px 20px;border-radius:24px;background:linear-gradient(160deg,rgba(250,245,232,.6),rgba(242,235,217,.35));border:1px solid rgba(212,168,90,.22);box-shadow:0 8px 30px rgba(91,67,54,.08);text-align:center;position:relative;overflow:hidden;backdrop-filter:blur(4px)}
 .love-tree-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 95%,rgba(141,189,171,.14) 0%,transparent 65%);pointer-events:none}
 .love-tree-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2A2420;position:relative}
@@ -345,7 +309,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .love-tree-progress-text{font-size:11px;color:#6B5C52;margin:6px 0 10px;letter-spacing:.5px;position:relative;font-weight:600}
 .love-tree-progress-track{height:6px;border-radius:20px;background:rgba(141,189,171,.22);overflow:hidden;position:relative}
 .love-tree-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#8dbdab,#d4a85a);border-radius:20px;transition:width 1.2s cubic-bezier(.34,1.2,.64,1)}
-
 .achievements-block{margin-top:20px;padding:20px 18px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.25);box-shadow:0 6px 22px rgba(91,67,54,.08)}
 .achievements-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;text-align:center;letter-spacing:2px;text-transform:uppercase;color:#3A2E2A;margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed rgba(212,168,90,.35)}
 .achievements-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -358,7 +321,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 @keyframes achPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .achievement .ach-name{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:600;color:#3A2E2A;line-height:1.2}
 .achievement .ach-desc{font-size:8px;color:#8C7A6E;margin-top:4px;line-height:1.3;letter-spacing:.3px}
-
 .month-celebration{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(58,46,42,.65);backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:.5s;cursor:pointer;padding:20px}
 .month-celebration.active{opacity:1;visibility:visible}
 .month-celebration-card{max-width:400px;width:100%;padding:40px 28px 32px;border-radius:32px;background:linear-gradient(160deg,rgba(253,251,247,.98),rgba(245,232,222,.96));border:1px solid rgba(212,168,90,.35);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1)}
@@ -368,11 +330,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .month-celebration-card h2{font-family:'Marck Script',cursive;font-size:36px;color:#3A2E2A;margin:16px 0 10px;font-weight:400}
 .month-celebration-card p{font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.6;color:#5b4a3e;margin-bottom:20px}
 .month-celebration-card .mc-bonus{display:inline-block;padding:10px 24px;border-radius:40px;background:linear-gradient(145deg,#e0bb6d,#c89b4a);color:white;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:1px;box-shadow:0 6px 18px rgba(212,168,90,.4);margin-bottom:18px}
-
 .wish-tier{display:flex;gap:6px;margin:14px 0}
 .wish-tier button{flex:1;padding:12px 6px;border-radius:16px;color:#3a3028;background:rgba(255,250,240,.9);border:1px solid rgba(212,168,90,.35);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.5px}
 .wish-tier button.active{background:linear-gradient(145deg,#3e322c,#2d241f);color:#fff8ef;border-color:#2d241f}
-
 .garden-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:6px}
 .garden-flower{padding:18px 12px 14px;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(250,245,232,.9));border:1px solid rgba(212,168,90,.25);box-shadow:0 4px 18px rgba(91,67,54,.08);text-align:center;position:relative;overflow:hidden;transition:transform .25s}
 .garden-flower:active{transform:scale(.97)}
@@ -389,7 +349,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;background:ra
 .garden-flower.done .flower-emoji{filter:grayscale(.3) drop-shadow(0 3px 6px rgba(0,0,0,.1))}
 .garden-flower .flower-actions{display:flex;gap:6px;margin-top:10px;justify-content:center}
 .garden-flower .flower-actions button{background:none;border:none;font-size:11px;color:#6b5a4e;cursor:pointer;padding:2px 6px;font-family:inherit;text-decoration:underline}
-
 :root{--ivory:#F2EBD9;--sage-dark:#3A3230;--dark-btn:#3D2F28;--line-vintage:#D9CCC3}
 body{background:linear-gradient(180deg,rgba(168,164,144,.55) 0%,rgba(168,164,144,.72) 100%),url('https://i.ibb.co/v6KB6w9B/IMG-4278.jpg') center/cover fixed no-repeat !important;animation:none !important;color:var(--sage-dark);display:block !important;padding:12px 12px 24px 12px !important;min-height:100vh !important}
 body::before{background:none !important}
@@ -419,57 +378,15 @@ body::before{background:none !important}
 .overlay.center .modal{border-radius:40px !important}
 .modal-title,.section-title{font-family:'Cormorant Garamond',serif !important;font-weight:700 !important;letter-spacing:5px !important;text-transform:uppercase !important;color:#1a1410 !important;text-shadow:0 1px 0 rgba(255,255,255,.65),0 2px 6px rgba(58,46,42,.12) !important}
 .modal-subtitle{letter-spacing:2px !important;color:#3a3028 !important;font-weight:600 !important}
-.section-sub{
-  color:#3a3028 !important;
-  font-weight:600 !important;
-  font-size:11px !important;
-  letter-spacing:1px !important;
-  text-transform:none !important;
-  background:linear-gradient(135deg,rgba(255,250,240,.95),rgba(250,245,232,.9)) !important;
-  border:1px solid rgba(212,168,90,.3) !important;
-  border-radius:20px !important;
-  padding:10px 18px !important;
-  box-shadow:0 3px 12px rgba(58,46,42,.08) !important;
-  display:block !important;
-  width:100% !important;
-  box-sizing:border-box !important;
-  margin:6px 0 18px 0 !important;
-  text-align:center !important;
-}
+.section-sub{color:#3a3028 !important;font-weight:600 !important;font-size:11px !important;letter-spacing:1px !important;text-transform:none !important;background:linear-gradient(135deg,rgba(255,250,240,.95),rgba(250,245,232,.9)) !important;border:1px solid rgba(212,168,90,.3) !important;border-radius:20px !important;padding:10px 18px !important;box-shadow:0 3px 12px rgba(58,46,42,.08) !important;display:block !important;width:100% !important;box-sizing:border-box !important;margin:6px 0 18px 0 !important;text-align:center !important}
 .btn-primary,.btn-gold,.spin-button,.primary-button{background:var(--dark-btn) !important;color:var(--ivory) !important;border-radius:60px !important;padding:16px 28px !important;font-family:'Cormorant Garamond',serif !important;font-size:13px !important;font-weight:500 !important;letter-spacing:4px !important;text-transform:uppercase !important;box-shadow:0 6px 20px rgba(58,46,42,.28) !important;border:none !important}
 .btn-secondary{background:transparent !important;color:var(--sage-dark) !important;border:1.5px solid var(--sage-dark) !important;border-radius:60px !important;letter-spacing:3px !important;text-transform:uppercase !important;font-family:'Cormorant Garamond',serif !important}
-
-button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-item, .month-arrow, .close-button, .flower-btn, .tab-btn, .settings-menu button, .add-row button, .del-btn {
-  touch-action: manipulation;
-  -webkit-appearance: none;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-.btn-secondary, .btn-primary, .btn-gold, .spin-button, .role-btn {
-  min-height: 56px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1.2 !important;
-}
+button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-item, .month-arrow, .close-button, .flower-btn, .tab-btn, .settings-menu button, .add-row button, .del-btn {touch-action: manipulation;-webkit-appearance: none;-webkit-user-select: none;user-select: none;cursor: pointer;}
+.btn-secondary, .btn-primary, .btn-gold, .spin-button, .role-btn {min-height: 56px !important;display: flex !important;align-items: center !important;justify-content: center !important;line-height: 1.2 !important;}
 .month-arrow, .close-button { min-width: 44px !important; min-height: 44px !important; }
 .overlay { backdrop-filter: none !important; }
-
-.calendar-day.planned-day {
-  border: 2px dashed var(--gold) !important;
-  background: linear-gradient(145deg,#fff8e6,#ffefc8) !important;
-  color: #8a6a2a !important;
-  position: relative;
-}
-.calendar-day.planned-day::after {
-  content: "⏰";
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  font-size: 14px;
-  opacity: 0.9;
-}
+.calendar-day.planned-day {border: 2px dashed var(--gold) !important;background: linear-gradient(145deg,#fff8e6,#ffefc8) !important;color: #8a6a2a !important;position: relative;}
+.calendar-day.planned-day::after {content: "⏰";position: absolute;right: 3px;bottom: 3px;font-size: 14px;opacity: 0.9;}
 </style>
 </head>
 <body>
@@ -622,12 +539,10 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
 <div id="pointsToGo" style="color:var(--muted);font-size:10px;margin-top:12px;letter-spacing:1px"></div>
 </div>
-
 <div class="achievements-block">
 <div class="achievements-title">✦ Достижения ✦</div>
 <div class="achievements-grid" id="achievementsGrid"></div>
 </div>
-
 <div class="love-tree-card">
 <div class="love-tree-title">🌳 Наше дерево</div>
 <div class="love-tree-stage" id="treeStage">Семечко</div>
@@ -637,7 +552,6 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 <div class="love-tree-progress-fill" id="treeProgressFill"></div>
 </div>
 </div>
-
 <div class="motivation-block"><strong>Ты сам создаёшь эту историю.</strong><br>Выполнил — заработал. Придумал своё — заработал больше. Записал хотелку — снова плюс.<br>Копи 1000 → активируй в «Тайном саду». ❤️</div>
 <div class="system-note" style="position:relative;z-index:3;margin-top:16px">
 ⚠️ <b>Важно:</b> баллы «за месяц» сгорают 1-го числа каждого месяца.
@@ -993,6 +907,8 @@ const ACHIEVEMENTS = [
 
 const monthNames = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
 
+const emptyToday = () => ({ date:null, spin:0, task_done:0, page_opens:0, day_opens:0, settings_opens:0, logins:0 });
+
 let state = {
   role:null, viewingAs:null, currentDate:new Date(),
   points:0, totalPoints:0, history:[], completedDays:{},
@@ -1006,8 +922,8 @@ let state = {
   achievements: [],
   lastCelebrationMonth: null,
   vanyaSession: { loginAt:null, lastActiveAt:null, online:false, todaySeconds:0, todayDate:null, sessionStart:null },
-  counters: { login:0, task_done:0, spin:0, wish_add:0, wish_activate:0, page_calendar:0, page_history:0, page_wishes:0, page_stats:0, page_system:0, settings_open:0, day_open:0 },
-  todayCounters: { date:null, spin:0, task_done:0, page_opens:0, day_opens:0, settings_opens:0, logins:0 },
+  counters: { nastya:{}, vanya:{} },
+  todayCounters: { nastya:emptyToday(), vanya:emptyToday() },
   schedules: {},
   pendingPhoto: null,
   plannedDays: {},
@@ -1019,22 +935,121 @@ let reachedMilestones = JSON.parse(localStorage.getItem('reachedMilestones') || 
 let unsubscribeFirestore = null;
 let isOnline = true;
 
-function getSeason() {
-  const m = new Date().getMonth();
-  if (m >= 2 && m <= 4) return 'spring';
-  if (m >= 5 && m <= 7) return 'summer';
-  if (m >= 8 && m <= 10) return 'autumn';
-  return 'winter';
+/* ==== ЗАЩИТА ОТ ПОТЕРИ ДАННЫХ ==== */
+let stateLoaded = false;
+let pendingSave = false;
+let isSaving = false;
+let saveTimeout = null;
+
+function currentActor() { return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
+
+/* ===== MERGE-функции (объединяют данные, не перезаписывают) ===== */
+function _histKey(h){ return (h.eventDate||0)+'|'+(h.title||'')+'|'+(h.points||0); }
+function mergeHistory(a, b){
+  const map = new Map();
+  (a||[]).forEach(h => map.set(_histKey(h), h));
+  (b||[]).forEach(h => {
+    const k = _histKey(h);
+    const ex = map.get(k);
+    if (ex && ex.photo && !h.photo) return;
+    map.set(k, ex ? { ...ex, ...h, photo: h.photo || ex.photo } : h);
+  });
+  return Array.from(map.values()).sort((x,y)=>(y.eventDate||0)-(x.eventDate||0));
 }
-function applySeason() {
-  const season = getSeason();
-  document.body.classList.remove('season-autumn','season-winter','season-spring','season-summer');
-  document.body.classList.add('season-' + season);
-  startPetals(season);
+function mergeCompletedDays(a, b){
+  const out = {};
+  const keys = new Set([...Object.keys(a||{}), ...Object.keys(b||{})]);
+  keys.forEach(k => {
+    const ev = new Map();
+    (a && a[k] || []).forEach(e => ev.set(e.timestamp, e));
+    (b && b[k] || []).forEach(e => {
+      const ex = ev.get(e.timestamp);
+      ev.set(e.timestamp, ex ? { ...ex, ...e, photo: e.photo || ex.photo } : e);
+    });
+    out[k] = Array.from(ev.values()).sort((x,y)=>x.timestamp-y.timestamp);
+  });
+  return out;
 }
-function startPetals(season) {
-  const layer = document.getElementById('petalsLayer');
-  if (!layer) return;
+function mergePlannedDays(a, b){
+  const out = { ...(a||{}) };
+  for (const k in (b||{})){
+    const ex = out[k], nw = b[k];
+    if (!ex) out[k] = nw;
+    else out[k] = (nw.timestamp||0) > (ex.timestamp||0) ? nw : ex;
+  }
+  return out;
+}
+function mergeWishes(a, b){
+  const map = new Map();
+  (a||[]).forEach(w => map.set(w.createdAt, w));
+  (b||[]).forEach(w => {
+    const ex = map.get(w.createdAt);
+    map.set(w.createdAt, ex ? { ...ex, ...w } : w);
+  });
+  return Array.from(map.values()).sort((x,y)=>(x.createdAt||0)-(y.createdAt||0));
+}
+function mergeNotifications(a, b){
+  const map = new Map();
+  (a||[]).forEach(n => map.set(n.id, n));
+  (b||[]).forEach(n => {
+    const ex = map.get(n.id);
+    map.set(n.id, ex ? { ...ex, ...n } : n);
+  });
+  return Array.from(map.values()).sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));
+}
+function mergeActivityLog(a, b){
+  const map = new Map();
+  (a||[]).forEach(l => map.set(l.id, l));
+  (b||[]).forEach(l => map.set(l.id, l));
+  return Array.from(map.values()).sort((x,y)=>y.timestamp-x.timestamp).slice(0, 500);
+}
+function migrateCountersShape(){
+  if (state.counters && !state.counters.nastya && !state.counters.vanya) {
+    state.counters = { nastya: state.counters || {}, vanya: {} };
+  }
+  if (!state.counters || typeof state.counters !== 'object') state.counters = { nastya:{}, vanya:{} };
+  if (!state.counters.nastya) state.counters.nastya = {};
+  if (!state.counters.vanya)  state.counters.vanya  = {};
+
+  if (state.todayCounters && !state.todayCounters.nastya && state.todayCounters.date !== undefined) {
+    state.todayCounters = { nastya: state.todayCounters, vanya: emptyToday() };
+  }
+  if (!state.todayCounters || typeof state.todayCounters !== 'object') state.todayCounters = { nastya:emptyToday(), vanya:emptyToday() };
+  if (!state.todayCounters.nastya) state.todayCounters.nastya = emptyToday();
+  if (!state.todayCounters.vanya)  state.todayCounters.vanya  = emptyToday();
+}
+
+/* ===== ГИДРАТАЦИЯ ИЗ localStorage ===== */
+function hydrateFromLocalStorage(){
+  const g = k => localStorage.getItem(k);
+  try {
+    if (g('monthPoints')) state.points = parseInt(g('monthPoints')) || 0;
+    if (g('totalPoints')) state.totalPoints = parseInt(g('totalPoints')) || 0;
+    state.history        = JSON.parse(g('history') || '[]');
+    state.completedDays  = JSON.parse(g('completedDays') || '{}');
+    state.plannedDays    = JSON.parse(g('plannedDays') || '{}');
+    state.wishes         = JSON.parse(g('wishes') || '[]');
+    state.achievements   = JSON.parse(g('achievements') || '[]');
+    state.activityLog    = JSON.parse(g('activityLog') || '[]');
+    state.quarantine     = JSON.parse(g('quarantine') || '{}');
+    state.dailyVisits    = JSON.parse(g('dailyVisits') || '{}');
+    state.spinsUsed      = JSON.parse(g('spinsUsed') || '{}');
+    state.userAdded      = JSON.parse(g('userAdded') || '{"emotional":[],"physical":[],"lightDate":[],"bigDate":[]}');
+    state.userRemoved    = JSON.parse(g('userRemoved') || '{"emotional":[],"physical":[],"lightDate":[],"bigDate":[]}');
+    state.notificationsForNastya = JSON.parse(g('notificationsForNastya') || '[]');
+    state.counters       = JSON.parse(g('counters') || '{"nastya":{},"vanya":{}}');
+    state.todayCounters  = JSON.parse(g('todayCounters') || 'null') || { nastya:emptyToday(), vanya:emptyToday() };
+    const vs = JSON.parse(g('vanyaSession') || 'null');
+    if (vs) state.vanyaSession = vs;
+  } catch(e){ console.error('hydrate:', e); }
+  migrateCountersShape();
+}
+
+/* ===== СЕЗОНЫ / ПЕТАЛИ ===== */
+function getSeason(){ const m = new Date().getMonth(); if(m>=2&&m<=4)return 'spring'; if(m>=5&&m<=7)return 'summer'; if(m>=8&&m<=10)return 'autumn'; return 'winter'; }
+function applySeason(){ const s = getSeason(); document.body.classList.remove('season-autumn','season-winter','season-spring','season-summer'); document.body.classList.add('season-'+s); startPetals(s); }
+function startPetals(season){
+  const layer = document.getElementById('petalsLayer'); if (!layer) return;
   layer.innerHTML = '';
   for (let i = 0; i < 16; i++) {
     const p = document.createElement('div');
@@ -1049,7 +1064,8 @@ function startPetals(season) {
   }
 }
 
-function compressImage(file, maxDim, quality) {
+/* ===== КОМПРЕССИЯ ФОТО ===== */
+function compressImage(file, maxDim, quality){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = e => {
@@ -1060,10 +1076,8 @@ function compressImage(file, maxDim, quality) {
         else       { if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; } }
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
-        const ctx2 = canvas.getContext('2d');
-        ctx2.drawImage(img, 0, 0, w, h);
-        try { resolve(canvas.toDataURL('image/jpeg', quality)); }
-        catch(err) { reject(err); }
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        try { resolve(canvas.toDataURL('image/jpeg', quality)); } catch(err){ reject(err); }
       };
       img.onerror = reject;
       img.src = e.target.result;
@@ -1073,14 +1087,9 @@ function compressImage(file, maxDim, quality) {
   });
 }
 
-function updateOnlineStatus() {
-  // Отключено из-за ложных срабатываний navigator.onLine на iOS
-  isOnline = true;
-  const indicator = document.getElementById('offlineIndicator');
-  if (indicator) indicator.classList.remove('show');
-}
-
-function showToast(emoji, text) {
+/* ===== УТИЛИТЫ ===== */
+function updateOnlineStatus() { isOnline = true; }
+function showToast(emoji, text){
   const t = document.getElementById('toast');
   document.getElementById('toastEmoji').textContent = emoji;
   document.getElementById('toastText').textContent = text;
@@ -1088,117 +1097,93 @@ function showToast(emoji, text) {
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(() => t.classList.remove('show'), 5000);
 }
-function formatTime(ts) {
-  if (!ts) return '—';
-  const d = new Date(ts);
-  return String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0') + ' · ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-}
-function formatDuration(sec) {
-  if (!sec || sec < 0) return '0 сек';
-  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
-  if (h > 0) return h + ' ч ' + m + ' мин';
-  if (m > 0) return m + ' мин ' + s + ' сек';
-  return s + ' сек';
-}
-function getDaysWord(n) {
-  if (n%10===1 && n%100!==11) return 'день';
-  if (n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) return 'дня';
-  return 'дней';
-}
-function getCurrentMonthKey() { const n = new Date(); return n.getFullYear() + '-' + n.getMonth(); }
-function getVanyaTodaySeconds() {
+function formatTime(ts){ if (!ts) return '—'; const d = new Date(ts); return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+function formatDuration(sec){ if (!sec || sec < 0) return '0 сек'; const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60; if (h>0) return h+' ч '+m+' мин'; if (m>0) return m+' мин '+s+' сек'; return s+' сек'; }
+function getDaysWord(n){ if (n%10===1 && n%100!==11) return 'день'; if (n%10>=2 && n%10<=4 && (n%100<10||n%100>=20)) return 'дня'; return 'дней'; }
+function getCurrentMonthKey(){ const n = new Date(); return n.getFullYear()+'-'+n.getMonth(); }
+function getVanyaTodaySeconds(){
   const todayKey = new Date().toISOString().slice(0,10);
   let base = 0;
   if (state.vanyaSession.todayDate === todayKey) base = state.vanyaSession.todaySeconds || 0;
-  if (state.vanyaSession.sessionStart && state.vanyaSession.online) {
-    base += Math.floor((Date.now() - state.vanyaSession.sessionStart) / 1000);
-  }
+  if (state.vanyaSession.sessionStart && state.vanyaSession.online) base += Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
   return base;
 }
-function getLevel(p) { for (let i=0; i<LEVELS.length; i++) if (p <= LEVELS[i].max) return LEVELS[i]; return LEVELS[LEVELS.length-1]; }
-function getNextLevel(p) { for (let i=0; i<LEVELS.length; i++) if (p <= LEVELS[i].max) return LEVELS[i]; return null; }
-function getProgressToNext(p) {
+function getLevel(p){ for (let i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return LEVELS[LEVELS.length-1]; }
+function getNextLevel(p){ for (let i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return null; }
+function getProgressToNext(p){
   const cur = getLevel(p); const idx = LEVELS.indexOf(cur);
-  if (idx === LEVELS.length - 1) return 100;
-  const next = LEVELS[idx + 1];
-  const prevMax = idx === 0 ? 0 : LEVELS[idx - 1].max + 1;
-  return Math.min(100, Math.max(0, ((p - prevMax) / (next.max - prevMax + 1)) * 100));
+  if (idx === LEVELS.length-1) return 100;
+  const next = LEVELS[idx+1];
+  const prevMax = idx===0 ? 0 : LEVELS[idx-1].max + 1;
+  return Math.min(100, Math.max(0, ((p-prevMax)/(next.max-prevMax+1))*100));
 }
-
-function makeSparkles(cx, cy, count) {
+function makeSparkles(cx, cy, count){
   count = count || 24;
-  for (let i = 0; i < count; i++) {
+  for (let i=0;i<count;i++){
     const s = document.createElement('div');
     s.className = 'sparkle';
-    const angle = (i / count) * Math.PI * 2 + Math.random() * 0.4;
-    const dist = 60 + Math.random() * 80;
-    s.style.left = cx + 'px'; s.style.top = cy + 'px';
-    s.style.setProperty('--sx', (Math.cos(angle) * dist) + 'px');
-    s.style.setProperty('--sy', (Math.sin(angle) * dist) + 'px');
+    const angle = (i/count)*Math.PI*2 + Math.random()*0.4;
+    const dist = 60 + Math.random()*80;
+    s.style.left = cx+'px'; s.style.top = cy+'px';
+    s.style.setProperty('--sx', (Math.cos(angle)*dist)+'px');
+    s.style.setProperty('--sy', (Math.sin(angle)*dist)+'px');
     document.body.appendChild(s);
     setTimeout(() => { if (s.parentNode) s.parentNode.removeChild(s); }, 1200);
   }
 }
-function makeConfetti(count) {
+function makeConfetti(count){
   count = count || 40;
   const colors = ['#d4a85a','#e8c88a','#e8b0bc','#f2ccd7','#b094d4','#a8d0e8','#8dbdab','#FDFBF7'];
-  for (let i = 0; i < count; i++) {
+  for (let i=0;i<count;i++){
     const c = document.createElement('div');
     c.className = 'confetti';
-    c.style.left = (Math.random() * 100) + 'vw';
-    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-    c.style.width = (6 + Math.random() * 8) + 'px';
-    c.style.height = (6 + Math.random() * 8) + 'px';
+    c.style.left = (Math.random()*100)+'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
+    c.style.width = (6+Math.random()*8)+'px'; c.style.height = (6+Math.random()*8)+'px';
     document.body.appendChild(c);
     setTimeout(() => { if (c.parentNode) c.parentNode.removeChild(c); }, 4500);
   }
 }
-function fireBurst(x, y) {
-  const ring = document.createElement('div');
-  ring.className = 'burst-ring';
-  ring.style.left = x + 'px'; ring.style.top = y + 'px';
+function fireBurst(x, y){
+  const ring = document.createElement('div'); ring.className='burst-ring';
+  ring.style.left = x+'px'; ring.style.top = y+'px';
   document.body.appendChild(ring);
-  setTimeout(() => { if (ring.parentNode) ring.parentNode.removeChild(ring); }, 750);
-  for (let i = 0; i < 6; i++) {
-    const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.3;
-    const dist = 60 + Math.random() * 40;
-    const h = document.createElement('div');
-    h.className = 'burst-heart';
-    h.style.left = x + 'px'; h.style.top = y + 'px';
-    h.style.setProperty('--bx', (Math.cos(angle) * dist) + 'px');
-    h.style.setProperty('--by', (Math.sin(angle) * dist) + 'px');
-    h.style.setProperty('--br', (360 * (Math.random() > 0.5 ? 1 : -1)) + 'deg');
-    h.style.width = (24 + Math.random() * 14) + 'px';
-    h.style.height = h.style.width;
+  setTimeout(()=>{ if (ring.parentNode) ring.parentNode.removeChild(ring); }, 750);
+  for (let i=0;i<6;i++){
+    const angle = (i/6)*Math.PI*2 + Math.random()*0.3;
+    const dist = 60 + Math.random()*40;
+    const h = document.createElement('div'); h.className='burst-heart';
+    h.style.left = x+'px'; h.style.top = y+'px';
+    h.style.setProperty('--bx', (Math.cos(angle)*dist)+'px');
+    h.style.setProperty('--by', (Math.sin(angle)*dist)+'px');
+    h.style.setProperty('--br', (360*(Math.random()>0.5?1:-1))+'deg');
+    h.style.width = (24+Math.random()*14)+'px'; h.style.height = h.style.width;
     document.body.appendChild(h);
-    setTimeout(() => { if (h.parentNode) h.parentNode.removeChild(h); }, 1150);
+    setTimeout(()=>{ if (h.parentNode) h.parentNode.removeChild(h); }, 1150);
   }
-  for (let i = 0; i < 8; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const dist = 40 + Math.random() * 90;
-    const s = document.createElement('div');
-    s.className = 'burst-star';
-    s.style.left = x + 'px'; s.style.top = y + 'px';
-    s.style.setProperty('--bx', (Math.cos(angle) * dist) + 'px');
-    s.style.setProperty('--by', (Math.sin(angle) * dist) + 'px');
-    s.style.setProperty('--br', (360 * (Math.random() > 0.5 ? 1 : -1)) + 'deg');
-    s.style.width = (14 + Math.random() * 10) + 'px';
-    s.style.height = s.style.width;
+  for (let i=0;i<8;i++){
+    const angle = Math.random()*Math.PI*2;
+    const dist = 40 + Math.random()*90;
+    const s = document.createElement('div'); s.className='burst-star';
+    s.style.left = x+'px'; s.style.top = y+'px';
+    s.style.setProperty('--bx', (Math.cos(angle)*dist)+'px');
+    s.style.setProperty('--by', (Math.sin(angle)*dist)+'px');
+    s.style.setProperty('--br', (360*(Math.random()>0.5?1:-1))+'deg');
+    s.style.width = (14+Math.random()*10)+'px'; s.style.height = s.style.width;
     document.body.appendChild(s);
-    setTimeout(() => { if (s.parentNode) s.parentNode.removeChild(s); }, 1100);
+    setTimeout(()=>{ if (s.parentNode) s.parentNode.removeChild(s); }, 1100);
   }
   makeSparkles(x, y, 22);
 }
-function animateNumber(el, from, to, duration) {
+function animateNumber(el, from, to, duration){
   duration = duration || 900;
   const start = performance.now();
-  function tick(now) {
-    const t = Math.min(1, (now - start) / duration);
-    const eased = 1 - Math.pow(1 - t, 3);
-    el.textContent = Math.round(from + (to - from) * eased);
-    if (t < 1) requestAnimationFrame(tick);
-    else el.textContent = to;
+  function tick(now){
+    const t = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-t, 3);
+    el.textContent = Math.round(from + (to-from)*eased);
+    if (t<1) requestAnimationFrame(tick); else el.textContent = to;
   }
   requestAnimationFrame(tick);
 }
@@ -1213,26 +1198,32 @@ burstStyleEl.textContent = `
 `;
 document.head.appendChild(burstStyleEl);
 
-function logActivity(action, detail) {
+/* ===== ЛОГ АКТИВНОСТИ С УЧЁТОМ РОЛИ ===== */
+function logActivity(action, detail){
   const now = Date.now();
-  if (state.counters[action] !== undefined) state.counters[action]++;
-  else state.counters[action] = 1;
+  const actor = currentActor();
+  if (state.counters[actor][action] !== undefined) state.counters[actor][action]++;
+  else state.counters[actor][action] = 1;
+
   const todayKey = new Date().toISOString().slice(0,10);
-  if (state.todayCounters.date !== todayKey) {
-    state.todayCounters = { date: todayKey, spin:0, task_done:0, page_opens:0, day_opens:0, settings_opens:0, logins:0 };
+  if (state.todayCounters[actor].date !== todayKey) {
+    state.todayCounters[actor] = { ...emptyToday(), date: todayKey };
   }
-  if (action === 'spin') state.todayCounters.spin++;
-  if (action === 'task_done') state.todayCounters.task_done++;
-  if (action === 'login') state.todayCounters.logins++;
-  if (action === 'settings_open') state.todayCounters.settings_opens++;
-  if (action === 'day_open') state.todayCounters.day_opens++;
-  if (action.indexOf('page_') === 0) state.todayCounters.page_opens++;
-  state.activityLog.unshift({ id: now, action: action, detail: detail || '', timestamp: now });
-  if (state.activityLog.length > 200) state.activityLog = state.activityLog.slice(0, 200);
+  const tc = state.todayCounters[actor];
+  if (action === 'spin') tc.spin++;
+  if (action === 'task_done') tc.task_done++;
+  if (action === 'login') tc.logins++;
+  if (action === 'settings_open') tc.settings_opens++;
+  if (action === 'day_open') tc.day_opens++;
+  if (action.indexOf('page_') === 0) tc.page_opens++;
+
+  state.activityLog.unshift({ id: now, actor: actor, action: action, detail: detail || '', timestamp: now });
+  if (state.activityLog.length > 500) state.activityLog = state.activityLog.slice(0, 500);
   saveState();
 }
 
-function startVanyaSession() {
+/* ===== СЕССИЯ ВАНИ ===== */
+function startVanyaSession(){
   const todayKey = new Date().toISOString().slice(0,10);
   if (state.vanyaSession.todayDate !== todayKey) {
     state.vanyaSession.todayDate = todayKey;
@@ -1244,16 +1235,15 @@ function startVanyaSession() {
   state.vanyaSession.sessionStart = Date.now();
   logActivity('login', 'Открыл приложение');
 }
-function isVanyaReallyOnline() {
+function isVanyaReallyOnline(){
   if (!state.vanyaSession || !state.vanyaSession.online) return false;
   const last = state.vanyaSession.lastActiveAt || 0;
-  const secondsSince = (Date.now() - last) / 1000;
-  return secondsSince < 180;
+  return (Date.now() - last)/1000 < 180;
 }
-function endVanyaSession() {
-  if (state.vanyaSession.sessionStart) {
-    const elapsed = Math.floor((Date.now() - state.vanyaSession.sessionStart) / 1000);
-    state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds || 0) + elapsed;
+function endVanyaSession(){
+  if (state.vanyaSession.sessionStart){
+    const elapsed = Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
+    state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds||0) + elapsed;
     state.vanyaSession.sessionStart = null;
   }
   state.vanyaSession.online = false;
@@ -1261,20 +1251,21 @@ function endVanyaSession() {
   logActivity('logout', 'Закрыл приложение');
 }
 
-let saveTimeout = null;
-let isSaving = false;
-async function saveState() {
+/* ===== СОХРАНЕНИЕ ===== */
+async function saveState(){
+  if (!stateLoaded) { pendingSave = true; return; }
   if (saveTimeout) clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
-    if (isSaving) return;
+    if (isSaving) { saveState(); return; }
     isSaving = true;
+
     localStorage.setItem('monthPoints', state.points);
     localStorage.setItem('totalPoints', state.totalPoints);
     localStorage.setItem('history', JSON.stringify(state.history));
     localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
     localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
     localStorage.setItem('currentMonth', getCurrentMonthKey());
-    localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0, 200)));
+    localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
     localStorage.setItem('counters', JSON.stringify(state.counters));
     localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
     localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
@@ -1286,71 +1277,93 @@ async function saveState() {
     localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
     localStorage.setItem('achievements', JSON.stringify(state.achievements));
     localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+
     if (!navigator.onLine) { isSaving = false; return; }
+
     const schedules = {};
-    for (let key in localStorage) {
-      if (key.startsWith('schedule_')) schedules[key] = localStorage.getItem(key);
-    }
+    for (let key in localStorage) if (key.startsWith('schedule_')) schedules[key] = localStorage.getItem(key);
+
     const data = {
       points: state.points, totalPoints: state.totalPoints,
       history: state.history, completedDays: state.completedDays,
       spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
       quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
       wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
-      activityLog: state.activityLog.slice(0, 200), achievements: state.achievements,
+      activityLog: state.activityLog.slice(0,500), achievements: state.achievements,
       plannedDays: state.plannedDays,
       lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
       counters: state.counters, todayCounters: state.todayCounters,
       currentMonth: getCurrentMonthKey(),
-      dismissed_notifications: JSON.parse(localStorage.getItem('dismissed_notifications') || '[]'),
       lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
       welcomeShown: localStorage.getItem('welcomeShown') === 'true',
       schedules: schedules
     };
+    // НЕ отправляем пустые массивы, чтобы не перетереть непустые
+    if (!state.history.length) delete data.history;
+    if (!Object.keys(state.completedDays).length) delete data.completedDays;
+    if (!Object.keys(state.plannedDays).length) delete data.plannedDays;
+    if (!state.wishes.length) delete data.wishes;
+    if (!state.achievements.length) delete data.achievements;
+
     try { await setDoc(mainDocRef, data, { merge: true }); }
-    catch (e) { console.error('Firestore:', e); }
+    catch(e){ console.error('Firestore:', e); }
     finally { isSaving = false; }
   }, 400);
 }
 
-function subscribeToFirestore() {
+function subscribeToFirestore(){
   unsubscribeFirestore = onSnapshot(mainDocRef, async (snapshot) => {
     if (snapshot.metadata.hasPendingWrites) return;
     if (snapshot.exists()) {
       const d = snapshot.data() || {};
       const prevPoints = state.points;
+
       if (d.currentMonth && d.currentMonth !== getCurrentMonthKey()) {
         state.points = 0; state.spinsUsed = {};
         setDoc(mainDocRef, { points:0, currentMonth:getCurrentMonthKey(), spinsUsed:{} }, { merge:true });
-      } else { state.points = d.points || 0; }
-      state.totalPoints = d.totalPoints || 0;
-      state.history = d.history || [];
-      state.completedDays = d.completedDays || {};
-      state.spinsUsed = d.spinsUsed || {};
-      state.dailyVisits = d.dailyVisits || {};
-      state.quarantine = d.quarantine || {};
-      state.userAdded = d.userAdded || { emotional:[], physical:[], lightDate:[], bigDate:[] };
-      state.userRemoved = d.userRemoved || { emotional:[], physical:[], lightDate:[], bigDate:[] };
-      state.wishes = d.wishes || [];
-      state.notificationsForNastya = d.notificationsForNastya || [];
-      state.activityLog = d.activityLog || [];
-      state.achievements = d.achievements || [];
-      state.plannedDays = d.plannedDays || {};
-      state.lastCelebrationMonth = d.lastCelebrationMonth || null;
-      state.vanyaSession = d.vanyaSession || state.vanyaSession;
-      state.counters = d.counters || state.counters;
-      state.todayCounters = d.todayCounters || state.todayCounters;
-      if (d.lastLevelName) { lastLevelName = d.lastLevelName; localStorage.setItem('lastLevelName', lastLevelName); }
-      if (d.reachedMilestones) { reachedMilestones = d.reachedMilestones; localStorage.setItem('reachedMilestones', JSON.stringify(reachedMilestones)); }
-      if (d.welcomeShown !== undefined) localStorage.setItem('welcomeShown', d.welcomeShown ? 'true' : 'false');
-      if (d.dismissed_notifications) localStorage.setItem('dismissed_notifications', JSON.stringify(d.dismissed_notifications));
+      } else if (typeof d.points === 'number') {
+        state.points = d.points;
+      }
+
+      if (typeof d.totalPoints === 'number') state.totalPoints = Math.max(state.totalPoints, d.totalPoints);
+
+      state.history        = mergeHistory(state.history, d.history);
+      state.completedDays  = mergeCompletedDays(state.completedDays, d.completedDays);
+      state.plannedDays    = mergePlannedDays(state.plannedDays, d.plannedDays);
+      state.wishes         = mergeWishes(state.wishes, d.wishes);
+      state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
+      state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
+      state.achievements   = Array.from(new Set([...(state.achievements||[]), ...((d.achievements)||[])]));
+
+      state.spinsUsed      = { ...state.spinsUsed, ...(d.spinsUsed||{}) };
+      state.dailyVisits    = { ...state.dailyVisits, ...(d.dailyVisits||{}) };
+      state.quarantine     = { ...state.quarantine, ...(d.quarantine||{}) };
+      state.userAdded      = { emotional:[], physical:[], lightDate:[], bigDate:[], ...(state.userAdded||{}), ...(d.userAdded||{}) };
+      state.userRemoved    = { emotional:[], physical:[], lightDate:[], bigDate:[], ...(state.userRemoved||{}), ...(d.userRemoved||{}) };
+
+      if (d.lastCelebrationMonth) state.lastCelebrationMonth = d.lastCelebrationMonth;
+      if (d.vanyaSession) state.vanyaSession = d.vanyaSession;
+      if (d.counters) state.counters = d.counters;
+      if (d.todayCounters) state.todayCounters = d.todayCounters;
+      if (d.lastLevelName){ lastLevelName = d.lastLevelName; localStorage.setItem('lastLevelName', lastLevelName); }
+      if (d.reachedMilestones){ reachedMilestones = d.reachedMilestones; localStorage.setItem('reachedMilestones', JSON.stringify(reachedMilestones)); }
+      if (d.welcomeShown !== undefined) localStorage.setItem('welcomeShown', d.welcomeShown ? 'true':'false');
       if (d.schedules) for (let key in d.schedules) localStorage.setItem(key, d.schedules[key]);
+
+      migrateCountersShape();
       refreshAll(prevPoints);
-    } else { saveState(); }
+
+      stateLoaded = true;
+      if (pendingSave) { pendingSave = false; saveState(); }
+    } else {
+      stateLoaded = true;
+      saveState();
+    }
   }, err => console.error('Firestore sub:', err));
 }
 
-function initRole() {
+/* ===== РОЛИ ===== */
+function initRole(){
   const savedRole = localStorage.getItem('userRole');
   if (savedRole === 'nastya' || savedRole === 'vanya') {
     state.role = savedRole; state.viewingAs = savedRole;
@@ -1362,53 +1375,54 @@ function initRole() {
     renderSettingsMenu();
   }
 }
-function setRole(role) {
+function setRole(role){
   state.role = role; state.viewingAs = role;
   localStorage.setItem('userRole', role);
   document.getElementById('roleOverlay').classList.remove('active');
   applyRoleView();
-  if (role === 'vanya') {
+  if (role === 'vanya'){
     startVanyaSession();
     if (!localStorage.getItem('welcomeShown')) document.getElementById('welcomeOverlay').classList.add('active');
     setTimeout(showDailyMessage, 800);
   }
 }
-function applyRoleView() {
+function applyRoleView(){
   const isVanya = state.viewingAs === 'vanya';
   const badge = document.getElementById('roleBadge');
   document.querySelectorAll('[data-page="wishes"]').forEach(el => { el.style.display = isVanya ? '' : 'none'; });
   const hotzone = document.getElementById('settingsHotzone');
   const settingsBtn = document.getElementById('settingsToggle');
   const sm = document.getElementById('settingsMenu');
-  if (isVanya) {
-    if (hotzone) { hotzone.style.display = 'none'; hotzone.style.pointerEvents = 'none'; }
-    if (settingsBtn) { settingsBtn.classList.remove('visible'); settingsBtn.style.display = 'none'; }
+  if (isVanya){
+    if (hotzone){ hotzone.style.display='none'; hotzone.style.pointerEvents='none'; }
+    if (settingsBtn){ settingsBtn.classList.remove('visible'); settingsBtn.style.display='none'; }
     if (sm) sm.classList.remove('open');
   } else {
-    if (hotzone) { hotzone.style.display = 'block'; hotzone.style.pointerEvents = 'auto'; }
-    if (settingsBtn) settingsBtn.style.display = '';
+    if (hotzone){ hotzone.style.display='block'; hotzone.style.pointerEvents='auto'; }
+    if (settingsBtn) settingsBtn.style.display='';
   }
   renderSettingsMenu();
-  if (state.role === 'nastya' && state.viewingAs === 'vanya') { badge.textContent = '👁 Режим просмотра: Ваня'; badge.classList.add('show'); }
-  else if (state.role === 'vanya' && state.viewingAs === 'nastya') { badge.textContent = '👁 Режим просмотра: Настя'; badge.classList.add('show'); }
+  if (state.role === 'nastya' && state.viewingAs === 'vanya'){ badge.textContent='👁 Режим просмотра: Ваня'; badge.classList.add('show'); }
+  else if (state.role === 'vanya' && state.viewingAs === 'nastya'){ badge.textContent='👁 Режим просмотра: Настя'; badge.classList.add('show'); }
   else badge.classList.remove('show');
   renderNotificationsForNastya();
 }
-function toggleRoleView() {
+function toggleRoleView(){
   if (state.role !== 'nastya') return;
   state.viewingAs = state.viewingAs === 'vanya' ? 'nastya' : 'vanya';
   applyRoleView();
   showToast('👁', state.viewingAs === 'vanya' ? 'Режим Вани' : 'Режим Насти');
 }
 
-function showDailyMessage() {
+/* ===== ПРИВЕТСТВИЕ ДНЯ ===== */
+function showDailyMessage(){
   if (state.viewingAs !== 'vanya') return;
   const todayKey = new Date().toISOString().slice(0,10);
   if (localStorage.getItem('lastDailyMessage') === todayKey) return;
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now - start) / 86400000);
-  const idx = ((dayOfYear - 1) % DAILY_MESSAGES.length + DAILY_MESSAGES.length) % DAILY_MESSAGES.length;
+  const dayOfYear = Math.floor((now-start)/86400000);
+  const idx = ((dayOfYear-1)%DAILY_MESSAGES.length + DAILY_MESSAGES.length)%DAILY_MESSAGES.length;
   const msg = DAILY_MESSAGES[idx];
   document.getElementById('dailyEmoji').textContent = msg.e;
   document.getElementById('dailyMessage').textContent = msg.t;
@@ -1416,135 +1430,128 @@ function showDailyMessage() {
   localStorage.setItem('lastDailyMessage', todayKey);
 }
 
-function renderSettingsMenu() {
+/* ===== НАСТРОЙКИ ===== */
+function renderSettingsMenu(){
   const menu = document.getElementById('settingsMenu');
   if (!menu) return;
   menu.innerHTML = '';
-  if (state.role === 'nastya') {
+  if (state.role === 'nastya'){
     const add = (txt, color, fn) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.textContent = txt;
-      if (color) { b.style.color = color; b.style.fontWeight = '600'; }
+      const b = document.createElement('button'); b.type='button'; b.textContent = txt;
+      if (color){ b.style.color = color; b.style.fontWeight='600'; }
       b.onclick = fn; menu.appendChild(b);
     };
-    const div = () => { const d = document.createElement('div'); d.className = 'divider'; menu.appendChild(d); };
-    add('💌 Показать приветственное письмо', 'var(--gold)', () => { menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
-    add('💰 Начислить баллы вручную', 'var(--gold)', () => { menu.classList.remove('open'); openManualPoints(); });
-    add('👁 Активность Вани', 'var(--blue)', () => { menu.classList.remove('open'); openVanyaActivity(); });
-    add('🔄 Переключить на Ваню', 'var(--purple)', () => { menu.classList.remove('open'); toggleRoleView(); });
+    const div = () => { const d = document.createElement('div'); d.className='divider'; menu.appendChild(d); };
+    add('💌 Показать приветственное письмо','var(--gold)',()=>{ menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
+    add('💰 Начислить баллы вручную','var(--gold)',()=>{ menu.classList.remove('open'); openManualPoints(); });
+    add('👁 Активность Вани','var(--blue)',()=>{ menu.classList.remove('open'); openVanyaActivity(); });
+    add('🔄 Переключить на Ваню','var(--purple)',()=>{ menu.classList.remove('open'); toggleRoleView(); });
     div();
-    add('✏ Управление действиями', null, () => { renderActionLists(); document.getElementById('actionEditorOverlay').classList.add('active'); menu.classList.remove('open'); });
-    add('⏸ Карантин', null, () => { openQuarantineList(); menu.classList.remove('open'); });
-    add('↺ Сбросить карантин', null, () => {
-      if (!confirm('Сбросить карантин?')) return;
-      state.quarantine = {}; saveState().then(() => showToast('↺','Карантин сброшен!'));
-      menu.classList.remove('open');
-    });
-    add('🔄 Сбросить расписание', null, () => {
-      if (!confirm('Сбросить расписание?')) return;
-      Object.keys(localStorage).forEach(k => { if (k.indexOf('schedule_') === 0) localStorage.removeItem(k); });
-      saveState().then(() => location.reload());
-    });
+    add('✏ Управление действиями',null,()=>{ renderActionLists(); document.getElementById('actionEditorOverlay').classList.add('active'); menu.classList.remove('open'); });
+    add('⏸ Карантин',null,()=>{ openQuarantineList(); menu.classList.remove('open'); });
+    add('↺ Сбросить карантин',null,()=>{ if (!confirm('Сбросить карантин?')) return; state.quarantine={}; saveState().then(()=>showToast('↺','Карантин сброшен!')); menu.classList.remove('open'); });
+    add('🔄 Сбросить расписание',null,()=>{ if (!confirm('Сбросить расписание?')) return; Object.keys(localStorage).forEach(k=>{ if (k.indexOf('schedule_')===0) localStorage.removeItem(k); }); saveState().then(()=>location.reload()); });
     div();
-    add('📤 Копировать данные', null, () => {
-      const data = JSON.parse(JSON.stringify(state));
-      data.currentMonth = getCurrentMonthKey();
+    add('📤 Копировать данные',null,()=>{
+      const data = JSON.parse(JSON.stringify(state)); data.currentMonth = getCurrentMonthKey();
       const json = JSON.stringify(data);
-      if (navigator.clipboard) navigator.clipboard.writeText(json).then(() => showToast('📤','Скопировано!')).catch(() => prompt('Скопируй:', json));
+      if (navigator.clipboard) navigator.clipboard.writeText(json).then(()=>showToast('📤','Скопировано!')).catch(()=>prompt('Скопируй:', json));
       else prompt('Скопируй:', json);
       menu.classList.remove('open');
     });
-    add('📥 Вставить из буфера', null, () => {
-      if (!navigator.clipboard) { alert('Буфер недоступен'); return; }
-      navigator.clipboard.readText().then(text => {
+    add('📥 Вставить из буфера',null,()=>{
+      if (!navigator.clipboard){ alert('Буфер недоступен'); return; }
+      navigator.clipboard.readText().then(text=>{
         try {
           const data = JSON.parse(text);
-          if (data.points === undefined) { showToast('❌','Неверный формат'); return; }
+          if (data.points === undefined){ showToast('❌','Неверный формат'); return; }
           if (!confirm('Импорт заменит все данные. Продолжить?')) return;
           for (let k in data) if (data.hasOwnProperty(k)) state[k] = data[k];
-          saveState().then(() => { refreshAll(); showToast('📥','Импортировано!'); });
-        } catch (e) { showToast('❌','Ошибка импорта'); }
+          migrateCountersShape();
+          saveState().then(()=>{ refreshAll(); showToast('📥','Импортировано!'); });
+        } catch(e){ showToast('❌','Ошибка импорта'); }
       });
       menu.classList.remove('open');
     });
     div();
     const b9 = document.createElement('button');
-    b9.type = 'button'; b9.textContent = '🗑 Сбросить всё';
-    b9.className = 'danger';
+    b9.type='button'; b9.textContent='🗑 Сбросить всё'; b9.className='danger';
     b9.onclick = () => {
       if (!confirm('УДАЛИТЬ ВСЁ?')) return;
       localStorage.clear();
-      setDoc(mainDocRef, { welcomeShown:false, points:0, totalPoints:0, history:[], completedDays:{}, achievements:[], plannedDays:{}, lastCelebrationMonth:null }, { merge:true })
-        .then(() => location.reload()).catch(() => location.reload());
+      const emptyData = {
+        points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, wishes:[],
+        achievements:[], activityLog:[], quarantine:{}, dailyVisits:{}, spinsUsed:{},
+        notificationsForNastya:[], counters:{nastya:{},vanya:{}}, todayCounters:{nastya:emptyToday(),vanya:emptyToday()},
+        lastCelebrationMonth:null, welcomeShown:false, schedules:{}
+      };
+      setDoc(mainDocRef, emptyData, { merge:false })
+        .then(()=>location.reload()).catch(()=>location.reload());
     };
     menu.appendChild(b9);
   } else {
     const notice = document.createElement('div');
-    notice.className = 'empty-menu-notice';
+    notice.className='empty-menu-notice';
     notice.innerHTML = '<span class="big">🌿</span>Здесь пусто<span class="small">Настройки доступны только Насте</span>';
     menu.appendChild(notice);
   }
 }
 
-function isInQuarantine(taskText, cat) {
-  const q = state.quarantine[taskText];
-  if (!q) return false;
-  return (Date.now() - q.doneAt) / (1000*60*60*24) < (QUARANTINE_DAYS[cat] || 14);
-}
-function putInQuarantine(taskText, cat) {
-  state.quarantine[taskText] = { type:cat, doneAt:Date.now() };
-  saveState();
-}
-function openQuarantineList() {
+/* ===== КАРАНТИН ===== */
+function isInQuarantine(taskText, cat){ const q = state.quarantine[taskText]; if (!q) return false; return (Date.now()-q.doneAt)/(1000*60*60*24) < (QUARANTINE_DAYS[cat]||14); }
+function putInQuarantine(taskText, cat){ state.quarantine[taskText] = { type:cat, doneAt:Date.now() }; saveState(); }
+function openQuarantineList(){
   const list = document.getElementById('quarantineList');
   const items = [];
-  for (let k in state.quarantine) {
+  for (let k in state.quarantine){
     if (state.quarantine.hasOwnProperty(k) && isInQuarantine(k, state.quarantine[k].type)) items.push([k, state.quarantine[k]]);
   }
   if (!items.length) list.innerHTML = '<div class="empty-state">Все задания доступны</div>';
   else {
     list.innerHTML = items.map(pair => {
       const txt = pair[0], q = pair[1];
-      const days = QUARANTINE_DAYS[q.type] || 14;
-      const left = Math.ceil(days - (Date.now() - q.doneAt)/(1000*60*60*24));
+      const days = QUARANTINE_DAYS[q.type]||14;
+      const left = Math.ceil(days - (Date.now()-q.doneAt)/(1000*60*60*24));
       return '<div class="quarantine-item"><span>'+txt+'</span><span class="days">'+left+' дн.</span></div>';
     }).join('');
   }
   document.getElementById('quarantineOverlay').classList.add('active');
 }
 
-function getTasksForCategory(cat) {
+/* ===== ЗАДАНИЯ ===== */
+function getTasksForCategory(cat){
   const base = DEFAULT_TASKS[cat] || [];
   const added = state.userAdded[cat] || [];
   const removed = state.userRemoved[cat] || [];
   return base.concat(added).filter(t => removed.indexOf(t) === -1);
 }
-function getAvailableTasks(cat) {
+function getAvailableTasks(cat){
   const all = getTasksForCategory(cat);
   const available = all.filter(t => !isInQuarantine(t, cat));
-  if (available.length === 0) {
+  if (available.length === 0){
     return all.slice().sort((a,b) => (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0)).slice(0,5);
   }
   return available;
 }
 
-function generateMonthSchedule(year, month) {
-  const key = 'schedule_' + year + '_' + month;
+/* ===== РАСПИСАНИЕ МЕСЯЦА ===== */
+function generateMonthSchedule(year, month){
+  const key = 'schedule_'+year+'_'+month;
   const saved = localStorage.getItem(key);
   if (saved) return JSON.parse(saved);
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const schedule = {}; const weeks = []; let cur = [];
-  for (let d=1; d<=daysInMonth; d++) {
+  for (let d=1; d<=daysInMonth; d++){
     cur.push(d);
-    if (new Date(year,month,d).getDay()===0 || d===daysInMonth) { weeks.push(cur); cur=[]; }
+    if (new Date(year,month,d).getDay()===0 || d===daysInMonth){ weeks.push(cur); cur=[]; }
   }
   weeks.forEach(w => {
-    const sh = w.slice().sort(() => Math.random()-0.5);
+    const sh = w.slice().sort(()=>Math.random()-0.5);
     if (sh.length>=1) schedule[sh[0]]='emotional';
     if (sh.length>=2) schedule[sh[1]]='emotional';
     if (sh.length>=3) schedule[sh[2]]='physical';
     if (sh.length>=4) schedule[sh[3]]='physical';
-    for (let i=4; i<sh.length; i++) schedule[sh[i]]='free';
+    for (let i=4;i<sh.length;i++) schedule[sh[i]]='free';
   });
   const midC=[]; for (let d1=13; d1<=Math.min(17,daysInMonth); d1++) midC.push(d1);
   if (midC.length) schedule[midC[Math.floor(Math.random()*midC.length)]]='bigDate';
@@ -1553,15 +1560,16 @@ function generateMonthSchedule(year, month) {
   localStorage.setItem(key, JSON.stringify(schedule));
   return schedule;
 }
-function getDayType(year, month, day) {
+function getDayType(year, month, day){
   const key = year+'-'+month+'-'+day;
   if (state.completedDays[key] && state.completedDays[key].length>0) return state.completedDays[key][0].type;
   if (state.plannedDays && state.plannedDays[key]) return state.plannedDays[key].type;
   return generateMonthSchedule(year, month)[day] || 'free';
 }
-function getCompletedEvents(y,m,d) { return state.completedDays[y+'-'+m+'-'+d] || []; }
+function getCompletedEvents(y,m,d){ return state.completedDays[y+'-'+m+'-'+d] || []; }
 
-function renderCalendar() {
+/* ===== КАЛЕНДАРЬ ===== */
+function renderCalendar(){
   const year = state.currentDate.getFullYear();
   const month = state.currentDate.getMonth();
   document.getElementById('monthName').textContent = monthNames[month];
@@ -1572,16 +1580,16 @@ function renderCalendar() {
   const lastDow = new Date(year,month,daysInMonth).getDay();
   const trailing = lastDow===0 ? 0 : 7-lastDow;
   const cal = document.getElementById('calendar'); cal.innerHTML = '';
-  for (let i=0; i<startDay; i++) { const e = document.createElement('div'); e.className='calendar-day empty'; cal.appendChild(e); }
+  for (let i=0;i<startDay;i++){ const e = document.createElement('div'); e.className='calendar-day empty'; cal.appendChild(e); }
   const today = new Date();
-  for (let d=1; d<=daysInMonth; d++) {
+  for (let d=1; d<=daysInMonth; d++){
     const el = document.createElement('div'); el.className='calendar-day';
     const events = getCompletedEvents(year,month,d);
     const isDone = events.length>0;
     const plannedKey = year+'-'+month+'-'+d;
     const isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
     const type = getDayType(year,month,d);
-    if (isDone) {
+    if (isDone){
       const types=[]; events.forEach(ev => { if (types.indexOf(ev.type)===-1) types.push(ev.type); });
       el.classList.add('done-'+types[0]);
     } else { el.classList.add(type); }
@@ -1592,29 +1600,28 @@ function renderCalendar() {
     el.onclick = (function(day,t,isD){ return function(){ onDayClick(day,t,isD); }; })(d,type,isDone);
     cal.appendChild(el);
   }
-  for (let j=1; j<=trailing; j++) {
+  for (let j=1;j<=trailing;j++){
     const e2 = document.createElement('div'); e2.className='calendar-day next-month';
     const n2 = document.createElement('span'); n2.className='day-number'; n2.textContent = j; e2.appendChild(n2); cal.appendChild(e2);
   }
 }
-function onDayClick(day, type, isDone) {
+function onDayClick(day, type, isDone){
   state.editingDay = { year:state.currentDate.getFullYear(), month:state.currentDate.getMonth(), day:day, type:type, isDone:isDone };
   const typeName = TYPE_INFO[type] ? TYPE_INFO[type].name : 'свободный';
   logActivity('day_open', '📅 Открыл день ' + day + ' ' + monthNames[state.currentDate.getMonth()] + ' (тип: ' + typeName + ')');
   openEditModal();
 }
+function updateFreePointsPreview(){ const c = document.getElementById('freeCustomCategory').value; document.getElementById('freeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
+function updateTypePointsPreview(){ const c = document.getElementById('typeInitiativeCategory').value; document.getElementById('typeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
 
-function updateFreePointsPreview() { const c = document.getElementById('freeCustomCategory').value; document.getElementById('freeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
-function updateTypePointsPreview() { const c = document.getElementById('typeInitiativeCategory').value; document.getElementById('typeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
-
-function openEditModal() {
+function openEditModal(){
   const ed = state.editingDay;
   const year=ed.year, month=ed.month, day=ed.day, type=ed.type, isDone=ed.isDone;
   const overlay = document.getElementById('editDayOverlay');
   document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
   const freeBlock = document.getElementById('freeChoiceBlock');
   const typeBlock = document.getElementById('typeBlock');
-  if (type === 'free' && !isDone) {
+  if (type === 'free' && !isDone){
     freeBlock.style.display='block'; typeBlock.style.display='none';
     document.getElementById('editDaySubtitle').textContent = 'Выбери, как провести день';
     document.getElementById('freeCustomFields').style.display = 'none';
@@ -1625,9 +1632,9 @@ function openEditModal() {
     document.getElementById('freeCustomDone').onclick = () => {
       const t = document.getElementById('freeCustomTitle').value.trim();
       const c = document.getElementById('freeCustomCategory').value;
-      if (!t) { alert('Введите название'); return; }
+      if (!t){ alert('Введите название'); return; }
       const p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-      openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(() => overlay.classList.remove('active')));
+      openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(()=>overlay.classList.remove('active')));
     };
     overlay.classList.add('active'); return;
   }
@@ -1637,7 +1644,7 @@ function openEditModal() {
   document.getElementById('typeNameDisplay').textContent = ti.name;
   const events = getCompletedEvents(year,month,day);
   const list = document.getElementById('eventListCompact');
-  if (events.length>0) {
+  if (events.length>0){
     list.innerHTML = events.map(e => {
       const info = TYPE_INFO[e.type]||TYPE_INFO.custom;
       const photoIcon = e.photo ? ' 📸' : '';
@@ -1657,7 +1664,7 @@ function openEditModal() {
   document.getElementById('typeMoveBtn').onclick = () => {
     const mb = document.getElementById('moveBlockType');
     mb.style.display = mb.style.display==='block' ? 'none' : 'block';
-    if (mb.style.display==='block') {
+    if (mb.style.display==='block'){
       const t = new Date();
       const val = t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
       document.getElementById('moveDateInputType').min = val;
@@ -1665,39 +1672,39 @@ function openEditModal() {
     }
   };
   document.getElementById('typeClearBtn').onclick = () => {
-    if (confirm('Очистить '+day+' '+monthNames[month]+'?')) {
+    if (confirm('Очистить '+day+' '+monthNames[month]+'?')){
       delete state.completedDays[year+'-'+month+'-'+day];
       delete state.plannedDays[year+'-'+month+'-'+day];
-      saveState().then(() => { renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active'); });
+      saveState().then(()=>{ renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active'); });
     }
   };
   document.getElementById('typeInitiativeDone').onclick = () => {
     const t = document.getElementById('typeInitiativeTitle').value.trim();
     const c = document.getElementById('typeInitiativeCategory').value;
-    if (!t) { alert('Введите название'); return; }
+    if (!t){ alert('Введите название'); return; }
     const p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-    openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(() => overlay.classList.remove('active')));
+    openPhotoAttach(() => planEvent(year,month,day,c,t,p,true).then(()=>overlay.classList.remove('active')));
   };
   document.getElementById('moveDayBtnType').onclick = () => {
     const v = document.getElementById('moveDateInputType').value;
-    if (!v) { alert('Выберите дату'); return; }
-    const parts = v.split('-').map(n => parseInt(n));
+    if (!v){ alert('Выберите дату'); return; }
+    const parts = v.split('-').map(n=>parseInt(n));
     const ny=parts[0], nm=parts[1]-1, nd=parts[2];
     const nk = ny+'-'+nm+'-'+nd;
     const sk = year+'-'+month+'-'+day;
-    if (state.completedDays[sk]) { state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
-    if (state.plannedDays[sk]) { state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
-    saveState().then(() => { renderCalendar(); overlay.classList.remove('active'); });
+    if (state.completedDays[sk]){ state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
+    if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
+    saveState().then(()=>{ renderCalendar(); overlay.classList.remove('active'); });
   };
   overlay.classList.add('active');
 }
-function openChoiceModal(title, subtitle) {
+function openChoiceModal(title, subtitle){
   document.getElementById('choiceTitle').textContent = title;
   document.getElementById('choiceSubtitle').textContent = subtitle;
   document.getElementById('choiceOverlay').classList.add('active');
 }
 
-function openPhotoAttach(onSave) {
+function openPhotoAttach(onSave){
   state.pendingPhoto = null;
   const overlay = document.getElementById('photoAttachOverlay');
   const input = document.getElementById('photoInput');
@@ -1717,18 +1724,16 @@ function openPhotoAttach(onSave) {
       previewImg.src = dataUrl;
       preview.classList.add('show');
       saveBtn.disabled = false;
-    } catch (err) { showToast('❌', 'Не удалось загрузить фото'); }
+    } catch(err){ showToast('❌', 'Не удалось загрузить фото'); }
   };
-  document.getElementById('removePhotoBtn').onclick = () => {
-    state.pendingPhoto = null; preview.classList.remove('show');
-    input.value = ''; saveBtn.disabled = true;
-  };
+  document.getElementById('removePhotoBtn').onclick = () => { state.pendingPhoto = null; preview.classList.remove('show'); input.value = ''; saveBtn.disabled = true; };
   saveBtn.onclick = () => { overlay.classList.remove('active'); onSave(); };
   skipBtn.onclick = () => { state.pendingPhoto = null; overlay.classList.remove('active'); onSave(); };
   overlay.classList.add('active');
 }
 
-function planEvent(year, month, day, type, text, points, isInitiative) {
+/* ===== ПЛАНЫ И СОБЫТИЯ ===== */
+function planEvent(year, month, day, type, text, points, isInitiative){
   const key = year+'-'+month+'-'+day;
   if (!state.plannedDays) state.plannedDays = {};
   const event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
@@ -1736,23 +1741,16 @@ function planEvent(year, month, day, type, text, points, isInitiative) {
   state.pendingPhoto = null;
   state.plannedDays[key] = event;
   state.notificationsForNastya.push({
-    id: Date.now(),
-    type: 'planned',
-    title: text,
-    cost: points,
-    tier: type,
-    dateKey: key,
-    seen: false,
-    createdAt: Date.now()
+    id: Date.now(), type: 'planned', title: text, cost: points, tier: type,
+    dateKey: key, seen: false, createdAt: Date.now()
   });
-  logActivity('planned', '🗓 Запланировал: «' + text + '» (' + (TYPE_INFO[type] ? TYPE_INFO[type].name : '') + ', ' + points + ' б.) на ' + day + '.' + (month+1) + '.' + year);
-  return saveState().then(() => {
+  logActivity('planned', '🗓 Запланировал: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', '+points+' б.) на '+day+'.'+(month+1)+'.'+year);
+  return saveState().then(()=>{
     renderCalendar(); renderHistory();
-    showToast('🗓', 'Запланировано: ' + text);
+    showToast('🗓', 'Запланировано: '+text);
   });
 }
-
-function addEventToDay(year, month, day, type, text, points, isInitiative) {
+function addEventToDay(year, month, day, type, text, points, isInitiative){
   const key = year+'-'+month+'-'+day;
   if (!state.completedDays[key]) state.completedDays[key] = [];
   const event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
@@ -1767,40 +1765,36 @@ function addEventToDay(year, month, day, type, text, points, isInitiative) {
     category:isInitiative?TYPE_INFO[type].name+' (инициатива)':TYPE_INFO[type].name,
     emoji:isInitiative?'⭐':TYPE_INFO[type].emoji, points:points, photo: event.photo || null
   });
-  logActivity('task_done', '✅ Подтвердил: «' + text + '» (' + (TYPE_INFO[type] ? TYPE_INFO[type].name : '') + ', +' + points + ' б.)');
-  return saveState().then(() => {
+  logActivity('task_done', '✅ Подтвердил: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', +'+points+' б.)');
+  return saveState().then(()=>{
     renderCalendar(); updateStats(); checkUpcomingDates();
     renderHistory(); renderLoveTree();
-    showToast(TYPE_INFO[type].emoji, '+' + points + ' баллов! ' + text);
+    showToast(TYPE_INFO[type].emoji, '+'+points+' баллов! '+text);
     fireBurst(window.innerWidth/2, window.innerHeight/2);
     checkAchievements();
     checkMonthCelebration();
   });
 }
-function addPoints(amount) { state.points += amount; state.totalPoints += amount; saveState(); }
+function addPoints(amount){ state.points += amount; state.totalPoints += amount; saveState(); }
 
-function renderHistory() {
+/* ===== ИСТОРИЯ ===== */
+function renderHistory(){
   const list = document.getElementById('timelineList');
   if (!list) return;
-  if (!state.history.length) {
-    list.innerHTML = '<div class="empty-state">Пока пусто.<br>Нажми на день в календаре ❤️</div>';
-    return;
-  }
+  if (!state.history.length){ list.innerHTML = '<div class="empty-state">Пока пусто.<br>Нажми на день в календаре ❤️</div>'; return; }
   list.innerHTML = state.history.map((h, i) => {
     const emoji = h.emoji || '❤️';
-    const delay = Math.min(i * 0.04, 0.8);
-    const photoBlock = h.photo
-      ? '<div class="tl-photo" data-photo-idx="' + i + '"><img src="' + h.photo + '" alt=""></div>'
-      : '';
-    return '<div class="timeline-item" style="animation-delay:' + delay + 's">' +
-      '<div class="tl-icon">' + emoji + '</div>' +
+    const delay = Math.min(i*0.04, 0.8);
+    const photoBlock = h.photo ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+h.photo+'" alt=""></div>' : '';
+    return '<div class="timeline-item" style="animation-delay:'+delay+'s">' +
+      '<div class="tl-icon">'+emoji+'</div>' +
       '<div class="tl-body">' +
-        '<div class="tl-date">' + h.date + '</div>' +
-        '<div class="tl-cat">' + (h.category || '') + '</div>' +
-        '<div class="tl-title">' + h.title + '</div>' +
+        '<div class="tl-date">'+h.date+'</div>' +
+        '<div class="tl-cat">'+(h.category||'')+'</div>' +
+        '<div class="tl-title">'+h.title+'</div>' +
         photoBlock +
       '</div>' +
-      '<div class="tl-points">+' + h.points + '</div>' +
+      '<div class="tl-points">+'+h.points+'</div>' +
     '</div>';
   }).join('');
   list.querySelectorAll('.tl-photo').forEach(el => {
@@ -1814,13 +1808,11 @@ function renderHistory() {
   });
 }
 
-function renderWishes() {
+/* ===== ХОТЕЛКИ ===== */
+function renderWishes(){
   const garden = document.getElementById('wishGarden');
   if (!garden) return;
-  if (!state.wishes.length) {
-    garden.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Пока пусто.<br>Запиши первое желание ☝</div>';
-    return;
-  }
+  if (!state.wishes.length){ garden.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Пока пусто.<br>Запиши первое желание ☝</div>'; return; }
   garden.innerHTML = state.wishes.map((w, i) => {
     const canActivate = state.totalPoints >= WISH_THRESHOLD && state.points >= w.cost && !w.activated && !w.done;
     let flowerEmoji = WISH_TIER_FLOWER[w.tier] || '🌼';
@@ -1833,17 +1825,16 @@ function renderWishes() {
     else if (canActivate) btnClass = 'ready';
     const btnDisabled = (w.done || w.activated || !canActivate) ? 'disabled' : '';
     let hint = '';
-    if (!w.activated && !w.done && state.totalPoints < WISH_THRESHOLD) {
-      hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight:600">До порога: ' + (WISH_THRESHOLD - state.totalPoints) + ' б.</div>';
+    if (!w.activated && !w.done && state.totalPoints < WISH_THRESHOLD){
+      hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight:600">До порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
     }
-    const actions = (!w.done && !w.activated) ?
-      '<div class="flower-actions"><button data-action="edit" data-idx="' + i + '" type="button">Изменить</button><button data-action="delete" data-idx="' + i + '" type="button">Удалить</button></div>' : '';
-    return '<div class="garden-flower ' + (w.done ? 'done' : '') + (w.activated ? ' activated' : '') + '">' +
-      '<span class="flower-emoji">' + flowerEmoji + '</span>' +
-      '<div class="flower-title">' + w.title + '</div>' +
-      '<div class="flower-meta">' + WISH_TIER_LABEL[w.tier] + ' · ' + w.cost + ' б.</div>' +
+    const actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
+    return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
+      '<span class="flower-emoji">'+flowerEmoji+'</span>' +
+      '<div class="flower-title">'+w.title+'</div>' +
+      '<div class="flower-meta">'+WISH_TIER_LABEL[w.tier]+' · '+w.cost+' б.</div>' +
       hint +
-      '<button class="flower-btn ' + btnClass + '" data-action="activate" data-idx="' + i + '" ' + btnDisabled + ' type="button">' + statusLabel + '</button>' +
+      '<button class="flower-btn '+btnClass+'" data-action="activate" data-idx="'+i+'" '+btnDisabled+' type="button">'+statusLabel+'</button>' +
       actions +
     '</div>';
   }).join('');
@@ -1851,35 +1842,36 @@ function renderWishes() {
     b.onclick = () => {
       const i = parseInt(b.dataset.idx); const w = state.wishes[i];
       if (!w || w.activated || w.done) return;
-      if (state.totalPoints < WISH_THRESHOLD) { showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
-      if (state.points < w.cost) { showToast('💔','Недостаточно баллов'); return; }
+      if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
+      if (state.points < w.cost){ showToast('💔','Недостаточно баллов'); return; }
       if (!confirm('Активировать «'+w.title+'»?\nСпишется '+w.cost+' баллов.')) return;
       state.points -= w.cost;
       state.wishes[i].activated = true;
       state.wishes[i].activatedAt = Date.now();
       state.notificationsForNastya.push({ id:Date.now(), title:w.title, cost:w.cost, tier:w.tier, seen:false, createdAt:Date.now() });
-      logActivity('wish_activate', '💎 Активировал: ' + w.title + ' (−' + w.cost + ' б.)');
-      saveState().then(() => { updateStats(); renderWishes(); showToast('💎','Желание активировано!'); makeConfetti(25); checkAchievements(); });
+      logActivity('wish_activate', '💎 Активировал: '+w.title+' (−'+w.cost+' б.)');
+      saveState().then(()=>{ updateStats(); renderWishes(); showToast('💎','Желание активировано!'); makeConfetti(25); checkAchievements(); });
     };
   });
   garden.querySelectorAll('.flower-actions button').forEach(b => {
     b.onclick = () => {
       const i = parseInt(b.dataset.idx); const action = b.dataset.action; const w = state.wishes[i];
-      if (action === 'edit') {
+      if (action === 'edit'){
         const nv = prompt('Изменить желание:', w.title);
-        if (nv && nv.trim()) { state.wishes[i].title = nv.trim(); saveState().then(() => { renderWishes(); showToast('✏️','Изменено'); }); }
-      } else if (action === 'delete') {
+        if (nv && nv.trim()){ state.wishes[i].title = nv.trim(); saveState().then(()=>{ renderWishes(); showToast('✏️','Изменено'); }); }
+      } else if (action === 'delete'){
         if (!confirm('Удалить желание?')) return;
         state.wishes.splice(i, 1);
-        saveState().then(() => { renderWishes(); showToast('🗑','Удалено'); });
+        saveState().then(()=>{ renderWishes(); showToast('🗑','Удалено'); });
       }
     };
   });
 }
 
-function getAchievementStats() {
-  let emotionalDone = 0, physicalDone = 0, bigDateDone = 0, dateDone = 0, initiativeDone = 0, totalDone = 0;
-  for (let k in state.completedDays) {
+/* ===== ДОСТИЖЕНИЯ ===== */
+function getAchievementStats(){
+  let emotionalDone=0, physicalDone=0, bigDateDone=0, dateDone=0, initiativeDone=0, totalDone=0;
+  for (let k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
     state.completedDays[k].forEach(e => {
       totalDone++;
@@ -1892,40 +1884,39 @@ function getAchievementStats() {
   }
   return {
     totalDone, emotionalDone, physicalDone, bigDateDone, dateDone, initiativeDone,
-    wishesCount: (state.wishes || []).length,
-    wishesActivated: (state.wishes || []).filter(w => w.activated).length,
+    wishesCount: (state.wishes||[]).length,
+    wishesActivated: (state.wishes||[]).filter(w=>w.activated).length,
     totalPoints: state.totalPoints || 0
   };
 }
-function checkAchievements() {
+function checkAchievements(){
   const s = getAchievementStats();
   const unlockedNow = [];
   ACHIEVEMENTS.forEach(a => {
-    if (state.achievements.indexOf(a.id) === -1 && a.check(s)) {
+    if (state.achievements.indexOf(a.id) === -1 && a.check(s)){
       state.achievements.push(a.id);
       unlockedNow.push(a);
     }
   });
-  if (unlockedNow.length) {
+  if (unlockedNow.length){
     saveState(); renderAchievements();
-    unlockedNow.forEach((a, i) => {
-      setTimeout(() => { showToast(a.emoji, 'Новое достижение: ' + a.name + '!'); }, i * 700);
-    });
+    unlockedNow.forEach((a, i) => { setTimeout(()=>{ showToast(a.emoji, 'Новое достижение: '+a.name+'!'); }, i*700); });
   }
 }
-function renderAchievements() {
+function renderAchievements(){
   const grid = document.getElementById('achievementsGrid');
   if (!grid) return;
   grid.innerHTML = ACHIEVEMENTS.map(a => {
     const unlocked = state.achievements.indexOf(a.id) !== -1;
-    return '<div class="achievement ' + (unlocked ? 'unlocked' : 'locked') + '">' +
-      '<span class="ach-emoji">' + a.emoji + '</span>' +
-      '<div class="ach-name">' + a.name + '</div>' +
-      '<div class="ach-desc">' + a.desc + '</div>' +
+    return '<div class="achievement '+(unlocked?'unlocked':'locked')+'">' +
+      '<span class="ach-emoji">'+a.emoji+'</span>' +
+      '<div class="ach-name">'+a.name+'</div>' +
+      '<div class="ach-desc">'+a.desc+'</div>' +
     '</div>';
   }).join('');
 }
 
+/* ===== ДЕРЕВО ===== */
 const TREE_STAGES = [
   { name: "Семечко",        min: 0,   max: 4   },
   { name: "Росток",         min: 5,   max: 14  },
@@ -1935,137 +1926,79 @@ const TREE_STAGES = [
   { name: "Цветущее",       min: 80,  max: 119 },
   { name: "Плодоносящее",   min: 120, max: Infinity }
 ];
-
-function buildTreeSvg(stage) {
-  const W = 300, H = 260;
-  const cx = W / 2;
-  const groundY = H - 18;
-  let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="groundGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#8dbdab" stop-opacity="0.45"/>
-        <stop offset="100%" stop-color="#8dbdab" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#5a3d28"/><stop offset="35%" stop-color="#7a5436"/>
-        <stop offset="55%" stop-color="#8a6042"/><stop offset="100%" stop-color="#4a3020"/>
-      </linearGradient>
-      <radialGradient id="crownGrad1" cx="35%" cy="30%" r="75%">
-        <stop offset="0%" stop-color="#a8d4b8"/><stop offset="55%" stop-color="#7aab8d"/>
-        <stop offset="100%" stop-color="#4a7a5c"/>
-      </radialGradient>
-      <radialGradient id="crownGrad2" cx="40%" cy="35%" r="70%">
-        <stop offset="0%" stop-color="#b8dfc5"/><stop offset="60%" stop-color="#8dbdab"/>
-        <stop offset="100%" stop-color="#5a8d75"/>
-      </radialGradient>
-      <radialGradient id="crownGradDark" cx="50%" cy="40%" r="70%">
-        <stop offset="0%" stop-color="#7aab8d"/><stop offset="100%" stop-color="#3d6b50"/>
-      </radialGradient>
-      <radialGradient id="flowerGrad" cx="35%" cy="30%" r="70%">
-        <stop offset="0%" stop-color="#ffe4ec"/><stop offset="70%" stop-color="#f8cdd6"/>
-        <stop offset="100%" stop-color="#e8a8b8"/>
-      </radialGradient>
-      <radialGradient id="fruitGrad" cx="30%" cy="25%" r="80%">
-        <stop offset="0%" stop-color="#ff9a9a"/><stop offset="60%" stop-color="#e06060"/>
-        <stop offset="100%" stop-color="#a03030"/>
-      </radialGradient>
-      <filter id="treeShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-        <feOffset dx="0" dy="4" result="offsetblur"/>
-        <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
-        <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-    <ellipse cx="${cx}" cy="${groundY + 4}" rx="120" ry="18" fill="url(#groundGrad)"/>
-    <ellipse cx="${cx}" cy="${groundY + 2}" rx="70" ry="8" fill="#6da892" opacity="0.22"/>
-  `;
-  if (stage === 1) {
-    s += `<ellipse cx="${cx}" cy="${groundY - 6}" rx="16" ry="10" fill="#6b4f3a"/>
-      <ellipse cx="${cx - 4}" cy="${groundY - 9}" rx="5" ry="3" fill="#8a6a4a" opacity="0.6"/>
-      <path d="M ${cx + 2} ${groundY - 14} q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="${cx - 3}" cy="${groundY - 26}" rx="6" ry="3.4" fill="#a8cfb8" transform="rotate(-30 ${cx - 3} ${groundY - 26})"/>
-      <ellipse cx="${cx + 5}" cy="${groundY - 22}" rx="5" ry="3" fill="#8dbdab" transform="rotate(25 ${cx + 5} ${groundY - 22})"/>`;
-  } else if (stage === 2) {
-    s += `<path d="M ${cx} ${groundY} Q ${cx - 1} ${groundY - 30} ${cx} ${groundY - 62}" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <ellipse cx="${cx - 15}" cy="${groundY - 48}" rx="13" ry="7" fill="url(#crownGrad2)" transform="rotate(-35 ${cx - 15} ${groundY - 48})"/>
-      <ellipse cx="${cx + 15}" cy="${groundY - 56}" rx="13" ry="7" fill="url(#crownGrad1)" transform="rotate(35 ${cx + 15} ${groundY - 56})"/>
-      <ellipse cx="${cx - 8}" cy="${groundY - 64}" rx="10" ry="5.5" fill="url(#crownGrad2)" transform="rotate(-25 ${cx - 8} ${groundY - 64})"/>
-      <ellipse cx="${cx + 10}" cy="${groundY - 68}" rx="10" ry="5.5" fill="url(#crownGrad1)" transform="rotate(25 ${cx + 10} ${groundY - 68})"/>`;
+function buildTreeSvg(stage){
+  const W = 300, H = 260, cx = W/2, groundY = H-18;
+  let s = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">' +
+    '<defs>' +
+      '<radialGradient id="groundGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#8dbdab" stop-opacity="0.45"/><stop offset="100%" stop-color="#8dbdab" stop-opacity="0"/></radialGradient>' +
+      '<linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5a3d28"/><stop offset="35%" stop-color="#7a5436"/><stop offset="55%" stop-color="#8a6042"/><stop offset="100%" stop-color="#4a3020"/></linearGradient>' +
+      '<radialGradient id="crownGrad1" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#a8d4b8"/><stop offset="55%" stop-color="#7aab8d"/><stop offset="100%" stop-color="#4a7a5c"/></radialGradient>' +
+      '<radialGradient id="crownGrad2" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#b8dfc5"/><stop offset="60%" stop-color="#8dbdab"/><stop offset="100%" stop-color="#5a8d75"/></radialGradient>' +
+      '<radialGradient id="crownGradDark" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#7aab8d"/><stop offset="100%" stop-color="#3d6b50"/></radialGradient>' +
+      '<radialGradient id="flowerGrad" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#ffe4ec"/><stop offset="70%" stop-color="#f8cdd6"/><stop offset="100%" stop-color="#e8a8b8"/></radialGradient>' +
+      '<radialGradient id="fruitGrad" cx="30%" cy="25%" r="80%"><stop offset="0%" stop-color="#ff9a9a"/><stop offset="60%" stop-color="#e06060"/><stop offset="100%" stop-color="#a03030"/></radialGradient>' +
+    '</defs>' +
+    '<ellipse cx="'+cx+'" cy="'+(groundY+4)+'" rx="120" ry="18" fill="url(#groundGrad)"/>' +
+    '<ellipse cx="'+cx+'" cy="'+(groundY+2)+'" rx="70" ry="8" fill="#6da892" opacity="0.22"/>';
+  if (stage === 1){
+    s += '<ellipse cx="'+cx+'" cy="'+(groundY-6)+'" rx="16" ry="10" fill="#6b4f3a"/>' +
+      '<ellipse cx="'+(cx-4)+'" cy="'+(groundY-9)+'" rx="5" ry="3" fill="#8a6a4a" opacity="0.6"/>' +
+      '<path d="M '+(cx+2)+' '+(groundY-14)+' q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
+      '<ellipse cx="'+(cx-3)+'" cy="'+(groundY-26)+'" rx="6" ry="3.4" fill="#a8cfb8" transform="rotate(-30 '+(cx-3)+' '+(groundY-26)+')"/>' +
+      '<ellipse cx="'+(cx+5)+'" cy="'+(groundY-22)+'" rx="5" ry="3" fill="#8dbdab" transform="rotate(25 '+(cx+5)+' '+(groundY-22)+')"/>';
+  } else if (stage === 2){
+    s += '<path d="M '+cx+' '+groundY+' Q '+(cx-1)+' '+(groundY-30)+' '+cx+' '+(groundY-62)+'" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+      '<ellipse cx="'+(cx-15)+'" cy="'+(groundY-48)+'" rx="13" ry="7" fill="url(#crownGrad2)" transform="rotate(-35 '+(cx-15)+' '+(groundY-48)+')"/>' +
+      '<ellipse cx="'+(cx+15)+'" cy="'+(groundY-56)+'" rx="13" ry="7" fill="url(#crownGrad1)" transform="rotate(35 '+(cx+15)+' '+(groundY-56)+')"/>' +
+      '<ellipse cx="'+(cx-8)+'" cy="'+(groundY-64)+'" rx="10" ry="5.5" fill="url(#crownGrad2)" transform="rotate(-25 '+(cx-8)+' '+(groundY-64)+')"/>' +
+      '<ellipse cx="'+(cx+10)+'" cy="'+(groundY-68)+'" rx="10" ry="5.5" fill="url(#crownGrad1)" transform="rotate(25 '+(cx+10)+' '+(groundY-68)+')"/>';
   } else {
-    const trunkH = 40 + (stage - 2) * 22;
-    const trunkTop = groundY - trunkH;
-    const crownR = 22 + (stage - 2) * 10;
+    const trunkH = 40 + (stage-2)*22, trunkTop = groundY - trunkH, crownR = 22 + (stage-2)*10;
     const hasBranches = stage >= 4, hasFlowers = stage === 6, hasFruits = stage === 7;
-    s += `<g filter="url(#treeShadow)">`;
-    s += `<path d="M ${cx - 8} ${groundY} Q ${cx - 5} ${groundY - trunkH/2} ${cx - 2} ${trunkTop + crownR*0.3} L ${cx + 2} ${trunkTop + crownR*0.3} Q ${cx + 5} ${groundY - trunkH/2} ${cx + 8} ${groundY} Z" fill="url(#trunkGrad)"/>`;
-    if (hasBranches) {
-      s += `<path d="M ${cx - 1} ${trunkTop + 30} Q ${cx - 26} ${trunkTop + 14} ${cx - 42} ${trunkTop - 6}" stroke="url(#trunkGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>`;
-      s += `<path d="M ${cx + 1} ${trunkTop + 30} Q ${cx + 26} ${trunkTop + 14} ${cx + 42} ${trunkTop - 6}" stroke="url(#trunkGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+    s += '<path d="M '+(cx-8)+' '+groundY+' Q '+(cx-5)+' '+(groundY-trunkH/2)+' '+(cx-2)+' '+(trunkTop+crownR*0.3)+' L '+(cx+2)+' '+(trunkTop+crownR*0.3)+' Q '+(cx+5)+' '+(groundY-trunkH/2)+' '+(cx+8)+' '+groundY+' Z" fill="url(#trunkGrad)"/>';
+    if (hasBranches){
+      s += '<path d="M '+(cx-1)+' '+(trunkTop+30)+' Q '+(cx-26)+' '+(trunkTop+14)+' '+(cx-42)+' '+(trunkTop-6)+'" stroke="url(#trunkGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+        '<path d="M '+(cx+1)+' '+(trunkTop+30)+' Q '+(cx+26)+' '+(trunkTop+14)+' '+(cx+42)+' '+(trunkTop-6)+'" stroke="url(#trunkGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>';
     }
-    if (stage >= 5) {
-      s += `<path d="M ${cx - 1} ${trunkTop + 55} Q ${cx - 32} ${trunkTop + 42} ${cx - 52} ${trunkTop + 22}" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>`;
-      s += `<path d="M ${cx + 1} ${trunkTop + 55} Q ${cx + 32} ${trunkTop + 42} ${cx + 52} ${trunkTop + 22}" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>`;
-    }
-    s += `<g class="tree-sway">`;
-    s += `<ellipse cx="${cx}" cy="${trunkTop - crownR * 0.15}" rx="${crownR * 1.25}" ry="${crownR * 1.05}" fill="url(#crownGradDark)" opacity="0.85"/>`;
-    s += `<ellipse cx="${cx - crownR * 0.7}" cy="${trunkTop - crownR * 0.35}" rx="${crownR * 0.8}" ry="${crownR * 0.72}" fill="url(#crownGrad1)" opacity="0.9"/>`;
-    s += `<ellipse cx="${cx + crownR * 0.7}" cy="${trunkTop - crownR * 0.35}" rx="${crownR * 0.8}" ry="${crownR * 0.72}" fill="url(#crownGrad1)" opacity="0.9"/>`;
-    if (stage >= 4) {
-      s += `<ellipse cx="${cx - crownR * 0.35}" cy="${trunkTop - crownR * 0.75}" rx="${crownR * 0.62}" ry="${crownR * 0.58}" fill="url(#crownGrad2)" opacity="0.95"/>`;
-      s += `<ellipse cx="${cx + crownR * 0.35}" cy="${trunkTop - crownR * 0.75}" rx="${crownR * 0.62}" ry="${crownR * 0.58}" fill="url(#crownGrad2)" opacity="0.95"/>`;
-    }
-    if (stage >= 5) s += `<ellipse cx="${cx}" cy="${trunkTop - crownR * 1.05}" rx="${crownR * 0.6}" ry="${crownR * 0.5}" fill="url(#crownGrad2)" opacity="0.9"/>`;
-    s += `<ellipse cx="${cx - crownR * 0.4}" cy="${trunkTop - crownR * 0.95}" rx="${crownR * 0.3}" ry="${crownR * 0.2}" fill="#ffffff" opacity="0.16"/>`;
-    if (hasFlowers) {
+    s += '<g class="tree-sway">';
+    s += '<ellipse cx="'+cx+'" cy="'+(trunkTop-crownR*0.15)+'" rx="'+(crownR*1.25)+'" ry="'+(crownR*1.05)+'" fill="url(#crownGradDark)" opacity="0.85"/>';
+    s += '<ellipse cx="'+(cx-crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
+    s += '<ellipse cx="'+(cx+crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
+    if (hasFlowers){
       const positions = [[-0.75,-0.35],[-0.55,-0.75],[-0.35,-1.0],[0,-1.2],[0.35,-1.0],[0.55,-0.75],[0.75,-0.35],[-0.85,0.05],[-0.4,-0.2],[0,-0.4],[0.4,-0.2],[0.85,0.05],[-0.6,-0.45],[0.6,-0.45],[-0.2,-0.8],[0.2,-0.8]];
-      positions.forEach(([fx, fy]) => {
-        const px = cx + fx * crownR, py = trunkTop + fy * crownR;
-        s += `<circle cx="${px}" cy="${py}" r="4" fill="url(#flowerGrad)"/>`;
-        for (let k = 0; k < 5; k++) {
-          const a = (k / 5) * Math.PI * 2;
-          s += `<ellipse cx="${px + Math.cos(a)*3.2}" cy="${py + Math.sin(a)*3.2}" rx="2.2" ry="1.4" fill="#fce4ea" opacity="0.9"/>`;
-        }
-      });
+      positions.forEach(([fx, fy]) => { s += '<circle cx="'+(cx+fx*crownR)+'" cy="'+(trunkTop+fy*crownR)+'" r="4" fill="url(#flowerGrad)"/>'; });
     }
-    if (hasFruits) {
+    if (hasFruits){
       const positions = [[-0.75,-0.35],[-0.5,-0.7],[-0.2,-0.95],[0.2,-0.95],[0.5,-0.7],[0.75,-0.35],[-0.6,-0.1],[0.6,-0.1],[0,-0.55],[-0.3,-0.3],[0.3,-0.3]];
       positions.forEach(([fx, fy]) => {
-        const px = cx + fx * crownR, py = trunkTop + fy * crownR;
-        s += `<circle cx="${px}" cy="${py}" r="5.5" fill="url(#fruitGrad)"/>`;
-        s += `<ellipse cx="${px - 1.5}" cy="${py - 1.5}" rx="1.6" ry="1.1" fill="#ffd0d0" opacity="0.85"/>`;
+        const px = cx+fx*crownR, py = trunkTop+fy*crownR;
+        s += '<circle cx="'+px+'" cy="'+py+'" r="5.5" fill="url(#fruitGrad)"/>' +
+          '<ellipse cx="'+(px-1.5)+'" cy="'+(py-1.5)+'" rx="1.6" ry="1.1" fill="#ffd0d0" opacity="0.85"/>';
       });
     }
-    s += `</g></g>`;
-    if (stage >= 5) {
-      s += `<g class="leaf-fall">
-        <ellipse cx="${cx - crownR * 0.9}" cy="${trunkTop + crownR * 0.4}" rx="4" ry="2.4" fill="#8dbdab" opacity="0.55"/>
-        <ellipse cx="${cx + crownR * 0.85}" cy="${trunkTop + crownR * 0.55}" rx="3.6" ry="2.2" fill="#a8cfb8" opacity="0.5"/>
-      </g>`;
-    }
+    s += '</g>';
   }
-  s += `</svg>`;
+  s += '</svg>';
   return s;
 }
-function renderLoveTree() {
+function renderLoveTree(){
   const wrap = document.getElementById('treeSvgWrap');
   if (!wrap) return;
-  const count = (state.history || []).length;
+  const count = (state.history||[]).length;
   let stageIdx = 0;
-  for (let i = 0; i < TREE_STAGES.length; i++) {
-    if (count >= TREE_STAGES[i].min && count <= TREE_STAGES[i].max) { stageIdx = i; break; }
-  }
-  const stage = stageIdx + 1;
+  for (let i=0;i<TREE_STAGES.length;i++){ if (count>=TREE_STAGES[i].min && count<=TREE_STAGES[i].max){ stageIdx=i; break; } }
+  const stage = stageIdx+1;
   const info = TREE_STAGES[stageIdx];
-  const next = TREE_STAGES[stageIdx + 1] || null;
+  const next = TREE_STAGES[stageIdx+1] || null;
   document.getElementById('treeStage').textContent = info.name;
   wrap.innerHTML = buildTreeSvg(stage);
-  if (next) {
+  if (next){
     const curMin = info.min, nextMin = next.min;
     const done = count - curMin, total = nextMin - curMin;
-    const pct = Math.max(4, Math.min(100, (done / total) * 100));
+    const pct = Math.max(4, Math.min(100, (done/total)*100));
     const toNext = nextMin - count;
     const word = toNext === 1 ? 'задание' : (toNext >= 2 && toNext <= 4 ? 'задания' : 'заданий');
-    document.getElementById('treeProgressText').textContent = `До стадии «${next.name}» — ${toNext} ${word}`;
+    document.getElementById('treeProgressText').textContent = 'До стадии «'+next.name+'» — '+toNext+' '+word;
     document.getElementById('treeProgressFill').style.width = pct + '%';
   } else {
     document.getElementById('treeProgressText').textContent = '✨ Ваше дерево расцвело полностью!';
@@ -2073,53 +2006,53 @@ function renderLoveTree() {
   }
 }
 
-function checkMonthCelebration() {
+/* ===== МЕСЯЧНЫЙ ПРАЗДНИК ===== */
+function checkMonthCelebration(){
   if (state.viewingAs !== 'vanya') return;
   const now = new Date();
-  const prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  const prevMonthKey = prevMonth.getFullYear() + '-' + prevMonth.getMonth();
+  const prevMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
+  const prevMonthKey = prevMonth.getFullYear()+'-'+prevMonth.getMonth();
   if (state.lastCelebrationMonth === prevMonthKey) return;
   let countPrevMonth = 0;
-  for (let k in state.completedDays) {
+  for (let k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
     const parts = k.split('-');
     const y = parseInt(parts[0]); const m = parseInt(parts[1]);
-    if (y === prevMonth.getFullYear() && m === prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
+    if (y===prevMonth.getFullYear() && m===prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
   }
-  if (countPrevMonth >= MONTH_CELEBRATION_DAYS) {
+  if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
     state.lastCelebrationMonth = prevMonthKey;
     state.points += MONTH_CELEBRATION_BONUS;
     state.totalPoints += MONTH_CELEBRATION_BONUS;
     const mc = document.getElementById('monthCelebration');
     document.getElementById('mcTitle').textContent = 'Восхитительно!';
-    document.getElementById('mcText').innerHTML = 'Ты выполнил <b>' + countPrevMonth + '</b> дел за прошлый месяц!<br>Настя гордится тобой.';
-    document.getElementById('mcBonus').textContent = '+' + MONTH_CELEBRATION_BONUS + ' баллов';
+    document.getElementById('mcText').innerHTML = 'Ты выполнил <b>'+countPrevMonth+'</b> дел за прошлый месяц!<br>Настя гордится тобой.';
+    document.getElementById('mcBonus').textContent = '+'+MONTH_CELEBRATION_BONUS+' баллов';
     mc.classList.add('active');
     saveState();
-    setTimeout(() => makeConfetti(60), 400);
-  } else if (!state.lastCelebrationMonth) {
+    setTimeout(()=>makeConfetti(60), 400);
+  } else if (!state.lastCelebrationMonth){
     state.lastCelebrationMonth = prevMonthKey;
     saveState();
   }
 }
-
-function checkLevelAndMilestones(p) {
+function checkLevelAndMilestones(p){
   const cur = getLevel(p);
-  if (cur.name !== lastLevelName && lastLevelName !== null) {
-    showToast(cur.emoji, 'Уровень «' + cur.name + '»! ' + cur.text);
+  if (cur.name !== lastLevelName && lastLevelName !== null){
+    showToast(cur.emoji, 'Уровень «'+cur.name+'»! '+cur.text);
     makeConfetti(50);
   }
   lastLevelName = cur.name;
   localStorage.setItem('lastLevelName', lastLevelName);
   MILESTONES.forEach(m => {
-    if (p >= m.points && reachedMilestones.indexOf(m.points) === -1) {
+    if (p >= m.points && reachedMilestones.indexOf(m.points) === -1){
       showToast(m.emoji, m.text); makeConfetti(30);
       reachedMilestones.push(m.points);
       localStorage.setItem('reachedMilestones', JSON.stringify(reachedMilestones));
     }
   });
 }
-function updateStats(prevPoints) {
+function updateStats(prevPoints){
   const pointsEl = document.getElementById('pointsNumber');
   const totalEl = document.getElementById('totalPointsDisplay');
   const fromP = (typeof prevPoints === 'number') ? prevPoints : state.points;
@@ -2128,7 +2061,7 @@ function updateStats(prevPoints) {
   const lvl = getLevel(state.points);
   document.getElementById('levelEmoji').textContent = lvl.emoji;
   document.getElementById('levelName').textContent = lvl.name;
-  document.getElementById('progressBar').style.width = getProgressToNext(state.points) + '%';
+  document.getElementById('progressBar').style.width = getProgressToNext(state.points)+'%';
   const next = getNextLevel(state.points);
   if (next && next.max !== Infinity) document.getElementById('pointsToNext').textContent = 'До уровня «'+next.name+'» — '+(next.max-state.points+1)+' б.';
   else document.getElementById('pointsToNext').textContent = lvl.text;
@@ -2137,17 +2070,18 @@ function updateStats(prevPoints) {
   checkLevelAndMilestones(state.points);
 }
 
-function checkUpcomingDates() {
+/* ===== УВЕДОМЛЕНИЯ ===== */
+function checkUpcomingDates(){
   const today = new Date(); today.setHours(0,0,0,0);
   const banner = document.getElementById('notificationBanner');
   const dismissed = JSON.parse(localStorage.getItem('dismissed_notifications')||'[]');
-  for (let i=0; i<=5; i++) {
+  for (let i=0;i<=5;i++){
     const cd = new Date(today); cd.setDate(today.getDate()+i);
     const y=cd.getFullYear(), m=cd.getMonth(), d=cd.getDate();
     const type = getDayType(y,m,d);
     const key = y+'-'+m+'-'+d;
     const events = getCompletedEvents(y,m,d);
-    if ((type==='bigDate'||type==='lightDate') && events.length===0 && dismissed.indexOf(key)===-1) {
+    if ((type==='bigDate'||type==='lightDate') && events.length===0 && dismissed.indexOf(key)===-1){
       const label = i===0 ? 'Сегодня' : 'Через '+i+' '+getDaysWord(i);
       const tn = type==='bigDate' ? 'Большое' : 'Лёгкое';
       const em = type==='bigDate' ? '🏆' : '💗';
@@ -2167,22 +2101,20 @@ function checkUpcomingDates() {
   }
   banner.classList.remove('show');
 }
-function renderNotificationsForNastya() {
+function renderNotificationsForNastya(){
   if (state.viewingAs !== 'nastya') return;
   const banner = document.getElementById('notificationBanner');
   const planned = state.notificationsForNastya.filter(n => n.type === 'planned' && !n.seen);
-  if (planned.length > 0) {
+  if (planned.length > 0){
     const p = planned[0];
     document.getElementById('notifTitle').textContent = '🗓 Ваня что-то запланировал!';
-    document.getElementById('notifSub').textContent = '«' + p.title + '» · ' + p.cost + ' б.';
+    document.getElementById('notifSub').textContent = '«'+p.title+'» · '+p.cost+' б.';
     document.getElementById('notifAction').textContent = 'Ок';
     document.getElementById('notifAction').onclick = () => {
       let idx = -1;
-      for (let i = 0; i < state.notificationsForNastya.length; i++) {
-        if (state.notificationsForNastya[i].id === p.id) { idx = i; break; }
-      }
-      if (idx !== -1) state.notificationsForNastya[idx].seen = true;
-      saveState().then(() => { banner.classList.remove('show'); renderNotificationsForNastya(); });
+      for (let i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id === p.id){ idx=i; break; }
+      if (idx!==-1) state.notificationsForNastya[idx].seen = true;
+      saveState().then(()=>{ banner.classList.remove('show'); renderNotificationsForNastya(); });
     };
     banner.classList.add('show');
     return;
@@ -2194,44 +2126,39 @@ function renderNotificationsForNastya() {
   document.getElementById('notifSub').textContent = '«'+n.title+'» · '+n.cost+' б.';
   document.getElementById('notifAction').textContent = '✓ Выполнено';
   document.getElementById('notifAction').onclick = () => {
-    let idx = -1;
-    for (let i=0; i<state.notificationsForNastya.length; i++) if (state.notificationsForNastya[i].id===n.id) { idx=i; break; }
+    let idx=-1;
+    for (let i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id===n.id){ idx=i; break; }
     if (idx!==-1) state.notificationsForNastya[idx].seen = true;
-    saveState().then(() => { banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya(); });
+    saveState().then(()=>{ banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya(); });
   };
   banner.classList.add('show');
 }
-function applyDailyBonus() {
+function applyDailyBonus(){
   if (state.viewingAs !== 'vanya') return;
   const today = new Date().toISOString().slice(0,10);
-  if (!state.dailyVisits[today]) {
+  if (!state.dailyVisits[today]){
     state.dailyVisits[today] = true;
     addPoints(DAILY_BONUS);
-    showToast('📅', '+' + DAILY_BONUS + ' баллов за вход сегодня!');
+    showToast('📅', '+'+DAILY_BONUS+' баллов за вход сегодня!');
   }
 }
 
+/* ===== КОЛЕСО ===== */
 let wheelItems = [], currentAngle = 0, spinVelocity = 0, isSpinning = false, animId = null, wheelMode = 'task';
 let canvas, ctx;
-function resizeCanvas() {
-  if (!canvas) { canvas = document.getElementById('wheel'); ctx = canvas.getContext('2d'); }
+function resizeCanvas(){
+  if (!canvas){ canvas = document.getElementById('wheel'); ctx = canvas.getContext('2d'); }
   if (!canvas || !ctx) return;
-  const size = Math.min(window.innerWidth * 0.78, 340);
+  const size = Math.min(window.innerWidth*0.78, 340);
   const dpr = window.devicePixelRatio || 1;
-  canvas.width = size * dpr; canvas.height = size * dpr;
-  canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+  canvas.width = size*dpr; canvas.height = size*dpr;
+  canvas.style.width = size+'px'; canvas.style.height = size+'px';
   ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
   drawWheel();
 }
-function lighten(hex, amount) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return 'rgb('+Math.min(255,Math.round(r+(255-r)*amount))+','+Math.min(255,Math.round(g+(255-g)*amount))+','+Math.min(255,Math.round(b+(255-b)*amount))+')';
-}
-function darken(hex, amount) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return 'rgb('+Math.max(0,Math.round(r*(1-amount)))+','+Math.max(0,Math.round(g*(1-amount)))+','+Math.max(0,Math.round(b*(1-amount)))+')';
-}
-function drawWheel() {
+function lighten(hex, amount){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.min(255,Math.round(r+(255-r)*amount))+','+Math.min(255,Math.round(g+(255-g)*amount))+','+Math.min(255,Math.round(b+(255-b)*amount))+')'; }
+function darken(hex, amount){ const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.max(0,Math.round(r*(1-amount)))+','+Math.max(0,Math.round(g*(1-amount)))+','+Math.max(0,Math.round(b*(1-amount)))+')'; }
+function drawWheel(){
   if (!wheelItems.length || !ctx) return;
   const size = parseInt(canvas.style.width);
   const cx = size/2, cy = size/2; const r = cx - 24;
@@ -2254,7 +2181,7 @@ function drawWheel() {
   ctx.fillStyle = "#FDFBF7"; ctx.fill();
   ctx.strokeStyle = "rgba(212,168,90,0.5)"; ctx.lineWidth = 1; ctx.stroke();
 }
-function openTypeWheel() {
+function openTypeWheel(){
   const types = ['emotional','physical','lightDate','bigDate'];
   wheelItems = types.map(t => ({ text:TYPE_INFO[t].name, type:t }));
   document.getElementById('wheelTitle').textContent = state.currentDay + ' ' + monthNames[state.currentDate.getMonth()];
@@ -2267,7 +2194,7 @@ function openTypeWheel() {
   document.getElementById('spinBtn').disabled = false;
   document.getElementById('spinBtn').textContent = 'Крутить колесо';
 }
-function openWheel(type) {
+function openWheel(type){
   const info = TYPE_INFO[type];
   const available = getAvailableTasks(type);
   wheelItems = available.map(t => ({ text:t, type:type }));
@@ -2279,15 +2206,15 @@ function openWheel(type) {
   resizeCanvas(); wheelMode = 'task';
   updateSpinsUI();
 }
-function getSpinsKeyForTarget() {
+function getSpinsKeyForTarget(){
   if (state.currentDate && state.currentDay) return 'target-'+state.currentDate.getFullYear()+'-'+state.currentDate.getMonth()+'-'+state.currentDay;
   const d = new Date();
   return 'target-'+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
 }
-function getSpinsUsed() { return state.spinsUsed[getSpinsKeyForTarget()] || 0; }
-function getNextSpinPrice() { const used = getSpinsUsed(); return SPIN_PRICES[Math.min(used, SPIN_PRICES.length - 1)]; }
-function updateSpinsUI() {
-  if (wheelMode === 'type') {
+function getSpinsUsed(){ return state.spinsUsed[getSpinsKeyForTarget()] || 0; }
+function getNextSpinPrice(){ const used = getSpinsUsed(); return SPIN_PRICES[Math.min(used, SPIN_PRICES.length-1)]; }
+function updateSpinsUI(){
+  if (wheelMode === 'type'){
     document.getElementById('spinBtn').disabled = false;
     document.getElementById('spinBtn').textContent = 'Крутить колесо';
     document.getElementById('spinsLeft').textContent = 'Выбор категории бесплатный';
@@ -2298,51 +2225,52 @@ function updateSpinsUI() {
   const info = document.getElementById('spinsLeft');
   const used = getSpinsUsed();
   const targetDay = state.currentDay;
-  if (used === 0) { btn.textContent = 'Крутить колесо'; btn.disabled = false; info.textContent = 'Первая попытка для ' + targetDay + '-го — бесплатно ✨'; }
-  else if (state.points >= price) { btn.textContent = 'Крутить ещё (−' + price + ' б.)'; btn.disabled = false; info.textContent = 'Перекрут: −' + price + ' б.'; }
-  else { btn.textContent = 'Не хватает ' + price + ' б.'; btn.disabled = true; info.textContent = 'Нужно ' + price + ' баллов'; }
+  if (used === 0){ btn.textContent = 'Крутить колесо'; btn.disabled = false; info.textContent = 'Первая попытка для ' + targetDay + '-го — бесплатно ✨'; }
+  else if (state.points >= price){ btn.textContent = 'Крутить ещё (−'+price+' б.)'; btn.disabled = false; info.textContent = 'Перекрут: −'+price+' б.'; }
+  else { btn.textContent = 'Не хватает '+price+' б.'; btn.disabled = true; info.textContent = 'Нужно '+price+' баллов'; }
 }
-function animate() {
-  if (spinVelocity > 0.0015) {
+function animate(){
+  if (spinVelocity > 0.0015){
     currentAngle += spinVelocity; spinVelocity *= 0.991;
     drawWheel(); animId = requestAnimationFrame(animate);
   } else { isSpinning = false; spinVelocity = 0; cancelAnimationFrame(animId); determineWinner(); }
 }
-function determineWinner() {
+function determineWinner(){
   const n = wheelItems.length; const step = (Math.PI*2)/n;
-  const norm = ((Math.PI*2) - (currentAngle % (Math.PI*2))) % (Math.PI*2);
+  const norm = ((Math.PI*2)-(currentAngle%(Math.PI*2)))%(Math.PI*2);
   const pa = (norm + Math.PI*1.5) % (Math.PI*2);
-  let idx = Math.floor(pa/step) % n; if (idx < 0) idx = 0;
+  let idx = Math.floor(pa/step)%n; if (idx < 0) idx = 0;
   showResult(wheelItems[idx]);
 }
-function showResult(item) {
+function showResult(item){
   document.getElementById('resultText').textContent = item.text;
   document.getElementById('resultBox').style.display = 'block';
   window._currentItem = item;
 }
-function doSpin() {
+function doSpin(){
   if (isSpinning) return;
-  if (wheelMode === 'type') { isSpinning = true; spinVelocity = 0.25 + Math.random()*0.15; animate(); return; }
+  if (wheelMode === 'type'){ isSpinning = true; spinVelocity = 0.25+Math.random()*0.15; animate(); return; }
   const price = getNextSpinPrice();
-  if (price > 0) {
-    if (state.points < price) { showToast('💔', 'Недостаточно баллов'); return; }
+  if (price > 0){
+    if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
     state.points -= price; updateStats();
-    showToast('🔄', '−' + price + ' баллов за перекрут');
+    showToast('🔄','−'+price+' баллов за перекрут');
   }
   const k = getSpinsKeyForTarget();
-  state.spinsUsed[k] = (state.spinsUsed[k] || 0) + 1;
+  state.spinsUsed[k] = (state.spinsUsed[k]||0)+1;
   saveState();
   isSpinning = true;
   document.getElementById('resultBox').style.display = 'none';
-  spinVelocity = 0.28 + Math.random()*0.15;
+  spinVelocity = 0.28+Math.random()*0.15;
   animate();
   updateSpinsUI();
-  const spinCat = state.currentType ? (TYPE_INFO[state.currentType] ? TYPE_INFO[state.currentType].name : '') : '';
-  logActivity('spin', '🎡 Крутил колесо' + (spinCat ? ' [' + spinCat + ']' : '') + (price > 0 ? ', −' + price + ' б.' : ', бесплатно'));
+  const spinCat = state.currentType ? (TYPE_INFO[state.currentType]?TYPE_INFO[state.currentType].name:'') : '';
+  logActivity('spin', '🎡 Крутил колесо'+(spinCat?' ['+spinCat+']':'')+(price>0?', −'+price+' б.':', бесплатно'));
 }
 
+/* ===== УПРАВЛЕНИЕ ДЕЙСТВИЯМИ ===== */
 let activeEditorTab = 'emotional';
-function renderActionLists() {
+function renderActionLists(){
   ['emotional','physical','lightDate','bigDate'].forEach(cat => {
     const ul = document.getElementById('list-'+cat);
     if (!ul) return;
@@ -2353,53 +2281,56 @@ function renderActionLists() {
     b.onclick = () => {
       const cat = b.dataset.cat; const txt = decodeURIComponent(b.dataset.text);
       if (!confirm('Удалить это действие?')) return;
-      if (DEFAULT_TASKS[cat].indexOf(txt) !== -1) {
+      if (DEFAULT_TASKS[cat].indexOf(txt) !== -1){
         if (!state.userRemoved[cat]) state.userRemoved[cat] = [];
         if (state.userRemoved[cat].indexOf(txt) === -1) state.userRemoved[cat].push(txt);
       } else { state.userAdded[cat] = (state.userAdded[cat]||[]).filter(x => x !== txt); }
-      logActivity('action_removed', '🗑 Удалил из «' + (TYPE_INFO[cat] ? TYPE_INFO[cat].name : cat) + '»: ' + txt.slice(0, 60));
-      saveState().then(() => { renderActionLists(); showToast('✓','Действие удалено'); });
+      logActivity('action_removed', '🗑 Удалил из «'+(TYPE_INFO[cat]?TYPE_INFO[cat].name:cat)+'»: '+txt.slice(0, 60));
+      saveState().then(()=>{ renderActionLists(); showToast('✓','Действие удалено'); });
     };
   });
 }
 
-function openVanyaActivity() {
+/* ===== АКТИВНОСТЬ ВАНИ (ТОЛЬКО ЕГО ДЕЙСТВИЯ) ===== */
+function openVanyaActivity(){
   if (state.role !== 'nastya') return;
   const overlay = document.createElement('div');
   overlay.className = 'overlay center active';
   const isOn = isVanyaReallyOnline();
-  const log = state.activityLog || [];
-  const c = state.counters || {};
-  const t = state.todayCounters || {};
+
+  // ФИЛЬТР: только логи актора «vanya»
+  const log = (state.activityLog || []).filter(item => item.actor === 'vanya');
+  const c = (state.counters && state.counters.vanya) || {};
+  const t = (state.todayCounters && state.todayCounters.vanya) || emptyToday();
+
   const statRow = (lbl, val) => '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>';
   overlay.innerHTML = '<div class="modal" style="max-height:88vh">' +
     '<button class="close-button" type="button" id="activityCloseBtn">×</button>' +
     '<div class="modal-title">Активность Вани</div>' +
-    '<div class="modal-subtitle">Только для Насти</div>' +
+    '<div class="modal-subtitle">Только действия Вани</div>' +
     '<div style="margin-top:20px">' +
-      statRow('Сейчас', '<span class="activity-status-dot ' + (isOn ? 'online' : 'offline') + '"></span>' + (isOn ? 'Онлайн' : 'Офлайн')) +
+      statRow('Сейчас', '<span class="activity-status-dot '+(isOn?'online':'offline')+'"></span>'+(isOn?'Онлайн':'Офлайн')) +
       statRow('Последний вход', formatTime(state.vanyaSession.loginAt)) +
       statRow('Последняя активность', formatTime(state.vanyaSession.lastActiveAt)) +
       statRow('Сегодня был онлайн', formatDuration(getVanyaTodaySeconds())) +
     '</div>' +
-    '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">📊 За сегодня</div>' +
+    '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">📊 Ваня за сегодня</div>' +
     '<div style="margin-top:14px">' +
-      statRow('Заходил', (t.logins||0) + ' раз') +
-      statRow('Крутил колесо', (t.spin||0) + ' раз') +
-      statRow('Отметил заданий', (t.task_done||0) + ' раз') +
-      statRow('Открывал дни', (t.day_opens||0) + ' раз') +
-      statRow('Переключал вкладки', (t.page_opens||0) + ' раз') +
-      statRow('Открывал настройки', (t.settings_opens||0) + ' раз') +
+      statRow('Заходил', (t.logins||0)+' раз') +
+      statRow('Крутил колесо', (t.spin||0)+' раз') +
+      statRow('Отметил заданий', (t.task_done||0)+' раз') +
+      statRow('Открывал дни', (t.day_opens||0)+' раз') +
+      statRow('Переключал вкладки', (t.page_opens||0)+' раз') +
     '</div>' +
-    '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">🏆 Всего</div>' +
+    '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">🏆 Ваня всего</div>' +
     '<div style="margin-top:14px">' +
-      statRow('Заходил', (c.login||0) + ' раз') +
-      statRow('Крутил колесо', (c.spin||0) + ' раз') +
-      statRow('Отметил заданий', (c.task_done||0) + ' раз') +
-      statRow('Записал хотелок', (c.wish_add||0) + ' раз') +
-      statRow('Активировал хотелок', (c.wish_activate||0) + ' раз') +
+      statRow('Заходил', (c.login||0)+' раз') +
+      statRow('Крутил колесо', (c.spin||0)+' раз') +
+      statRow('Отметил заданий', (c.task_done||0)+' раз') +
+      statRow('Записал хотелок', (c.wish_add||0)+' раз') +
+      statRow('Активировал хотелок', (c.wish_activate||0)+' раз') +
     '</div>' +
-    '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">📜 Последние действия</div>' +
+    '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(212,168,90,.3);padding-bottom:10px">📜 Последние действия Вани</div>' +
     '<ul class="activity-log-list">' +
       (log.length ? log.map(item => {
         let ico = '•';
@@ -2417,8 +2348,8 @@ function openVanyaActivity() {
         else if (item.action.indexOf('page_') === 0) ico = '📱';
         else if (item.action === 'day_open') ico = '📅';
         else if (item.action === 'settings_open') ico = '⚙️';
-        return '<li><span class="ico">' + ico + '</span><span class="body"><span class="when">' + formatTime(item.timestamp) + '</span><span class="what">' + item.detail + '</span></span></li>';
-      }).join('') : '<div class="empty-state">Пока нет записей</div>') +
+        return '<li><span class="ico">'+ico+'</span><span class="body"><span class="when">'+formatTime(item.timestamp)+'</span><span class="what">'+item.detail+'</span></span></li>';
+      }).join('') : '<div class="empty-state">Пока Ваня ничего не делал</div>') +
     '</ul>' +
   '</div>';
   document.body.appendChild(overlay);
@@ -2426,7 +2357,8 @@ function openVanyaActivity() {
   overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
 }
 
-function openManualPoints() {
+/* ===== НАЧИСЛЕНИЕ БАЛЛОВ ВРУЧНУЮ ===== */
+function openManualPoints(){
   if (state.role !== 'nastya') return;
   const overlay = document.createElement('div');
   overlay.className = 'overlay center active';
@@ -2456,24 +2388,25 @@ function openManualPoints() {
   document.getElementById('manualSubmitBtn').onclick = () => {
     const reason = document.getElementById('manualReason').value.trim();
     const amount = parseInt(document.getElementById('manualAmount').value);
-    if (!reason) { alert('Напиши, за что начисляешь баллы'); return; }
-    if (!amount || amount < 1) { alert('Введи число баллов'); return; }
-    if (amount > 9999) { alert('Максимум 9999'); return; }
+    if (!reason){ alert('Напиши, за что начисляешь баллы'); return; }
+    if (!amount || amount < 1){ alert('Введи число баллов'); return; }
+    if (amount > 9999){ alert('Максимум 9999'); return; }
     state.points += amount; state.totalPoints += amount;
     const now = new Date();
-    const dateStr = String(now.getDate()).padStart(2,'0') + '.' + String(now.getMonth()+1).padStart(2,'0') + '.' + now.getFullYear();
+    const dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
     state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
-    logActivity('manual_points', '💌 Настя начислила ' + amount + ' б.: ' + reason);
-    saveState().then(() => {
+    logActivity('manual_points', '💌 Настя начислила '+amount+' б.: '+reason);
+    saveState().then(()=>{
       updateStats(); renderHistory();
-      showToast('💌', 'Начислено ' + amount + ' баллов!');
+      showToast('💌', 'Начислено '+amount+' баллов!');
       makeConfetti(30);
       overlay.remove();
     });
   };
 }
 
-function refreshAll(prevPoints) {
+/* ===== ПЕРЕРИСОВКА ===== */
+function refreshAll(prevPoints){
   renderCalendar();
   updateStats(prevPoints);
   renderHistory();
@@ -2486,6 +2419,7 @@ function refreshAll(prevPoints) {
   renderLoveTree();
 }
 
+/* ===== СТАРТ ===== */
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splashScreen');
   const app = document.getElementById('appRoot');
@@ -2496,10 +2430,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   canvas = document.getElementById('wheel');
   if (canvas) ctx = canvas.getContext('2d');
+
+  // 1) Поднимаем из localStorage
+  hydrateFromLocalStorage();
+
+  // 2) UI
   updateOnlineStatus();
   applySeason();
   initRole();
-  subscribeToFirestore();
   renderSettingsMenu();
   renderCalendar();
   updateStats();
@@ -2513,6 +2451,15 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAchievements();
   setTimeout(checkMonthCelebration, 1800);
 
+  // 3) Облако. Пока не пришёл снапшот — saveState не пишет в Firebase
+  subscribeToFirestore();
+
+  // 4) Страховка: если Firestore не ответил за 4 секунды — разрешаем сохранять
+  setTimeout(() => {
+    if (!stateLoaded){ stateLoaded = true; saveState(); }
+  }, 4000);
+
+  // ==== ОБРАБОТЧИКИ ====
   document.getElementById('roleNastya').onclick = () => setRole('nastya');
   document.getElementById('roleVanya').onclick = () => setRole('vanya');
 
@@ -2521,8 +2468,8 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('welcomeShown', 'true'); saveState();
     setTimeout(showDailyMessage, 400);
   };
-  document.getElementById('dailyOverlay').onclick = function() { this.classList.remove('active'); };
-  document.getElementById('monthCelebration').onclick = function() { this.classList.remove('active'); };
+  document.getElementById('dailyOverlay').onclick = function(){ this.classList.remove('active'); };
+  document.getElementById('monthCelebration').onclick = function(){ this.classList.remove('active'); };
 
   const pageNames = { calendar:'Месяц', history:'История', wishes:'Хотелки', stats:'Баллы', system:'Система' };
   document.querySelectorAll('.nav-item').forEach(btn => {
@@ -2532,10 +2479,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       document.getElementById('page-'+btn.dataset.page).classList.add('active');
       if (btn.dataset.page === 'history') renderHistory();
-      if (btn.dataset.page === 'stats') { updateStats(); renderAchievements(); renderLoveTree(); }
+      if (btn.dataset.page === 'stats'){ updateStats(); renderAchievements(); renderLoveTree(); }
       if (btn.dataset.page === 'wishes') renderWishes();
       window.scrollTo(0,0);
-      logActivity('page_' + btn.dataset.page, '📱 Открыл «' + (pageNames[btn.dataset.page] || btn.dataset.page) + '»');
+      logActivity('page_'+btn.dataset.page, '📱 Открыл «'+(pageNames[btn.dataset.page]||btn.dataset.page)+'»');
     };
   });
 
@@ -2556,7 +2503,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('openRandomBtn').onclick = () => {
     const t = new Date();
-    if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0) { showToast('❤️','Сегодня уже сделано!'); return; }
+    if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0){ showToast('❤️','Сегодня уже сделано!'); return; }
     state.currentDay = t.getDate();
     state.currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
     const type = getDayType(t.getFullYear(), t.getMonth(), t.getDate());
@@ -2586,36 +2533,32 @@ document.addEventListener('DOMContentLoaded', () => {
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
     addPoints(WISH_BONUS);
-    logActivity('wish_add', '✿ Записал хотелку (' + WISH_TIER_LABEL[state.currentWishTier] + '): «' + v + '»');
-    saveState().then(() => { renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements(); });
+    logActivity('wish_add', '✿ Записал хотелку ('+WISH_TIER_LABEL[state.currentWishTier]+'): «'+v+'»');
+    saveState().then(()=>{ renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов за хотелку!'); checkAchievements(); });
   };
 
-  document.querySelectorAll('[data-close]').forEach(b => {
-    b.onclick = () => document.getElementById(b.dataset.close).classList.remove('active');
-  });
-  document.querySelectorAll('.overlay').forEach(ov => {
-    ov.onclick = e => { if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); };
-  });
-  document.getElementById('photoViewModal').onclick = function() { this.classList.remove('active'); };
+  document.querySelectorAll('[data-close]').forEach(b => { b.onclick = () => document.getElementById(b.dataset.close).classList.remove('active'); });
+  document.querySelectorAll('.overlay').forEach(ov => { ov.onclick = e => { if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
+  document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
 
   const settingsToggle = document.getElementById('settingsToggle');
   const settingsMenu = document.getElementById('settingsMenu');
   const settingsHotzone = document.getElementById('settingsHotzone');
   let tapCount = 0, tapTimer = null, lastTouchTime = 0;
-  function registerHotzoneTap() {
+  function registerHotzoneTap(){
     if (state.viewingAs === 'vanya' || state.role === 'vanya') return;
     tapCount++;
     if (tapTimer) clearTimeout(tapTimer);
     tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
-    if (tapCount >= 3) {
+    if (tapCount >= 3){
       tapCount = 0; clearTimeout(tapTimer);
       settingsToggle.classList.toggle('visible');
       if (!settingsToggle.classList.contains('visible')) settingsMenu.classList.remove('open');
     }
   }
-  if (settingsHotzone) {
+  if (settingsHotzone){
     settingsHotzone.addEventListener('touchend', e => { lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
-    settingsHotzone.addEventListener('click', e => { e.stopPropagation(); if (Date.now() - lastTouchTime < 500) return; registerHotzoneTap(); });
+    settingsHotzone.addEventListener('click', e => { e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
   }
   let toggleClickCount = 0, toggleClickTimer = null;
   settingsToggle.addEventListener('click', e => {
@@ -2623,12 +2566,12 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleClickCount++;
     if (toggleClickTimer) clearTimeout(toggleClickTimer);
     toggleClickTimer = setTimeout(() => {
-      if (toggleClickCount === 1) {
+      if (toggleClickCount === 1){
         renderSettingsMenu();
         const willOpen = !settingsMenu.classList.contains('open');
         settingsMenu.classList.toggle('open');
         if (willOpen && state.role === 'nastya') logActivity('settings_open', '⚙️ Открыл настройки');
-      } else if (toggleClickCount >= 2) {
+      } else if (toggleClickCount >= 2){
         settingsMenu.classList.remove('open');
         toggleRoleView();
       }
@@ -2652,15 +2595,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!state.userAdded[activeEditorTab]) state.userAdded[activeEditorTab] = [];
     state.userAdded[activeEditorTab].push(v);
     document.getElementById('newActionInput').value = '';
-    saveState().then(() => { renderActionLists(); showToast('✨','Действие добавлено!'); });
+    saveState().then(()=>{ renderActionLists(); showToast('✨','Действие добавлено!'); });
   };
 
   document.getElementById('notifClose').onclick = () => {
     const b = document.getElementById('notificationBanner');
     const ds = b.dataset.notifDate;
-    if (ds) {
+    if (ds){
       const d = JSON.parse(localStorage.getItem('dismissed_notifications')||'[]');
-      if (d.indexOf(ds) === -1) { d.push(ds); localStorage.setItem('dismissed_notifications', JSON.stringify(d)); }
+      if (d.indexOf(ds) === -1){ d.push(ds); localStorage.setItem('dismissed_notifications', JSON.stringify(d)); }
     }
     b.classList.remove('show');
   };
@@ -2670,7 +2613,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('respinBtn').onclick = doSpin;
   document.getElementById('doneBtn').onclick = () => {
     const item = window._currentItem; if (!item) return;
-    if (wheelMode === 'type') {
+    if (wheelMode === 'type'){
       document.getElementById('wheelOverlay').classList.remove('active');
       state.currentType = item.type;
       setTimeout(() => openWheel(item.type), 300); return;
@@ -2686,17 +2629,17 @@ document.addEventListener('DOMContentLoaded', () => {
     openPhotoAttach(() => { planEvent(year, month, day, item.type, item.text, pts, isInit); });
   };
 
-  function checkYesterdayPlanned() {
+  function checkYesterdayPlanned(){
     if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const key = yesterday.getFullYear() + '-' + yesterday.getMonth() + '-' + yesterday.getDate();
+    const key = yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate();
     const plan = state.plannedDays && state.plannedDays[key];
     if (!plan) return;
     window._pendingPlanKey = key;
     const d = new Date(yesterday);
-    const dateStr = String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0');
-    document.getElementById('confirmYesterdayText').textContent = '«' + plan.text + '» — ' + dateStr;
+    const dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0');
+    document.getElementById('confirmYesterdayText').textContent = '«'+plan.text+'» — '+dateStr;
     document.getElementById('confirmYesterdayOverlay').classList.add('active');
   }
 
@@ -2721,27 +2664,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const t = new Date();
     const tomorrow = new Date(t);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const val = tomorrow.getFullYear() + '-' + String(tomorrow.getMonth()+1).padStart(2,'0') + '-' + String(tomorrow.getDate()).padStart(2,'0');
+    const val = tomorrow.getFullYear()+'-'+String(tomorrow.getMonth()+1).padStart(2,'0')+'-'+String(tomorrow.getDate()).padStart(2,'0');
     document.getElementById('rescheduleDateInput').min = val;
     document.getElementById('rescheduleDateInput').value = val;
     document.getElementById('rescheduleOverlay').classList.add('active');
   };
   document.getElementById('rescheduleConfirmBtn').onclick = () => {
     const v = document.getElementById('rescheduleDateInput').value;
-    if (!v) { alert('Выбери дату'); return; }
+    if (!v){ alert('Выбери дату'); return; }
     const parts = v.split('-').map(n => parseInt(n));
-    const newKey = parts[0] + '-' + (parts[1]-1) + '-' + parts[2];
+    const newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
     const pr = window._pendingReschedule;
     if (!pr) return;
-    if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text) {
+    if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text){
       if (!confirm('На этот день уже есть план. Заменить?')) return;
     }
     state.plannedDays[newKey] = pr.plan;
     delete state.plannedDays[pr.key];
-    logActivity('planned_moved', '📅 Перенёс план «' + pr.plan.text + '» на ' + parts[2] + '.' + parts[1] + '.' + parts[0]);
+    logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'» на '+parts[2]+'.'+parts[1]+'.'+parts[0]);
     window._pendingReschedule = null;
     window._pendingPlanKey = null;
-    saveState().then(() => {
+    saveState().then(()=>{
       renderCalendar();
       document.getElementById('rescheduleOverlay').classList.remove('active');
       showToast('📅', 'Перенесено на новую дату');
@@ -2749,10 +2692,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.getElementById('rescheduleCancelBtn').onclick = () => {
     const pr = window._pendingReschedule;
-    if (pr) {
+    if (pr){
       delete state.plannedDays[pr.key];
-      logActivity('planned_cancelled', '✕ Отменил план: «' + pr.plan.text + '»');
-      saveState().then(() => {
+      logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
+      saveState().then(()=>{
         renderCalendar();
         document.getElementById('rescheduleOverlay').classList.remove('active');
         showToast('✕', 'План отменён');
@@ -2773,12 +2716,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.hidden) endVanyaSession();
     else startVanyaSession();
   });
-  window.addEventListener('pagehide', () => {
-    if (state.role === 'vanya') endVanyaSession();
-  });
-  window.addEventListener('beforeunload', () => {
-    if (state.role === 'vanya') endVanyaSession();
-  });
+  window.addEventListener('pagehide', () => { if (state.role === 'vanya') endVanyaSession(); });
+  window.addEventListener('beforeunload', () => { if (state.role === 'vanya') endVanyaSession(); });
   setInterval(() => {
     if (state.role !== 'vanya') return;
     if (document.hidden) return;
