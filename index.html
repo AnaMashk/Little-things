@@ -391,7 +391,6 @@ button, .btn-primary, .btn-secondary, .btn-gold, .role-btn, .spin-button, .nav-i
 <body>
 
 <script>
-/* Аварийное скрытие заставки через 2.5 секунды, если основной модуль не запустился */
 setTimeout(function(){
   var s = document.getElementById('splashScreen');
   var a = document.getElementById('appRoot');
@@ -1605,29 +1604,38 @@ function updateTypePointsPreview(){ var c = document.getElementById('typeInitiat
 function openEditModal(){
   var ed = state.editingDay;
   var year=ed.year, month=ed.month, day=ed.day, type=ed.type, isDone=ed.isDone;
+  /* === ОПРЕДЕЛЯЕМ, ПРОШЛЫЙ/СЕГОДНЯШНИЙ ЭТО ДЕНЬ ИЛИ БУДУЩИЙ === */
+  var _today = new Date(); _today.setHours(0,0,0,0);
+  var _thisDate = new Date(year, month, day); _thisDate.setHours(0,0,0,0);
+  var _isPastOrToday = _thisDate <= _today;
   var overlay = document.getElementById('editDayOverlay');
   document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
   var freeBlock = document.getElementById('freeChoiceBlock');
   var typeBlock = document.getElementById('typeBlock');
   if (type === 'free' && !isDone){
     freeBlock.style.display='block'; typeBlock.style.display='none';
-    document.getElementById('editDaySubtitle').textContent = 'Выбери, как провести день';
+    document.getElementById('editDaySubtitle').textContent = _isPastOrToday ? 'Этот день уже прошёл или сегодня' : 'Выбери, как провести день';
     document.getElementById('freeCustomFields').style.display = 'none';
     updateFreePointsPreview();
     document.getElementById('freeCustomCategory').onchange = updateFreePointsPreview;
     document.getElementById('freeWheelBtn').onclick = function(){ overlay.classList.remove('active'); state.currentDay = day; openChoiceModal(day+' '+monthNames[month], "Выбери направление"); };
     document.getElementById('freeCustomBtn').onclick = function(){ document.getElementById('freeCustomFields').style.display = 'block'; };
+    document.getElementById('freeCustomDone').textContent = _isPastOrToday ? 'Отметить выполненным ✓' : 'Запланировать';
     document.getElementById('freeCustomDone').onclick = function(){
       var t = document.getElementById('freeCustomTitle').value.trim();
       var c = document.getElementById('freeCustomCategory').value;
       if (!t){ alert('Введите название'); return; }
       var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-      openPhotoAttach(function(){ planEvent(year,month,day,c,t,p,true); overlay.classList.remove('active'); });
+      openPhotoAttach(function(){
+        if (_isPastOrToday) addEventToDay(year, month, day, c, t, p, true);
+        else planEvent(year, month, day, c, t, p, true);
+        overlay.classList.remove('active');
+      });
     };
     overlay.classList.add('active'); return;
   }
   freeBlock.style.display='none'; typeBlock.style.display='block';
-  document.getElementById('editDaySubtitle').textContent = isDone ? 'Уже выполнено' : 'Выбери действие';
+  document.getElementById('editDaySubtitle').textContent = isDone ? 'Уже выполнено' : (_isPastOrToday ? 'Этот день уже прошёл или сегодня' : 'Выбери действие');
   var ti = TYPE_INFO[type] || TYPE_INFO.custom;
   document.getElementById('typeNameDisplay').textContent = ti.name;
   var events = getCompletedEvents(year,month,day);
@@ -1666,12 +1674,17 @@ function openEditModal(){
       saveState(); renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active');
     }
   };
+  document.getElementById('typeInitiativeDone').textContent = _isPastOrToday ? 'Отметить выполненным ✓' : 'Запланировать';
   document.getElementById('typeInitiativeDone').onclick = function(){
     var t = document.getElementById('typeInitiativeTitle').value.trim();
     var c = document.getElementById('typeInitiativeCategory').value;
     if (!t){ alert('Введите название'); return; }
     var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-    openPhotoAttach(function(){ planEvent(year,month,day,c,t,p,true); overlay.classList.remove('active'); });
+    openPhotoAttach(function(){
+      if (_isPastOrToday) addEventToDay(year, month, day, c, t, p, true);
+      else planEvent(year, month, day, c, t, p, true);
+      overlay.classList.remove('active');
+    });
   };
   document.getElementById('moveDayBtnType').onclick = function(){
     var v = document.getElementById('moveDateInputType').value;
@@ -2201,6 +2214,10 @@ function determineWinner(){
 function showResult(item){
   document.getElementById('resultText').textContent = item.text;
   document.getElementById('resultBox').style.display = 'block';
+  /* Меняем текст кнопки «Запланировать» на «Отметить выполненным», если день уже прошёл */
+  var _t = new Date(); _t.setHours(0,0,0,0);
+  var _d = new Date(state.currentDate.getFullYear(), state.currentDate.getMonth(), state.currentDay); _d.setHours(0,0,0,0);
+  document.getElementById('doneBtn').textContent = (_d <= _t) ? 'Отметить выполненным ✓' : 'Запланировать 🗓';
   window._currentItem = item;
 }
 function doSpin(){
@@ -2571,8 +2588,15 @@ document.addEventListener('DOMContentLoaded', function(){
     var events = getCompletedEvents(year, month, day);
     var isInit = events.some(function(e){ return e.type === item.type; });
     var pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
+    /* === ОПРЕДЕЛЯЕМ: ДЕНЬ УЖЕ ПРОШЁЛ ИЛИ СЕГОДНЯ? === */
+    var _t = new Date(); _t.setHours(0,0,0,0);
+    var _d = new Date(year, month, day); _d.setHours(0,0,0,0);
+    var _isPastOrToday = _d <= _t;
     document.getElementById('wheelOverlay').classList.remove('active');
-    openPhotoAttach(function(){ planEvent(year, month, day, item.type, item.text, pts, isInit); });
+    openPhotoAttach(function(){
+      if (_isPastOrToday) addEventToDay(year, month, day, item.type, item.text, pts, isInit);
+      else planEvent(year, month, day, item.type, item.text, pts, isInit);
+    });
   };
 
   function checkYesterdayPlanned(){
