@@ -1237,36 +1237,37 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
-/* ===== СОХРАНЕНИЕ ===== */
+/* ===== СОХРАНЕНИЕ (ИСПРАВЛЕНО) ===== */
 function saveState(){
+  /* ВСЕГДА пишем в localStorage мгновенно — независимо от Firebase */
+  try {
+    localStorage.setItem('monthPoints', state.points);
+    localStorage.setItem('totalPoints', state.totalPoints);
+    localStorage.setItem('history', JSON.stringify(state.history));
+    localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
+    localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+    localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
+    localStorage.setItem('currentMonth', getCurrentMonthKey());
+    localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
+    localStorage.setItem('counters', JSON.stringify(state.counters));
+    localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
+    localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
+    localStorage.setItem('wishes', JSON.stringify(state.wishes));
+    localStorage.setItem('notificationsForNastya', JSON.stringify(state.notificationsForNastya));
+    localStorage.setItem('dailyVisits', JSON.stringify(state.dailyVisits));
+    localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
+    localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
+    localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
+    localStorage.setItem('achievements', JSON.stringify(state.achievements));
+  } catch(e){ console.warn('ls', e); }
+
+  /* А в Firebase — только когда первый снапшот уже пришёл */
   if (!stateLoaded){ pendingSave = true; return; }
+  if (!navigator.onLine) return;
   if (saveTimeout) clearTimeout(saveTimeout);
   saveTimeout = setTimeout(function(){
     if (isSaving){ saveState(); return; }
     isSaving = true;
-
-    try {
-      localStorage.setItem('monthPoints', state.points);
-      localStorage.setItem('totalPoints', state.totalPoints);
-      localStorage.setItem('history', JSON.stringify(state.history));
-      localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
-      localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
-      localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
-      localStorage.setItem('currentMonth', getCurrentMonthKey());
-      localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
-      localStorage.setItem('counters', JSON.stringify(state.counters));
-      localStorage.setItem('todayCounters', JSON.stringify(state.todayCounters));
-      localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
-      localStorage.setItem('wishes', JSON.stringify(state.wishes));
-      localStorage.setItem('notificationsForNastya', JSON.stringify(state.notificationsForNastya));
-      localStorage.setItem('dailyVisits', JSON.stringify(state.dailyVisits));
-      localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
-      localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
-      localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
-      localStorage.setItem('achievements', JSON.stringify(state.achievements));
-    } catch(e){ console.warn('ls', e); }
-
-    if (!navigator.onLine){ isSaving = false; return; }
 
     var schedules = {};
     for (var key in localStorage) if (key.indexOf('schedule_') === 0) schedules[key] = localStorage.getItem(key);
@@ -1812,7 +1813,7 @@ function renderWishes(){
   if (!state.wishes.length){ garden.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Пока пусто.<br>Запиши первое желание ☝</div>'; return; }
   garden.innerHTML = state.wishes.map(function(w, i){
     var canActivate = state.totalPoints >= WISH_THRESHOLD && state.points >= w.cost && !w.activated && !w.done;
-    var flowerEmoji = WISH_TIER_FLOWER[w.tier] || '🌼';
+    var flowerEmoji = WISH_TIER_FLOWER[w.tier] ||. '🌼';
     if (w.activated && !w.done) flowerEmoji = WISH_TIER_FLOWER_ACTIVE[w.tier] || '🌷';
     if (w.done) flowerEmoji = '🌸';
     var statusLabel = 'Активировать';
@@ -1825,8 +1826,9 @@ function renderWishes(){
     if (!w.activated && !w.done && state.totalPoints < WISH_THRESHOLD){
       hint = '<div style="font-size:9px;color:#6b5a4e;margin-top:4px;font-weight:600">До порога: '+(WISH_THRESHOLD-state.totalPoints)+' б.</div>';
     }
-    var actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
-    return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
+    var actions = (!w.done && !w.activated) ? '<div class22="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">И"/>зменить</button><button data-action="delete" data';
+-idx="'+i+'" type="button">У далить</button></div>' : '';
+ if    return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
       '<span class="flower-emoji">'+flowerEmoji+'</span>' +
       '<div class="flower-title">'+w.title+'</div>' +
       '<div class="flower-meta">'+WISH_TIER_LABEL[w.tier]+' · '+w.cost+' б.</div>' +
@@ -1936,8 +1938,7 @@ function buildTreeSvg(stage){
       '<radialGradient id="crownGradDark" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#7aab8d"/><stop offset="100%" stop-color="#3d6b50"/></radialGradient>' +
     '</defs>' +
     '<ellipse cx="'+cx+'" cy="'+(groundY+4)+'" rx="120" ry="18" fill="url(#groundGrad)"/>' +
-    '<ellipse cx="'+cx+'" cy="'+(groundY+2)+'" rx="70" ry="8" fill="#6da892" opacity="0.22"/>';
-  if (stage === 1){
+    '<ellipse cx="'+cx+'" cy="'+(groundY+2)+'" rx="70" ry="8" fill="#6da892" opacity="0 (stage === 1){
     s += '<ellipse cx="'+cx+'" cy="'+(groundY-6)+'" rx="16" ry="10" fill="#6b4f3a"/>' +
       '<path d="M '+(cx+2)+' '+(groundY-14)+' q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
   } else if (stage === 2){
@@ -2618,7 +2619,6 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     delete state.plannedDays[key];
     window._pendingPlanKey = null;
-    /* === ПОСЛЕ «ДА, СОСТОЯЛОСЬ» ОТКРЫВАЕМ ОКНО ФОТО === */
     openPhotoAttach(function(){
       addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
     });
