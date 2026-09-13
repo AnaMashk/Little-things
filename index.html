@@ -30,7 +30,12 @@ audio,video{display:none!important}
   --shadow-soft:0 3px 14px rgba(60,40,20,.12);
 }
 
-html,body{height:100%}
+html{
+  min-height:100%;
+  /* ЗАМЕНИ-НА-СВОЮ-ПРЯМУЮ-ССЫЛКУ */
+  background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat fixed;
+  background-color:#3A3028;
+}
 
 body{
   font-family:'Montserrat',sans-serif;
@@ -39,26 +44,16 @@ body{
   line-height:1.5;
   overflow-x:hidden;
   padding:12px 12px 24px;
-  background:#3A3028;
+  background:transparent;
   position:relative;
 }
 
-/* Фиксированный слой с фоном — на iPhone не дёргается и не рвётся */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat;
-  background-color:#3A3028;
-}
-
-/* Затемняющая вуаль поверх фона, под контентом */
+/* Затемняющая вуаль — фиксированный слой, поверх фона, под контентом */
 body::after{
   content:'';
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:0;
   pointer-events:none;
   background:linear-gradient(180deg,
     rgba(40,30,20,.35) 0%,
