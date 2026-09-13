@@ -10,7 +10,6 @@
 <meta name="apple-mobile-web-app-title" content="Little things">
 <title>Наши маленькие вещи ❤️</title>
 
-<!-- ИКОНКИ (лежат в той же папке, что и index.html) -->
 <link rel="icon" type="image/png" sizes="512x512" href="icon512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icon180.png">
 
@@ -73,7 +72,6 @@ body::after{
 
 .app{width:100%;max-width:520px;min-height:0;position:relative;padding-bottom:24px;z-index:2;margin:0 auto;background:transparent}
 
-/* ==== ШАПКА ==== */
 .header{text-align:center;padding:20px 16px 12px;position:relative;z-index:2}
 .header-title{
   font-family:'Cormorant Garamond',serif;
@@ -94,7 +92,6 @@ body::after{
   text-transform:uppercase;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.55);line-height:1.6;
 }
 
-/* ==== НАВИГАЦИЯ ==== */
 .nav{
   display:grid;grid-template-columns:repeat(5,1fr);
   background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
@@ -113,7 +110,6 @@ body::after{
 .nav-item.active .nav-icon{transform:scale(1.1);color:var(--gold-deep)}
 .nav-item:active .nav-icon{transform:scale(.9)}
 
-/* ==== СТРАНИЦЫ ==== */
 .page{display:none;padding:20px 8px;animation:fadeIn .45s cubic-bezier(.34,1.2,.64,1);position:relative;z-index:2}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -132,7 +128,6 @@ body::after{
   text-shadow:0 1px 4px rgba(0,0,0,.4);
 }
 
-/* ==== МЕСЯЦ ==== */
 .month-header{
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:14px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
@@ -246,7 +241,6 @@ body::after{
 .manage-panel-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:6px;color:var(--dark);letter-spacing:1px}
 .manage-panel-text{color:var(--muted);font-size:11px;line-height:1.6;margin-bottom:16px;letter-spacing:.5px}
 
-/* ==== КНОПКИ ==== */
 .btn-primary{
   width:100%;padding:15px;border-radius:40px;
   background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;
@@ -276,7 +270,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .btn-secondary,.btn-primary,.btn-gold,.spin-button,.role-btn{min-height:52px;display:flex;align-items:center;justify-content:center;line-height:1.2}
 .month-arrow,.close-button{min-width:44px;min-height:44px}
 
-/* ==== ОВЕРЛЕИ / МОДАЛКИ ==== */
 .overlay{position:fixed;inset:0;background:rgba(30,22,16,.75);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:.35s;z-index:100}
 .overlay.active{opacity:1;visibility:visible}
 .modal{
@@ -314,7 +307,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .role-badge{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:linear-gradient(145deg,rgba(46,36,25,.95),rgba(30,22,16,.95));color:#F5EBD5;padding:6px 18px;border-radius:20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;z-index:500;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3);border:1px solid rgba(201,169,97,.4)}
 .role-badge.show{display:block}
 
-/* ==== НАСТРОЙКИ ==== */
 .settings-hotzone{position:fixed;bottom:0;right:0;width:150px;height:150px;z-index:900;background:transparent;touch-action:manipulation}
 .settings-toggle{position:fixed;bottom:22px;right:22px;width:44px;height:44px;border-radius:50%;background:rgba(90,74,58,.4);color:#F5EBD5;font-size:18px;z-index:901;display:none;align-items:center;justify-content:center;cursor:pointer;border:none;opacity:0;transition:opacity .35s;backdrop-filter:blur(4px)}
 .settings-toggle.visible{display:flex;opacity:1}
@@ -329,7 +321,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .empty-menu-notice .big{font-size:32px;display:block;margin-bottom:10px}
 .empty-menu-notice .small{font-size:10px;opacity:.7;display:block;margin-top:8px}
 
-/* ==== БАЛЛЫ ==== */
 .points-card{padding:30px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.4);position:relative;overflow:hidden}
 .points-number{font-family:'Cormorant Garamond',serif;font-size:64px;line-height:1;color:var(--gold-deep);font-weight:600}
 .points-caption{color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:3px;text-transform:uppercase}
@@ -416,7 +407,7 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .day-info-block .day-label{font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
 .day-info-block .day-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:2px;color:var(--dark)}
 .event-list{list-style:none;margin:8px 0}
-.event-list li{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px;gap:10px;color:var(--dark)}
+.event-list li{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px;gap:10px;color:var(--dark);align-items:center}
 .event-list li:last-child{border-bottom:none}
 .event-list li span:last-child{color:var(--gold-deep);font-weight:600;flex-shrink:0}
 
@@ -742,49 +733,35 @@ setTimeout(function(){
 <button class="close-button" data-close="editDayOverlay" type="button">×</button>
 <div class="modal-title" id="editDayTitle">День</div>
 <div class="modal-subtitle" id="editDaySubtitle"></div>
-<div id="freeChoiceBlock" style="display:none;margin-top:20px">
-<div style="display:flex;flex-direction:column;gap:10px">
-<button class="btn-primary" id="freeWheelBtn" type="button">🎡 Крутить колесо</button>
-<button class="btn-secondary" id="freeCustomBtn" type="button">⭐ Моя инициатива</button>
+
+<div id="typeBlock" style="display:block;margin-top:20px">
+  <div class="day-info-block">
+    <div class="day-label">Тип дня</div>
+    <div class="day-title" id="typeNameDisplay">Свободный</div>
+  </div>
+
+  <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:18px 0 8px;text-align:center">Что уже стоит</div>
+  <ul class="event-list" id="eventListCompact"></ul>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+    <button class="btn-gold" id="typeWheelBtn" type="button">📅 Запланировать</button>
+    <button class="btn-secondary" id="typeInitiativeBtn" type="button">⭐ Своя инициатива</button>
+    <button class="btn-secondary" id="typeClearBtn" type="button" style="display:none;color:#fff;background:linear-gradient(145deg,#C97A7A,#A85A5A);border-color:#955050">🗑 Очистить день</button>
+  </div>
+
+  <div id="typeInitiativeFields" style="display:none;margin-top:16px">
+    <input type="text" class="input-line" id="typeInitiativeTitle" placeholder="Название дела">
+    <select class="select-line" id="typeInitiativeCategory">
+      <option value="emotional">💙 Эмоциональная (5 б.)</option>
+      <option value="physical">💜 Физическая (10 б.)</option>
+      <option value="lightDate">💗 Лёгкое (50 б.)</option>
+      <option value="bigDate">🏆 Большое (150 б.)</option>
+    </select>
+    <div style="text-align:center;font-size:12px;color:var(--gold-deep);padding:10px;background:rgba(201,169,97,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="typeTotalPoints">35</span> баллов</div>
+    <button class="btn-primary" id="typeInitiativeDone" type="button">Сохранить</button>
+  </div>
 </div>
-<div id="freeCustomFields" style="display:none;margin-top:16px">
-<input type="text" class="input-line" id="freeCustomTitle" placeholder="Название дела">
-<select class="select-line" id="freeCustomCategory">
-<option value="emotional">💙 Эмоциональная (5 б.)</option>
-<option value="physical">💜 Физическая (10 б.)</option>
-<option value="lightDate">💗 Лёгкое (50 б.)</option>
-<option value="bigDate">🏆 Большое (150 б.)</option>
-</select>
-<div style="text-align:center;font-size:12px;color:var(--gold-deep);padding:10px;background:rgba(201,169,97,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="freeTotalPoints">35</span> баллов</div>
-<button class="btn-gold" id="freeCustomDone" type="button">Запланировать</button>
-</div>
-</div>
-<div id="typeBlock" style="display:none;margin-top:20px">
-<div class="day-info-block"><div class="day-label">Тип дня</div><div class="day-title" id="typeNameDisplay">Эмоциональная</div></div>
-<ul class="event-list" id="eventListCompact"></ul>
-<div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
-<button class="btn-primary" id="typeWheelBtn" type="button">🎡 Крутить колесо</button>
-<button class="btn-secondary" id="typeInitiativeBtn" type="button">⭐ Добавить инициативу</button>
-<button class="btn-secondary" id="typeMoveBtn" type="button">📅 Перенести дату</button>
-<button class="btn-secondary" id="typeClearBtn" type="button" style="display:none;color:var(--red);border-color:var(--red)">🗑 Очистить</button>
-</div>
-<div id="typeInitiativeFields" style="display:none;margin-top:16px">
-<input type="text" class="input-line" id="typeInitiativeTitle" placeholder="Название дела">
-<select class="select-line" id="typeInitiativeCategory">
-<option value="emotional">💙 Эмоциональная (5 б.)</option>
-<option value="physical">💜 Физическая (10 б.)</option>
-<option value="lightDate">💗 Лёгкое (50 б.)</option>
-<option value="bigDate">🏆 Большое (150 б.)</option>
-</select>
-<div style="text-align:center;font-size:12px;color:var(--gold-deep);padding:10px;background:rgba(201,169,97,.1);border-radius:14px;margin-bottom:10px">Итого: <span id="typeTotalPoints">35</span> баллов</div>
-<button class="btn-gold" id="typeInitiativeDone" type="button">Запланировать</button>
-</div>
-<div id="moveBlockType" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid rgba(201,169,97,.3)">
-<label style="font-size:12px;display:block;margin-bottom:8px;color:var(--brown)">Новая дата</label>
-<input type="date" class="input-line" id="moveDateInputType" style="border-radius:14px">
-<button class="btn-primary" id="moveDayBtnType" type="button">Перенести</button>
-</div>
-</div>
+
 </div>
 </div>
 
@@ -1680,73 +1657,59 @@ function openEditModal(){
   var _today = new Date(); _today.setHours(0,0,0,0);
   var _thisDate = new Date(year, month, day); _thisDate.setHours(0,0,0,0);
   var _isPastOrToday = _thisDate <= _today;
+  var key = year+'-'+month+'-'+day;
   var overlay = document.getElementById('editDayOverlay');
+
   document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
-  var freeBlock = document.getElementById('freeChoiceBlock');
-  var typeBlock = document.getElementById('typeBlock');
-  if (type === 'free' && !isDone){
-    freeBlock.style.display='block'; typeBlock.style.display='none';
-    document.getElementById('editDaySubtitle').textContent = _isPastOrToday ? 'Этот день уже прошёл или сегодня' : 'Выбери, как провести день';
-    document.getElementById('freeCustomFields').style.display = 'none';
-    updateFreePointsPreview();
-    document.getElementById('freeCustomCategory').onchange = updateFreePointsPreview;
-    document.getElementById('freeWheelBtn').onclick = function(){ overlay.classList.remove('active'); state.currentDay = day; openChoiceModal(day+' '+monthNames[month], "Выбери направление"); };
-    document.getElementById('freeCustomBtn').onclick = function(){ document.getElementById('freeCustomFields').style.display = 'block'; };
-    document.getElementById('freeCustomDone').textContent = _isPastOrToday ? 'Отметить выполненным ✓' : 'Запланировать';
-    document.getElementById('freeCustomDone').onclick = function(){
-      var t = document.getElementById('freeCustomTitle').value.trim();
-      var c = document.getElementById('freeCustomCategory').value;
-      if (!t){ alert('Введите название'); return; }
-      var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-      openPhotoAttach(function(){
-        if (_isPastOrToday) addEventToDay(year, month, day, c, t, p, true);
-        else planEvent(year, month, day, c, t, p, true);
-        overlay.classList.remove('active');
-      });
-    };
-    overlay.classList.add('active'); return;
-  }
-  freeBlock.style.display='none'; typeBlock.style.display='block';
-  document.getElementById('editDaySubtitle').textContent = isDone ? 'Уже выполнено' : (_isPastOrToday ? 'Этот день уже прошёл или сегодня' : 'Выбери действие');
+  document.getElementById('editDaySubtitle').textContent = _isPastOrToday
+    ? 'Этот день уже прошёл или сегодня'
+    : 'Будущий день — можно запланировать';
+
+  var events = getCompletedEvents(year,month,day);
+  var planned = state.plannedDays && state.plannedDays[key];
   var ti = TYPE_INFO[type] || TYPE_INFO.custom;
   document.getElementById('typeNameDisplay').textContent = ti.name;
-  var events = getCompletedEvents(year,month,day);
+
   var list = document.getElementById('eventListCompact');
-  if (events.length>0){
-    list.innerHTML = events.map(function(e){
+  var html = '';
+  if (events.length > 0){
+    html += events.map(function(e){
       var info = TYPE_INFO[e.type]||TYPE_INFO.custom;
       var photoIcon = e.photo ? ' 📸' : '';
-      return '<li><span>'+info.emoji+' '+e.text+photoIcon+'</span><span>+'+e.points+' б.</span></li>';
+      return '<li><span>'+info.emoji+' '+e.text+photoIcon+' <em style="color:var(--muted);font-style:normal">✓</em></span><span>+'+e.points+' б.</span></li>';
     }).join('');
-  } else list.innerHTML = '<li><span style="color:var(--muted)">Пока ничего</span></li>';
-  document.getElementById('typeClearBtn').style.display = events.length>0 ? 'block' : 'none';
+  }
+  if (planned){
+    var pInfo = TYPE_INFO[planned.type]||TYPE_INFO.custom;
+    html += '<li style="opacity:.85"><span>'+pInfo.emoji+' '+planned.text+' <em style="color:var(--gold-deep);font-style:normal">⏳ план</em></span><span>'+planned.points+' б.</span></li>';
+  }
+  if (!html) html = '<li><span style="color:var(--muted)">Пока ничего</span></li>';
+  list.innerHTML = html;
+
+  var wheelBtn = document.getElementById('typeWheelBtn');
+  if (_isPastOrToday){
+    wheelBtn.textContent = '✓ Отметить выполненным';
+  } else {
+    wheelBtn.textContent = '📅 Запланировать';
+  }
+  wheelBtn.className = 'btn-gold';
+  wheelBtn.onclick = function(){
+    overlay.classList.remove('active');
+    state.currentType = type;
+    state.currentDay = day;
+    openChoiceModal(day+' '+monthNames[month], _isPastOrToday ? 'Что сделал?' : 'Что запланировать?');
+  };
+
   document.getElementById('typeInitiativeFields').style.display = 'none';
-  document.getElementById('moveBlockType').style.display = 'none';
-  document.getElementById('typeWheelBtn').onclick = function(){ overlay.classList.remove('active'); state.currentType = type; state.currentDay = day; openWheel(type); };
   document.getElementById('typeInitiativeBtn').onclick = function(){
     var f = document.getElementById('typeInitiativeFields');
-    f.style.display = f.style.display==='block' ? 'none' : 'block';
+    var isOpen = f.style.display === 'block';
+    f.style.display = isOpen ? 'none' : 'block';
+    document.getElementById('typeInitiativeDone').textContent = _isPastOrToday ? '✓ Отметить выполненным' : '📅 Запланировать';
     updateTypePointsPreview();
     document.getElementById('typeInitiativeCategory').onchange = updateTypePointsPreview;
   };
-  document.getElementById('typeMoveBtn').onclick = function(){
-    var mb = document.getElementById('moveBlockType');
-    mb.style.display = mb.style.display==='block' ? 'none' : 'block';
-    if (mb.style.display==='block'){
-      var t = new Date();
-      var val = t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
-      document.getElementById('moveDateInputType').min = val;
-      document.getElementById('moveDateInputType').value = val;
-    }
-  };
-  document.getElementById('typeClearBtn').onclick = function(){
-    if (confirm('Очистить '+day+' '+monthNames[month]+'?')){
-      delete state.completedDays[year+'-'+month+'-'+day];
-      delete state.plannedDays[year+'-'+month+'-'+day];
-      saveState(); renderCalendar(); updateStats(); renderLoveTree(); overlay.classList.remove('active');
-    }
-  };
-  document.getElementById('typeInitiativeDone').textContent = _isPastOrToday ? 'Отметить выполненным ✓' : 'Запланировать';
+
   document.getElementById('typeInitiativeDone').onclick = function(){
     var t = document.getElementById('typeInitiativeTitle').value.trim();
     var c = document.getElementById('typeInitiativeCategory').value;
@@ -1758,17 +1721,50 @@ function openEditModal(){
       overlay.classList.remove('active');
     });
   };
-  document.getElementById('moveDayBtnType').onclick = function(){
-    var v = document.getElementById('moveDateInputType').value;
-    if (!v){ alert('Выберите дату'); return; }
-    var parts = v.split('-').map(function(n){ return parseInt(n); });
-    var ny=parts[0], nm=parts[1]-1, nd=parts[2];
-    var nk = ny+'-'+nm+'-'+nd;
-    var sk = year+'-'+month+'-'+day;
-    if (state.completedDays[sk]){ state.completedDays[nk] = state.completedDays[sk]; delete state.completedDays[sk]; }
-    if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
-    saveState(); renderCalendar(); overlay.classList.remove('active');
+
+  var hasAnything = events.length > 0 || planned;
+  var clearBtn = document.getElementById('typeClearBtn');
+  clearBtn.style.display = hasAnything ? 'block' : 'none';
+  clearBtn.onclick = function(){
+    var refund = events.reduce(function(s,e){ return s + (e.points||0); }, 0);
+    var msg = 'Очистить ' + day + ' ' + monthNames[month] + '?';
+    if (refund > 0) msg += '\n\nИз баллов вернётся: −' + refund;
+    if (!confirm(msg)) return;
+
+    if (refund > 0){
+      state.points -= refund;
+      state.totalPoints -= refund;
+      if (state.points < 0) state.points = 0;
+      if (state.totalPoints < 0) state.totalPoints = 0;
+    }
+
+    var dayStart = new Date(year, month, day).getTime();
+    var dayEnd = dayStart + 86400000;
+    state.history = (state.history || []).filter(function(h){
+      return !(h.eventDate >= dayStart && h.eventDate < dayEnd);
+    });
+
+    events.forEach(function(e){
+      if (state.quarantine && state.quarantine[e.text]) delete state.quarantine[e.text];
+    });
+
+    delete state.completedDays[key];
+    delete state.plannedDays[key];
+
+    if (state.notificationsForNastya){
+      state.notificationsForNastya = state.notificationsForNastya.filter(function(n){ return n.dateKey !== key; });
+    }
+
+    logActivity('day_cleared', '🗑 Очистил день ' + day + '.' + (month+1) + '.' + year);
+    saveState();
+    renderCalendar();
+    updateStats();
+    renderHistory();
+    renderLoveTree();
+    overlay.classList.remove('active');
+    showToast('🗑', 'День очищен' + (refund>0 ? ' (−' + refund + ' б.)' : ''));
   };
+
   overlay.classList.add('active');
 }
 function openChoiceModal(title, subtitle){
