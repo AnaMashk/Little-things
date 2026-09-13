@@ -2,8 +2,18 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#3A3028">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Little things">
 <title>Наши маленькие вещи ❤️</title>
+
+<!-- ИКОНКИ (лежат в той же папке, что и index.html) -->
+<link rel="icon" type="image/png" sizes="512x512" href="icon512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon180.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Marck+Script&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -32,9 +42,9 @@ audio,video{display:none!important}
 
 html{
   min-height:100%;
-  /* ЗАМЕНИ-НА-СВОЮ-ПРЯМУЮ-ССЫЛКУ */
-  background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat fixed;
+  background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat;
   background-color:#3A3028;
+  overscroll-behavior:none;
 }
 
 body{
@@ -46,9 +56,9 @@ body{
   padding:12px 12px 24px;
   background:transparent;
   position:relative;
+  overscroll-behavior:none;
 }
 
-/* Затемняющая вуаль — фиксированный слой, поверх фона, под контентом */
 body::after{
   content:'';
   position:fixed;
