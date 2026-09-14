@@ -75,6 +75,8 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;back
 @keyframes markerPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.3);opacity:1}100%{transform:scale(1);opacity:1}}
 .calendar-day.planned-day{position:relative;outline:2px dashed var(--gold);outline-offset:-3px}
 .calendar-day.planned-day::after{content:"";position:absolute;right:4px;bottom:4px;width:20px;height:20px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8842E' stroke-width='2'><circle cx='12' cy='12' r='9'/><path d='M12 7 L12 12 L15 14'/></svg>");background-repeat:no-repeat;background-size:contain;opacity:.9;z-index:3}
+.calendar-day.forced-day{position:relative}
+.calendar-day.forced-day::before{content:'🎯';position:absolute;left:4px;bottom:4px;font-size:12px;z-index:3;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
 .legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:18px}
 .legend-item{display:flex;align-items:center;gap:8px;color:var(--brown);font-size:10px;font-weight:500;background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));padding:10px 12px;border-radius:14px;border:1px solid rgba(201,169,97,.35);box-shadow:var(--shadow-soft);letter-spacing:.5px}
 .legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,.7) inset}
@@ -657,6 +659,27 @@ setTimeout(function(){
 </div>
 </div>
 
+<div class="overlay" id="forceDayOverlay">
+<div class="modal">
+<button class="close-button" data-close="forceDayOverlay" type="button">×</button>
+<div class="modal-title">🎯 Настроить тип дня</div>
+<div class="modal-subtitle">Выбери день и что в нём будет</div>
+<div style="margin-top:18px">
+<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px">Дата</label>
+<input type="date" class="input-line" id="forceDayDate" style="border-radius:14px">
+<div style="text-align:center;font-size:11px;color:var(--muted);margin:10px 0;letter-spacing:1px">Сейчас стоит: <span id="forceDayCurrent" style="color:var(--gold-deep);font-weight:600">—</span></div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<button class="role-btn" data-force="emotional" type="button"><span class="role-emoji">💙</span>Эмоциональная забота</button>
+<button class="role-btn" data-force="physical" type="button"><span class="role-emoji">💜</span>Физическая забота</button>
+<button class="role-btn" data-force="lightDate" type="button"><span class="role-emoji">💗</span>Лёгкое свидание</button>
+<button class="role-btn" data-force="bigDate" type="button"><span class="role-emoji">🏆</span>Большое свидание</button>
+<button class="role-btn" data-force="free" type="button"><span class="role-emoji">⬜</span>Свободный день</button>
+<button class="role-btn" data-force="reset" type="button" style="background:linear-gradient(145deg,#E5D8B8,#D4C4A0);border-color:#B8A680"><span class="role-emoji">↺</span>Вернуть автоматический</button>
+</div>
+</div>
+</div>
+</div>
+
 <div class="overlay" id="retroOverlay">
 <div class="modal">
 <button class="close-button" data-close="retroOverlay" type="button">×</button>
@@ -773,6 +796,7 @@ const TYPE_INFO = {
   physical:  { name:"Физическая забота",     short:"Физическая",     emoji:"💜", points:10, color:"#D5C4DB" },
   lightDate: { name:"Лёгкое свидание",       short:"Лёгкое",         emoji:"💗", points:50, color:"#E8C4CB" },
   bigDate:   { name:"Большое свидание",      short:"Большое",        emoji:"🏆", points:150, color:"#C97A7A" },
+  free:      { name:"Свободный день",        short:"Свободный",      emoji:"⬜", points:0, color:"#F2E8D5" },
   custom:    { name:"Своё дело",             short:"Своё",           emoji:"⭐", points:0, color:"#B5C4A8" }
 };
 
@@ -841,6 +865,7 @@ var state = {
   schedules: {},
   pendingPhoto: null,
   plannedDays: {},
+  forcedDayTypes: {},
   pendingReschedule: null
 };
 
@@ -935,6 +960,7 @@ function hydrateFromLocalStorage(){
     state.history        = JSON.parse(g('history') || '[]');
     state.completedDays  = JSON.parse(g('completedDays') || '{}');
     state.plannedDays    = JSON.parse(g('plannedDays') || '{}');
+    state.forcedDayTypes = JSON.parse(g('forcedDayTypes') || '{}');
     state.wishes         = JSON.parse(g('wishes') || '[]');
     state.achievements   = JSON.parse(g('achievements') || '[]');
     state.activityLog    = JSON.parse(g('activityLog') || '[]');
@@ -1114,15 +1140,12 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
-// ==== FIX: изменения баллов через increment, чтобы они не перезаписывались ====
+// ==== Точки через increment, чтобы не затирались ====
 function applyPointsDelta(deltaMonth, deltaTotal, reason){
-  // Локально
   state.points += deltaMonth;
   state.totalPoints += deltaTotal;
   if (state.points < 0) state.points = 0;
   if (state.totalPoints < 0) state.totalPoints = 0;
-
-  // В облаке — атомарно
   if (mainDocRef && FV && navigator.onLine){
     var patch = {};
     patch.points = FV.increment(deltaMonth);
@@ -1132,7 +1155,6 @@ function applyPointsDelta(deltaMonth, deltaTotal, reason){
   saveState();
 }
 
-// ==== FIX: удаление ключей в облаке ====
 function deleteCloudKeys(keys){
   if (!mainDocRef || !FV || !navigator.onLine) return Promise.resolve();
   var patch = {};
@@ -1148,6 +1170,7 @@ function saveState(){
     localStorage.setItem('history', JSON.stringify(state.history));
     localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
     localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+    localStorage.setItem('forcedDayTypes', JSON.stringify(state.forcedDayTypes));
     localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
     localStorage.setItem('currentMonth', getCurrentMonthKey());
     localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
@@ -1171,14 +1194,13 @@ function saveState(){
     if (isSaving){ saveState(); return; }
     isSaving = true;
 
-    // ВАЖНО: не пишем points и totalPoints в основном set — их пишет applyPointsDelta через increment.
-    // Здесь пишем всё остальное.
     var schedules = {};
     for (var key in localStorage) if (key.indexOf('schedule_') === 0) schedules[key] = localStorage.getItem(key);
 
     var data = {
       history: state.history, completedDays: state.completedDays,
       plannedDays: state.plannedDays,
+      forcedDayTypes: state.forcedDayTypes,
       spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
       quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
       wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
@@ -1209,7 +1231,6 @@ function subscribeToFirestore(){
         state.points = 0; state.spinsUsed = {};
         mainDocRef.set({ points:0, currentMonth:getCurrentMonthKey(), spinsUsed:{} }, { merge:true });
       } else if (typeof d.points === 'number'){
-        // ВАЖНО: точки приходят уже с учётом increment
         state.points = d.points;
       }
 
@@ -1218,6 +1239,7 @@ function subscribeToFirestore(){
       state.history        = mergeHistory(state.history, d.history);
       state.completedDays  = mergeCompletedDays(state.completedDays, d.completedDays);
       state.plannedDays    = mergePlannedDays(state.plannedDays, d.plannedDays);
+      if (d.forcedDayTypes) state.forcedDayTypes = Object.assign({}, state.forcedDayTypes, d.forcedDayTypes);
       state.wishes         = mergeWishes(state.wishes, d.wishes);
       state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
       state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
@@ -1327,6 +1349,7 @@ function renderSettingsMenu(){
       b.onclick = fn; menu.appendChild(b);
     };
     var div = function(){ var d = document.createElement('div'); d.className='divider'; menu.appendChild(d); };
+    add('🎯 Настроить тип дня','var(--purple-deep)',function(){ menu.classList.remove('open'); openForceDayModal(); });
     add('📝 Отметить задним числом','var(--gold-deep)',function(){ menu.classList.remove('open'); openRetroModal(); });
     add('💌 Показать письмо','var(--gold-deep)',function(){ menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
     add('💰 Начислить баллы','var(--gold-deep)',function(){ menu.classList.remove('open'); openManualPoints(); });
@@ -1367,7 +1390,7 @@ function renderSettingsMenu(){
       localStorage.clear();
       if (mainDocRef){
         mainDocRef.set({
-          points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, wishes:[],
+          points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, forcedDayTypes:{}, wishes:[],
           achievements:[], activityLog:[], quarantine:{}, dailyVisits:{}, spinsUsed:{},
           notificationsForNastya:[], counters:{nastya:{},vanya:{}}, todayCounters:{nastya:emptyToday(),vanya:emptyToday()},
           lastCelebrationMonth:null, welcomeShown:false, schedules:{}
@@ -1383,7 +1406,63 @@ function renderSettingsMenu(){
   }
 }
 
-// ==== НОВАЯ ФУНКЦИЯ: отметить задним числом ====
+// ==== Настроить тип дня вручную ====
+function openForceDayModal(){
+  var overlay = document.getElementById('forceDayOverlay');
+  var dateInput = document.getElementById('forceDayDate');
+  var currentSpan = document.getElementById('forceDayCurrent');
+
+  var today = new Date();
+  dateInput.value = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+
+  function refreshCurrent(){
+    var v = dateInput.value;
+    if (!v){ currentSpan.textContent = '—'; return; }
+    var p = v.split('-').map(function(n){ return parseInt(n); });
+    var yy = p[0], mm = p[1]-1, dd = p[2];
+    var key = yy+'-'+mm+'-'+dd;
+    var t = getDayType(yy, mm, dd);
+    var info = TYPE_INFO[t] || TYPE_INFO.custom;
+    var manualMark = (state.forcedDayTypes && state.forcedDayTypes[key]) ? ' (вручную)' : ' (авто)';
+    currentSpan.textContent = info.emoji + ' ' + info.name + manualMark;
+  }
+  refreshCurrent();
+  dateInput.onchange = refreshCurrent;
+
+  overlay.querySelectorAll('button[data-force]').forEach(function(b){
+    b.onclick = function(){
+      var v = dateInput.value;
+      if (!v){ alert('Выбери дату'); return; }
+      var p = v.split('-').map(function(n){ return parseInt(n); });
+      var yy = p[0], mm = p[1]-1, dd = p[2];
+      var key = yy+'-'+mm+'-'+dd;
+      var choice = b.dataset.force;
+      if (!state.forcedDayTypes) state.forcedDayTypes = {};
+
+      if (choice === 'reset'){
+        delete state.forcedDayTypes[key];
+        if (mainDocRef && FV && navigator.onLine){
+          var patch = {};
+          patch['forcedDayTypes.'+key] = FV.delete();
+          mainDocRef.update(patch).catch(function(e){ console.warn('forceReset', e); });
+        }
+        logActivity('force_reset', '↺ Вернул автотип для '+dd+'.'+(mm+1)+'.'+yy);
+        showToast('↺', 'Вернул автотип для '+dd+'.'+(mm+1));
+      } else {
+        state.forcedDayTypes[key] = choice;
+        logActivity('force_set', '🎯 Поставил '+(TYPE_INFO[choice]?TYPE_INFO[choice].name:choice)+' на '+dd+'.'+(mm+1)+'.'+yy);
+        showToast('🎯', 'Поставлено: '+(TYPE_INFO[choice]?TYPE_INFO[choice].name:choice));
+      }
+      saveState();
+      renderCalendar();
+      refreshCurrent();
+    };
+  });
+
+  overlay.classList.add('active');
+}
+
+// ==== Отметить задним числом ====
 function openRetroModal(){
   var overlay = document.getElementById('retroOverlay');
   var dateInput = document.getElementById('retroDate');
@@ -1392,7 +1471,6 @@ function openRetroModal(){
   var customInput = document.getElementById('retroCustomText');
   var pointsSpan = document.getElementById('retroPoints');
 
-  // дата по умолчанию — вчера
   var y = new Date(); y.setDate(y.getDate()-1);
   dateInput.value = y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0');
   dateInput.max = new Date().toISOString().slice(0,10);
@@ -1411,11 +1489,7 @@ function openRetroModal(){
   refreshTasks(); refreshPoints();
 
   catSelect.onchange = function(){ refreshTasks(); refreshPoints(); };
-  taskSelect.onchange = function(){
-    if (taskSelect.value){
-      customInput.value = '';
-    }
-  };
+  taskSelect.onchange = function(){ if (taskSelect.value) customInput.value = ''; };
 
   overlay.classList.add('active');
 }
@@ -1435,11 +1509,8 @@ function submitRetro(){
   if (!text){ alert('Выбери задание из списка или введи свой текст'); return; }
 
   var points = TYPE_INFO[cat].points;
-
-  // добавляем событие в completedDays
   var key = yy+'-'+mm+'-'+dd;
   if (!state.completedDays[key]) state.completedDays[key] = [];
-  // защита от дубля
   var exists = state.completedDays[key].some(function(e){ return e.text === text; });
   if (exists){
     if (!confirm('Это уже отмечено в этот день. Добавить ещё раз?')) return;
@@ -1448,7 +1519,6 @@ function submitRetro(){
     type: cat, text: text, points: points, isInitiative: false, timestamp: Date.now(), retro: true
   });
 
-  // история
   var dateNice = String(dd).padStart(2,'0')+'.'+String(mm+1).padStart(2,'0')+'.'+yy;
   state.history.unshift({
     date: dateNice, eventDate: new Date(yy, mm, dd).getTime(), title: text,
@@ -1456,9 +1526,7 @@ function submitRetro(){
     emoji: TYPE_INFO[cat].emoji, points: points, photo: null
   });
 
-  // баллы через increment
   applyPointsDelta(points, points, 'retro');
-
   logActivity('retro_add', '📝 Отметил задним числом: «'+text+'» ('+dateNice+', +'+points+' б.)');
 
   renderCalendar(); updateStats(); renderHistory(); renderLoveTree(); checkAchievements();
@@ -1503,34 +1571,68 @@ function getAvailableTasks(cat){
   return available;
 }
 
+// ==== Улучшенный генератор: 2 эмо + 2 физ в неделю равномерно ====
 function generateMonthSchedule(year, month){
   var key = 'schedule_'+year+'_'+month;
   var saved = localStorage.getItem(key);
   if (saved) return JSON.parse(saved);
+
   var daysInMonth = new Date(year, month+1, 0).getDate();
-  var schedule = {}; var weeks = []; var cur = [];
-  for (var d=1; d<=daysInMonth; d++){
-    cur.push(d);
-    if (new Date(year,month,d).getDay()===0 || d===daysInMonth){ weeks.push(cur); cur=[]; }
+  var allDays = [];
+  for (var d = 1; d <= daysInMonth; d++) allDays.push(d);
+
+  var weeksInMonth = daysInMonth / 7;
+  var totalEmotional = Math.max(2, Math.round(weeksInMonth * 2));
+  var totalPhysical  = Math.max(2, Math.round(weeksInMonth * 2));
+
+  function pickSpread(pool, count){
+    if (count >= pool.length) return pool.slice();
+    var sorted = pool.slice().sort(function(a,b){ return a - b; });
+    var result = [];
+    var step = sorted.length / count;
+    for (var i = 0; i < count; i++){
+      var startIdx = Math.floor(i * step);
+      var endIdx = Math.min(sorted.length - 1, Math.floor((i + 1) * step) - 1);
+      if (endIdx < startIdx) endIdx = startIdx;
+      var idx = startIdx + Math.floor(Math.random() * (endIdx - startIdx + 1));
+      result.push(sorted[idx]);
+    }
+    return result;
   }
-  weeks.forEach(function(w){
-    var sh = w.slice().sort(function(){ return Math.random()-0.5; });
-    if (sh.length>=1) schedule[sh[0]]='emotional';
-    if (sh.length>=2) schedule[sh[1]]='emotional';
-    if (sh.length>=3) schedule[sh[2]]='physical';
-    if (sh.length>=4) schedule[sh[3]]='physical';
-    for (var i=4;i<sh.length;i++) schedule[sh[i]]='free';
+
+  var emDays   = pickSpread(allDays, totalEmotional);
+  var rem1     = allDays.filter(function(d){ return emDays.indexOf(d) === -1; });
+  var physDays = pickSpread(rem1, totalPhysical);
+
+  var schedule = {};
+  allDays.forEach(function(d){
+    if (emDays.indexOf(d) !== -1) schedule[d] = 'emotional';
+    else if (physDays.indexOf(d) !== -1) schedule[d] = 'physical';
+    else schedule[d] = 'free';
   });
-  var midC=[]; for (var d1=13; d1<=Math.min(17,daysInMonth); d1++) midC.push(d1);
-  if (midC.length) schedule[midC[Math.floor(Math.random()*midC.length)]]='bigDate';
-  var endC=[]; for (var d2=25; d2<=Math.min(30,daysInMonth); d2++) endC.push(d2);
-  if (endC.length) schedule[endC[Math.floor(Math.random()*endC.length)]]='lightDate';
+
+  var midC = [];
+  for (var d1 = 13; d1 <= Math.min(17, daysInMonth); d1++) midC.push(d1);
+  if (midC.length){
+    var pickedBig = midC[Math.floor(Math.random() * midC.length)];
+    schedule[pickedBig] = 'bigDate';
+  }
+
+  var endC = [];
+  for (var d2 = 25; d2 <= Math.min(30, daysInMonth); d2++) endC.push(d2);
+  if (endC.length){
+    var pickedLight = endC[Math.floor(Math.random() * endC.length)];
+    if (schedule[pickedLight] !== 'bigDate') schedule[pickedLight] = 'lightDate';
+  }
+
   localStorage.setItem(key, JSON.stringify(schedule));
   return schedule;
 }
+
 function getDayType(year, month, day){
   var key = year+'-'+month+'-'+day;
   if (state.completedDays[key] && state.completedDays[key].length>0) return state.completedDays[key][0].type;
+  if (state.forcedDayTypes && state.forcedDayTypes[key]) return state.forcedDayTypes[key];
   if (state.plannedDays && state.plannedDays[key]) return state.plannedDays[key].type;
   return generateMonthSchedule(year, month)[day] || 'free';
 }
@@ -1555,12 +1657,14 @@ function renderCalendar(){
     var isDone = events.length>0;
     var plannedKey = year+'-'+month+'-'+d;
     var isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
+    var isForced = state.forcedDayTypes && state.forcedDayTypes[plannedKey];
     var type = getDayType(year,month,d);
     if (isDone){
       var types=[]; events.forEach(function(ev){ if (types.indexOf(ev.type)===-1) types.push(ev.type); });
       el.classList.add('done-'+types[0]);
     } else { el.classList.add(type); }
     if (isPlanned) el.classList.add('planned-day');
+    if (isForced) el.classList.add('forced-day');
     el.dataset.day = d; el.dataset.type = type;
     var num = document.createElement('span'); num.className='day-number'; num.textContent = d; el.appendChild(num);
     if (d===today.getDate() && month===today.getMonth() && year===today.getFullYear()) el.classList.add('today');
@@ -1578,7 +1682,6 @@ function onDayClick(day, type, isDone){
   logActivity('day_open', '📅 Открыл день ' + day + ' ' + monthNames[state.currentDate.getMonth()] + ' (тип: ' + typeName + ')');
   openEditModal();
 }
-function updateFreePointsPreview(){ var c = document.getElementById('freeCustomCategory').value; document.getElementById('freeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
 function updateTypePointsPreview(){ var c = document.getElementById('typeInitiativeCategory').value; document.getElementById('typeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
 
 function openEditModal(){
@@ -1661,7 +1764,6 @@ function openEditModal(){
     if (refund > 0) msg += '\n\nИз баллов вернётся: −' + refund;
     if (!confirm(msg)) return;
 
-    // ==== FIX: удаляем и локально, и в облаке ====
     if (refund > 0){
       applyPointsDelta(-refund, -refund, 'clearDay');
     }
@@ -1683,7 +1785,6 @@ function openEditModal(){
       state.notificationsForNastya = state.notificationsForNastya.filter(function(n){ return n.dateKey !== key; });
     }
 
-    // Удаляем в облаке
     deleteCloudKeys(['completedDays.'+key, 'plannedDays.'+key]);
 
     logActivity('day_cleared', '🗑 Очистил день ' + day + '.' + (month+1) + '.' + year);
@@ -1755,7 +1856,6 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   state.pendingPhoto = null;
   state.completedDays[key].push(event);
 
-  // ==== FIX: баллы через increment ====
   applyPointsDelta(points, points, 'addEvent');
 
   putInQuarantine(text, type);
@@ -2463,7 +2563,6 @@ function startApp(){
   document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
   document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
 
-  // НОВОЕ: обработчики для retro-модалки
   document.getElementById('retroSaveBtn').onclick = submitRetro;
 
   var settingsToggle = document.getElementById('settingsToggle');
@@ -2615,7 +2714,6 @@ function startApp(){
     }
     state.plannedDays[newKey] = pr.plan;
     delete state.plannedDays[pr.key];
-    // Удаляем старый ключ в облаке
     deleteCloudKeys(['plannedDays.'+pr.key, 'completedDays.'+pr.key]);
     logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'»');
     window._pendingReschedule = null;
