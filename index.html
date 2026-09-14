@@ -9,276 +9,97 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Little things">
 <title>Наши маленькие вещи ❤️</title>
-
 <link rel="icon" type="image/png" sizes="512x512" href="icon512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icon180.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Marck+Script&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 audio,video{display:none!important}
-
 :root{
-  --cream:#F5EFE0;
-  --cream2:#FAF6EC;
-  --dark:#2E2419;
-  --brown:#5A4A3A;
-  --muted:#8A7A66;
-  --line:#D4C4A8;
-  --gold:#C9A961;
-  --gold-deep:#A8842E;
-  --blue:#B8D0DC;
-  --blue-deep:#8FA9BA;
-  --purple:#D5C4DB;
-  --purple-deep:#B09CBC;
-  --rose:#E8B8BD;
-  --rose-deep:#D4989E;
-  --green:#B5C4A8;
-  --red:#C97A7A;
-  --shadow:0 8px 30px rgba(60,40,20,.18);
+  --cream:#F5EFE0;--cream2:#FAF6EC;--dark:#2E2419;--brown:#5A4A3A;--muted:#8A7A66;
+  --line:#D4C4A8;--gold:#C9A961;--gold-deep:#A8842E;--blue:#B8D0DC;--blue-deep:#8FA9BA;
+  --purple:#D5C4DB;--purple-deep:#B09CBC;--rose:#E8B8BD;--rose-deep:#D4989E;
+  --green:#B5C4A8;--red:#C97A7A;--shadow:0 8px 30px rgba(60,40,20,.18);
   --shadow-soft:0 3px 14px rgba(60,40,20,.12);
 }
-
-html{
-  min-height:100%;
-  background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat;
-  background-color:#3A3028;
-  overscroll-behavior:none;
-}
-
-body{
-  font-family:'Montserrat',sans-serif;
-  color:var(--dark);
-  min-height:100vh;
-  line-height:1.5;
-  overflow-x:hidden;
-  padding:12px 12px 24px;
-  background:transparent;
-  position:relative;
-  overscroll-behavior:none;
-}
-
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  background:linear-gradient(180deg,
-    rgba(40,30,20,.35) 0%,
-    rgba(40,30,20,.10) 40%,
-    rgba(40,30,20,.35) 100%);
-}
-
+html{min-height:100%;background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat;background-color:#3A3028;overscroll-behavior:none}
+body{font-family:'Montserrat',sans-serif;color:var(--dark);min-height:100vh;line-height:1.5;overflow-x:hidden;padding:12px 12px 24px;background:transparent;position:relative;overscroll-behavior:none}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(40,30,20,.35) 0%,rgba(40,30,20,.10) 40%,rgba(40,30,20,.35) 100%)}
 .app{width:100%;max-width:520px;min-height:0;position:relative;padding-bottom:24px;z-index:2;margin:0 auto;background:transparent}
-
 .header{text-align:center;padding:20px 16px 12px;position:relative;z-index:2}
-.header-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:34px;font-weight:500;letter-spacing:4px;text-transform:uppercase;
-  line-height:1.1;color:#F5EBD5;
-  text-shadow:0 2px 12px rgba(0,0,0,.55),0 1px 2px rgba(0,0,0,.4);
-}
+.header-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;letter-spacing:4px;text-transform:uppercase;line-height:1.1;color:#F5EBD5;text-shadow:0 2px 12px rgba(0,0,0,.55),0 1px 2px rgba(0,0,0,.4)}
 .header-title::after{content:'♡';display:block;font-size:16px;margin-top:14px;color:#F5EBD5;opacity:.85;line-height:1}
-.header-names{
-  font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;
-  letter-spacing:4px;text-transform:uppercase;margin-top:10px;display:inline-block;
-  padding:10px 26px;border:1px solid rgba(255,255,255,.55);border-radius:2px;
-  color:#F5EBD5;background:rgba(245,235,213,.08);backdrop-filter:blur(2px);
-}
-.header-names::before,.header-names::after{display:none}
-.header-subtitle{
-  margin-top:14px;font-size:10px;color:#EBDFC5;letter-spacing:3px;
-  text-transform:uppercase;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.55);line-height:1.6;
-}
-
-.nav{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
-  border:1px solid rgba(201,169,97,.35);border-radius:18px;
-  margin:14px 4px 0;padding:6px 4px;position:relative;z-index:4;
-  box-shadow:var(--shadow);backdrop-filter:blur(4px);
-}
-.nav-item{
-  padding:12px 2px 10px;background:none;color:var(--brown);
-  font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
-  border-bottom:none;display:flex;flex-direction:column;align-items:center;gap:6px;
-  cursor:pointer;font-family:inherit;border:none;border-radius:12px;transition:all .2s;opacity:.7;
-}
+.header-names{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;letter-spacing:4px;text-transform:uppercase;margin-top:10px;display:inline-block;padding:10px 26px;border:1px solid rgba(255,255,255,.55);border-radius:2px;color:#F5EBD5;background:rgba(245,235,213,.08);backdrop-filter:blur(2px)}
+.header-subtitle{margin-top:14px;font-size:10px;color:#EBDFC5;letter-spacing:3px;text-transform:uppercase;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.55);line-height:1.6}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.35);border-radius:18px;margin:14px 4px 0;padding:6px 4px;position:relative;z-index:4;box-shadow:var(--shadow);backdrop-filter:blur(4px)}
+.nav-item{padding:12px 2px 10px;background:none;color:var(--brown);font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;border-bottom:none;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-family:inherit;border:none;border-radius:12px;transition:all .2s;opacity:.7}
 .nav-item .nav-icon{font-size:18px;transition:transform .3s;color:var(--brown)}
 .nav-item.active{color:var(--dark);background:rgba(201,169,97,.12);opacity:1}
 .nav-item.active .nav-icon{transform:scale(1.1);color:var(--gold-deep)}
 .nav-item:active .nav-icon{transform:scale(.9)}
-
 .page{display:none;padding:20px 8px;animation:fadeIn .45s cubic-bezier(.34,1.2,.64,1);position:relative;z-index:2}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-.section-title{
-  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;
-  text-align:center;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;
-  display:inline-block;width:100%;color:#F5EBD5;text-shadow:0 2px 12px rgba(0,0,0,.5);
-}
-.section-title::after{display:none}
-.section-sub{
-  color:#EBDFC5;font-weight:400;font-size:11px;letter-spacing:1.5px;
-  background:rgba(245,235,213,.1);border:1px solid rgba(255,255,255,.25);
-  border-radius:20px;padding:10px 18px;display:block;width:100%;box-sizing:border-box;
-  margin:10px 0 18px;text-align:center;backdrop-filter:blur(2px);
-  text-shadow:0 1px 4px rgba(0,0,0,.4);
-}
-
-.month-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:14px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
-  border-radius:20px;padding:14px 10px;border:1px solid rgba(201,169,97,.4);
-  box-shadow:var(--shadow);position:relative;overflow:hidden;
-}
-.month-arrow{
-  width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.5);
-  color:var(--brown);font-size:22px;border:1px solid rgba(201,169,97,.5);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  font-family:inherit;position:relative;z-index:2;transition:background .2s;
-}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;display:inline-block;width:100%;color:#F5EBD5;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.section-sub{color:#EBDFC5;font-weight:400;font-size:11px;letter-spacing:1.5px;background:rgba(245,235,213,.1);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:10px 18px;display:block;width:100%;box-sizing:border-box;margin:10px 0 18px;text-align:center;backdrop-filter:blur(2px);text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.month-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border-radius:20px;padding:14px 10px;border:1px solid rgba(201,169,97,.4);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.month-arrow{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.5);color:var(--brown);font-size:22px;border:1px solid rgba(201,169,97,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:inherit;position:relative;z-index:2;transition:background .2s}
 .month-arrow:active{background:rgba(201,169,97,.25);transform:scale(.92)}
-.month-name{
-  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
-  font-size:32px;line-height:1;color:#2E2419;letter-spacing:1px;
-}
-.month-year{
-  font-family:'Cormorant Garamond',serif;color:var(--brown);font-size:15px;
-  font-weight:500;letter-spacing:3px;margin-top:4px;
-}
+.month-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:32px;line-height:1;color:#2E2419;letter-spacing:1px}
+.month-year{font-family:'Cormorant Garamond',serif;color:var(--brown);font-size:15px;font-weight:500;letter-spacing:3px;margin-top:4px}
 .month-year::before,.month-year::after{content:'—';color:var(--gold);margin:0 8px;opacity:.6}
-
-.weekdays{
-  display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;
-  background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));
-  border-radius:14px;padding:10px 0;border:1px solid rgba(201,169,97,.35);
-  box-shadow:var(--shadow-soft);
-}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));border-radius:14px;padding:10px 0;border:1px solid rgba(201,169,97,.35);box-shadow:var(--shadow-soft)}
 .weekday{text-align:center;font-size:10px;font-weight:500;color:var(--brown);letter-spacing:2px;padding:4px 0;text-transform:uppercase}
-
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px 5px;margin-top:10px}
-.calendar-day{
-  min-height:56px;border-radius:14px;position:relative;display:flex;
-  align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--dark);
-  cursor:pointer;border:1px solid rgba(255,255,255,.5);transition:transform .2s;
-  overflow:visible;box-shadow:0 2px 6px rgba(60,40,20,.12),inset 0 1px 0 rgba(255,255,255,.5);
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7A66' stroke-width='0.9' opacity='0.55'><circle cx='12' cy='12' r='1.6' fill='%238A7A66'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>");
-  background-repeat:no-repeat;background-position:right 4px bottom 4px;background-size:18px;
-}
+.calendar-day{min-height:56px;border-radius:14px;position:relative;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--dark);cursor:pointer;border:1px solid rgba(255,255,255,.5);transition:transform .2s;overflow:visible;box-shadow:0 2px 6px rgba(60,40,20,.12),inset 0 1px 0 rgba(255,255,255,.5)}
 .calendar-day:active{transform:scale(.94)}
-.calendar-day.empty{background:transparent;cursor:default;border:none;box-shadow:none;background-image:none}
-.calendar-day.today{
-  border-color:var(--gold);border-width:2px;
-  box-shadow:0 0 0 2px rgba(201,169,97,.35),0 4px 14px rgba(201,169,97,.3);
-}
-.calendar-day .day-number{
-  position:absolute;top:4px;left:8px;
-  font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--dark);
-}
-.calendar-day.emotional{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7A66' stroke-width='0.9' opacity='0.5'><circle cx='12' cy='12' r='1.6' fill='%238A7A66'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#B8D0DC,#9FBCC9);border-color:rgba(143,169,186,.6)}
-.calendar-day.physical{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7A66' stroke-width='0.9' opacity='0.5'><circle cx='12' cy='12' r='1.6' fill='%238A7A66'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#D5C4DB,#B09CBC);border-color:rgba(176,156,188,.6)}
-.calendar-day.lightDate{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7A66' stroke-width='0.9' opacity='0.5'><circle cx='12' cy='12' r='1.6' fill='%238A7A66'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#E8C4CB,#DDA0A8);border-color:rgba(221,160,168,.6)}
-.calendar-day.bigDate{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7A66' stroke-width='0.9' opacity='0.5'><circle cx='12' cy='12' r='1.6' fill='%238A7A66'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#E0A0A8,#C97A7A);border-color:rgba(201,122,122,.6)}
-.calendar-day.free{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A7A66' stroke-width='0.9' opacity='0.5'><circle cx='12' cy='12' r='1.6' fill='%238A7A66'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#F2E8D5,#E5D5B8);border:1px dashed rgba(140,120,90,.5)}
-
-.calendar-day.done-emotional{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='0.9' opacity='0.6'><circle cx='12' cy='12' r='1.6' fill='%23FFFFFF'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#8FA9BA,#7A96A8);border-color:#6E8598;color:#F5EBD5}
-.calendar-day.done-physical{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='0.9' opacity='0.6'><circle cx='12' cy='12' r='1.6' fill='%23FFFFFF'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#B09CBC,#9A82A8);border-color:#8E7599;color:#F5EBD5}
-.calendar-day.done-lightDate{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='0.9' opacity='0.6'><circle cx='12' cy='12' r='1.6' fill='%23FFFFFF'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#DDA0A8,#C9848C);border-color:#BB737A;color:#F5EBD5}
-.calendar-day.done-bigDate{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='0.9' opacity='0.6'><circle cx='12' cy='12' r='1.6' fill='%23FFFFFF'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#C97A7A,#A85A5A);border-color:#955050;color:#F5EBD5}
-.calendar-day.done-custom{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='0.9' opacity='0.6'><circle cx='12' cy='12' r='1.6' fill='%23FFFFFF'/><ellipse cx='12' cy='7' rx='2.2' ry='3.4'/><ellipse cx='12' cy='17' rx='2.2' ry='3.4'/><ellipse cx='7' cy='12' rx='3.4' ry='2.2'/><ellipse cx='17' cy='12' rx='3.4' ry='2.2'/></svg>") right 4px bottom 4px/18px no-repeat,linear-gradient(145deg,#B5C4A8,#96A88A);border-color:#84977A;color:#F5EBD5}
-.calendar-day.done-emotional .day-number,
-.calendar-day.done-physical .day-number,
-.calendar-day.done-lightDate .day-number,
-.calendar-day.done-bigDate .day-number,
-.calendar-day.done-custom .day-number{color:#F5EBD5;opacity:1}
-.calendar-day.next-month{background:transparent;border:none;cursor:default;box-shadow:none;background-image:none}
+.calendar-day.empty{background:transparent;cursor:default;border:none;box-shadow:none}
+.calendar-day.today{border-color:var(--gold);border-width:2px;box-shadow:0 0 0 2px rgba(201,169,97,.35),0 4px 14px rgba(201,169,97,.3)}
+.calendar-day .day-number{position:absolute;top:4px;left:8px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--dark)}
+.calendar-day.emotional{background:linear-gradient(145deg,#B8D0DC,#9FBCC9);border-color:rgba(143,169,186,.6)}
+.calendar-day.physical{background:linear-gradient(145deg,#D5C4DB,#B09CBC);border-color:rgba(176,156,188,.6)}
+.calendar-day.lightDate{background:linear-gradient(145deg,#E8C4CB,#DDA0A8);border-color:rgba(221,160,168,.6)}
+.calendar-day.bigDate{background:linear-gradient(145deg,#E0A0A8,#C97A7A);border-color:rgba(201,122,122,.6)}
+.calendar-day.free{background:linear-gradient(145deg,#F2E8D5,#E5D5B8);border:1px dashed rgba(140,120,90,.5)}
+.calendar-day.done-emotional{background:linear-gradient(145deg,#8FA9BA,#7A96A8);border-color:#6E8598;color:#F5EBD5}
+.calendar-day.done-physical{background:linear-gradient(145deg,#B09CBC,#9A82A8);border-color:#8E7599;color:#F5EBD5}
+.calendar-day.done-lightDate{background:linear-gradient(145deg,#DDA0A8,#C9848C);border-color:#BB737A;color:#F5EBD5}
+.calendar-day.done-bigDate{background:linear-gradient(145deg,#C97A7A,#A85A5A);border-color:#955050;color:#F5EBD5}
+.calendar-day.done-custom{background:linear-gradient(145deg,#B5C4A8,#96A88A);border-color:#84977A;color:#F5EBD5}
+.calendar-day.done-emotional .day-number,.calendar-day.done-physical .day-number,.calendar-day.done-lightDate .day-number,.calendar-day.done-bigDate .day-number,.calendar-day.done-custom .day-number{color:#F5EBD5;opacity:1}
+.calendar-day.next-month{background:transparent;border:none;cursor:default;box-shadow:none}
 .calendar-day.next-month .day-number{color:rgba(245,235,213,.35);font-size:16px}
 .calendar-day.today::before{content:'';position:absolute;inset:-3px;border-radius:16px;border:2px solid rgba(201,169,97,.7);pointer-events:none;animation:todayGlow 2.8s ease-in-out infinite}
 @keyframes todayGlow{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.05);opacity:.3;box-shadow:0 0 20px 4px rgba(201,169,97,.4)}}
-.calendar-day.done-emotional::after,
-.calendar-day.done-physical::after,
-.calendar-day.done-lightDate::after,
-.calendar-day.done-bigDate::after,
-.calendar-day.done-custom::after{
-  content:"";position:absolute;right:-4px;bottom:-4px;width:26px;height:26px;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 26.5 C 6.5 19.8, 3 14.2, 5.6 9.4 C 8.2 4.6, 13.8 5.4, 16 11 C 18.2 5.4, 23.8 4.6, 26.4 9.4 C 29 14.2, 25.5 19.8, 16 26.5 Z' fill='%23C97A7A' stroke='white' stroke-width='1.5'/></svg>");
-  background-repeat:no-repeat;background-size:contain;
-  filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));pointer-events:none;z-index:3;
-  animation:markerPop .5s cubic-bezier(.34,1.7,.64,1);
-}
+.calendar-day.done-emotional::after,.calendar-day.done-physical::after,.calendar-day.done-lightDate::after,.calendar-day.done-bigDate::after,.calendar-day.done-custom::after{content:"";position:absolute;right:-4px;bottom:-4px;width:26px;height:26px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 26.5 C 6.5 19.8, 3 14.2, 5.6 9.4 C 8.2 4.6, 13.8 5.4, 16 11 C 18.2 5.4, 23.8 4.6, 26.4 9.4 C 29 14.2, 25.5 19.8, 16 26.5 Z' fill='%23C97A7A' stroke='white' stroke-width='1.5'/></svg>");background-repeat:no-repeat;background-size:contain;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));pointer-events:none;z-index:3;animation:markerPop .5s cubic-bezier(.34,1.7,.64,1)}
 @keyframes markerPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.3);opacity:1}100%{transform:scale(1);opacity:1}}
 .calendar-day.planned-day{position:relative;outline:2px dashed var(--gold);outline-offset:-3px}
-.calendar-day.planned-day::after{
-  content:"";position:absolute;right:4px;bottom:4px;width:20px;height:20px;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8842E' stroke-width='2'><circle cx='12' cy='12' r='9'/><path d='M12 7 L12 12 L15 14'/></svg>");
-  background-repeat:no-repeat;background-size:contain;opacity:.9;z-index:3;
-}
-
+.calendar-day.planned-day::after{content:"";position:absolute;right:4px;bottom:4px;width:20px;height:20px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A8842E' stroke-width='2'><circle cx='12' cy='12' r='9'/><path d='M12 7 L12 12 L15 14'/></svg>");background-repeat:no-repeat;background-size:contain;opacity:.9;z-index:3}
 .legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:18px}
-.legend-item{
-  display:flex;align-items:center;gap:8px;color:var(--brown);font-size:10px;font-weight:500;
-  background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));
-  padding:10px 12px;border-radius:14px;border:1px solid rgba(201,169,97,.35);
-  box-shadow:var(--shadow-soft);letter-spacing:.5px;
-}
+.legend-item{display:flex;align-items:center;gap:8px;color:var(--brown);font-size:10px;font-weight:500;background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));padding:10px 12px;border-radius:14px;border:1px solid rgba(201,169,97,.35);box-shadow:var(--shadow-soft);letter-spacing:.5px}
 .legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,.7) inset}
 .legend-dot.emotional{background:linear-gradient(145deg,#B8D0DC,#9FBCC9)}
 .legend-dot.physical{background:linear-gradient(145deg,#D5C4DB,#B09CBC)}
 .legend-dot.lightDate{background:linear-gradient(145deg,#E8C4CB,#DDA0A8)}
 .legend-dot.bigDate{background:linear-gradient(145deg,#E0A0A8,#C97A7A)}
 .legend-dot.custom{background:linear-gradient(145deg,#B5C4A8,#96A88A)}
-
-.manage-panel{
-  margin-top:20px;padding:22px 20px;border-radius:20px;
-  background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
-  box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.35);
-  position:relative;z-index:3;
-}
+.manage-panel{margin-top:20px;padding:22px 20px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.35);position:relative;z-index:3}
 .manage-panel-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:6px;color:var(--dark);letter-spacing:1px}
 .manage-panel-text{color:var(--muted);font-size:11px;line-height:1.6;margin-bottom:16px;letter-spacing:.5px}
-
-.btn-primary{
-  width:100%;padding:15px;border-radius:40px;
-  background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;
-  font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;
-  cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;
-  position:relative;z-index:3;box-shadow:0 6px 18px rgba(46,36,25,.35);
-}
+.btn-primary{width:100%;padding:15px;border-radius:40px;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;position:relative;z-index:3;box-shadow:0 6px 18px rgba(46,36,25,.35)}
 .btn-primary:active{transform:scale(.97)}
 .btn-primary:disabled{background:#C4B8A5;cursor:not-allowed;box-shadow:none}
-.btn-secondary{
-  width:100%;padding:13px;border-radius:40px;background:rgba(255,255,255,.4);
-  color:var(--brown);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
-  border:1.5px solid rgba(90,74,58,.5);cursor:pointer;font-family:'Cormorant Garamond',serif;
-  margin-top:10px;position:relative;z-index:3;
-}
+.btn-secondary{width:100%;padding:13px;border-radius:40px;background:rgba(255,255,255,.4);color:var(--brown);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:1.5px solid rgba(90,74,58,.5);cursor:pointer;font-family:'Cormorant Garamond',serif;margin-top:10px;position:relative;z-index:3}
 .btn-secondary:active{transform:scale(.97);background:rgba(90,74,58,.1)}
 .btn-secondary:disabled{opacity:.4}
-.btn-gold{
-  width:100%;padding:15px;border-radius:40px;
-  background:linear-gradient(145deg,#C9A961,#A8842E);color:#FCF8EE;
-  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;
-  position:relative;z-index:3;box-shadow:0 6px 20px rgba(168,132,46,.35);
-}
+.btn-gold{width:100%;padding:15px;border-radius:40px;background:linear-gradient(145deg,#C9A961,#A8842E);color:#FCF8EE;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;position:relative;z-index:3;box-shadow:0 6px 20px rgba(168,132,46,.35)}
 .btn-gold:active{transform:scale(.97)}
 button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.month-arrow,.close-button,.flower-btn,.tab-btn,.settings-menu button,.add-row button,.del-btn{touch-action:manipulation;-webkit-appearance:none;-webkit-user-select:none;user-select:none;cursor:pointer}
 .btn-secondary,.btn-primary,.btn-gold,.spin-button,.role-btn{min-height:52px;display:flex;align-items:center;justify-content:center;line-height:1.2}
 .month-arrow,.close-button{min-width:44px;min-height:44px}
-
 .overlay{position:fixed;inset:0;background:rgba(30,22,16,.75);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:.35s;z-index:100}
 .overlay.active{opacity:1;visibility:visible}
-.modal{
-  width:100%;max-width:520px;max-height:calc(100vh - 30px);overflow-y:auto;-webkit-overflow-scrolling:touch;
-  background:linear-gradient(180deg,#FAF6EC 0%,#F2EAD6 100%);
-  border-radius:32px 32px 0 0;padding:30px 20px 40px;position:relative;
-  transform:translateY(60px) scale(.96);opacity:0;transition:.45s cubic-bezier(.34,1.4,.64,1);
-  box-shadow:0 -20px 60px rgba(0,0,0,.3);border:1px solid rgba(201,169,97,.4);border-bottom:none;
-}
+.modal{width:100%;max-width:520px;max-height:calc(100vh - 30px);overflow-y:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(180deg,#FAF6EC 0%,#F2EAD6 100%);border-radius:32px 32px 0 0;padding:30px 20px 40px;position:relative;transform:translateY(60px) scale(.96);opacity:0;transition:.45s cubic-bezier(.34,1.4,.64,1);box-shadow:0 -20px 60px rgba(0,0,0,.3);border:1px solid rgba(201,169,97,.4);border-bottom:none}
 .overlay.active .modal{transform:translateY(0) scale(1);opacity:1}
 .close-button{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:50%;background:rgba(90,74,58,.08);color:var(--brown);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-family:inherit;z-index:10}
 .close-button:active{transform:scale(.9) rotate(90deg)}
@@ -287,7 +108,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .overlay.center{align-items:center;padding:20px}
 .overlay.center .modal{border-radius:28px;max-width:440px;transform:translateY(20px) scale(.92);border-bottom:1px solid rgba(201,169,97,.4)}
 .overlay.center.active .modal{transform:translateY(0) scale(1)}
-
 .daily-overlay{position:fixed;inset:0;background:rgba(30,22,16,.8);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
 .daily-overlay.active{opacity:1;visibility:visible}
 .daily-card{background:linear-gradient(160deg,#FAF6EC,#F0E6CE);border-radius:32px;padding:50px 30px 40px;max-width:400px;width:100%;text-align:center;position:relative;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1);border:1px solid rgba(201,169,97,.5);box-shadow:0 30px 80px rgba(0,0,0,.4)}
@@ -296,17 +116,14 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 @keyframes dailyFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
 .daily-message{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;line-height:1.45;color:var(--dark);margin-bottom:24px;font-style:italic;letter-spacing:.3px}
 .daily-hint{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:.7;margin-top:20px;border-top:1px solid rgba(201,169,97,.35);padding-top:18px}
-
 .role-buttons{display:flex;flex-direction:column;gap:12px;margin-top:20px}
 .role-btn{padding:18px 22px;border-radius:22px;border:1px solid rgba(201,169,97,.5);background:linear-gradient(180deg,#FAF6EC,#F2EAD6);font-family:inherit;color:var(--dark);cursor:pointer;font-size:14px;font-weight:500;letter-spacing:1px;display:flex;align-items:center;gap:14px;text-align:left}
 .role-btn:active{transform:scale(.97)}
 .role-btn .role-emoji{font-size:26px}
 .role-btn.nastya{background:linear-gradient(145deg,#F5DDDE,#E8B8BD);border-color:#D4989E}
 .role-btn.vanya{background:linear-gradient(145deg,#DCE6EE,#B8D0DC);border-color:#8FA9BA}
-
 .role-badge{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:linear-gradient(145deg,rgba(46,36,25,.95),rgba(30,22,16,.95));color:#F5EBD5;padding:6px 18px;border-radius:20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;z-index:500;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3);border:1px solid rgba(201,169,97,.4)}
 .role-badge.show{display:block}
-
 .settings-hotzone{position:fixed;bottom:0;right:0;width:150px;height:150px;z-index:900;background:transparent;touch-action:manipulation}
 .settings-toggle{position:fixed;bottom:22px;right:22px;width:44px;height:44px;border-radius:50%;background:rgba(90,74,58,.4);color:#F5EBD5;font-size:18px;z-index:901;display:none;align-items:center;justify-content:center;cursor:pointer;border:none;opacity:0;transition:opacity .35s;backdrop-filter:blur(4px)}
 .settings-toggle.visible{display:flex;opacity:1}
@@ -320,7 +137,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .empty-menu-notice{padding:30px 22px;text-align:center;font-size:12px;color:var(--muted);letter-spacing:1px;line-height:1.7;font-style:italic}
 .empty-menu-notice .big{font-size:32px;display:block;margin-bottom:10px}
 .empty-menu-notice .small{font-size:10px;opacity:.7;display:block;margin-top:8px}
-
 .points-card{padding:30px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.4);position:relative;overflow:hidden}
 .points-number{font-family:'Cormorant Garamond',serif;font-size:64px;line-height:1;color:var(--gold-deep);font-weight:600}
 .points-caption{color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:3px;text-transform:uppercase}
@@ -333,7 +149,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .progress-track{height:6px;border-radius:20px;background:rgba(201,169,97,.2);margin-top:18px;overflow:hidden}
 .progress-bar{height:100%;width:0;background:linear-gradient(90deg,#C9A961,#A8842E,#C9A961);background-size:200% 100%;border-radius:20px;transition:width .8s;animation:shimmer 2.5s linear infinite}
 @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-
 .notification-banner{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(250,246,236,.98),rgba(240,232,214,.98));backdrop-filter:blur(8px);border-bottom:1px solid rgba(201,169,97,.4);padding:14px 16px;display:none;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(60,40,20,.15)}
 .notification-banner.show{display:flex}
 .notification-banner .icon{font-size:24px;flex-shrink:0}
@@ -342,7 +157,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .notification-banner .sub{font-size:11px;color:var(--muted);margin-top:2px}
 .notification-banner .close-btn{background:none;border:none;font-size:18px;color:var(--muted);padding:4px 8px;cursor:pointer;font-family:inherit}
 .notification-banner .action-link{background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;border:none;padding:8px 16px;border-radius:40px;font-size:10px;font-weight:600;cursor:pointer;letter-spacing:1px;text-transform:uppercase;font-family:'Cormorant Garamond',serif;white-space:nowrap}
-
 .wheel-wrap{position:relative;width:min(90vw,360px);height:min(90vw,360px);margin:24px auto}
 #wheel{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 30px rgba(60,40,20,.25))}
 .wheel-pointer{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid #5A4A3A;z-index:4}
@@ -352,7 +166,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .spin-button:disabled{background:#C4B8A5;cursor:not-allowed;box-shadow:none}
 .result-box{margin-top:16px;padding:22px 18px;border-radius:22px;background:linear-gradient(145deg,rgba(245,221,224,.6),rgba(232,184,189,.4));text-align:center;border:1px solid rgba(201,169,97,.4)}
 .result-box .result-text{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.4;margin-bottom:16px;font-weight:500;color:var(--dark)}
-
 .input-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:13px;outline:none;margin-bottom:12px;color:var(--dark)}
 .input-line:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,97,.2)}
 .input-line::placeholder{color:var(--muted);font-size:11px}
@@ -361,7 +174,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .add-row input{flex:1;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:13px;outline:none;color:var(--dark)}
 .add-row input::placeholder{font-size:11px;color:var(--muted)}
 .add-row button{padding:0 22px;border-radius:40px;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:20px;cursor:pointer;border:none;font-family:inherit}
-
 .action-list{list-style:none;max-height:340px;overflow-y:auto;margin-top:8px}
 .action-list li{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,.6);border-radius:14px;margin-bottom:6px;font-size:12px;gap:10px;border:1px solid rgba(201,169,97,.3);color:var(--dark)}
 .action-list li .txt{flex:1;line-height:1.4}
@@ -373,7 +185,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .tab-content.active{display:block}
 .quarantine-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,.6);border-radius:14px;margin-bottom:6px;font-size:11px;color:var(--muted);border:1px solid rgba(201,169,97,.3)}
 .quarantine-item .days{font-weight:600;color:var(--dark);font-size:12px}
-
 .system-intro{padding:22px 20px;border-radius:22px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);margin-bottom:18px;box-shadow:var(--shadow-soft)}
 .system-intro h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:8px;letter-spacing:2px;text-transform:uppercase;color:var(--dark)}
 .system-intro p{font-size:12px;line-height:1.8;color:var(--brown)}
@@ -396,13 +207,11 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .system-level .info{flex:1}
 .system-level .name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)}
 .system-level .range{font-size:10px;color:var(--muted);margin-top:2px}
-
 .toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-120%);background:linear-gradient(180deg,#FAF6EC,#F0E6CE);padding:16px 22px;border-radius:40px;box-shadow:0 8px 30px rgba(0,0,0,.3);z-index:1000;display:flex;align-items:center;gap:14px;font-size:13px;font-weight:500;border:1px solid rgba(201,169,97,.5);max-width:90%;transition:transform .5s cubic-bezier(.34,1.5,.64,1);color:var(--dark)}
 .toast.show{transform:translate(-50%,0)}
 .toast .emoji{font-size:24px}
 .toast .text{flex:1;line-height:1.4}
 .toast .close-x{background:none;border:none;font-size:18px;color:var(--muted);cursor:pointer;font-family:inherit}
-
 .day-info-block{padding:16px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(201,169,97,.35);margin-bottom:12px;text-align:center}
 .day-info-block .day-label{font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
 .day-info-block .day-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:2px;color:var(--dark)}
@@ -410,14 +219,11 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .event-list li{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px;gap:10px;color:var(--dark);align-items:center}
 .event-list li:last-child{border-bottom:none}
 .event-list li span:last-child{color:var(--gold-deep);font-weight:600;flex-shrink:0}
-
 .empty-state{text-align:center;padding:50px 20px;color:#EBDFC5;font-size:13px;letter-spacing:.5px;line-height:1.8;font-weight:400;text-shadow:0 1px 4px rgba(0,0,0,.5)}
-
 .sparkle{position:fixed;width:8px;height:8px;background:radial-gradient(circle,#FFFDF7 0%,#E8C88A 60%,transparent 100%);border-radius:50%;pointer-events:none;z-index:1200;animation:sparkleOut .9s ease-out forwards}
 @keyframes sparkleOut{0%{transform:scale(0) translate(0,0);opacity:1}70%{opacity:1}100%{transform:scale(1.5) translate(var(--sx),var(--sy));opacity:0}}
 .confetti{position:fixed;width:10px;height:10px;pointer-events:none;z-index:1100;will-change:transform;animation:confettiFall 3s ease-out forwards}
 @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(1080deg);opacity:0}}
-
 .activity-stat{padding:14px 18px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid rgba(201,169,97,.3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .activity-stat .lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
 .activity-stat .val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--gold-deep);text-align:right}
@@ -429,7 +235,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .activity-status-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
 .activity-status-dot.online{background:#7A8E6E}
 .activity-status-dot.offline{background:#C4B8A5}
-
 .splash-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#3A3028,#2A2018);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s ease,visibility .8s ease}
 .splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .splash-logo{width:140px;height:140px;border-radius:50%;background:linear-gradient(145deg,rgba(245,235,213,.15),rgba(245,235,213,.05));display:flex;align-items:center;justify-content:center;box-shadow:0 15px 40px rgba(0,0,0,.4),0 0 0 1px rgba(201,169,97,.3) inset;position:relative}
@@ -438,17 +243,14 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .splash-logo svg{width:80px;height:80px}
 .splash-title{font-family:'Marck Script',cursive;font-size:38px;color:#F5EBD5;margin-top:22px;letter-spacing:1px}
 .splash-sub{font-family:'Cormorant Garamond',serif;font-size:13px;color:#B5A88E;letter-spacing:4px;text-transform:uppercase;margin-top:8px}
-
 .app.reveal .header{animation:revealUp .8s .1s cubic-bezier(.34,1.4,.64,1) backwards}
 .app.reveal .nav{animation:revealUp .8s .25s cubic-bezier(.34,1.4,.64,1) backwards}
 .app.reveal .page.active{animation:revealUp .9s .4s cubic-bezier(.34,1.4,.64,1) backwards}
 @keyframes revealUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
-
 .calendar.slide-left{animation:slideL .4s cubic-bezier(.4,0,.2,1)}
 .calendar.slide-right{animation:slideR .4s cubic-bezier(.4,0,.2,1)}
 @keyframes slideL{from{transform:translateX(30px);opacity:.4}to{transform:translateX(0);opacity:1}}
 @keyframes slideR{from{transform:translateX(-30px);opacity:.4}to{transform:translateX(0);opacity:1}}
-
 .photo-modal{position:fixed;inset:0;z-index:1300;background:rgba(20,15,12,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
 .photo-modal.active{display:flex}
 .photo-modal img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
@@ -457,7 +259,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .photo-preview.show{display:block}
 .photo-preview img{width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid rgba(201,169,97,.3)}
 .photo-preview .remove-photo{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(201,122,122,.95);color:#fff;font-size:14px;border:none;cursor:pointer;font-family:inherit}
-
 .love-tree-card{margin-top:22px;padding:22px 18px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden}
 .love-tree-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2A2420;position:relative}
 .love-tree-stage{font-family:'Caveat',cursive;font-size:20px;color:#A8842E;margin-top:4px;position:relative;font-weight:600}
@@ -466,7 +267,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .love-tree-progress-text{font-size:11px;color:#6B5C52;margin:6px 0 10px;position:relative;font-weight:500}
 .love-tree-progress-track{height:6px;border-radius:20px;background:rgba(201,169,97,.22);overflow:hidden;position:relative}
 .love-tree-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#B5C4A8,#C9A961);border-radius:20px;transition:width 1.2s cubic-bezier(.34,1.2,.64,1)}
-
 .achievements-block{margin-top:20px;padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);box-shadow:var(--shadow-soft)}
 .achievements-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;color:var(--dark);margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed rgba(201,169,97,.4)}
 .achievements-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -476,7 +276,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .achievement .ach-emoji{font-size:26px;display:block;margin-bottom:6px}
 .achievement .ach-name{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:600;color:var(--dark);line-height:1.2}
 .achievement .ach-desc{font-size:8px;color:var(--muted);margin-top:4px;line-height:1.3}
-
 .month-celebration{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(30,22,16,.8);opacity:0;visibility:hidden;transition:.5s;cursor:pointer;padding:20px}
 .month-celebration.active{opacity:1;visibility:visible}
 .month-celebration-card{max-width:400px;width:100%;padding:40px 28px 32px;border-radius:32px;background:linear-gradient(160deg,#FAF6EC,#F0E6CE);border:1px solid rgba(201,169,97,.5);box-shadow:0 30px 80px rgba(0,0,0,.4);text-align:center;transform:scale(.85);transition:.6s cubic-bezier(.34,1.5,.64,1)}
@@ -485,7 +284,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .month-celebration-card h2{font-family:'Marck Script',cursive;font-size:36px;color:var(--dark);margin:16px 0 10px;font-weight:400}
 .month-celebration-card p{font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.6;color:var(--brown);margin-bottom:20px}
 .month-celebration-card .mc-bonus{display:inline-block;padding:10px 24px;border-radius:40px;background:linear-gradient(145deg,#C9A961,#A8842E);color:#FCF8EE;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:1px;margin-bottom:18px}
-
 .wish-tier{display:flex;gap:6px;margin:14px 0}
 .wish-tier button{flex:1;padding:12px 6px;border-radius:16px;color:var(--brown);background:rgba(255,250,240,.8);border:1px solid rgba(201,169,97,.4);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.5px}
 .wish-tier button.active{background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;border-color:#2E2419}
@@ -733,22 +531,18 @@ setTimeout(function(){
 <button class="close-button" data-close="editDayOverlay" type="button">×</button>
 <div class="modal-title" id="editDayTitle">День</div>
 <div class="modal-subtitle" id="editDaySubtitle"></div>
-
 <div id="typeBlock" style="display:block;margin-top:20px">
   <div class="day-info-block">
     <div class="day-label">Тип дня</div>
     <div class="day-title" id="typeNameDisplay">Свободный</div>
   </div>
-
   <div style="font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:18px 0 8px;text-align:center">Что уже стоит</div>
   <ul class="event-list" id="eventListCompact"></ul>
-
   <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
     <button class="btn-gold" id="typeWheelBtn" type="button">📅 Запланировать</button>
     <button class="btn-secondary" id="typeInitiativeBtn" type="button">⭐ Своя инициатива</button>
     <button class="btn-secondary" id="typeClearBtn" type="button" style="display:none;color:#fff;background:linear-gradient(145deg,#C97A7A,#A85A5A);border-color:#955050">🗑 Очистить день</button>
   </div>
-
   <div id="typeInitiativeFields" style="display:none;margin-top:16px">
     <input type="text" class="input-line" id="typeInitiativeTitle" placeholder="Название дела">
     <select class="select-line" id="typeInitiativeCategory">
@@ -761,7 +555,6 @@ setTimeout(function(){
     <button class="btn-primary" id="typeInitiativeDone" type="button">Сохранить</button>
   </div>
 </div>
-
 </div>
 </div>
 
@@ -864,6 +657,31 @@ setTimeout(function(){
 </div>
 </div>
 
+<div class="overlay" id="retroOverlay">
+<div class="modal">
+<button class="close-button" data-close="retroOverlay" type="button">×</button>
+<div class="modal-title">📝 Отметить задним числом</div>
+<div class="modal-subtitle">Выбери день и что было — баллы начислятся сразу</div>
+<div style="margin-top:18px">
+<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px">Дата</label>
+<input type="date" class="input-line" id="retroDate" style="border-radius:14px">
+<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;margin-top:8px;letter-spacing:1px">Категория</label>
+<select class="select-line" id="retroCategory">
+<option value="emotional">💙 Эмоциональная (5 б.)</option>
+<option value="physical">💜 Физическая (10 б.)</option>
+<option value="lightDate">💗 Лёгкое свидание (50 б.)</option>
+<option value="bigDate">🏆 Большое свидание (150 б.)</option>
+</select>
+<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px">Задание из списка</label>
+<select class="select-line" id="retroTask"><option value="">— не выбирать —</option></select>
+<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px">Или свой текст</label>
+<input type="text" class="input-line" id="retroCustomText" placeholder="Например: погладил меня 20 минут">
+<div style="text-align:center;font-size:12px;color:var(--gold-deep);padding:10px;background:rgba(201,169,97,.1);border-radius:14px;margin-bottom:12px">Начислится: <span id="retroPoints">5</span> баллов</div>
+<button class="btn-gold" id="retroSaveBtn" type="button">Начислить</button>
+</div>
+</div>
+</div>
+
 <div class="settings-hotzone" id="settingsHotzone"></div>
 <button class="settings-toggle" id="settingsToggle" type="button">⚙</button>
 <div class="settings-menu" id="settingsMenu"></div>
@@ -891,11 +709,13 @@ var firebaseConfig = {
 };
 
 var mainDocRef = null;
+var FV = null;
 try {
   if (typeof firebase !== 'undefined' && firebase.initializeApp) {
     firebase.initializeApp(firebaseConfig);
     var _db = firebase.firestore();
     mainDocRef = _db.collection('appData').doc('mainData');
+    FV = firebase.firestore.FieldValue;
   }
 } catch(e){ console.warn('Firebase off:', e); mainDocRef = null; }
 
@@ -1294,6 +1114,33 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
+// ==== FIX: изменения баллов через increment, чтобы они не перезаписывались ====
+function applyPointsDelta(deltaMonth, deltaTotal, reason){
+  // Локально
+  state.points += deltaMonth;
+  state.totalPoints += deltaTotal;
+  if (state.points < 0) state.points = 0;
+  if (state.totalPoints < 0) state.totalPoints = 0;
+
+  // В облаке — атомарно
+  if (mainDocRef && FV && navigator.onLine){
+    var patch = {};
+    patch.points = FV.increment(deltaMonth);
+    patch.totalPoints = FV.increment(deltaTotal);
+    mainDocRef.update(patch).catch(function(e){ console.warn('increment', e); });
+  }
+  saveState();
+}
+
+// ==== FIX: удаление ключей в облаке ====
+function deleteCloudKeys(keys){
+  if (!mainDocRef || !FV || !navigator.onLine) return Promise.resolve();
+  var patch = {};
+  keys.forEach(function(k){ patch[k] = FV.delete(); });
+  if (Object.keys(patch).length === 0) return Promise.resolve();
+  return mainDocRef.update(patch).catch(function(e){ console.warn('cloudDelete', e); });
+}
+
 function saveState(){
   try {
     localStorage.setItem('monthPoints', state.points);
@@ -1324,11 +1171,12 @@ function saveState(){
     if (isSaving){ saveState(); return; }
     isSaving = true;
 
+    // ВАЖНО: не пишем points и totalPoints в основном set — их пишет applyPointsDelta через increment.
+    // Здесь пишем всё остальное.
     var schedules = {};
     for (var key in localStorage) if (key.indexOf('schedule_') === 0) schedules[key] = localStorage.getItem(key);
 
     var data = {
-      points: state.points, totalPoints: state.totalPoints,
       history: state.history, completedDays: state.completedDays,
       plannedDays: state.plannedDays,
       spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
@@ -1342,11 +1190,6 @@ function saveState(){
       welcomeShown: localStorage.getItem('welcomeShown') === 'true',
       schedules: schedules
     };
-    if (!state.history.length) delete data.history;
-    if (!Object.keys(state.completedDays).length) delete data.completedDays;
-    if (!Object.keys(state.plannedDays).length) delete data.plannedDays;
-    if (!state.wishes.length) delete data.wishes;
-    if (!state.achievements.length) delete data.achievements;
 
     mainDocRef.set(data, { merge: true })
       .then(function(){ isSaving = false; })
@@ -1366,10 +1209,11 @@ function subscribeToFirestore(){
         state.points = 0; state.spinsUsed = {};
         mainDocRef.set({ points:0, currentMonth:getCurrentMonthKey(), spinsUsed:{} }, { merge:true });
       } else if (typeof d.points === 'number'){
+        // ВАЖНО: точки приходят уже с учётом increment
         state.points = d.points;
       }
 
-      if (typeof d.totalPoints === 'number') state.totalPoints = Math.max(state.totalPoints, d.totalPoints);
+      if (typeof d.totalPoints === 'number') state.totalPoints = d.totalPoints;
 
       state.history        = mergeHistory(state.history, d.history);
       state.completedDays  = mergeCompletedDays(state.completedDays, d.completedDays);
@@ -1483,6 +1327,7 @@ function renderSettingsMenu(){
       b.onclick = fn; menu.appendChild(b);
     };
     var div = function(){ var d = document.createElement('div'); d.className='divider'; menu.appendChild(d); };
+    add('📝 Отметить задним числом','var(--gold-deep)',function(){ menu.classList.remove('open'); openRetroModal(); });
     add('💌 Показать письмо','var(--gold-deep)',function(){ menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
     add('💰 Начислить баллы','var(--gold-deep)',function(){ menu.classList.remove('open'); openManualPoints(); });
     add('👁 Активность Вани','var(--blue-deep)',function(){ menu.classList.remove('open'); openVanyaActivity(); });
@@ -1536,6 +1381,91 @@ function renderSettingsMenu(){
     notice.innerHTML = '<span class="big">🌿</span>Здесь пусто<span class="small">Только для Насти</span>';
     menu.appendChild(notice);
   }
+}
+
+// ==== НОВАЯ ФУНКЦИЯ: отметить задним числом ====
+function openRetroModal(){
+  var overlay = document.getElementById('retroOverlay');
+  var dateInput = document.getElementById('retroDate');
+  var catSelect = document.getElementById('retroCategory');
+  var taskSelect = document.getElementById('retroTask');
+  var customInput = document.getElementById('retroCustomText');
+  var pointsSpan = document.getElementById('retroPoints');
+
+  // дата по умолчанию — вчера
+  var y = new Date(); y.setDate(y.getDate()-1);
+  dateInput.value = y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0');
+  dateInput.max = new Date().toISOString().slice(0,10);
+  catSelect.value = 'emotional';
+  customInput.value = '';
+
+  function refreshTasks(){
+    var cat = catSelect.value;
+    var tasks = getTasksForCategory(cat);
+    taskSelect.innerHTML = '<option value="">— не выбирать —</option>' + tasks.map(function(t){ return '<option value="'+encodeURIComponent(t)+'">'+t+'</option>'; }).join('');
+  }
+  function refreshPoints(){
+    var cat = catSelect.value;
+    pointsSpan.textContent = TYPE_INFO[cat].points;
+  }
+  refreshTasks(); refreshPoints();
+
+  catSelect.onchange = function(){ refreshTasks(); refreshPoints(); };
+  taskSelect.onchange = function(){
+    if (taskSelect.value){
+      customInput.value = '';
+    }
+  };
+
+  overlay.classList.add('active');
+}
+
+function submitRetro(){
+  var dateStr = document.getElementById('retroDate').value;
+  if (!dateStr){ alert('Выбери дату'); return; }
+  var parts = dateStr.split('-').map(function(n){ return parseInt(n); });
+  var yy = parts[0], mm = parts[1]-1, dd = parts[2];
+
+  var cat = document.getElementById('retroCategory').value;
+  var taskEncoded = document.getElementById('retroTask').value;
+  var customText = document.getElementById('retroCustomText').value.trim();
+  var text = '';
+  if (taskEncoded) text = decodeURIComponent(taskEncoded);
+  else if (customText) text = customText;
+  if (!text){ alert('Выбери задание из списка или введи свой текст'); return; }
+
+  var points = TYPE_INFO[cat].points;
+
+  // добавляем событие в completedDays
+  var key = yy+'-'+mm+'-'+dd;
+  if (!state.completedDays[key]) state.completedDays[key] = [];
+  // защита от дубля
+  var exists = state.completedDays[key].some(function(e){ return e.text === text; });
+  if (exists){
+    if (!confirm('Это уже отмечено в этот день. Добавить ещё раз?')) return;
+  }
+  state.completedDays[key].push({
+    type: cat, text: text, points: points, isInitiative: false, timestamp: Date.now(), retro: true
+  });
+
+  // история
+  var dateNice = String(dd).padStart(2,'0')+'.'+String(mm+1).padStart(2,'0')+'.'+yy;
+  state.history.unshift({
+    date: dateNice, eventDate: new Date(yy, mm, dd).getTime(), title: text,
+    category: TYPE_INFO[cat].name + ' (задним числом)',
+    emoji: TYPE_INFO[cat].emoji, points: points, photo: null
+  });
+
+  // баллы через increment
+  applyPointsDelta(points, points, 'retro');
+
+  logActivity('retro_add', '📝 Отметил задним числом: «'+text+'» ('+dateNice+', +'+points+' б.)');
+
+  renderCalendar(); updateStats(); renderHistory(); renderLoveTree(); checkAchievements();
+
+  document.getElementById('retroOverlay').classList.remove('active');
+  showToast('📝', 'Начислено +'+points+' б. за '+dateNice);
+  makeConfetti(20);
 }
 
 function isInQuarantine(taskText, cat){ var q = state.quarantine[taskText]; if (!q) return false; return (Date.now()-q.doneAt)/(1000*60*60*24) < (QUARANTINE_DAYS[cat]||14); }
@@ -1731,11 +1661,9 @@ function openEditModal(){
     if (refund > 0) msg += '\n\nИз баллов вернётся: −' + refund;
     if (!confirm(msg)) return;
 
+    // ==== FIX: удаляем и локально, и в облаке ====
     if (refund > 0){
-      state.points -= refund;
-      state.totalPoints -= refund;
-      if (state.points < 0) state.points = 0;
-      if (state.totalPoints < 0) state.totalPoints = 0;
+      applyPointsDelta(-refund, -refund, 'clearDay');
     }
 
     var dayStart = new Date(year, month, day).getTime();
@@ -1754,6 +1682,9 @@ function openEditModal(){
     if (state.notificationsForNastya){
       state.notificationsForNastya = state.notificationsForNastya.filter(function(n){ return n.dateKey !== key; });
     }
+
+    // Удаляем в облаке
+    deleteCloudKeys(['completedDays.'+key, 'plannedDays.'+key]);
 
     logActivity('day_cleared', '🗑 Очистил день ' + day + '.' + (month+1) + '.' + year);
     saveState();
@@ -1823,7 +1754,10 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   if (state.pendingPhoto) event.photo = state.pendingPhoto;
   state.pendingPhoto = null;
   state.completedDays[key].push(event);
-  addPoints(points);
+
+  // ==== FIX: баллы через increment ====
+  applyPointsDelta(points, points, 'addEvent');
+
   putInQuarantine(text, type);
   var dateStr = String(day).padStart(2,'0')+'.'+String(month+1).padStart(2,'0')+'.'+year;
   state.history.unshift({
@@ -1840,7 +1774,6 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   checkAchievements();
   checkMonthCelebration();
 }
-function addPoints(amount){ state.points += amount; state.totalPoints += amount; saveState(); }
 
 function renderHistory(){
   var list = document.getElementById('timelineList');
@@ -1906,7 +1839,7 @@ function renderWishes(){
       if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
       if (state.points < w.cost){ showToast('💔','Недостаточно баллов'); return; }
       if (!confirm('Активировать «'+w.title+'»?\nСпишется '+w.cost+' баллов.')) return;
-      state.points -= w.cost;
+      applyPointsDelta(-w.cost, 0, 'wishActivate');
       state.wishes[i].activated = true;
       state.wishes[i].activatedAt = Date.now();
       state.notificationsForNastya.push({ id:Date.now(), title:w.title, cost:w.cost, tier:w.tier, seen:false, createdAt:Date.now() });
@@ -2055,8 +1988,7 @@ function checkMonthCelebration(){
   }
   if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
     state.lastCelebrationMonth = prevMonthKey;
-    state.points += MONTH_CELEBRATION_BONUS;
-    state.totalPoints += MONTH_CELEBRATION_BONUS;
+    applyPointsDelta(MONTH_CELEBRATION_BONUS, MONTH_CELEBRATION_BONUS, 'monthBonus');
     var mc = document.getElementById('monthCelebration');
     document.getElementById('mcTitle').textContent = 'Восхитительно!';
     document.getElementById('mcText').innerHTML = 'Ты выполнил <b>'+countPrevMonth+'</b> дел за прошлый месяц!';
@@ -2170,7 +2102,7 @@ function applyDailyBonus(){
   var today = new Date().toISOString().slice(0,10);
   if (!state.dailyVisits[today]){
     state.dailyVisits[today] = true;
-    addPoints(DAILY_BONUS);
+    applyPointsDelta(DAILY_BONUS, DAILY_BONUS, 'daily');
     showToast('📅', '+'+DAILY_BONUS+' баллов за вход сегодня!');
   }
 }
@@ -2282,7 +2214,7 @@ function doSpin(){
   var price = getNextSpinPrice();
   if (price > 0){
     if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
-    state.points -= price; updateStats();
+    applyPointsDelta(-price, 0, 'respin');
     showToast('🔄','−'+price+' баллов за перекрут');
   }
   var k = getSpinsKeyForTarget();
@@ -2392,7 +2324,7 @@ function openManualPoints(){
     var amount = parseInt(document.getElementById('manualAmount').value);
     if (!reason){ alert('Напиши, за что'); return; }
     if (!amount || amount < 1){ alert('Введи число'); return; }
-    state.points += amount; state.totalPoints += amount;
+    applyPointsDelta(amount, amount, 'manual');
     var now = new Date();
     var dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
     state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
@@ -2522,7 +2454,7 @@ function startApp(){
     if (!v) return;
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
-    addPoints(WISH_BONUS);
+    applyPointsDelta(WISH_BONUS, WISH_BONUS, 'wishAdd');
     logActivity('wish_add', '✿ Записал хотелку: «'+v+'»');
     saveState(); renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
   };
@@ -2530,6 +2462,9 @@ function startApp(){
   document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
   document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
   document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
+
+  // НОВОЕ: обработчики для retro-модалки
+  document.getElementById('retroSaveBtn').onclick = submitRetro;
 
   var settingsToggle = document.getElementById('settingsToggle');
   var settingsMenu = document.getElementById('settingsMenu');
@@ -2568,7 +2503,7 @@ function startApp(){
       toggleClickCount = 0;
     }, 320);
   });
-  document.addEventListener('click', function(){ settingsMenu.classList.remove('open'); });
+  document.addEventListener('click', function(e){ if (!settingsMenu.contains(e.target) && e.target !== settingsToggle) settingsMenu.classList.remove('open'); });
 
   document.querySelectorAll('.tab-btn').forEach(function(b){
     b.onclick = function(){
@@ -2647,6 +2582,7 @@ function startApp(){
     var parts = key.split('-').map(function(n){ return parseInt(n); });
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     delete state.plannedDays[key];
+    deleteCloudKeys(['plannedDays.'+key]);
     window._pendingPlanKey = null;
     openPhotoAttach(function(){
       addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
@@ -2679,6 +2615,8 @@ function startApp(){
     }
     state.plannedDays[newKey] = pr.plan;
     delete state.plannedDays[pr.key];
+    // Удаляем старый ключ в облаке
+    deleteCloudKeys(['plannedDays.'+pr.key, 'completedDays.'+pr.key]);
     logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'»');
     window._pendingReschedule = null;
     window._pendingPlanKey = null;
@@ -2690,6 +2628,7 @@ function startApp(){
     var pr = window._pendingReschedule;
     if (pr){
       delete state.plannedDays[pr.key];
+      deleteCloudKeys(['plannedDays.'+pr.key]);
       logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
       saveState(); renderCalendar();
       document.getElementById('rescheduleOverlay').classList.remove('active');
