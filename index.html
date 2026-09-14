@@ -445,6 +445,12 @@ setTimeout(function(){
 <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
 <div id="pointsToGo" style="color:var(--muted);font-size:10px;margin-top:12px;letter-spacing:1px"></div>
 </div>
+
+<div class="points-log-block" style="margin-top:20px;padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);box-shadow:var(--shadow-soft)">
+<div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;color:var(--dark);margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed rgba(201,169,97,.4)">✦ Журнал баллов ✦</div>
+<ul id="pointsLogList" style="list-style:none;max-height:420px;overflow-y:auto;padding:0;margin:0"></ul>
+</div>
+
 <div class="achievements-block">
 <div class="achievements-title">✦ Достижения ✦</div>
 <div class="achievements-grid" id="achievementsGrid"></div>
@@ -858,6 +864,7 @@ var state = {
   pendingPhoto: null,
   plannedDays: {},
   forcedDayTypes: {},
+  pointsLog: [],
   pendingReschedule: null
 };
 
@@ -929,6 +936,12 @@ function mergeActivityLog(a, b){
   (b||[]).forEach(function(l){ map.set(l.id, l); });
   return Array.from(map.values()).sort(function(x,y){ return y.timestamp-x.timestamp; }).slice(0, 500);
 }
+function mergePointsLog(a, b){
+  var map = new Map();
+  (a||[]).forEach(function(l){ map.set(l.id, l); });
+  (b||[]).forEach(function(l){ map.set(l.id, l); });
+  return Array.from(map.values()).sort(function(x,y){ return y.timestamp - x.timestamp; }).slice(0, 300);
+}
 function migrateCountersShape(){
   if (state.counters && !state.counters.nastya && !state.counters.vanya){
     state.counters = { nastya: state.counters || {}, vanya: {} };
@@ -953,6 +966,7 @@ function hydrateFromLocalStorage(){
     state.completedDays  = JSON.parse(g('completedDays') || '{}');
     state.plannedDays    = JSON.parse(g('plannedDays') || '{}');
     state.forcedDayTypes = JSON.parse(g('forcedDayTypes') || '{}');
+    state.pointsLog      = JSON.parse(g('pointsLog') || '[]');
     state.wishes         = JSON.parse(g('wishes') || '[]');
     state.achievements   = JSON.parse(g('achievements') || '[]');
     state.activityLog    = JSON.parse(g('activityLog') || '[]');
@@ -1132,11 +1146,24 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
-function applyPointsDelta(deltaMonth, deltaTotal, reason){
+function applyPointsDelta(deltaMonth, deltaTotal, reason, detail){
   state.points += deltaMonth;
   state.totalPoints += deltaTotal;
   if (state.points < 0) state.points = 0;
   if (state.totalPoints < 0) state.totalPoints = 0;
+
+  var actor = currentActor();
+  state.pointsLog.unshift({
+    id: Date.now() + Math.random(),
+    delta: deltaMonth,
+    deltaTotal: deltaTotal,
+    reason: reason || 'manual',
+    detail: detail || '',
+    actor: actor,
+    timestamp: Date.now()
+  });
+  if (state.pointsLog.length > 300) state.pointsLog = state.pointsLog.slice(0, 300);
+
   if (mainDocRef && FV && navigator.onLine){
     var patch = {};
     patch.points = FV.increment(deltaMonth);
@@ -1170,6 +1197,7 @@ function saveState(){
     localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
     localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
     localStorage.setItem('forcedDayTypes', JSON.stringify(state.forcedDayTypes));
+    localStorage.setItem('pointsLog', JSON.stringify(state.pointsLog.slice(0, 300)));
     localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
     localStorage.setItem('currentMonth', getCurrentMonthKey());
     localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0,500)));
@@ -1200,6 +1228,7 @@ function saveState(){
       history: state.history, completedDays: state.completedDays,
       plannedDays: state.plannedDays,
       forcedDayTypes: state.forcedDayTypes,
+      pointsLog: state.pointsLog.slice(0, 300),
       spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
       quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
       wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
@@ -1239,6 +1268,7 @@ function subscribeToFirestore(){
       state.completedDays  = mergeCompletedDays(state.completedDays, d.completedDays);
       state.plannedDays    = mergePlannedDays(state.plannedDays, d.plannedDays);
       if (d.forcedDayTypes) state.forcedDayTypes = Object.assign({}, state.forcedDayTypes, d.forcedDayTypes);
+      if (d.pointsLog) state.pointsLog = mergePointsLog(state.pointsLog, d.pointsLog);
       state.wishes         = mergeWishes(state.wishes, d.wishes);
       state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
       state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
@@ -1393,7 +1423,7 @@ function renderSettingsMenu(){
           points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, forcedDayTypes:{}, wishes:[],
           achievements:[], activityLog:[], quarantine:{}, dailyVisits:{}, spinsUsed:{},
           notificationsForNastya:[], counters:{nastya:{},vanya:{}}, todayCounters:{nastya:emptyToday(),vanya:emptyToday()},
-          lastCelebrationMonth:null, welcomeShown:false, schedules:{}
+          lastCelebrationMonth:null, welcomeShown:false, schedules:{}, pointsLog:[]
         }).then(function(){ location.reload(); }).catch(function(){ location.reload(); });
       } else location.reload();
     };
@@ -1521,10 +1551,10 @@ function submitRetro(){
     emoji: TYPE_INFO[cat].emoji, points: points, photo: null
   });
 
-  applyPointsDelta(points, points, 'retro');
+  applyPointsDelta(points, points, 'retro', text + ' (' + dateNice + ')');
   logActivity('retro_add', '📝 Отметил задним числом: «'+text+'» ('+dateNice+', +'+points+' б.)');
 
-  renderCalendar(); updateStats(); renderHistory(); renderLoveTree(); checkAchievements();
+  renderCalendar(); updateStats(); renderHistory(); renderLoveTree(); renderPointsLog(); checkAchievements();
 
   document.getElementById('retroOverlay').classList.remove('active');
   showToast('📝', 'Начислено +'+points+' б. за '+dateNice);
@@ -1760,7 +1790,7 @@ function openEditModal(){
     if (!confirm(msg)) return;
 
     if (refund > 0){
-      applyPointsDelta(-refund, -refund, 'clearDay');
+      applyPointsDelta(-refund, -refund, 'clearDay', 'Очистка ' + day + '.' + (month+1) + '.' + year);
     }
 
     var dayStart = new Date(year, month, day).getTime();
@@ -1791,6 +1821,7 @@ function openEditModal(){
     updateStats();
     renderHistory();
     renderLoveTree();
+    renderPointsLog();
     overlay.classList.remove('active');
     showToast('🗑', 'День очищен' + (refund>0 ? ' (−' + refund + ' б.)' : ''));
   };
@@ -1854,7 +1885,7 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   state.pendingPhoto = null;
   state.completedDays[key].push(event);
 
-  applyPointsDelta(points, points, 'addEvent');
+  applyPointsDelta(points, points, 'addEvent', text + ' (' + day + '.' + (month+1) + '.') );
 
   putInQuarantine(text, type);
   var dateStr = String(day).padStart(2,'0')+'.'+String(month+1).padStart(2,'0')+'.'+year;
@@ -1866,7 +1897,7 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   logActivity('task_done', '✅ Подтвердил: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', +'+points+' б.)');
   saveState();
   renderCalendar(); updateStats(); checkUpcomingDates();
-  renderHistory(); renderLoveTree();
+  renderHistory(); renderLoveTree(); renderPointsLog();
   showToast(TYPE_INFO[type].emoji, '+'+points+' баллов! '+text);
   fireBurst(window.innerWidth/2, window.innerHeight/2);
   checkAchievements();
@@ -1906,6 +1937,44 @@ function renderHistory(){
   });
 }
 
+var POINTS_REASON_LABELS = {
+  retro: '📝 Отмечено задним числом',
+  addEvent: '✅ Задание выполнено',
+  clearDay: '🗑 Очистка дня',
+  manual: '💌 Подарок от Насти',
+  respin: '🎡 Перекрут колеса',
+  wishAdd: '✿ Новая хотелка',
+  wishActivate: '💎 Желание активировано',
+  daily: '📅 Ежедневный вход',
+  monthBonus: '🎉 Месячный бонус'
+};
+
+function renderPointsLog(){
+  var list = document.getElementById('pointsLogList');
+  if (!list) return;
+  if (!state.pointsLog || !state.pointsLog.length){
+    list.innerHTML = '<div style="text-align:center;padding:30px 10px;color:var(--muted);font-size:12px">Пока операций не было</div>';
+    return;
+  }
+  list.innerHTML = state.pointsLog.map(function(l){
+    var sign = l.delta >= 0 ? '+' : '';
+    var color = l.delta >= 0 ? '#7A8E6E' : '#C97A7A';
+    var label = POINTS_REASON_LABELS[l.reason] || l.reason;
+    var actorIcon = l.actor === 'vanya' ? '🍞' : '❤️';
+    var detailLine = l.detail ? '<div style="font-size:11px;color:#5A4A3A;margin-top:3px;line-height:1.35">'+l.detail+'</div>' : '';
+    var d = new Date(l.timestamp);
+    var dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    return '<li style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:rgba(255,255,255,.5);border-radius:12px;margin-bottom:6px;border:1px solid rgba(201,169,97,.25)">' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-size:12px;font-weight:600;color:#2E2419">'+actorIcon+' '+label+'</div>' +
+        detailLine +
+        '<div style="font-size:9px;color:#8A7A66;margin-top:3px">'+dateStr+'</div>' +
+      '</div>' +
+      '<div style="font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:700;color:'+color+';white-space:nowrap">'+sign+l.delta+'</div>' +
+    '</li>';
+  }).join('');
+}
+
 function renderWishes(){
   var garden = document.getElementById('wishGarden');
   if (!garden) return;
@@ -1937,12 +2006,12 @@ function renderWishes(){
       if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
       if (state.points < w.cost){ showToast('💔','Недостаточно баллов'); return; }
       if (!confirm('Активировать «'+w.title+'»?\nСпишется '+w.cost+' баллов.')) return;
-      applyPointsDelta(-w.cost, 0, 'wishActivate');
+      applyPointsDelta(-w.cost, 0, 'wishActivate', w.title);
       state.wishes[i].activated = true;
       state.wishes[i].activatedAt = Date.now();
       state.notificationsForNastya.push({ id:Date.now(), title:w.title, cost:w.cost, tier:w.tier, seen:false, createdAt:Date.now() });
       logActivity('wish_activate', '💎 Активировал: '+w.title+' (−'+w.cost+' б.)');
-      saveState(); updateStats(); renderWishes();
+      saveState(); updateStats(); renderWishes(); renderPointsLog();
       showToast('💎','Желание активировано!'); makeConfetti(25); checkAchievements();
     };
   });
@@ -2086,7 +2155,7 @@ function checkMonthCelebration(){
   }
   if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
     state.lastCelebrationMonth = prevMonthKey;
-    applyPointsDelta(MONTH_CELEBRATION_BONUS, MONTH_CELEBRATION_BONUS, 'monthBonus');
+    applyPointsDelta(MONTH_CELEBRATION_BONUS, MONTH_CELEBRATION_BONUS, 'monthBonus', 'Прошлый месяц');
     var mc = document.getElementById('monthCelebration');
     document.getElementById('mcTitle').textContent = 'Восхитительно!';
     document.getElementById('mcText').innerHTML = 'Ты выполнил <b>'+countPrevMonth+'</b> дел за прошлый месяц!';
@@ -2200,7 +2269,7 @@ function applyDailyBonus(){
   var today = new Date().toISOString().slice(0,10);
   if (!state.dailyVisits[today]){
     state.dailyVisits[today] = true;
-    applyPointsDelta(DAILY_BONUS, DAILY_BONUS, 'daily');
+    applyPointsDelta(DAILY_BONUS, DAILY_BONUS, 'daily', 'Ежедневный вход');
     showToast('📅', '+'+DAILY_BONUS+' баллов за вход сегодня!');
   }
 }
@@ -2312,7 +2381,7 @@ function doSpin(){
   var price = getNextSpinPrice();
   if (price > 0){
     if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
-    applyPointsDelta(-price, 0, 'respin');
+    applyPointsDelta(-price, 0, 'respin', 'Перекрут колеса');
     showToast('🔄','−'+price+' баллов за перекрут');
   }
   var k = getSpinsKeyForTarget();
@@ -2325,6 +2394,7 @@ function doSpin(){
   updateSpinsUI();
   var spinCat = state.currentType ? (TYPE_INFO[state.currentType]?TYPE_INFO[state.currentType].name:'') : '';
   logActivity('spin', '🎡 Крутил колесо'+(spinCat?' ['+spinCat+']':'')+(price>0?', −'+price+' б.':', бесплатно'));
+  renderPointsLog();
 }
 
 var activeEditorTab = 'emotional';
@@ -2422,12 +2492,12 @@ function openManualPoints(){
     var amount = parseInt(document.getElementById('manualAmount').value);
     if (!reason){ alert('Напиши, за что'); return; }
     if (!amount || amount < 1){ alert('Введи число'); return; }
-    applyPointsDelta(amount, amount, 'manual');
+    applyPointsDelta(amount, amount, 'manual', reason);
     var now = new Date();
     var dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
     state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
     logActivity('manual_points', '💌 Настя начислила '+amount+' б.: '+reason);
-    saveState(); updateStats(); renderHistory();
+    saveState(); updateStats(); renderHistory(); renderPointsLog();
     showToast('💌', 'Начислено '+amount+' баллов!');
     makeConfetti(30);
     overlay.remove();
@@ -2440,6 +2510,7 @@ function refreshAll(prevPoints){
   renderHistory();
   renderWishes();
   renderAchievements();
+  renderPointsLog();
   checkUpcomingDates();
   applyDailyBonus();
   renderNotificationsForNastya();
@@ -2467,6 +2538,7 @@ function startApp(){
   renderHistory();
   renderWishes();
   renderAchievements();
+  renderPointsLog();
   renderLoveTree();
   checkUpcomingDates();
   setTimeout(resizeCanvas, 200);
@@ -2499,7 +2571,7 @@ function startApp(){
       btn.classList.add('active');
       document.getElementById('page-'+btn.dataset.page).classList.add('active');
       if (btn.dataset.page === 'history') renderHistory();
-      if (btn.dataset.page === 'stats'){ updateStats(); renderAchievements(); renderLoveTree(); }
+      if (btn.dataset.page === 'stats'){ updateStats(); renderAchievements(); renderLoveTree(); renderPointsLog(); }
       if (btn.dataset.page === 'wishes') renderWishes();
       window.scrollTo(0,0);
       logActivity('page_'+btn.dataset.page, '📱 Открыл «'+(pageNames[btn.dataset.page]||btn.dataset.page)+'»');
@@ -2552,9 +2624,9 @@ function startApp(){
     if (!v) return;
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
-    applyPointsDelta(WISH_BONUS, WISH_BONUS, 'wishAdd');
+    applyPointsDelta(WISH_BONUS, WISH_BONUS, 'wishAdd', v);
     logActivity('wish_add', '✿ Записал хотелку: «'+v+'»');
-    saveState(); renderWishes(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
+    saveState(); renderWishes(); renderPointsLog(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
   };
 
   document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
