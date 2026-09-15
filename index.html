@@ -1,42 +1,189 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Проверка прогресса</title></head>
-<body>
-<script>
-var s = 'ЧТО ЛЕЖИТ В ПАМЯТИ БРАУЗЕРА:\n\n';
-s += 'Баллы за месяц: ' + (localStorage.getItem('monthPoints') || 'НЕТ') + '\n';
-s += 'Баллы всего: ' + (localStorage.getItem('totalPoints') || 'НЕТ') + '\n';
-
-var h = localStorage.getItem('history');
-if (h) { try { s += 'Записей в истории: ' + JSON.parse(h).length + '\n'; } catch(e) { s += 'История битая\n'; } }
-else s += 'История: НЕТ\n';
-
-var cd = localStorage.getItem('completedDays');
-if (cd) { try { s += 'Отмеченных дней: ' + Object.keys(JSON.parse(cd)).length + '\n'; } catch(e){} }
-else s += 'Отмеченных дней: НЕТ\n';
-
-var pd = localStorage.getItem('plannedDays');
-if (pd) { try { s += 'Запланированных дней: ' + Object.keys(JSON.parse(pd)).length + '\n'; } catch(e){} }
-else s += 'Планов: НЕТ\n';
-
-var fd = localStorage.getItem('forcedDayTypes');
-if (fd) { try { s += 'Ручных типов дней: ' + Object.keys(JSON.parse(fd)).length + '\n'; } catch(e){} }
-else s += 'Ручных типов: НЕТ\n';
-
-var pl = localStorage.getItem('pointsLog');
-if (pl) { try { s += 'Записей в журнале баллов: ' + JSON.parse(pl).length + '\n'; } catch(e){} }
-else s += 'Журнал: НЕТ\n';
-
-var w = localStorage.getItem('wishes');
-if (w) { try { s += 'Хотелок: ' + JSON.parse(w).length + '\n'; } catch(e){} }
-else s += 'Хотелки: НЕТ\n';
-
-var q = localStorage.getItem('quarantine');
-if (q) { try { s += 'В карантине: ' + Object.keys(JSON.parse(q)).length + '\n'; } catch(e){} }
-
-var a = localStorage.getItem('achievements');
-if (a) { try { s += 'Достижений открыто: ' + JSON.parse(a).length + '\n'; } catch(e){} }
-else s += 'Достижения: НЕТ\n';
-
-alert(s);
-</script>
-</body></html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#3A3028">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Little things">
+<title>Наши маленькие вещи</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Marck+Script&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--dark:#2E2419;--brown:#5A4A3A;--muted:#8A7A66;--line:#D4C4A8;--gold:#C9A961;--gold-deep:#A8842E;--red:#C97A7A;--shadow:0 8px 30px rgba(60,40,20,.18);--shadow-soft:0 3px 14px rgba(60,40,20,.12)}
+html{min-height:100%;background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat;background-color:#3A3028;overscroll-behavior:none}
+body{font-family:'Montserrat',sans-serif;color:var(--dark);min-height:100vh;line-height:1.5;overflow-x:hidden;padding:12px 12px 24px;background:transparent;position:relative}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(40,30,20,.35) 0%,rgba(40,30,20,.10) 40%,rgba(40,30,20,.35) 100%)}
+.app{width:100%;max-width:520px;min-height:0;position:relative;padding-bottom:24px;z-index:2;margin:0 auto}
+.header{text-align:center;padding:20px 16px 12px}
+.header-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:500;letter-spacing:4px;text-transform:uppercase;line-height:1.1;color:#F5EBD5;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+.header-title::after{content:'♡';display:block;font-size:16px;margin-top:14px;color:#F5EBD5;opacity:.85}
+.header-names{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;letter-spacing:4px;text-transform:uppercase;margin-top:10px;display:inline-block;padding:10px 26px;border:1px solid rgba(255,255,255,.55);border-radius:2px;color:#F5EBD5;background:rgba(245,235,213,.08)}
+.header-subtitle{margin-top:14px;font-size:10px;color:#EBDFC5;letter-spacing:3px;text-transform:uppercase;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.35);border-radius:18px;margin:14px 4px 0;padding:6px 4px;position:relative;z-index:4;box-shadow:var(--shadow)}
+.nav-item{padding:12px 2px 10px;background:none;color:var(--brown);font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-family:inherit;border:none;border-radius:12px;transition:all .2s;opacity:.7}
+.nav-item .nav-icon{font-size:18px;color:var(--brown)}
+.nav-item.active{color:var(--dark);background:rgba(201,169,97,.12);opacity:1}
+.nav-item.active .nav-icon{color:var(--gold-deep)}
+.page{display:none;padding:20px 8px;position:relative;z-index:2}
+.page.active{display:block}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;display:inline-block;width:100%;color:#F5EBD5;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.section-sub{color:#EBDFC5;font-size:11px;letter-spacing:1.5px;background:rgba(245,235,213,.1);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:10px 18px;display:block;width:100%;margin:10px 0 18px;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.month-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border-radius:20px;padding:14px 10px;border:1px solid rgba(201,169,97,.4);box-shadow:var(--shadow)}
+.month-arrow{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.5);color:var(--brown);font-size:22px;border:1px solid rgba(201,169,97,.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:inherit}
+.month-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:32px;line-height:1;color:#2E2419}
+.month-year{font-family:'Cormorant Garamond',serif;color:var(--brown);font-size:15px;font-weight:500;letter-spacing:3px;margin-top:4px}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));border-radius:14px;padding:10px 0;border:1px solid rgba(201,169,97,.35)}
+.weekday{text-align:center;font-size:10px;font-weight:500;color:var(--brown);letter-spacing:2px;padding:4px 0;text-transform:uppercase}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px 5px;margin-top:10px;min-height:200px}
+.calendar-day{min-height:56px;border-radius:14px;position:relative;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--dark);cursor:pointer;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 6px rgba(60,40,20,.12)}
+.calendar-day.empty{background:transparent;cursor:default;border:none;box-shadow:none}
+.calendar-day.today{border-color:var(--gold);border-width:2px}
+.calendar-day .day-number{position:absolute;top:4px;left:8px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--dark)}
+.calendar-day.emotional{background:linear-gradient(145deg,#B8D0DC,#9FBCC9)}
+.calendar-day.physical{background:linear-gradient(145deg,#D5C4DB,#B09CBC)}
+.calendar-day.lightDate{background:linear-gradient(145deg,#E8C4CB,#DDA0A8)}
+.calendar-day.bigDate{background:linear-gradient(145deg,#E0A0A8,#C97A7A)}
+.calendar-day.free{background:linear-gradient(145deg,#F2E8D5,#E5D5B8);border:1px dashed rgba(140,120,90,.5)}
+.calendar-day.done-emotional{background:linear-gradient(145deg,#8FA9BA,#7A96A8);color:#F5EBD5}
+.calendar-day.done-physical{background:linear-gradient(145deg,#B09CBC,#9A82A8);color:#F5EBD5}
+.calendar-day.done-lightDate{background:linear-gradient(145deg,#DDA0A8,#C9848C);color:#F5EBD5}
+.calendar-day.done-bigDate{background:linear-gradient(145deg,#C97A7A,#A85A5A);color:#F5EBD5}
+.calendar-day.done-custom{background:linear-gradient(145deg,#B5C4A8,#96A88A);color:#F5EBD5}
+.calendar-day.next-month{background:transparent;border:none;cursor:default;box-shadow:none}
+.calendar-day.next-month .day-number{color:rgba(245,235,213,.35);font-size:16px}
+.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:18px}
+.legend-item{display:flex;align-items:center;gap:8px;color:var(--brown);font-size:10px;font-weight:500;background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));padding:10px 12px;border-radius:14px;border:1px solid rgba(201,169,97,.35)}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.legend-dot.emotional{background:#B8D0DC}
+.legend-dot.physical{background:#D5C4DB}
+.legend-dot.lightDate{background:#E8C4CB}
+.legend-dot.bigDate{background:#C97A7A}
+.legend-dot.custom{background:#B5C4A8}
+.manage-panel{margin-top:20px;padding:22px 20px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.35)}
+.manage-panel-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:6px;color:var(--dark)}
+.manage-panel-text{color:var(--muted);font-size:11px;line-height:1.6;margin-bottom:16px}
+.btn-primary{width:100%;padding:15px;border-radius:40px;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;box-shadow:0 6px 18px rgba(46,36,25,.35)}
+.btn-secondary{width:100%;padding:13px;border-radius:40px;background:rgba(255,255,255,.4);color:var(--brown);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:1.5px solid rgba(90,74,58,.5);cursor:pointer;font-family:'Cormorant Garamond',serif;margin-top:10px}
+.btn-gold{width:100%;padding:15px;border-radius:40px;background:linear-gradient(145deg,#C9A961,#A8842E);color:#FCF8EE;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;box-shadow:0 6px 20px rgba(168,132,46,.35)}
+button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.month-arrow,.close-button,.flower-btn,.tab-btn,.settings-menu button,.add-row button,.del-btn{touch-action:manipulation;-webkit-appearance:none;cursor:pointer}
+.overlay{position:fixed;inset:0;background:rgba(30,22,16,.75);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:.35s;z-index:100}
+.overlay.active{opacity:1;visibility:visible}
+.modal{width:100%;max-width:520px;max-height:calc(100vh - 30px);overflow-y:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(180deg,#FAF6EC 0%,#F2EAD6 100%);border-radius:32px 32px 0 0;padding:30px 20px 40px;position:relative;transform:translateY(60px);transition:.4s;box-shadow:0 -20px 60px rgba(0,0,0,.3)}
+.overlay.active .modal{transform:translateY(0)}
+.close-button{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:50%;background:rgba(90,74,58,.08);color:var(--brown);font-size:20px;display:flex;align-items:center;justify-content:center;border:none;font-family:inherit}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;color:var(--dark)}
+.modal-subtitle{text-align:center;color:var(--muted);font-size:11px;margin-top:6px}
+.overlay.center{align-items:center;padding:20px}
+.overlay.center .modal{border-radius:28px;max-width:440px;transform:translateY(20px);border:1px solid rgba(201,169,97,.4)}
+.overlay.center.active .modal{transform:translateY(0)}
+.role-buttons{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.role-btn{padding:18px 22px;border-radius:22px;border:1px solid rgba(201,169,97,.5);background:linear-gradient(180deg,#FAF6EC,#F2EAD6);font-family:inherit;color:var(--dark);cursor:pointer;font-size:14px;font-weight:500;letter-spacing:1px;display:flex;align-items:center;gap:14px;text-align:left}
+.role-btn .role-emoji{font-size:26px}
+.role-btn.nastya{background:linear-gradient(145deg,#F5DDDE,#E8B8BD)}
+.role-btn.vanya{background:linear-gradient(145deg,#DCE6EE,#B8D0DC)}
+.role-badge{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:rgba(46,36,25,.95);color:#F5EBD5;padding:6px 18px;border-radius:20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;z-index:500;display:none}
+.role-badge.show{display:block}
+.settings-hotzone{position:fixed;bottom:0;right:0;width:150px;height:150px;z-index:900;background:transparent}
+.settings-toggle{position:fixed;bottom:22px;right:22px;width:44px;height:44px;border-radius:50%;background:rgba(90,74,58,.4);color:#F5EBD5;font-size:18px;z-index:901;display:none;align-items:center;justify-content:center;border:none;opacity:0;transition:opacity .35s}
+.settings-toggle.visible{display:flex;opacity:1}
+.settings-menu{position:fixed;bottom:80px;right:22px;background:#FAF6EC;border-radius:20px;padding:10px 0;min-width:260px;max-width:calc(100vw - 44px);z-index:902;display:none;border:1px solid rgba(201,169,97,.5);box-shadow:0 20px 60px rgba(0,0,0,.35);max-height:70vh;overflow-y:auto}
+.settings-menu.open{display:block}
+.settings-menu button{display:block;width:100%;padding:14px 22px;background:none;border:0;text-align:left;font-size:12.5px;font-family:inherit;color:var(--dark)}
+.settings-menu .divider{height:1px;background:var(--line);margin:6px 16px}
+.settings-menu .danger{color:#C97A7A}
+.points-card{padding:30px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.4)}
+.points-number{font-family:'Cormorant Garamond',serif;font-size:64px;line-height:1;color:var(--gold-deep);font-weight:600}
+.points-caption{color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:3px;text-transform:uppercase}
+.total-points{margin-top:8px;font-size:12px;color:var(--muted)}
+.total-points span{color:var(--dark);font-weight:600}
+.level-badge{margin-top:14px;display:inline-block;background:rgba(201,169,97,.15);padding:10px 22px;border-radius:40px;border:1px solid rgba(201,169,97,.5)}
+.level-badge .emoji{font-size:22px;margin-right:8px}
+.level-badge .name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--dark)}
+.progress-track{height:6px;border-radius:20px;background:rgba(201,169,97,.2);margin-top:18px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#C9A961,#A8842E);border-radius:20px;transition:width .8s}
+.input-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:13px;outline:none;margin-bottom:12px;color:var(--dark)}
+.select-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:12px;margin-bottom:12px;cursor:pointer;color:var(--dark)}
+.add-row{display:flex;gap:8px;margin-bottom:16px}
+.add-row input{flex:1;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:13px;outline:none;color:var(--dark)}
+.add-row button{padding:0 22px;border-radius:40px;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:20px;border:none;font-family:inherit}
+.toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-120%);background:linear-gradient(180deg,#FAF6EC,#F0E6CE);padding:16px 22px;border-radius:40px;box-shadow:0 8px 30px rgba(0,0,0,.3);z-index:1000;display:flex;align-items:center;gap:14px;font-size:13px;font-weight:500;border:1px solid rgba(201,169,97,.5);max-width:90%;transition:transform .5s;color:var(--dark)}
+.toast.show{transform:translate(-50%,0)}
+.toast .emoji{font-size:24px}
+.toast .text{flex:1}
+.toast .close-x{background:none;border:none;font-size:18px;color:var(--muted);font-family:inherit}
+.splash-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#3A3028,#2A2018);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s,visibility .8s}
+.splash-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.splash-title{font-family:'Marck Script',cursive;font-size:38px;color:#F5EBD5;margin-top:22px}
+.splash-sub{font-family:'Cormorant Garamond',serif;font-size:13px;color:#B5A88E;letter-spacing:4px;text-transform:uppercase;margin-top:8px}
+.tabs{display:flex;gap:4px;margin:16px 0;background:rgba(90,74,58,.08);padding:4px;border-radius:24px;overflow-x:auto}
+.tab-btn{flex:1;padding:10px 8px;border-radius:20px;background:transparent;border:none;font-size:10px;font-weight:500;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap}
+.tab-btn.active{background:#FAF6EC;color:var(--dark)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.action-list{list-style:none;max-height:340px;overflow-y:auto;margin-top:8px}
+.action-list li{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,.6);border-radius:14px;margin-bottom:6px;font-size:12px;gap:10px;border:1px solid rgba(201,169,97,.3)}
+.action-list li .txt{flex:1;line-height:1.4}
+.action-list li .del-btn{width:24px;height:24px;border-radius:50%;background:rgba(201,122,122,.15);color:var(--red);font-size:12px;border:none;font-family:inherit;flex-shrink:0}
+.garden-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:6px}
+.garden-flower{padding:18px 12px 14px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);text-align:center}
+.garden-flower .flower-emoji{font-size:44px;display:block}
+.garden-flower .flower-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;margin-top:8px;color:var(--dark);line-height:1.3;word-break:break-word}
+.garden-flower .flower-meta{font-size:10px;color:var(--brown);margin-top:4px;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.garden-flower .flower-btn{margin-top:10px;padding:8px 14px;border-radius:20px;border:none;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:inherit}
+.garden-flower .flower-btn.ready{background:linear-gradient(145deg,#C9A961,#A8842E)}
+.empty-state{text-align:center;padding:50px 20px;color:#EBDFC5;font-size:13px;line-height:1.8;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.wish-tier{display:flex;gap:6px;margin:14px 0}
+.wish-tier button{flex:1;padding:12px 6px;border-radius:16px;color:var(--brown);background:rgba(255,250,240,.8);border:1px solid rgba(201,169,97,.4);font-size:10px;font-weight:600;cursor:pointer;font-family:inherit}
+.wish-tier button.active{background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;border-color:#2E2419}
+.achievements-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.achievement{text-align:center;padding:12px 6px;border-radius:16px;background:linear-gradient(145deg,#FAF6EC,#F0E6CE);border:1px solid rgba(201,169,97,.35)}
+.achievement.locked{opacity:.35;filter:grayscale(1)}
+.achievement.unlocked{background:linear-gradient(145deg,#F5E8C0,#E8D198);border-color:rgba(201,169,97,.6)}
+.achievement .ach-emoji{font-size:26px;display:block;margin-bottom:6px}
+.achievement .ach-name{font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:600;color:var(--dark);line-height:1.2}
+.achievement .ach-desc{font-size:8px;color:var(--muted);margin-top:4px;line-height:1.3}
+.love-tree-card{margin-top:22px;padding:22px 18px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);text-align:center}
+.love-tree-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2A2420}
+.love-tree-stage{font-family:'Caveat',cursive;font-size:20px;color:#A8842E;margin-top:4px;font-weight:600}
+.love-tree-svg-wrap{margin:8px auto 6px;max-width:300px}
+.love-tree-svg-wrap svg{display:block;width:100%;height:auto}
+.love-tree-progress-text{font-size:11px;color:#6B5C52;margin:6px 0 10px;font-weight:500}
+.love-tree-progress-track{height:6px;border-radius:20px;background:rgba(201,169,97,.22);overflow:hidden}
+.love-tree-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#B5C4A8,#C9A961);border-radius:20px;transition:width 1.2s}
+.activity-stat{padding:14px 18px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid rgba(201,169,97,.3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.activity-stat .lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.activity-stat .val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--gold-deep);text-align:right}
+.activity-log-list{list-style:none;max-height:280px;overflow-y:auto;margin-top:8px;padding:0}
+.activity-log-list li{padding:10px 14px;background:rgba(255,255,255,.5);border-radius:14px;margin-bottom:6px;font-size:11px;border:1px solid rgba(201,169,97,.25);display:flex;gap:10px;align-items:flex-start;color:var(--dark)}
+.activity-log-list li .ico{font-size:16px;flex-shrink:0;margin-top:1px}
+.activity-log-list li .body{flex:1;line-height:1.5}
+.activity-log-list li .body .when{font-size:9px;color:var(--muted);margin-bottom:2px;display:block}
+.activity-status-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.activity-status-dot.online{background:#7A8E6E}
+.activity-status-dot.offline{background:#C4B8A5}
+.photo-preview{margin-top:10px;display:none;position:relative}
+.photo-preview.show{display:block}
+.photo-preview img{width:100%;max-height:200px;object-fit:cover;border-radius:12px}
+.add-photo-btn{margin-top:10px;padding:10px 18px;border-radius:30px;background:rgba(201,169,97,.12);border:1.5px dashed rgba(201,169,97,.5);color:#6b5a4e;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:1.5px}
+.photo-modal{position:fixed;inset:0;z-index:1300;background:rgba(20,15,12,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
+.photo-modal.active{display:flex}
+.photo-modal img{max-width:100%;max-height:90vh;border-radius:12px}
+.month-celebration{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(30,22,16,.8);opacity:0;visibility:hidden;transition:.5s;cursor:pointer;padding:20px}
+.month-celebration.active{opacity:1;visibility:visible}
+.month-celebration-card{max-width:400px;width:100%;padding:40px 28px 32px;border-radius:32px;background:linear-gradient(160deg,#FAF6EC,#F0E6CE);border:1px solid rgba(201,169,97,.5);text-align:center;transform:scale(.85);transition:.6s}
+.month-celebration.active .month-celebration-card{transform:scale(1)}
+.month-celebration-card .mc-emoji{font-size:76px;display:block}
+.month-celebration-card h2{font-family:'Marck Script',cursive;font-size:36px;color:var(--dark);margin:16px 0 10px;font-weight:400}
+.month-celebration-card p{font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.6;color:var(--brown);margin-bottom:20px}
+.month-celebration-card .mc-bonus{display:inline-block;padding:10px 24px;border-radius:40px;background:linear-gradient(145deg,#C9A961,#A8842E);color:#FCF8EE;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600}
+.daily-overlay{position:fixed;inset:0;background:rgba(30,22,16,.8);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1100;opacity:0;visibility:hidden;transition:.5s;cursor:pointer}
+.daily-overlay.active{opacity:1;visibility:visible}
+.daily-card{background:linear-gradient(160deg,#FAF6EC,#F0E6CE);border-radius:32px;padding:50px 30px 40px;max-width:400px;width:100%;text-align:center;transform:scale(.85);transition:.6s;border:1px solid rgba(201,169,97,.5)}
+.daily-overlay.active .daily-card{transform:scale(1)}
+.daily-emoji{font-size:64px;display:inline-block;margin:20px 0}
+.daily-message{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;line-height:1.45;color:var(--dark);margin-bottom:24px;font-style:italic}
+.daily-hint{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:.7;margin-top:20px;border-top:1px solid rgba(201,169,97,.35);padding-top:18px}
+</style>
+</head>
