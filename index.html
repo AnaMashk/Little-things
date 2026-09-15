@@ -48,11 +48,11 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;back
 .calendar-day{min-height:56px;border-radius:14px;position:relative;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--dark);cursor:pointer;border:1px solid rgba(255,255,255,.5);transition:transform .2s;overflow:visible;box-shadow:0 2px 6px rgba(60,40,20,.12),inset 0 1px 0 rgba(255,255,255,.5)}
 .calendar-day:active{transform:scale(.94)}
 .calendar-day.empty{background:transparent;cursor:default;border:none;box-shadow:none}
-.calendar-day.today{border-color:var(--gold);border-width:2px;box-shadow:0 0 0 2px rgba(201,169,97,.435),0 4px 14px rgba(201,169,97,.3)}
+.calendar-day.today{border-color:var(--gold);border-width:2px;box-shadow:0 0 0 2px rgba(201,169,97,.35),0 4px 14px rgba(201,169,97,.3)}
 .calendar-day .day-number{position:absolute;top:4px;left:8px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--dark)}
 .calendar-day.emotional{background:linear-gradient(145deg,#B8D0DC,#9FBCC9);border-color:rgba(143,169,186,.6)}
-.calendar-day.physical{background:linear-gradient(145deg,#D5C4DB,#B09CBC);border-color:rgba(176CB,156,188,.6)}
-.c,#alendar-day.lightDate{background:linear-gradient(145deg,#DE8CDA0A8);border-color:rgba(221,160,168,.6)}
+.calendar-day.physical{background:linear-gradient(145deg,#D5C4DB,#B09CBC);border-color:rgba(176,156,188,.6)}
+.calendar-day.lightDate{background:linear-gradient(145deg,#E8C4CB,#DDA0A8);border-color:rgba(221,160,168,.6)}
 .calendar-day.bigDate{background:linear-gradient(145deg,#E0A0A8,#C97A7A);border-color:rgba(201,122,122,.6)}
 .calendar-day.free{background:linear-gradient(145deg,#F2E8D5,#E5D5B8);border:1px dashed rgba(140,120,90,.5)}
 .calendar-day.done-emotional{background:linear-gradient(145deg,#8FA9BA,#7A96A8);border-color:#6E8598;color:#F5EBD5}
@@ -719,50 +719,23 @@ setTimeout(function(){
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
-/* ============================================================
-   СТРАХОВКА: если localStorage битый — чистим и продолжаем.
-   Кнопки "Я Настя" / "Я Ваня" вешаются ПЕРВЫМИ, до всего кода.
-   ============================================================ */
+/* СТРАХОВКА: кнопки роли + чистка битого localStorage */
 (function(){
-  try {
-    var raw = localStorage.getItem('reachedMilestones');
-    if (raw) JSON.parse(raw);
-  } catch(e){
-    try { localStorage.removeItem('reachedMilestones'); } catch(_){}
-  }
-  try {
-    var raw2 = localStorage.getItem('achievements');
-    if (raw2) JSON.parse(raw2);
-  } catch(e){
-    try { localStorage.removeItem('achievements'); } catch(_){}
-  }
-  try {
-    var raw3 = localStorage.getItem('todayCounters');
-    if (raw3) JSON.parse(raw3);
-  } catch(e){
-    try { localStorage.removeItem('todayCounters'); } catch(_){}
-  }
+  try { var r = localStorage.getItem('reachedMilestones'); if (r) JSON.parse(r); } catch(e){ try { localStorage.removeItem('reachedMilestones'); } catch(_){} }
+  try { var r2 = localStorage.getItem('achievements'); if (r2) JSON.parse(r2); } catch(e){ try { localStorage.removeItem('achievements'); } catch(_){} }
+  try { var r3 = localStorage.getItem('todayCounters'); if (r3) JSON.parse(r3); } catch(e){ try { localStorage.removeItem('todayCounters'); } catch(_){} }
 })();
-
-/* ---- Ранние обработчики кнопок ролей ---- */
 (function(){
-  function onReady(fn){
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
-    else fn();
-  }
+  function onReady(fn){ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
   onReady(function(){
     var btnN = document.getElementById('roleNastya');
     var btnV = document.getElementById('roleVanya');
     var ov = document.getElementById('roleOverlay');
     if (!btnN || !btnV) return;
     function choose(role){
-      try {
-        localStorage.setItem('userRole', role);
-      } catch(e){}
+      try { localStorage.setItem('userRole', role); } catch(e){}
       if (ov) ov.classList.remove('active');
-      try {
-        window.dispatchEvent(new CustomEvent('roleChosen', { detail: { role: role } }));
-      } catch(e){}
+      try { window.dispatchEvent(new CustomEvent('roleChosen', { detail: { role: role } })); } catch(e){}
     }
     btnN.addEventListener('click', function(){ choose('nastya'); });
     btnV.addEventListener('click', function(){ choose('vanya'); });
@@ -1169,7 +1142,6 @@ function logActivity(action, detail){
     var actor = currentActor();
     if (state.counters[actor][action] !== undefined) state.counters[actor][action]++;
     else state.counters[actor][action] = 1;
-
     var todayKey = new Date().toISOString().slice(0,10);
     if (state.todayCounters[actor].date !== todayKey){
       state.todayCounters[actor] = Object.assign({}, emptyToday(), { date: todayKey });
@@ -1181,7 +1153,6 @@ function logActivity(action, detail){
     if (action === 'settings_open') tc.settings_opens++;
     if (action === 'day_open') tc.day_opens++;
     if (action.indexOf('page_') === 0) tc.page_opens++;
-
     state.activityLog.unshift({ id: now, actor: actor, action: action, detail: detail || '', timestamp: now });
     if (state.activityLog.length > 500) state.activityLog = state.activityLog.slice(0, 500);
     saveState();
@@ -1226,7 +1197,6 @@ function applyPointsDelta(deltaMonth, deltaTotal, reason, detail){
     state.totalPoints += deltaTotal;
     if (state.points < 0) state.points = 0;
     if (state.totalPoints < 0) state.totalPoints = 0;
-
     var actor = currentActor();
     state.pointsLog.unshift({
       id: Date.now() + Math.random(),
@@ -1238,7 +1208,6 @@ function applyPointsDelta(deltaMonth, deltaTotal, reason, detail){
       timestamp: Date.now()
     });
     if (state.pointsLog.length > 300) state.pointsLog = state.pointsLog.slice(0, 300);
-
     if (mainDocRef && FV && navigator.onLine){
       var patch = {};
       patch.points = FV.increment(deltaMonth);
@@ -1296,12 +1265,10 @@ function saveState(){
   saveTimeout = setTimeout(function(){
     if (isSaving){ saveState(); return; }
     isSaving = true;
-
     var schedules = {};
     try {
       for (var key in localStorage) if (key.indexOf('schedule_') === 0) schedules[key] = localStorage.getItem(key);
     } catch(e){}
-
     var data = {
       history: state.history, completedDays: state.completedDays,
       plannedDays: state.plannedDays,
@@ -1318,7 +1285,6 @@ function saveState(){
       welcomeShown: safeGet('welcomeShown') === 'true',
       schedules: schedules
     };
-
     mainDocRef.set(data, { merge: true })
       .then(function(){ isSaving = false; })
       .catch(function(e){ console.warn('fs', e); isSaving = false; });
@@ -1333,16 +1299,13 @@ function subscribeToFirestore(){
       if (snapshot.exists){
         var d = snapshot.data() || {};
         var prevPoints = state.points;
-
         if (d.currentMonth && d.currentMonth !== getCurrentMonthKey()){
           state.points = 0; state.spinsUsed = {};
           mainDocRef.set({ points:0, currentMonth:getCurrentMonthKey(), spinsUsed:{} }, { merge:true });
         } else if (typeof d.points === 'number'){
           state.points = d.points;
         }
-
         if (typeof d.totalPoints === 'number') state.totalPoints = d.totalPoints;
-
         state.history        = mergeHistory(state.history, d.history);
         state.completedDays  = mergeCompletedDays(state.completedDays, d.completedDays);
         state.plannedDays    = mergePlannedDays(state.plannedDays, d.plannedDays);
@@ -1352,13 +1315,11 @@ function subscribeToFirestore(){
         state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
         state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
         state.achievements   = Array.from(new Set([].concat(state.achievements||[], d.achievements||[])));
-
         state.spinsUsed      = Object.assign({}, state.spinsUsed, d.spinsUsed||{});
         state.dailyVisits    = Object.assign({}, state.dailyVisits, d.dailyVisits||{});
         state.quarantine     = Object.assign({}, state.quarantine, d.quarantine||{});
         state.userAdded      = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userAdded||{}, d.userAdded||{});
         state.userRemoved    = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userRemoved||{}, d.userRemoved||{});
-
         if (d.lastCelebrationMonth) state.lastCelebrationMonth = d.lastCelebrationMonth;
         if (d.vanyaSession) state.vanyaSession = d.vanyaSession;
         if (d.counters) state.counters = d.counters;
@@ -1367,10 +1328,8 @@ function subscribeToFirestore(){
         if (d.reachedMilestones){ reachedMilestones = d.reachedMilestones; safeSet('reachedMilestones', JSON.stringify(reachedMilestones)); }
         if (d.welcomeShown !== undefined) safeSet('welcomeShown', d.welcomeShown ? 'true':'false');
         if (d.schedules) for (var key in d.schedules) safeSet(key, d.schedules[key]);
-
         migrateCountersShape();
         refreshAll(prevPoints);
-
         stateLoaded = true;
         if (pendingSave){ pendingSave = false; saveState(); }
       } else {
@@ -2642,13 +2601,11 @@ function startApp(){
       try { if (!stateLoaded){ stateLoaded = true; saveState(); } } catch(e){}
     }, 4000);
 
-    /* Навешиваем обработчики кнопок ролей через общий setRole */
     var btnN = document.getElementById('roleNastya');
     var btnV = document.getElementById('roleVanya');
     if (btnN) btnN.onclick = function(){ setRole('nastya'); };
     if (btnV) btnV.onclick = function(){ setRole('vanya'); };
 
-    /* Подхватываем раннее нажатие, если кнопку нажали до инициализации */
     window.addEventListener('roleChosen', function(e){
       if (e.detail && e.detail.role){ setRole(e.detail.role); }
     });
