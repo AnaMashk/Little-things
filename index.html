@@ -527,3 +527,1709 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 <span class="text" id="toastText"></span>
 <button class="close-x" id="toastClose" type="button">✕</button>
 </div> 
+<script>
+(function(){
+'use strict';
+
+// ============ СОСТОЯНИЕ ============
+var state = {
+  role: null,
+  viewingAs: null,
+  currentDate: new Date(),
+  points: 0,
+  totalPoints: 0,
+  history: [],
+  completedDays: {},
+  plannedDays: {},
+  forcedDayTypes: {},
+  pointsLog: [],
+  wishes: [],
+  achievements: [],
+  userAdded: { emotional: [], physical: [], lightDate: [], bigDate: [] },
+  userRemoved: { emotional: [], physical: [], lightDate: [], bigDate: [] },
+  quarantine: {},
+  spinsUsed: {},
+  currentDay: null,
+  currentType: null,
+  editingDay: null,
+  currentWishTier: 'small',
+  activityLog: [],
+  counters: { nastya: {}, vanya: {} },
+  vanyaSession: { loginAt: null, lastActiveAt: null, online: false },
+  lastCelebrationMonth: null,
+  pendingPhoto: null,
+  pendingReschedule: null
+};
+
+// ============ КЛЮЧИ (те же, что были — прогресс вернётся) ============
+function saveState(){
+  try {
+    localStorage.setItem('monthPoints', String(state.points));
+    localStorage.setItem('totalPoints', String(state.totalPoints));
+    localStorage.setItem('history', JSON.stringify(state.history));
+    localStorage.setItem('completedDays', JSON.stringify(state.completedDays));
+    localStorage.setItem('plannedDays', JSON.stringify(state.plannedDays));
+    localStorage.setItem('forcedDayTypes', JSON.stringify(state.forcedDayTypes));
+    localStorage.setItem('pointsLog', JSON.stringify(state.pointsLog.slice(0, 300)));
+    localStorage.setItem('wishes', JSON.stringify(state.wishes));
+    localStorage.setItem('achievements', JSON.stringify(state.achievements));
+    localStorage.setItem('userAdded', JSON.stringify(state.userAdded));
+    localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
+    localStorage.setItem('quarantine', JSON.stringify(state.quarantine));
+    localStorage.setItem('spinsUsed', JSON.stringify(state.spinsUsed));
+    localStorage.setItem('activityLog', JSON.stringify(state.activityLog.slice(0, 500)));
+    localStorage.setItem('counters', JSON.stringify(state.counters));
+    localStorage.setItem('vanyaSession', JSON.stringify(state.vanyaSession));
+    localStorage.setItem('lastCelebrationMonth', state.lastCelebrationMonth || '');
+  } catch(e){ console.warn('saveState', e); }
+}
+
+function loadState(){
+  try {
+    var p = localStorage.getItem('monthPoints');
+    var tp = localStorage.getItem('totalPoints');
+    if (p) state.points = parseInt(p) || 0;
+    if (tp) state.totalPoints = parseInt(tp) || 0;
+
+    function readJSON(key, fallback){
+      try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+      catch(e){ return fallback; }
+    }
+    state.history = readJSON('history', []);
+    state.completedDays = readJSON('completedDays', {});
+    state.plannedDays = readJSON('plannedDays', {});
+    state.forcedDayTypes = readJSON('forcedDayTypes', {});
+    state.pointsLog = readJSON('pointsLog', []);
+    state.wishes = readJSON('wishes', []);
+    state.achievements = readJSON('achievements', []);
+    state.userAdded = readJSON('userAdded', { emotional: [], physical: [], lightDate: [], bigDate: [] });
+    state.userRemoved = readJSON('userRemoved', { emotional: [], physical: [], lightDate: [], bigDate: [] });
+    state.quarantine = readJSON('quarantine', {});
+    state.spinsUsed = readJSON('spinsUsed', {});
+    state.activityLog = readJSON('activityLog', []);
+    state.counters = readJSON('counters', { nastya: {}, vanya: {} });
+    state.vanyaSession = readJSON('vanyaSession', { loginAt: null, lastActiveAt: null, online: false });
+    state.lastCelebrationMonth = localStorage.getItem('lastCelebrationMonth') || null;
+
+    if (!Array.isArray(state.history)) state.history = [];
+    if (!Array.isArray(state.wishes)) state.wishes = [];
+    if (!Array.isArray(state.achievements)) state.achievements = [];
+    if (!Array.isArray(state.pointsLog)) state.pointsLog = [];
+    if (!Array.isArray(state.activityLog)) state.activityLog = [];
+    if (!state.completedDays || typeof state.completedDays !== 'object') state.completedDays = {};
+    if (!state.plannedDays || typeof state.plannedDays !== 'object') state.plannedDays = {};
+    if (!state.forcedDayTypes || typeof state.forcedDayTypes !== 'object') state.forcedDayTypes = {};
+    if (!state.userAdded || typeof state.userAdded !== 'object') state.userAdded = { emotional: [], physical: [], lightDate: [], bigDate: [] };
+    if (!state.userRemoved || typeof state.userRemoved !== 'object') state.userRemoved = { emotional: [], physical: [], lightDate: [], bigDate: [] };
+    if (!state.quarantine || typeof state.quarantine !== 'object') state.quarantine = {};
+    if (!state.spinsUsed || typeof state.spinsUsed !== 'object') state.spinsUsed = {};
+    if (!state.counters || typeof state.counters !== 'object') state.counters = { nastya: {}, vanya: {} };
+    if (!state.counters.nastya) state.counters.nastya = {};
+    if (!state.counters.vanya) state.counters.vanya = {};
+  } catch(e){ console.warn('loadState', e); }
+}
+
+// ============ КОНСТАНТЫ ============
+var TYPE_INFO = {
+  emotional: { name: 'Эмоциональная забота', emoji: '💙', points: 5, color: '#B8D0DC' },
+  physical:  { name: 'Физическая забота',     emoji: '💜', points: 10, color: '#D5C4DB' },
+  lightDate: { name: 'Лёгкое свидание',       emoji: '💗', points: 50, color: '#E8C4CB' },
+  bigDate:   { name: 'Большое свидание',      emoji: '🏆', points: 150, color: '#C97A7A' },
+  free:      { name: 'Свободный день',        emoji: '⬜', points: 0, color: '#F2E8D5' },
+  custom:    { name: 'Своё дело',             emoji: '⭐', points: 0, color: '#B5C4A8' }
+};
+
+var LEVELS = [
+  { max: 199, name: 'Первый шаг', emoji: '🌿' },
+  { max: 399, name: 'Трепет', emoji: '💓' },
+  { max: 599, name: 'Притяжение', emoji: '✨' },
+  { max: 799, name: 'Гармония', emoji: '🌸' },
+  { max: 999, name: 'Почти совершенство', emoji: '🌟' },
+  { max: Infinity, name: 'Вечность', emoji: '♾️' }
+];
+
+var ACHIEVEMENTS_DEF = [
+  { id: 'first_step', emoji: '🌱', name: 'Первый шаг', desc: 'Первое дело' },
+  { id: 'caring', emoji: '💙', name: 'Заботливый', desc: '10 эмоц. дел' },
+  { id: 'masseur', emoji: '💜', name: 'Массажист', desc: '5 физ. дел' },
+  { id: 'romantic', emoji: '💗', name: 'Романтик', desc: 'Первое свидание' },
+  { id: 'dreamer', emoji: '✿', name: 'Мечтатель', desc: '5 хотелок' },
+  { id: 'wisher', emoji: '💎', name: 'Исполнитель', desc: 'Хотелка активирована' },
+  { id: 'happy_big', emoji: '🏆', name: 'Большой шаг', desc: 'Большое свидание' },
+  { id: 'persistent', emoji: '🔥', name: 'Настойчивый', desc: '20 дел всего' },
+  { id: 'thinker', emoji: '⭐', name: 'Мыслитель', desc: '5 инициатив' },
+  { id: 'forever', emoji: '♾️', name: 'Вечность', desc: '1000 баллов всего' }
+];
+
+var DEFAULT_TASKS = {
+  emotional: ['🤍 Обними её крепко-крепко','👀 Посмотри ей в глаза','🫶 Сделай для неё одну вещь','💭 Спроси, чего ей хочется','☕ Сядь рядом и 10 минут говори','🎁 Устрой маленький сюрприз','🍳 Приготовь то, что она любит','🧹 Возьми на себя её задачу','🫂 Выслушай её тревоги','💗 Скажи, что ценишь в ней','❤️ Вспомни ваш дорогой момент','💌 Напиши тёплое сообщение','📝 Оставь записку','🌷 Предложи провести время вместе','🤍 Спроси: «Что я могу для тебя сделать?»','🔁 Расскажи, какой момент хочешь пережить снова','💬 Скажи то, что давно хотел','🥹 Спроси: «Когда ты чувствуешь себя любимой?»','💕 Расскажи, когда сам чувствуешь себя любимым','✨ Расскажи, какие её действия ты ценишь'],
+  physical: ['🫂 Обними сзади','💆 Массаж плеч 20 минут','💆‍♀️ Массаж головы 20 минут','🤲 Массаж кистей 20 минут','🦶 Массаж ног и стоп 20 минут','💆 Массаж спины 20 минут','🤍 Погладь по голове','🥰 Уложи голову на колени','☕ Приготовь чай и накрой пледом','🛁 Сделай тёплую ванну','🫧 Помой ей голову','🪮 Расчеши и высуши волосы','💆‍♀️ Массаж лица 15 минут','🫂 Гладь спину 20 минут','❤️ Лягте рядом, 20 минут','💆 Массаж шеи 20 минут'],
+  lightDate: ['🎬 Сходить в кино','⛸️ Сходить на коньки','🎳 Сходить в боулинг','☕ Кофейня — кофе и десерт','🍰 Только за десертом','🍳 Вместе на завтрак','🍦 За мороженым и погулять','🛍️ В ТЦ — маленький подарок','📚 В книжный — купить книгу','🎨 Небольшой мастер-класс','🌳 Пикник в парке','🌅 Смотреть закат','🐶 В приют животных','🎮 В игровой зал','🎢 В парк аттракционов','🐠 В океанариум','🎭 На небольшой спектакль','🍕 Дома: пицца и фильм','🧁 Дегустация десертов','🎲 Вечер настольной игры'],
+  bigDate: ['🍽️ Ресторан','🎭 Хороший спектакль','🎤 Концерт','🎨 Мастер-класс для двоих','📸 Фотосессия','🧖‍♀️ SPA-программа','🏨 Ночь в отеле','🌲 Загородная база','🐎 Конная прогулка','🦙 Ферма альпак','🚆 Мини-путешествие']
+};
+
+var DAILY_MESSAGES = [
+  { e:'🥰', t:'Ты — моя самая любимая причина улыбаться.' },
+  { e:'🌸', t:'Ты делаешь обычный день волшебным.' },
+  { e:'💫', t:'С тобой я чувствую себя дома.' },
+  { e:'☀️', t:'Ты — моё утро, мой день и мой вечер.' },
+  { e:'🤍', t:'Я выбрала тебя. И выбираю каждый день заново.' },
+  { e:'🌷', t:'Спасибо, что ты просто есть.' },
+  { e:'🦋', t:'Ты — мой спокойный остров.' },
+  { e:'❤️', t:'Ты — тот, с кем мне не страшно.' },
+  { e:'🌙', t:'Ты — мой самый тёплый человек.' },
+  { e:'✨', t:'Когда ты рядом — всё на своих местах.' },
+  { e:'💐', t:'Ты — моя лучшая случайность в жизни.' },
+  { e:'🕊', t:'С тобой я могу быть собой.' },
+  { e:'🌟', t:'Ты — моё самое тёплое «своё».' },
+  { e:'💕', t:'Ты — причина, по которой я верю в настоящее.' },
+  { e:'🌻', t:'Рядом с тобой я расцветаю.' },
+  { e:'🔥', t:'Ты сильнее, чем думаешь.' },
+  { e:'⭐️', t:'Даже если сегодня тяжело — ты справишься.' },
+  { e:'🦁', t:'В тебе столько силы!' },
+  { e:'💪', t:'Ты — мой герой.' },
+  { e:'🌈', t:'У тебя всё получится.' }
+];
+
+var monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+
+// ============ ХЕЛПЕРЫ ============
+function $(id){ return document.getElementById(id); }
+function currentActor(){ return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
+
+function showToast(emoji, text){
+  var t = $('toast');
+  if (!t) return;
+  $('toastEmoji').textContent = emoji;
+  $('toastText').textContent = text;
+  t.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(function(){ t.classList.remove('show'); }, 4000);
+}
+
+function getLevel(p){
+  for (var i = 0; i < LEVELS.length; i++) if (p <= LEVELS[i].max) return LEVELS[i];
+  return LEVELS[LEVELS.length - 1];
+}
+
+// ============ БАЛЛЫ ============
+function addPoints(amount, reason, detail){
+  state.points += amount;
+  state.totalPoints += amount;
+  if (state.points < 0) state.points = 0;
+  if (state.totalPoints < 0) state.totalPoints = 0;
+  state.pointsLog.unshift({
+    id: Date.now() + Math.random(),
+    delta: amount,
+    reason: reason || 'manual',
+    detail: detail || '',
+    actor: currentActor(),
+    timestamp: Date.now()
+  });
+  if (state.pointsLog.length > 300) state.pointsLog = state.pointsLog.slice(0, 300);
+  saveState();
+}
+
+// ============ АКТИВНОСТЬ ============
+function logActivity(action, detail){
+  state.activityLog.unshift({
+    id: Date.now() + Math.random(),
+    actor: currentActor(),
+    action: action,
+    detail: detail || '',
+    timestamp: Date.now()
+  });
+  if (state.activityLog.length > 500) state.activityLog = state.activityLog.slice(0, 500);
+  saveState();
+}
+
+// ============ ЗАДАЧИ ============
+function getTasksForCategory(cat){
+  var base = DEFAULT_TASKS[cat] || [];
+  var added = state.userAdded[cat] || [];
+  var removed = state.userRemoved[cat] || [];
+  return base.concat(added).filter(function(t){ return removed.indexOf(t) === -1; });
+}
+
+function getAvailableTasks(cat){
+  var all = getTasksForCategory(cat);
+  var now = Date.now();
+  return all.filter(function(t){
+    var q = state.quarantine[t];
+    if (!q) return true;
+    return (now - q.doneAt) / (1000 * 60 * 60 * 24) > 14;
+  });
+}
+
+// ============ РАСПИСАНИЕ ============
+function generateMonthSchedule(year, month){
+  var key = 'sch_' + year + '_' + month;
+  var saved = localStorage.getItem(key);
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e){}
+  }
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var schedule = {};
+  for (var d = 1; d <= daysInMonth; d++){
+    var idx = (d - 1) % 7;
+    if (idx === 0 || idx === 1) schedule[d] = 'emotional';
+    else if (idx === 2 || idx === 3) schedule[d] = 'physical';
+    else schedule[d] = 'free';
+  }
+  if (daysInMonth >= 15) schedule[15] = 'bigDate';
+  if (daysInMonth >= 28) schedule[28] = 'lightDate';
+  try { localStorage.setItem(key, JSON.stringify(schedule)); } catch(e){}
+  return schedule;
+}
+
+function getDayType(year, month, day){
+  var key = year + '-' + month + '-' + day;
+  if (state.completedDays[key] && state.completedDays[key].length > 0){
+    return state.completedDays[key][0].type;
+  }
+  if (state.forcedDayTypes[key]) return state.forcedDayTypes[key];
+  if (state.plannedDays[key]) return state.plannedDays[key].type;
+  var sch = generateMonthSchedule(year, month);
+  return sch[day] || 'free';
+}
+
+// ============ КАЛЕНДАРЬ ============
+function renderCalendar(){
+  var year = state.currentDate.getFullYear();
+  var month = state.currentDate.getMonth();
+  $('monthName').textContent = monthNames[month];
+  $('monthYear').textContent = year;
+
+  var firstDay = new Date(year, month, 1);
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var startDay = firstDay.getDay() - 1;
+  if (startDay === -1) startDay = 6;
+  var lastDow = new Date(year, month, daysInMonth).getDay();
+  var trailing = lastDow === 0 ? 0 : 7 - lastDow;
+
+  var cal = $('calendar');
+  cal.innerHTML = '';
+
+  for (var i = 0; i < startDay; i++){
+    var e = document.createElement('div');
+    e.className = 'calendar-day empty';
+    cal.appendChild(e);
+  }
+
+  var today = new Date();
+
+  for (var d = 1; d <= daysInMonth; d++){
+    var el = document.createElement('div');
+    el.className = 'calendar-day';
+
+    var key = year + '-' + month + '-' + d;
+    var events = state.completedDays[key] || [];
+    var isDone = events.length > 0;
+    var type = getDayType(year, month, d);
+
+    if (isDone) el.classList.add('done-' + events[0].type);
+    else el.classList.add(type);
+
+    el.dataset.day = d;
+
+    var num = document.createElement('span');
+    num.className = 'day-number';
+    num.textContent = d;
+    el.appendChild(num);
+
+    if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
+      el.classList.add('today');
+    }
+
+    el.onclick = (function(day){ return function(){ onDayClick(day); }; })(d);
+    cal.appendChild(el);
+  }
+
+  for (var j = 1; j <= trailing; j++){
+    var e2 = document.createElement('div');
+    e2.className = 'calendar-day next-month';
+    var n2 = document.createElement('span');
+    n2.className = 'day-number';
+    n2.textContent = j;
+    e2.appendChild(n2);
+    cal.appendChild(e2);
+  }
+}
+
+function onDayClick(day){
+  var year = state.currentDate.getFullYear();
+  var month = state.currentDate.getMonth();
+  var type = getDayType(year, month, day);
+  state.editingDay = { year: year, month: month, day: day, type: type };
+  state.currentDay = day;
+  state.currentType = type;
+
+  $('editDayTitle').textContent = day + ' ' + monthNames[month];
+  $('editDaySubtitle').textContent = 'Что тут?';
+  var info = TYPE_INFO[type] || TYPE_INFO.free;
+  $('typeNameDisplay').textContent = info.name;
+
+  var list = $('eventListCompact');
+  list.innerHTML = '';
+  var key = year + '-' + month + '-' + day;
+  var events = state.completedDays[key] || [];
+  var planned = state.plannedDays[key];
+
+  if (events.length){
+    events.forEach(function(ev){
+      var li = document.createElement('li');
+      var ico = TYPE_INFO[ev.type] ? TYPE_INFO[ev.type].emoji : '';
+      li.innerHTML = '<span>' + ico + ' ' + ev.text + '</span><span>+' + ev.points + '</span>';
+      list.appendChild(li);
+    });
+  }
+  if (planned){
+    var li2 = document.createElement('li');
+    li2.innerHTML = '<span>⏳ ' + planned.text + ' (план)</span><span>' + planned.points + '</span>';
+    list.appendChild(li2);
+  }
+  if (!events.length && !planned){
+    var li3 = document.createElement('li');
+    li3.innerHTML = '<span style="color:#8A7A66">Пока ничего</span>';
+    list.appendChild(li3);
+  }
+
+  $('typeClearBtn').style.display = (events.length || planned) ? 'block' : 'none';
+  $('editDayOverlay').classList.add('active');
+
+  logActivity('day_open', '📅 Открыл день ' + day + ' ' + monthNames[month]);
+}
+
+// ============ РОЛЬ ============
+function applyRoleView(){
+  var isVanya = state.viewingAs === 'vanya';
+  document.querySelectorAll('[data-page="wishes"]').forEach(function(el){
+    el.style.display = isVanya ? '' : 'none';
+  });
+
+  var hotzone = $('settingsHotzone');
+  var btn = $('settingsToggle');
+  var sm = $('settingsMenu');
+  if (isVanya){
+    if (hotzone) hotzone.style.display = 'none';
+    if (btn){ btn.classList.remove('visible'); btn.style.display = 'none'; }
+    if (sm) sm.classList.remove('open');
+  } else {
+    if (hotzone) hotzone.style.display = 'block';
+    if (btn) btn.style.display = '';
+  }
+
+  if (typeof renderSettingsMenu === 'function') renderSettingsMenu();
+
+  var badge = $('roleBadge');
+  if (badge){
+    if (state.role === 'nastya' && state.viewingAs === 'vanya'){
+      badge.textContent = '👁 Режим Вани';
+      badge.classList.add('show');
+    } else if (state.role === 'vanya' && state.viewingAs === 'nastya'){
+      badge.textContent = '👁 Режим Насти';
+      badge.classList.add('show');
+    } else {
+      badge.classList.remove('show');
+    }
+  }
+  renderCalendar();
+}
+
+function setRole(role){
+  state.role = role;
+  state.viewingAs = role;
+  try { localStorage.setItem('userRole', role); } catch(e){}
+  $('roleOverlay').classList.remove('active');
+  applyRoleView();
+
+  if (role === 'vanya'){
+    startVanyaSession();
+    if (typeof showDailyMessage === 'function') setTimeout(showDailyMessage, 800);
+  }
+}
+
+function startVanyaSession(){
+  state.vanyaSession.loginAt = Date.now();
+  state.vanyaSession.lastActiveAt = Date.now();
+  state.vanyaSession.online = true;
+  logActivity('login', 'Открыл приложение');
+}
+
+// ============ ИНИЦИАЛИЗАЦИЯ ============
+function initApp(){
+  loadState();
+
+  $('roleNastya').onclick = function(){ setRole('nastya'); };
+  $('roleVanya').onclick = function(){ setRole('vanya'); };
+
+  var savedRole = null;
+  try { savedRole = localStorage.getItem('userRole'); } catch(e){}
+  if (savedRole === 'nastya' || savedRole === 'vanya') setRole(savedRole);
+
+  document.querySelectorAll('.nav-item').forEach(function(btn){
+    btn.onclick = function(){
+      document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      var page = $('page-' + btn.dataset.page);
+      if (page) page.classList.add('active');
+      if (btn.dataset.page === 'history' && typeof renderHistory === 'function') renderHistory();
+      if (btn.dataset.page === 'stats' && typeof updateStats === 'function'){ updateStats(); if (typeof renderPointsLog === 'function') renderPointsLog(); if (typeof renderAchievements === 'function') renderAchievements(); if (typeof renderLoveTree === 'function') renderLoveTree(); }
+      if (btn.dataset.page === 'wishes' && typeof renderWishes === 'function') renderWishes();
+    };
+  });
+
+  $('prevMonth').onclick = function(){
+    state.currentDate.setMonth(state.currentDate.getMonth() - 1);
+    renderCalendar();
+  };
+  $('nextMonth').onclick = function(){
+    state.currentDate.setMonth(state.currentDate.getMonth() + 1);
+    renderCalendar();
+  };
+
+  $('openRandomBtn').onclick = function(){
+    var t = new Date();
+    onDayClick(t.getDate());
+  };
+
+  document.querySelectorAll('[data-close]').forEach(function(b){
+    b.onclick = function(){ $(b.dataset.close).classList.remove('active'); };
+  });
+  document.querySelectorAll('.overlay').forEach(function(ov){
+    ov.onclick = function(e){
+      if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active');
+    };
+  });
+
+  setTimeout(function(){ $('splashScreen').classList.add('hidden'); }, 1200);
+
+  renderCalendar();
+  if (typeof updateStats === 'function') updateStats();
+  if (typeof renderHistory === 'function') renderHistory();
+  if (typeof renderPointsLog === 'function') renderPointsLog();
+  if (typeof renderWishes === 'function') renderWishes();
+  if (typeof renderAchievements === 'function') renderAchievements();
+  if (typeof renderLoveTree === 'function') renderLoveTree();
+
+  console.log('App init OK. Баллы:', state.points, 'История:', state.history.length);
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initApp);
+else initApp();
+
+// Экспортируем для следующих частей
+window._lt = {
+  state: state,
+  saveState: saveState,
+  loadState: loadState,
+  addPoints: addPoints,
+  logActivity: logActivity,
+  getTasksForCategory: getTasksForCategory,
+  getAvailableTasks: getAvailableTasks,
+  getDayType: getDayType,
+  renderCalendar: renderCalendar,
+  onDayClick: onDayClick,
+  applyRoleView: applyRoleView,
+  setRole: setRole,
+  startVanyaSession: startVanyaSession,
+  showToast: showToast,
+  getLevel: getLevel,
+  currentActor: currentActor,
+  TYPE_INFO: TYPE_INFO,
+  LEVELS: LEVELS,
+  ACHIEVEMENTS_DEF: ACHIEVEMENTS_DEF,
+  DEFAULT_TASKS: DEFAULT_TASKS,
+  DAILY_MESSAGES: DAILY_MESSAGES,
+  monthNames: monthNames
+};
+
+})();
+</script>
+<script>
+(function(){
+'use strict';
+
+var lt = window._lt;
+if (!lt) { console.error('Часть 3 не загружена'); return; }
+var state = lt.state;
+var saveState = lt.saveState;
+var addPoints = lt.addPoints;
+var logActivity = lt.logActivity;
+var showToast = lt.showToast;
+var TYPE_INFO = lt.TYPE_INFO;
+var getAvailableTasks = lt.getAvailableTasks;
+var getTasksForCategory = lt.getTasksForCategory;
+var renderCalendar = lt.renderCalendar;
+var monthNames = lt.monthNames;
+var currentActor = lt.currentActor;
+var getLevel = lt.getLevel;
+
+var DEFAULT_TASKS = lt.DEFAULT_TASKS;
+
+// ============ ВЫБОР КАТЕГОРИИ ============
+function bindChoiceModal(){
+  var btns = document.querySelectorAll('[data-choice]');
+  btns.forEach(function(b){
+    b.onclick = function(){
+      var c = b.dataset.choice;
+      document.getElementById('choiceOverlay').classList.remove('active');
+      if (c === 'random'){
+        // Случайная категория
+        var arr = ['emotional','physical','lightDate','bigDate'];
+        var pick = arr[Math.floor(Math.random() * arr.length)];
+        openWheel(pick);
+      } else {
+        openWheel(c);
+      }
+    };
+  });
+}
+
+// ============ МОДАЛКА ДНЯ ============
+function bindEditDayModal(){
+  var wheelBtn = document.getElementById('typeWheelBtn');
+  if (wheelBtn) wheelBtn.onclick = function(){
+    document.getElementById('editDayOverlay').classList.remove('active');
+    document.getElementById('choiceOverlay').classList.add('active');
+  };
+
+  var initBtn = document.getElementById('typeInitiativeBtn');
+  if (initBtn) initBtn.onclick = function(){
+    var f = document.getElementById('typeInitiativeFields');
+    var isOpen = f.style.display === 'block';
+    f.style.display = isOpen ? 'none' : 'block';
+    var btn = document.getElementById('typeInitiativeDone');
+    var ed = state.editingDay;
+    var today = new Date(); today.setHours(0,0,0,0);
+    var thisDate = new Date(ed.year, ed.month, ed.day); thisDate.setHours(0,0,0,0);
+    var isPast = thisDate <= today;
+    btn.textContent = isPast ? '✓ Отметить выполненным' : '📅 Запланировать';
+  };
+
+  var doneBtn = document.getElementById('typeInitiativeDone');
+  if (doneBtn) doneBtn.onclick = function(){
+    var t = document.getElementById('typeInitiativeTitle').value.trim();
+    var c = document.getElementById('typeInitiativeCategory').value;
+    if (!t){ alert('Введите название'); return; }
+    var points = TYPE_INFO[c].points + 30;
+    var ed = state.editingDay;
+    var today = new Date(); today.setHours(0,0,0,0);
+    var thisDate = new Date(ed.year, ed.month, ed.day); thisDate.setHours(0,0,0,0);
+    var isPast = thisDate <= today;
+
+    openPhotoAttach(function(){
+      if (isPast){
+        addEventToDay(ed.year, ed.month, ed.day, c, t, points, true);
+      } else {
+        planEvent(ed.year, ed.month, ed.day, c, t, points, true);
+      }
+      document.getElementById('editDayOverlay').classList.remove('active');
+    });
+  };
+
+  var clearBtn = document.getElementById('typeClearBtn');
+  if (clearBtn) clearBtn.onclick = function(){
+    var ed = state.editingDay;
+    var key = ed.year + '-' + ed.month + '-' + ed.day;
+    var events = state.completedDays[key] || [];
+    var refund = 0;
+    events.forEach(function(e){ refund += (e.points || 0); });
+
+    var msg = 'Очистить ' + ed.day + ' ' + monthNames[ed.month] + '?';
+    if (refund > 0) msg += '\n\nВернётся: −' + refund;
+    if (!confirm(msg)) return;
+
+    if (refund > 0) addPoints(-refund, 'clearDay', 'Очистка дня');
+
+    var dayStart = new Date(ed.year, ed.month, ed.day).getTime();
+    var dayEnd = dayStart + 86400000;
+    state.history = state.history.filter(function(h){
+      return !(h.eventDate >= dayStart && h.eventDate < dayEnd);
+    });
+
+    delete state.completedDays[key];
+    delete state.plannedDays[key];
+    state.forcedDayTypes[key] = 'free';
+    saveState();
+
+    document.getElementById('editDayOverlay').classList.remove('active');
+    renderCalendar();
+    renderAll();
+    showToast('🗑', 'День очищен' + (refund > 0 ? ' (−' + refund + ')' : ''));
+  };
+}
+
+// ============ ДОБАВЛЕНИЕ / ПЛАНИРОВАНИЕ ============
+function planEvent(year, month, day, type, text, points, isInitiative){
+  var key = year + '-' + month + '-' + day;
+  var event = {
+    type: type,
+    text: text,
+    points: points,
+    isInitiative: isInitiative,
+    timestamp: Date.now()
+  };
+  if (state.pendingPhoto) event.photo = state.pendingPhoto;
+  state.pendingPhoto = null;
+  state.plannedDays[key] = event;
+  logActivity('planned', '🗓 Запланировано: ' + text);
+  saveState();
+  renderCalendar();
+  renderAll();
+  showToast('🗓', 'Запланировано: ' + text);
+}
+
+function addEventToDay(year, month, day, type, text, points, isInitiative){
+  var key = year + '-' + month + '-' + day;
+  if (!state.completedDays[key]) state.completedDays[key] = [];
+  var event = {
+    type: type,
+    text: text,
+    points: points,
+    isInitiative: isInitiative,
+    timestamp: Date.now()
+  };
+  if (state.pendingPhoto) event.photo = state.pendingPhoto;
+  state.pendingPhoto = null;
+  state.completedDays[key].push(event);
+
+  addPoints(points, 'addEvent', text + ' (' + day + '.' + (month + 1) + ')');
+  state.quarantine[text] = { type: type, doneAt: Date.now() };
+
+  var dateStr = String(day).padStart(2,'0') + '.' + String(month + 1).padStart(2,'0') + '.' + year;
+  state.history.unshift({
+    date: dateStr,
+    eventDate: new Date(year, month, day).getTime(),
+    title: text,
+    category: isInitiative ? TYPE_INFO[type].name + ' (инициатива)' : TYPE_INFO[type].name,
+    emoji: isInitiative ? '⭐' : TYPE_INFO[type].emoji,
+    points: points,
+    photo: event.photo || null
+  });
+
+  logActivity('task_done', '✅ ' + text + ' (+' + points + ')');
+  saveState();
+  renderCalendar();
+  renderAll();
+  showToast(TYPE_INFO[type].emoji, '+' + points + ' баллов! ' + text);
+}
+
+// ============ ФОТО ============
+function openPhotoAttach(onSave){
+  state.pendingPhoto = null;
+  var overlay = document.getElementById('photoAttachOverlay');
+  var input = document.getElementById('photoInput');
+  var preview = document.getElementById('photoPreview');
+  var previewImg = document.getElementById('photoPreviewImg');
+  var saveBtn = document.getElementById('photoSaveBtn');
+  var skipBtn = document.getElementById('photoSkipBtn');
+
+  preview.classList.remove('show');
+  saveBtn.disabled = true;
+  input.value = '';
+
+  input.onchange = function(e){
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      var img = new Image();
+      img.onload = function(){
+        var w = img.width, h = img.height;
+        var max = 400;
+        if (w > h){ if (w > max){ h = Math.round(h * max / w); w = max; } }
+        else { if (h > max){ w = Math.round(w * max / h); h = max; } }
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        var url = c.toDataURL('image/jpeg', 0.6);
+        state.pendingPhoto = url;
+        previewImg.src = url;
+        preview.classList.add('show');
+        saveBtn.disabled = false;
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  document.getElementById('removePhotoBtn').onclick = function(){
+    state.pendingPhoto = null;
+    preview.classList.remove('show');
+    input.value = '';
+    saveBtn.disabled = true;
+  };
+
+  saveBtn.onclick = function(){
+    overlay.classList.remove('active');
+    onSave();
+  };
+  skipBtn.onclick = function(){
+    state.pendingPhoto = null;
+    overlay.classList.remove('active');
+    onSave();
+  };
+
+  overlay.classList.add('active');
+}
+
+// ============ КОЛЕСО ============
+var canvas, ctx;
+var _wheelItems = [];
+var _angle = 0;
+var _vel = 0;
+var _spinning = false;
+var _mode = 'task';
+
+function openWheel(type){
+  state.currentType = type;
+  var info = TYPE_INFO[type];
+  var available = getAvailableTasks(type);
+  if (!available.length) available = ['Обними её'];
+
+  _wheelItems = available;
+  _angle = 0;
+  _vel = 0;
+  _spinning = false;
+  _mode = 'task';
+
+  document.getElementById('wheelTitle').textContent = state.currentDay + ' ' + monthNames[state.currentDate.getMonth()];
+  document.getElementById('wheelCategory').textContent = info.emoji + ' ' + info.name;
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('wheelOverlay').classList.add('active');
+
+  setTimeout(function(){
+    resizeWheel();
+    drawWheel();
+    updateSpinUI();
+  }, 100);
+}
+
+function resizeWheel(){
+  canvas = document.getElementById('wheel');
+  if (!canvas) return;
+  ctx = canvas.getContext('2d');
+  var size = Math.min(window.innerWidth * 0.78, 340);
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+}
+
+function drawWheel(){
+  if (!canvas || !ctx) return;
+  if (!_wheelItems.length) return;
+  var size = parseInt(canvas.style.width);
+  var cx = size / 2, cy = size / 2, r = cx - 24;
+  var step = (Math.PI * 2) / _wheelItems.length;
+  var colors = ['#B8D0DC','#D5C4DB','#E8C4CB','#F2E8D5','#B5C4A8','#C97A7A','#E0A0A8','#9FBCC9'];
+  ctx.clearRect(0, 0, size, size);
+  for (var i = 0; i < _wheelItems.length; i++){
+    var start = _angle + i * step;
+    var end = start + step;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    ctx.fillStyle = colors[i % colors.length];
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(201,169,97,0.75)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
+}
+
+function updateSpinUI(){
+  var used = state.spinsUsed[state.currentDay] || 0;
+  var prices = [0, 50, 150, 250];
+  var price = prices[Math.min(used, prices.length - 1)];
+  var btn = document.getElementById('spinBtn');
+  var info = document.getElementById('spinsLeft');
+  if (used === 0){
+    btn.textContent = 'Крутить колесо';
+    btn.disabled = false;
+    info.textContent = 'Первое — бесплатно ✨';
+  } else if (state.points >= price){
+    btn.textContent = 'Крутить ещё (−' + price + ')';
+    btn.disabled = false;
+    info.textContent = 'Перекрут: −' + price;
+  } else {
+    btn.textContent = 'Не хватает ' + price + ' б.';
+    btn.disabled = true;
+    info.textContent = 'Нужно ' + price + ' баллов';
+  }
+}
+
+function spinWheel(){
+  if (_spinning) return;
+  var used = state.spinsUsed[state.currentDay] || 0;
+  var prices = [0, 50, 150, 250];
+  var price = prices[Math.min(used, prices.length - 1)];
+  if (price > 0){
+    if (state.points < price){ showToast('💔', 'Мало баллов'); return; }
+    addPoints(-price, 'respin', 'Перекрут колеса');
+    showToast('🔄', '−' + price + ' баллов');
+  }
+  state.spinsUsed[state.currentDay] = used + 1;
+  saveState();
+  _spinning = true;
+  _vel = 0.28 + Math.random() * 0.15;
+  document.getElementById('resultBox').style.display = 'none';
+  animateSpin();
+  updateSpinUI();
+  logActivity('spin', '🎡 Крутил колесо');
+}
+
+function animateSpin(){
+  if (_vel > 0.0015){
+    _angle += _vel;
+    _vel *= 0.991;
+    drawWheel();
+    requestAnimationFrame(animateSpin);
+  } else {
+    _spinning = false;
+    _vel = 0;
+    var n = _wheelItems.length;
+    if (!n) return;
+    var step = (Math.PI * 2) / n;
+    var norm = ((Math.PI * 2) - (_angle % (Math.PI * 2))) % (Math.PI * 2);
+    var pa = (norm + Math.PI * 1.5) % (Math.PI * 2);
+    var idx = Math.floor(pa / step) % n;
+    if (idx < 0) idx = 0;
+    var item = _wheelItems[idx];
+    document.getElementById('resultText').textContent = item;
+    document.getElementById('resultBox').style.display = 'block';
+    window._currentItem = item;
+    updateSpinUI();
+  }
+}
+
+function bindWheel(){
+  var spinBtn = document.getElementById('spinBtn');
+  var respinBtn = document.getElementById('respinBtn');
+  if (spinBtn) spinBtn.onclick = spinWheel;
+  if (respinBtn) respinBtn.onclick = spinWheel;
+
+  var doneBtn = document.getElementById('doneBtn');
+  if (doneBtn) doneBtn.onclick = function(){
+    var item = window._currentItem;
+    if (!item) return;
+    var ed = state.editingDay || { year: state.currentDate.getFullYear(), month: state.currentDate.getMonth(), day: state.currentDay };
+    var today = new Date(); today.setHours(0,0,0,0);
+    var thisDate = new Date(ed.year, ed.month, ed.day); thisDate.setHours(0,0,0,0);
+    var isPast = thisDate <= today;
+    var type = state.currentType;
+    var points = TYPE_INFO[type].points;
+    var events = state.completedDays[ed.year + '-' + ed.month + '-' + ed.day] || [];
+    var isInit = false;
+    events.forEach(function(e){ if (e.type === type) isInit = true; });
+    if (isInit) points += 30;
+
+    document.getElementById('wheelOverlay').classList.remove('active');
+    openPhotoAttach(function(){
+      if (isPast) addEventToDay(ed.year, ed.month, ed.day, type, item, points, isInit);
+      else planEvent(ed.year, ed.month, ed.day, type, item, points, isInit);
+    });
+  };
+}
+
+// ============ ОТРИСОВКА ============
+function renderAll(){
+  if (typeof renderHistory === 'function') renderHistory();
+  if (typeof updateStats === 'function') updateStats();
+  if (typeof renderPointsLog === 'function') renderPointsLog();
+  if (typeof renderWishes === 'function') renderWishes();
+  if (typeof renderAchievements === 'function') renderAchievements();
+  if (typeof renderLoveTree === 'function') renderLoveTree();
+}
+
+// ============ СТАТИСТИКА ============
+function updateStats(){
+  var pn = document.getElementById('pointsNumber');
+  var tp = document.getElementById('totalPointsDisplay');
+  if (pn) pn.textContent = state.points;
+  if (tp) tp.textContent = state.totalPoints;
+  var pct = Math.min(100, (state.points / 1000) * 100);
+  var pb = document.getElementById('progressBar');
+  if (pb) pb.style.width = pct + '%';
+  var lvl = getLevel(state.points);
+  var le = document.getElementById('levelEmoji');
+  var ln = document.getElementById('levelName');
+  if (le) le.textContent = lvl.emoji;
+  if (ln) ln.textContent = lvl.name;
+  var tg = document.getElementById('pointsToGo');
+  if (tg){
+    var left = 1000 - state.points;
+    tg.textContent = left <= 0 ? '✦ Цель 1000 достигнута!' : 'До цели 1000: ' + left;
+  }
+}
+
+// ============ ЖУРНАЛ ============
+var REASON_LABELS = {
+  retro: '📝 Задним числом',
+  addEvent: '✅ Задание',
+  clearDay: '🗑 Очистка',
+  manual: '💌 Подарок',
+  respin: '🎡 Перекрут',
+  wishAdd: '✿ Хотелка',
+  wishActivate: '💎 Желание',
+  daily: '📅 Вход',
+  monthBonus: '🎉 Бонус'
+};
+
+function renderPointsLog(){
+  var list = document.getElementById('pointsLogList');
+  if (!list) return;
+  if (!state.pointsLog.length){
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:#8A7A66;font-size:12px">Пока пусто</div>';
+    return;
+  }
+  var html = '';
+  state.pointsLog.forEach(function(l){
+    var sign = l.delta >= 0 ? '+' : '';
+    var color = l.delta >= 0 ? '#7A8E6E' : '#C97A7A';
+    var label = REASON_LABELS[l.reason] || l.reason;
+    var actorIcon = l.actor === 'vanya' ? '🍞' : '❤️';
+    var d = new Date(l.timestamp);
+    var ds = String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth() + 1).padStart(2,'0') + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    html += '<li style="display:flex;gap:10px;padding:10px 12px;background:rgba(255,255,255,.5);border-radius:12px;margin-bottom:6px;border:1px solid rgba(201,169,97,.25)">';
+    html += '<div style="flex:1"><div style="font-size:12px;font-weight:600">' + actorIcon + ' ' + label + '</div>';
+    if (l.detail) html += '<div style="font-size:11px;color:#5A4A3A;margin-top:3px">' + l.detail + '</div>';
+    html += '<div style="font-size:9px;color:#8A7A66;margin-top:3px">' + ds + '</div></div>';
+    html += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:700;color:' + color + '">' + sign + l.delta + '</div></li>';
+  });
+  list.innerHTML = html;
+}
+
+// ============ ИСТОРИЯ ============
+function renderHistory(){
+  var list = document.getElementById('timelineList');
+  if (!list) return;
+  if (!state.history.length){
+    list.innerHTML = '<div class="empty-state">Пока пусто.<br>Нажми на день в календаре ❤️</div>';
+    return;
+  }
+  var html = '';
+  state.history.forEach(function(h){
+    var photoBlock = h.photo ? '<div style="margin-top:6px"><img src="' + h.photo + '" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px"></div>' : '';
+    html += '<div style="padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);display:flex;gap:14px">';
+    html += '<div style="width:44px;height:44px;border-radius:50%;background:#FAF6EC;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + (h.emoji || '❤️') + '</div>';
+    html += '<div style="flex:1;min-width:0"><div style="font-family:\'Caveat\',cursive;font-size:15px;color:#6b5a4e">' + h.date + '</div>';
+    html += '<div style="font-size:9px;color:#8A7A66;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px">' + (h.category || '') + '</div>';
+    html += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:17px;font-weight:700;color:#2E2419;margin-top:4px">' + h.title + '</div>';
+    html += photoBlock + '</div>';
+    html += '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:700;color:#A8842E;white-space:nowrap">+' + h.points + '</div></div>';
+  });
+  list.innerHTML = html;
+}
+
+// ============ ХОТЕЛКИ ============
+function renderWishes(){
+  var garden = document.getElementById('wishGarden');
+  if (!garden) return;
+  if (!state.wishes.length){
+    garden.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Пока пусто.<br>Запиши первое желание ☝</div>';
+    return;
+  }
+  var html = '';
+  state.wishes.forEach(function(w, i){
+    var canActivate = state.totalPoints >= 1000 && state.points >= w.cost && !w.activated;
+    var cls = w.activated ? 'done' : (canActivate ? 'ready' : '');
+    var label = w.activated ? '✓ Исполнено' : 'Активировать';
+    var disabled = w.activated ? 'disabled' : '';
+    html += '<div class="garden-flower ' + cls + '">';
+    html += '<span class="flower-emoji">' + (w.activated ? '🌸' : '🌼') + '</span>';
+    html += '<div class="flower-title">' + w.title + '</div>';
+    html += '<div class="flower-meta">' + w.tier + ' · ' + w.cost + ' б.</div>';
+    html += '<button class="flower-btn ' + (canActivate ? 'ready' : '') + '" data-idx="' + i + '" ' + disabled + ' type="button">' + label + '</button>';
+    html += '</div>';
+  });
+  garden.innerHTML = html;
+
+  garden.querySelectorAll('.flower-btn').forEach(function(b){
+    b.onclick = function(){
+      var i = parseInt(b.dataset.idx);
+      var w = state.wishes[i];
+      if (!w || w.activated) return;
+      if (state.totalPoints < 1000){ showToast('🔒', 'Нужно 1000 баллов всего'); return; }
+      if (state.points < w.cost){ showToast('💔', 'Мало баллов'); return; }
+      if (!confirm('Активировать «' + w.title + '»?\nСпишется ' + w.cost + ' баллов.')) return;
+      addPoints(-w.cost, 'wishActivate', w.title);
+      state.wishes[i].activated = true;
+      saveState();
+      renderWishes();
+      renderPointsLog();
+      updateStats();
+      showToast('💎', 'Желание активировано!');
+    };
+  });
+}
+
+// ============ ВСЁ ============
+function bindWishTier(){
+  document.querySelectorAll('.wish-tier button').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.wish-tier button').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      state.currentWishTier = b.dataset.tier;
+    };
+  });
+}
+
+function bindWishAdd(){
+  var btn = document.getElementById('wishAddBtn');
+  if (!btn) return;
+  btn.onclick = function(){
+    var v = document.getElementById('wishInput').value.trim();
+    if (!v) return;
+    var tiers = { small: 50, medium: 150, big: 500 };
+    state.wishes.push({
+      title: v,
+      tier: state.currentWishTier,
+      cost: tiers[state.currentWishTier],
+      createdAt: Date.now(),
+      activated: false
+    });
+    document.getElementById('wishInput').value = '';
+    addPoints(15, 'wishAdd', v);
+    saveState();
+    renderWishes();
+    renderPointsLog();
+    updateStats();
+    showToast('✿', '+15 баллов');
+  };
+}
+
+function bindRetro(){
+  var saveBtn = document.getElementById('retroSaveBtn');
+  if (saveBtn) saveBtn.onclick = function(){
+    var ds = document.getElementById('retroDate').value;
+    if (!ds){ alert('Выбери дату'); return; }
+    var p = ds.split('-').map(function(n){ return parseInt(n); });
+    var cat = document.getElementById('retroCategory').value;
+    var enc = document.getElementById('retroTask').value;
+    var custom = document.getElementById('retroCustomText').value.trim();
+    var text = enc ? decodeURIComponent(enc) : custom;
+    if (!text){ alert('Выбери или введи текст'); return; }
+    var key = p[0] + '-' + (p[1] - 1) + '-' + p[2];
+    if (!state.completedDays[key]) state.completedDays[key] = [];
+    var points = TYPE_INFO[cat].points;
+    state.completedDays[key].push({ type: cat, text: text, points: points, timestamp: Date.now() });
+    addPoints(points, 'retro', text);
+    var d = String(p[2]).padStart(2,'0') + '.' + String(p[1]).padStart(2,'0') + '.' + p[0];
+    state.history.unshift({
+      date: d,
+      eventDate: new Date(p[0], p[1] - 1, p[2]).getTime(),
+      title: text,
+      category: TYPE_INFO[cat].name,
+      emoji: TYPE_INFO[cat].emoji,
+      points: points
+    });
+    saveState();
+    document.getElementById('retroOverlay').classList.remove('active');
+    renderCalendar();
+    renderAll();
+    showToast('📝', '+' + points + ' баллов');
+  };
+
+  var catSel = document.getElementById('retroCategory');
+  if (catSel) catSel.onchange = function(){
+    var cat = catSel.value;
+    var tasks = getTasksForCategory(cat);
+    var sel = document.getElementById('retroTask');
+    sel.innerHTML = '<option value="">— не выбирать —</option>' + tasks.map(function(t){
+      return '<option value="' + encodeURIComponent(t) + '">' + t + '</option>';
+    }).join('');
+  };
+}
+
+// ============ КНОПКА СБРОСА ФОТО ============
+document.addEventListener('click', function(e){
+  var modal = document.getElementById('photoViewModal');
+  if (modal && e.target === modal) modal.classList.remove('active');
+});
+
+// ============ ИНИЦИАЛИЗАЦИЯ ============
+function initPart4(){
+  bindChoiceModal();
+  bindEditDayModal();
+  bindWheel();
+  bindWishTier();
+  bindWishAdd();
+  bindRetro();
+  window.addEventListener('resize', function(){
+    if (document.getElementById('wheelOverlay').classList.contains('active')){
+      resizeWheel();
+      drawWheel();
+    }
+  });
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPart4);
+else initPart4();
+
+// Экспорт для части 5
+window._lt.renderAll = renderAll;
+window._lt.updateStats = updateStats;
+window._lt.renderPointsLog = renderPointsLog;
+window._lt.renderHistory = renderHistory;
+window._lt.renderWishes = renderWishes;
+window._lt.addEventToDay = addEventToDay;
+window._lt.planEvent = planEvent;
+window._lt.openWheel = openWheel;
+window._lt.openPhotoAttach = openPhotoAttach;
+
+console.log('Часть 4 загружена');
+
+})();
+</script>  
+<script>
+(function(){
+'use strict';
+
+var lt = window._lt;
+if (!lt) { console.error('Часть 3 не загружена'); return; }
+var state = lt.state;
+var saveState = lt.saveState;
+var showToast = lt.showToast;
+var logActivity = lt.logActivity;
+var TYPE_INFO = lt.TYPE_INFO;
+var ACHIEVEMENTS_DEF = lt.ACHIEVEMENTS_DEF;
+var DAILY_MESSAGES = lt.DAILY_MESSAGES;
+var renderCalendar = lt.renderCalendar;
+var monthNames = lt.monthNames;
+var currentActor = lt.currentActor;
+
+// ============ ДОСТИЖЕНИЯ ============
+function getAchievementStats(){
+  var emotionalDone = 0, physicalDone = 0, bigDateDone = 0, dateDone = 0, initiativeDone = 0, totalDone = 0;
+  for (var k in state.completedDays){
+    if (!state.completedDays.hasOwnProperty(k)) continue;
+    state.completedDays[k].forEach(function(e){
+      totalDone++;
+      if (e.type === 'emotional') emotionalDone++;
+      if (e.type === 'physical') physicalDone++;
+      if (e.type === 'bigDate') bigDateDone++;
+      if (e.type === 'lightDate' || e.type === 'bigDate') dateDone++;
+      if (e.isInitiative) initiativeDone++;
+    });
+  }
+  return {
+    totalDone: totalDone,
+    emotionalDone: emotionalDone,
+    physicalDone: physicalDone,
+    bigDateDone: bigDateDone,
+    dateDone: dateDone,
+    initiativeDone: initiativeDone,
+    wishesCount: state.wishes.length,
+    wishesActivated: state.wishes.filter(function(w){ return w.activated; }).length,
+    totalPoints: state.totalPoints
+  };
+}
+
+function checkAchievements(){
+  var s = getAchievementStats();
+  var unlockedNow = [];
+  var ACH = {
+    first_step: s.totalDone >= 1,
+    caring: s.emotionalDone >= 10,
+    masseur: s.physicalDone >= 5,
+    romantic: s.dateDone >= 1,
+    dreamer: s.wishesCount >= 5,
+    wisher: s.wishesActivated >= 1,
+    happy_big: s.bigDateDone >= 1,
+    persistent: s.totalDone >= 20,
+    thinker: s.initiativeDone >= 5,
+    forever: s.totalPoints >= 1000
+  };
+  for (var k in ACH){
+    if (ACH[k] && state.achievements.indexOf(k) === -1){
+      state.achievements.push(k);
+      unlockedNow.push(k);
+    }
+  }
+  if (unlockedNow.length){
+    saveState();
+    renderAchievements();
+    unlockedNow.forEach(function(id, i){
+      var def = null;
+      for (var j = 0; j < ACHIEVEMENTS_DEF.length; j++){
+        if (ACHIEVEMENTS_DEF[j].id === id){ def = ACHIEVEMENTS_DEF[j]; break; }
+      }
+      if (def) setTimeout(function(){ showToast(def.emoji, 'Новое достижение: ' + def.name); }, i * 700);
+    });
+  }
+}
+
+function renderAchievements(){
+  var grid = document.getElementById('achievementsGrid');
+  if (!grid) return;
+  var html = '';
+  ACHIEVEMENTS_DEF.forEach(function(a){
+    var unlocked = state.achievements.indexOf(a.id) !== -1;
+    html += '<div class="achievement ' + (unlocked ? 'unlocked' : 'locked') + '">';
+    html += '<span class="ach-emoji">' + a.emoji + '</span>';
+    html += '<div class="ach-name">' + a.name + '</div>';
+    html += '<div class="ach-desc">' + a.desc + '</div>';
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+// ============ ДЕРЕВО ============
+var TREE_STAGES = [
+  { name: 'Семечко', min: 0, max: 4 },
+  { name: 'Росток', min: 5, max: 14 },
+  { name: 'Саженец', min: 15, max: 29 },
+  { name: 'Деревце', min: 30, max: 49 },
+  { name: 'Молодое дерево', min: 50, max: 79 },
+  { name: 'Цветущее', min: 80, max: 119 },
+  { name: 'Плодоносящее', min: 120, max: Infinity }
+];
+
+function buildTreeSvg(stage){
+  var W = 300, H = 260, cx = W / 2, groundY = H - 18;
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg">';
+  s += '<ellipse cx="' + cx + '" cy="' + (groundY + 4) + '" rx="120" ry="18" fill="rgba(181,196,168,0.45)"/>';
+  if (stage === 1){
+    s += '<ellipse cx="' + cx + '" cy="' + (groundY - 6) + '" rx="16" ry="10" fill="#6b4f3a"/>';
+  } else if (stage === 2){
+    s += '<path d="M ' + cx + ' ' + groundY + ' Q ' + (cx - 1) + ' ' + (groundY - 30) + ' ' + cx + ' ' + (groundY - 62) + '" stroke="#7a5436" stroke-width="4" fill="none"/>';
+    s += '<ellipse cx="' + (cx - 15) + '" cy="' + (groundY - 48) + '" rx="13" ry="7" fill="#8DBDAB"/>';
+    s += '<ellipse cx="' + (cx + 15) + '" cy="' + (groundY - 56) + '" rx="13" ry="7" fill="#8DBDAB"/>';
+  } else {
+    var trunkH = 40 + (stage - 2) * 22;
+    var trunkTop = groundY - trunkH;
+    var crownR = 22 + (stage - 2) * 10;
+    s += '<rect x="' + (cx - 5) + '" y="' + trunkTop + '" width="10" height="' + trunkH + '" fill="#7a5436"/>';
+    s += '<ellipse cx="' + cx + '" cy="' + (trunkTop - crownR * 0.3) + '" rx="' + (crownR * 1.2) + '" ry="' + (crownR) + '" fill="#8DBDAB"/>';
+    s += '<ellipse cx="' + (cx - crownR * 0.6) + '" cy="' + (trunkTop - crownR * 0.2) + '" rx="' + (crownR * 0.8) + '" ry="' + (crownR * 0.7) + '" fill="#9DBDAB"/>';
+    s += '<ellipse cx="' + (cx + crownR * 0.6) + '" cy="' + (trunkTop - crownR * 0.2) + '" rx="' + (crownR * 0.8) + '" ry="' + (crownR * 0.7) + '" fill="#9DBDAB"/>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function renderLoveTree(){
+  var wrap = document.getElementById('treeSvgWrap');
+  if (!wrap) return;
+  var count = state.history.length;
+  var stageIdx = 0;
+  for (var i = 0; i < TREE_STAGES.length; i++){
+    if (count >= TREE_STAGES[i].min && count <= TREE_STAGES[i].max){ stageIdx = i; break; }
+  }
+  var info = TREE_STAGES[stageIdx];
+  var next = TREE_STAGES[stageIdx + 1];
+  document.getElementById('treeStage').textContent = info.name;
+  wrap.innerHTML = buildTreeSvg(stageIdx + 1);
+  if (next){
+    var done = count - info.min;
+    var total = next.min - info.min;
+    var pct = Math.max(4, Math.min(100, (done / total) * 100));
+    var toNext = next.min - count;
+    var word = toNext === 1 ? 'задание' : (toNext >= 2 && toNext <= 4 ? 'задания' : 'заданий');
+    document.getElementById('treeProgressText').textContent = 'До стадии «' + next.name + '» — ' + toNext + ' ' + word;
+    document.getElementById('treeProgressFill').style.width = pct + '%';
+  } else {
+    document.getElementById('treeProgressText').textContent = '✨ Ваше дерево расцвело!';
+    document.getElementById('treeProgressFill').style.width = '100%';
+  }
+}
+
+// ============ АКТИВНОСТЬ ВАНИ ============
+function isVanyaOnline(){
+  if (!state.vanyaSession || !state.vanyaSession.online) return false;
+  var last = state.vanyaSession.lastActiveAt || 0;
+  return (Date.now() - last) / 1000 < 180;
+}
+
+function getVanyaTodaySeconds(){
+  var today = new Date().toISOString().slice(0,10);
+  if (state.vanyaSession.todayDate === today) return state.vanyaSession.todaySeconds || 0;
+  return 0;
+}
+
+function formatTime(ts){
+  if (!ts) return '—';
+  var d = new Date(ts);
+  return String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth() + 1).padStart(2,'0') + ' · ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+function formatDuration(sec){
+  if (!sec || sec < 0) return '0 сек';
+  var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  if (h > 0) return h + ' ч ' + m + ' мин';
+  if (m > 0) return m + ' мин ' + s + ' сек';
+  return s + ' сек';
+}
+
+function openVanyaActivity(){
+  if (state.role !== 'nastya') return;
+  var overlay = document.createElement('div');
+  overlay.className = 'overlay center active';
+  var isOn = isVanyaOnline();
+  var log = state.activityLog.filter(function(item){ return item.actor === 'vanya'; });
+  var t = state.counters.vanya || {};
+
+  function statRow(lbl, val){
+    return '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>';
+  }
+
+  var html = '<div class="modal" style="max-height:88vh">';
+  html += '<button class="close-button" type="button" id="activityCloseBtn">×</button>';
+  html += '<div class="modal-title">Активность Вани</div>';
+  html += '<div class="modal-subtitle">Только действия Вани</div>';
+  html += '<div style="margin-top:20px">';
+  html += statRow('Сейчас', '<span class="activity-status-dot ' + (isOn ? 'online' : 'offline') + '"></span>' + (isOn ? 'Онлайн' : 'Офлайн'));
+  html += statRow('Последний вход', formatTime(state.vanyaSession.loginAt));
+  html += statRow('Сегодня был онлайн', formatDuration(getVanyaTodaySeconds()));
+  html += '</div>';
+  html += '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(201,169,97,.4);padding-bottom:10px">📊 За сегодня</div>';
+  html += '<div style="margin-top:14px">';
+  html += statRow('Заходил', (t.login || 0) + ' раз');
+  html += statRow('Крутил колесо', (t.spin || 0) + ' раз');
+  html += statRow('Отметил заданий', (t.task_done || 0) + ' раз');
+  html += '</div>';
+  html += '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(201,169,97,.4);padding-bottom:10px">📜 Последние действия</div>';
+  html += '<ul class="activity-log-list">';
+  if (log.length){
+    log.slice(0, 30).forEach(function(item){
+      var ico = '•';
+      if (item.action === 'login') ico = '🟢';
+      else if (item.action === 'logout') ico = '🔴';
+      else if (item.action === 'task_done') ico = '✅';
+      else if (item.action === 'spin') ico = '🎡';
+      else if (item.action === 'planned') ico = '🗓';
+      else if (item.action === 'day_open') ico = '📅';
+      html += '<li><span class="ico">' + ico + '</span><span class="body"><span class="when">' + formatTime(item.timestamp) + '</span><span class="what">' + item.detail + '</span></span></li>';
+    });
+  } else {
+    html += '<div class="empty-state" style="color:var(--muted);text-shadow:none">Пока Ваня ничего не делал</div>';
+  }
+  html += '</ul></div>';
+  overlay.innerHTML = html;
+  document.body.appendChild(overlay);
+  document.getElementById('activityCloseBtn').onclick = function(){ overlay.remove(); };
+  overlay.onclick = function(e){ if (e.target === overlay) overlay.remove(); };
+}
+
+// ============ ЕЖЕДНЕВНЫЕ СООБЩЕНИЯ ============
+function showDailyMessage(){
+  if (state.viewingAs !== 'vanya') return;
+  var today = new Date().toISOString().slice(0,10);
+  var last = null;
+  try { last = localStorage.getItem('lastDailyMessage'); } catch(e){}
+  if (last === today) return;
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var dayOfYear = Math.floor((now - start) / 86400000);
+  var idx = ((dayOfYear - 1) % DAILY_MESSAGES.length + DAILY_MESSAGES.length) % DAILY_MESSAGES.length;
+  var msg = DAILY_MESSAGES[idx];
+  document.getElementById('dailyEmoji').textContent = msg.e;
+  document.getElementById('dailyMessage').textContent = msg.t;
+  document.getElementById('dailyOverlay').classList.add('active');
+  try { localStorage.setItem('lastDailyMessage', today); } catch(e){}
+}
+
+// ============ МЕСЯЦ-БОНУС ============
+function checkMonthCelebration(){
+  if (state.viewingAs !== 'vanya') return;
+  var now = new Date();
+  var prev = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  var prevKey = prev.getFullYear() + '-' + prev.getMonth();
+  if (state.lastCelebrationMonth === prevKey) return;
+  var count = 0;
+  for (var k in state.completedDays){
+    if (!state.completedDays.hasOwnProperty(k)) continue;
+    var parts = k.split('-');
+    if (parseInt(parts[0]) === prev.getFullYear() && parseInt(parts[1]) === prev.getMonth()){
+      count += state.completedDays[k].length;
+    }
+  }
+  if (count >= 15){
+    state.lastCelebrationMonth = prevKey;
+    lt.addPoints(100, 'monthBonus', 'Прошлый месяц');
+    document.getElementById('mcTitle').textContent = 'Восхитительно!';
+    document.getElementById('mcText').innerHTML = 'Ты выполнил <b>' + count + '</b> дел за прошлый месяц!';
+    document.getElementById('mcBonus').textContent = '+100 баллов';
+    document.getElementById('monthCelebration').classList.add('active');
+    saveState();
+  } else if (!state.lastCelebrationMonth){
+    state.lastCelebrationMonth = prevKey;
+    saveState();
+  }
+}
+
+// ============ НАСТРОЙКИ ============
+function renderSettingsMenu(){
+  var menu = document.getElementById('settingsMenu');
+  if (!menu) return;
+  menu.innerHTML = '';
+  if (state.role !== 'nastya'){
+    menu.innerHTML = '<div style="padding:30px 22px;text-align:center;font-size:12px;color:var(--muted)">Здесь пусто. Только для Насти</div>';
+    return;
+  }
+  function add(txt, color, fn){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = txt;
+    if (color) b.style.color = color;
+    b.onclick = function(){ menu.classList.remove('open'); fn(); };
+    menu.appendChild(b);
+  }
+  function div(){ var d = document.createElement('div'); d.className = 'divider'; menu.appendChild(d); }
+
+  add('📝 Отметить задним числом', 'var(--gold-deep)', openRetroModal);
+  add('👁 Активность Вани', 'var(--blue-deep)', openVanyaActivity);
+  add('🔄 Переключить на Ваню', 'var(--purple-deep)', function(){ if (typeof lt.toggleRole === 'function') lt.toggleRole(); });
+  div();
+  add('✏ Управление действиями', null, openActionEditor);
+  add('⏸ Карантин', null, openQuarantineList);
+  div();
+  add('🗑 Сбросить всё', '#C97A7A', function(){
+    if (!confirm('УДАЛИТЬ ВСЁ?')) return;
+    localStorage.clear();
+    location.reload();
+  });
+}
+
+function openRetroModal(){
+  var y = new Date(); y.setDate(y.getDate() - 1);
+  document.getElementById('retroDate').value = y.getFullYear() + '-' + String(y.getMonth() + 1).padStart(2,'0') + '-' + String(y.getDate()).padStart(2,'0');
+  var sel = document.getElementById('retroTask');
+  var cat = document.getElementById('retroCategory').value;
+  var tasks = lt.getTasksForCategory(cat);
+  sel.innerHTML = '<option value="">— не выбирать —</option>' + tasks.map(function(t){
+    return '<option value="' + encodeURIComponent(t) + '">' + t + '</option>';
+  }).join('');
+  document.getElementById('retroOverlay').classList.add('active');
+}
+
+function openQuarantineList(){
+  var list = document.getElementById('quarantineList');
+  var items = [];
+  var now = Date.now();
+  for (var k in state.quarantine){
+    if (!state.quarantine.hasOwnProperty(k)) continue;
+    var left = Math.ceil(14 - (now - state.quarantine[k].doneAt) / (1000 * 60 * 60 * 24));
+    if (left > 0) items.push({ text: k, left: left });
+  }
+  if (!items.length){
+    list.innerHTML = '<div class="empty-state" style="color:#8A7A66;text-shadow:none">Все задания доступны</div>';
+  } else {
+    list.innerHTML = items.map(function(it){
+      return '<div style="display:flex;justify-content:space-between;padding:12px;background:rgba(255,255,255,.6);border-radius:14px;margin-bottom:6px;font-size:12px"><span>' + it.text + '</span><span style="font-weight:600">' + it.left + ' дн.</span></div>';
+    }).join('');
+  }
+  document.getElementById('quarantineOverlay').classList.add('active');
+}
+
+function openActionEditor(){
+  renderActionLists();
+  document.getElementById('actionEditorOverlay').classList.add('active');
+}
+
+function renderActionLists(){
+  ['emotional','physical','lightDate','bigDate'].forEach(function(cat){
+    var ul = document.getElementById('list-' + cat);
+    if (!ul) return;
+    var tasks = lt.getTasksForCategory(cat);
+    ul.innerHTML = tasks.map(function(t){
+      return '<li><span class="txt">' + t + '</span><button class="del-btn" data-cat="' + cat + '" data-text="' + encodeURIComponent(t) + '" type="button">✕</button></li>';
+    }).join('');
+  });
+  document.querySelectorAll('.del-btn').forEach(function(b){
+    b.onclick = function(){
+      var cat = b.dataset.cat;
+      var txt = decodeURIComponent(b.dataset.text);
+      if (!confirm('Удалить?')) return;
+      if (!state.userRemoved[cat]) state.userRemoved[cat] = [];
+      state.userRemoved[cat].push(txt);
+      saveState();
+      renderActionLists();
+    };
+  });
+}
+
+function bindActionEditorTabs(){
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.tab-btn').forEach(function(x){ x.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      document.getElementById('tab-' + b.dataset.tab).classList.add('active');
+    };
+  });
+  var addBtn = document.getElementById('addActionBtn');
+  if (addBtn) addBtn.onclick = function(){
+    var v = document.getElementById('newActionInput').value.trim();
+    if (!v) return;
+    var active = document.querySelector('.tab-btn.active');
+    var cat = active ? active.dataset.tab : 'emotional';
+    if (!state.userAdded[cat]) state.userAdded[cat] = [];
+    state.userAdded[cat].push(v);
+    document.getElementById('newActionInput').value = '';
+    saveState();
+    renderActionLists();
+  };
+}
+
+// ============ FIREBASE (упрощённо) ============
+function initFirebase(){
+  try {
+    if (typeof firebase === 'undefined' || !firebase.initializeApp) return;
+    if (!window._firebaseInited){
+      firebase.initializeApp({
+        apiKey: 'AIzaSyBCkGtRJfBlTspGEdoGvHXq5Ig7pQDekTc',
+        authDomain: 'little-things-b7e6a.firebaseapp.com',
+        projectId: 'little-things-b7e6a',
+        storageBucket: 'little-things-b7e6a.firebasestorage.app',
+        messagingSenderId: '130079571341',
+        appId: '1:130079571341:web:4d9e1f27ca30c7c25251c4'
+      });
+      window._firebaseInited = true;
+      window._firestore = firebase.firestore();
+      var ref = window._firestore.collection('appData').doc('mainData');
+      ref.onSnapshot(function(snap){
+        if (!snap.exists) return;
+        if (snap.metadata && snap.metadata.hasPendingWrites) return;
+        var d = snap.data() || {};
+        if (typeof d.points === 'number') state.points = d.points;
+        if (typeof d.totalPoints === 'number') state.totalPoints = d.totalPoints;
+        if (Array.isArray(d.history)) state.history = d.history;
+        if (d.completedDays) state.completedDays = d.completedDays;
+        if (d.plannedDays) state.plannedDays = d.plannedDays;
+        if (d.forcedDayTypes) state.forcedDayTypes = d.forcedDayTypes;
+        if (Array.isArray(d.wishes)) state.wishes = d.wishes;
+        if (Array.isArray(d.achievements)) state.achievements = d.achievements;
+        saveState();
+        renderCalendar();
+        if (typeof lt.renderAll === 'function') lt.renderAll();
+      }, function(err){ console.warn('Firestore', err); });
+    }
+  } catch(e){ console.warn('Firebase init', e); }
+}
+
+function syncToFirebase(){
+  try {
+    if (!window._firestore) return;
+    if (!navigator.onLine) return;
+    window._firestore.collection('appData').doc('mainData').set({
+      points: state.points,
+      totalPoints: state.totalPoints,
+      history: state.history,
+      completedDays: state.completedDays,
+      plannedDays: state.plannedDays,
+      forcedDayTypes: state.forcedDayTypes,
+      wishes: state.wishes,
+      achievements: state.achievements,
+      currentMonth: new Date().getFullYear() + '-' + new Date().getMonth()
+    }, { merge: true }).catch(function(){});
+  } catch(e){}
+}
+
+// ============ АКТИВНОСТЬ ВАНИ — СЕССИЯ ============
+function updateVanyaSession(){
+  if (state.role !== 'vanya') return;
+  state.vanyaSession.lastActiveAt = Date.now();
+  state.vanyaSession.online = true;
+  saveState();
+}
+
+// ============ ЗАПУСК ЧАСТИ 5 ============
+function initPart5(){
+  bindActionEditorTabs();
+  renderAchievements();
+  renderLoveTree();
+  initFirebase();
+
+  // Обновление статистики Вани раз в минуту
+  setInterval(updateVanyaSession, 60000);
+
+  // Месяц-бонус при входе
+  setTimeout(function(){ checkMonthCelebration(); }, 1800);
+
+  // Настройки: hotzone + шестерёнка
+  var hotzone = document.getElementById('settingsHotzone');
+  var toggle = document.getElementById('settingsToggle');
+  var menu = document.getElementById('settingsMenu');
+  var tapCount = 0, tapTimer = null;
+  function registerTap(){
+    if (state.viewingAs === 'vanya') return;
+    tapCount++;
+    if (tapTimer) clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ tapCount = 0; }, 1000);
+    if (tapCount >= 3){
+      tapCount = 0;
+      toggle.classList.toggle('visible');
+      if (!toggle.classList.contains('visible')) menu.classList.remove('open');
+    }
+  }
+  if (hotzone){
+    hotzone.addEventListener('touchend', function(e){ e.stopPropagation(); registerTap(); }, { passive: true });
+    hotzone.addEventListener('click', function(e){ e.stopPropagation(); registerTap(); });
+  }
+  if (toggle) toggle.onclick = function(e){
+    e.stopPropagation();
+    renderSettingsMenu();
+    menu.classList.toggle('open');
+  };
+  document.addEventListener('click', function(e){
+    if (menu && !menu.contains(e.target) && e.target !== toggle) menu.classList.remove('open');
+  });
+
+  // Переключение роли (для меню настроек)
+  lt.toggleRole = function(){
+    if (state.role !== 'nastya') return;
+    state.viewingAs = state.viewingAs === 'vanya' ? 'nastya' : 'vanya';
+    lt.applyRoleView();
+    showToast('👁', state.viewingAs === 'vanya' ? 'Режим Вани' : 'Режим Насти');
+  };
+
+  // Кнопки модалок
+  var welcomeBtn = document.getElementById('welcomeAgree');
+  if (welcomeBtn) welcomeBtn.onclick = function(){
+    document.getElementById('welcomeOverlay').classList.remove('active');
+    setTimeout(showDailyMessage, 400);
+  };
+
+  var dailyOv = document.getElementById('dailyOverlay');
+  if (dailyOv) dailyOv.onclick = function(){ this.classList.remove('active'); };
+
+  var mc = document.getElementById('monthCelebration');
+  if (mc) mc.onclick = function(){ this.classList.remove('active'); };
+
+  // Проверка достижений
+  checkAchievements();
+  setTimeout(checkAchievements, 2000);
+
+  // Автосинк
+  setInterval(syncToFirebase, 30000);
+
+  // При изменении состояния — синк (простой перехват)
+  var origSave = saveState;
+  lt.saveState = function(){
+    origSave();
+    syncToFirebase();
+  };
+
+  // Обработчики закрытия оверлеев
+  document.querySelectorAll('[data-close]').forEach(function(b){
+    b.onclick = function(){ var el = document.getElementById(b.dataset.close); if (el) el.classList.remove('active'); };
+  });
+
+  console.log('Часть 5 загружена. Баллы:', state.points, 'Достижений:', state.achievements.length);
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPart5);
+else initPart5();
+
+})();
+</script>
+</body>
+</html>  
