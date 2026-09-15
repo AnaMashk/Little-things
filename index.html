@@ -44,7 +44,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;back
 .month-year::before,.month-year::after{content:'—';color:var(--gold);margin:0 8px;opacity:.6}
 .weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:8px;background:linear-gradient(180deg,rgba(250,246,236,.94),rgba(240,232,214,.9));border-radius:14px;padding:10px 0;border:1px solid rgba(201,169,97,.35);box-shadow:var(--shadow-soft)}
 .weekday{text-align:center;font-size:10px;font-weight:500;color:var(--brown);letter-spacing:2px;padding:4px 0;text-transform:uppercase}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px 5px;margin-top:10px}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px 5px;margin-top:10px;min-height:200px}
 .calendar-day{min-height:56px;border-radius:14px;position:relative;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--dark);cursor:pointer;border:1px solid rgba(255,255,255,.5);transition:transform .2s;overflow:visible;box-shadow:0 2px 6px rgba(60,40,20,.12),inset 0 1px 0 rgba(255,255,255,.5)}
 .calendar-day:active{transform:scale(.94)}
 .calendar-day.empty{background:transparent;cursor:default;border:none;box-shadow:none}
@@ -118,11 +118,11 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .role-btn.vanya{background:linear-gradient(145deg,#DCE6EE,#B8D0DC);border-color:#8FA9BA}
 .role-badge{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:linear-gradient(145deg,rgba(46,36,25,.95),rgba(30,22,16,.95));color:#F5EBD5;padding:6px 18px;border-radius:20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;z-index:500;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3);border:1px solid rgba(201,169,97,.4)}
 .role-badge.show{display:block}
-.settings-hotzone{position:fixed;bottom:0;right:0;width:150px;height:150px;z-index:900;background:transparent;touch-action:manipulation}
+.settings-hotzone{position:fixed;bottom:0;right:0;width:150px;height:150px;z-index:900;background:transparent;touch-action:manipulation;pointer-events:auto}
 .settings-toggle{position:fixed;bottom:22px;right:22px;width:44px;height:44px;border-radius:50%;background:rgba(90,74,58,.4);color:#F5EBD5;font-size:18px;z-index:901;display:none;align-items:center;justify-content:center;cursor:pointer;border:none;opacity:0;transition:opacity .35s;backdrop-filter:blur(4px)}
 .settings-toggle.visible{display:flex;opacity:1}
 .settings-toggle:active{transform:scale(.9) rotate(45deg)}
-.settings-menu{position:fixed;bottom:80px;right:22px;background:#FAF6EC;border-radius:20px;padding:10px 0;min-width:260px;z-index:902;display:none;border:1px solid rgba(201,169,97,.5);box-shadow:0 20px 60px rgba(0,0,0,.35);max-height:70vh;overflow-y:auto}
+.settings-menu{position:fixed;bottom:80px;right:22px;background:#FAF6EC;border-radius:20px;padding:10px 0;min-width:260px;max-width:calc(100vw - 44px);z-index:902;display:none;border:1px solid rgba(201,169,97,.5);box-shadow:0 20px 60px rgba(0,0,0,.35);max-height:70vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .settings-menu.open{display:block}
 .settings-menu button{display:block;width:100%;padding:14px 22px;background:none;border:0;text-align:left;font-size:12.5px;font-family:inherit;color:var(--dark)}
 .settings-menu button:active{background:rgba(201,169,97,.15)}
@@ -296,6 +296,19 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 </head>
 
 <body>
+
+<script>
+/* Видимая диагностика: любая ошибка покажется красной плашкой сверху */
+window.addEventListener('error', function(e){
+  try {
+    var el = document.createElement('div');
+    el.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#C97A7A;color:#fff;padding:14px;font-size:13px;z-index:999999;font-family:monospace;word-break:break-all;line-height:1.4;box-shadow:0 4px 12px rgba(0,0,0,.4)';
+    el.textContent = 'ОШИБКА: ' + (e.message || 'unknown') + ' (строка ' + (e.lineno || '?') + ')';
+    if (document.body) document.body.appendChild(el); else document.documentElement.appendChild(el);
+    setTimeout(function(){ try { el.remove(); } catch(_){} }, 15000);
+  } catch(err){}
+}, true);
+</script>
 
 <script>
 setTimeout(function(){
@@ -719,7 +732,6 @@ setTimeout(function(){
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
-/* СТРАХОВКА: кнопки роли + чистка битого localStorage */
 (function(){
   try { var r = localStorage.getItem('reachedMilestones'); if (r) JSON.parse(r); } catch(e){ try { localStorage.removeItem('reachedMilestones'); } catch(_){} }
   try { var r2 = localStorage.getItem('achievements'); if (r2) JSON.parse(r2); } catch(e){ try { localStorage.removeItem('achievements'); } catch(_){} }
@@ -1727,7 +1739,7 @@ function renderCalendar(){
       var e2 = document.createElement('div'); e2.className='calendar-day next-month';
       var n2 = document.createElement('span'); n2.className='day-number'; n2.textContent = j; e2.appendChild(n2); cal.appendChild(e2);
     }
-  } catch(e){ console.warn('renderCalendar', e); }
+  } catch(e){ console.warn('renderCalendar', e); throw e; }
 }
 function onDayClick(day, type, isDone){
   state.editingDay = { year:state.currentDate.getFullYear(), month:state.currentDate.getMonth(), day:day, type:type, isDone:isDone };
@@ -2565,360 +2577,376 @@ function refreshAll(prevPoints){
 }
 
 function startApp(){
-  try {
-    var splash = document.getElementById('splashScreen');
-    var app = document.getElementById('appRoot');
-    setTimeout(function(){
-      try {
-        if (splash) splash.classList.add('hidden');
-        if (app) app.classList.add('reveal');
-      } catch(e){}
-    }, 1200);
+  var splash = document.getElementById('splashScreen');
+  var app = document.getElementById('appRoot');
+  setTimeout(function(){
+    try {
+      if (splash) splash.classList.add('hidden');
+      if (app) app.classList.add('reveal');
+    } catch(e){}
+  }, 1200);
 
-    canvas = document.getElementById('wheel');
-    if (canvas) ctx = canvas.getContext('2d');
+  canvas = document.getElementById('wheel');
+  if (canvas) ctx = canvas.getContext('2d');
 
-    hydrateFromLocalStorage();
+  hydrateFromLocalStorage();
 
-    initRole();
-    renderSettingsMenu();
+  initRole();
+  renderSettingsMenu();
+  renderCalendar();
+  updateStats();
+  renderHistory();
+  renderWishes();
+  renderAchievements();
+  renderPointsLog();
+  renderLoveTree();
+  checkUpcomingDates();
+  setTimeout(resizeCanvas, 200);
+  applyDailyBonus();
+  checkAchievements();
+  setTimeout(checkMonthCelebration, 1800);
+
+  subscribeToFirestore();
+
+  setTimeout(function(){
+    try { if (!stateLoaded){ stateLoaded = true; saveState(); } } catch(e){}
+  }, 4000);
+
+  var btnN = document.getElementById('roleNastya');
+  var btnV = document.getElementById('roleVanya');
+  if (btnN) btnN.onclick = function(){ setRole('nastya'); };
+  if (btnV) btnV.onclick = function(){ setRole('vanya'); };
+
+  window.addEventListener('roleChosen', function(e){
+    if (e.detail && e.detail.role){ setRole(e.detail.role); }
+  });
+
+  var welcomeAgree = document.getElementById('welcomeAgree');
+  if (welcomeAgree) welcomeAgree.onclick = function(){
+    document.getElementById('welcomeOverlay').classList.remove('active');
+    safeSet('welcomeShown', 'true'); saveState();
+    setTimeout(showDailyMessage, 400);
+  };
+  var dailyOv = document.getElementById('dailyOverlay');
+  if (dailyOv) dailyOv.onclick = function(){ this.classList.remove('active'); };
+  var mc = document.getElementById('monthCelebration');
+  if (mc) mc.onclick = function(){ this.classList.remove('active'); };
+
+  var pageNames = { calendar:'Месяц', history:'История', wishes:'Хотелки', stats:'Баллы', system:'Система' };
+  document.querySelectorAll('.nav-item').forEach(function(btn){
+    btn.onclick = function(){
+      document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('page-'+btn.dataset.page).classList.add('active');
+      if (btn.dataset.page === 'history') renderHistory();
+      if (btn.dataset.page === 'stats'){ updateStats(); renderAchievements(); renderLoveTree(); renderPointsLog(); }
+      if (btn.dataset.page === 'wishes') renderWishes();
+      window.scrollTo(0,0);
+      logActivity('page_'+btn.dataset.page, '📱 Открыл «'+(pageNames[btn.dataset.page]||btn.dataset.page)+'»');
+    };
+  });
+
+  var prevM = document.getElementById('prevMonth');
+  var nextM = document.getElementById('nextMonth');
+  if (prevM) prevM.onclick = function(){
+    state.currentDate.setMonth(state.currentDate.getMonth()-1);
     renderCalendar();
-    updateStats();
-    renderHistory();
-    renderWishes();
-    renderAchievements();
-    renderPointsLog();
-    renderLoveTree();
-    checkUpcomingDates();
-    setTimeout(resizeCanvas, 200);
-    applyDailyBonus();
-    checkAchievements();
-    setTimeout(checkMonthCelebration, 1800);
+    var cal = document.getElementById('calendar');
+    cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
+    cal.classList.add('slide-right');
+  };
+  if (nextM) nextM.onclick = function(){
+    state.currentDate.setMonth(state.currentDate.getMonth()+1);
+    renderCalendar();
+    var cal = document.getElementById('calendar');
+    cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
+    cal.classList.add('slide-left');
+  };
 
-    subscribeToFirestore();
+  var openRnd = document.getElementById('openRandomBtn');
+  if (openRnd) openRnd.onclick = function(){
+    var t = new Date();
+    if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0){ showToast('❤️','Сегодня уже сделано!'); return; }
+    state.currentDay = t.getDate();
+    state.currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+    var type = getDayType(t.getFullYear(), t.getMonth(), t.getDate());
+    state.editingDay = { year:t.getFullYear(), month:t.getMonth(), day:t.getDate(), type:type, isDone:false };
+    openEditModal(); renderCalendar();
+  };
 
-    setTimeout(function(){
-      try { if (!stateLoaded){ stateLoaded = true; saveState(); } } catch(e){}
-    }, 4000);
-
-    var btnN = document.getElementById('roleNastya');
-    var btnV = document.getElementById('roleVanya');
-    if (btnN) btnN.onclick = function(){ setRole('nastya'); };
-    if (btnV) btnV.onclick = function(){ setRole('vanya'); };
-
-    window.addEventListener('roleChosen', function(e){
-      if (e.detail && e.detail.role){ setRole(e.detail.role); }
-    });
-
-    var welcomeAgree = document.getElementById('welcomeAgree');
-    if (welcomeAgree) welcomeAgree.onclick = function(){
-      document.getElementById('welcomeOverlay').classList.remove('active');
-      safeSet('welcomeShown', 'true'); saveState();
-      setTimeout(showDailyMessage, 400);
+  document.querySelectorAll('[data-choice]').forEach(function(btn){
+    btn.onclick = function(){
+      var c = btn.dataset.choice;
+      document.getElementById('choiceOverlay').classList.remove('active');
+      if (c === 'random') openTypeWheel();
+      else { state.currentType = c; state.currentDay = state.currentDay || new Date().getDate(); openWheel(c); }
     };
-    var dailyOv = document.getElementById('dailyOverlay');
-    if (dailyOv) dailyOv.onclick = function(){ this.classList.remove('active'); };
-    var mc = document.getElementById('monthCelebration');
-    if (mc) mc.onclick = function(){ this.classList.remove('active'); };
+  });
 
-    var pageNames = { calendar:'Месяц', history:'История', wishes:'Хотелки', stats:'Баллы', system:'Система' };
-    document.querySelectorAll('.nav-item').forEach(function(btn){
-      btn.onclick = function(){
-        document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
-        document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-        btn.classList.add('active');
-        document.getElementById('page-'+btn.dataset.page).classList.add('active');
-        if (btn.dataset.page === 'history') renderHistory();
-        if (btn.dataset.page === 'stats'){ updateStats(); renderAchievements(); renderLoveTree(); renderPointsLog(); }
-        if (btn.dataset.page === 'wishes') renderWishes();
-        window.scrollTo(0,0);
-        logActivity('page_'+btn.dataset.page, '📱 Открыл «'+(pageNames[btn.dataset.page]||btn.dataset.page)+'»');
-      };
-    });
-
-    var prevM = document.getElementById('prevMonth');
-    var nextM = document.getElementById('nextMonth');
-    if (prevM) prevM.onclick = function(){
-      state.currentDate.setMonth(state.currentDate.getMonth()-1);
-      renderCalendar();
-      var cal = document.getElementById('calendar');
-      cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
-      cal.classList.add('slide-right');
+  document.querySelectorAll('.wish-tier button').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.wish-tier button').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      state.currentWishTier = b.dataset.tier;
     };
-    if (nextM) nextM.onclick = function(){
-      state.currentDate.setMonth(state.currentDate.getMonth()+1);
-      renderCalendar();
-      var cal = document.getElementById('calendar');
-      cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
-      cal.classList.add('slide-left');
-    };
+  });
+  var wishAddBtn = document.getElementById('wishAddBtn');
+  if (wishAddBtn) wishAddBtn.onclick = function(){
+    var v = document.getElementById('wishInput').value.trim();
+    if (!v) return;
+    state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
+    document.getElementById('wishInput').value = '';
+    applyPointsDelta(WISH_BONUS, WISH_BONUS, 'wishAdd', v);
+    logActivity('wish_add', '✿ Записал хотелку: «'+v+'»');
+    saveState(); renderWishes(); renderPointsLog(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
+  };
 
-    var openRnd = document.getElementById('openRandomBtn');
-    if (openRnd) openRnd.onclick = function(){
-      var t = new Date();
-      if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0){ showToast('❤️','Сегодня уже сделано!'); return; }
-      state.currentDay = t.getDate();
-      state.currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-      var type = getDayType(t.getFullYear(), t.getMonth(), t.getDate());
-      state.editingDay = { year:t.getFullYear(), month:t.getMonth(), day:t.getDate(), type:type, isDone:false };
-      openEditModal(); renderCalendar();
-    };
+  document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
+  document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
+  var pvm = document.getElementById('photoViewModal');
+  if (pvm) pvm.onclick = function(){ this.classList.remove('active'); };
 
-    document.querySelectorAll('[data-choice]').forEach(function(btn){
-      btn.onclick = function(){
-        var c = btn.dataset.choice;
-        document.getElementById('choiceOverlay').classList.remove('active');
-        if (c === 'random') openTypeWheel();
-        else { state.currentType = c; state.currentDay = state.currentDay || new Date().getDate(); openWheel(c); }
-      };
-    });
+  var retroSave = document.getElementById('retroSaveBtn');
+  if (retroSave) retroSave.onclick = submitRetro;
 
-    document.querySelectorAll('.wish-tier button').forEach(function(b){
-      b.onclick = function(){
-        document.querySelectorAll('.wish-tier button').forEach(function(x){ x.classList.remove('active'); });
-        b.classList.add('active');
-        state.currentWishTier = b.dataset.tier;
-      };
-    });
-    var wishAddBtn = document.getElementById('wishAddBtn');
-    if (wishAddBtn) wishAddBtn.onclick = function(){
-      var v = document.getElementById('wishInput').value.trim();
-      if (!v) return;
-      state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
-      document.getElementById('wishInput').value = '';
-      applyPointsDelta(WISH_BONUS, WISH_BONUS, 'wishAdd', v);
-      logActivity('wish_add', '✿ Записал хотелку: «'+v+'»');
-      saveState(); renderWishes(); renderPointsLog(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
-    };
-
-    document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
-    document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
-    var pvm = document.getElementById('photoViewModal');
-    if (pvm) pvm.onclick = function(){ this.classList.remove('active'); };
-
-    var retroSave = document.getElementById('retroSaveBtn');
-    if (retroSave) retroSave.onclick = submitRetro;
-
-    var settingsToggle = document.getElementById('settingsToggle');
-    var settingsMenu = document.getElementById('settingsMenu');
-    var settingsHotzone = document.getElementById('settingsHotzone');
-    var tapCount = 0, tapTimer = null, lastTouchTime = 0;
-    function registerHotzoneTap(){
-      if (state.viewingAs === 'vanya' || state.role === 'vanya') return;
-      tapCount++;
-      if (tapTimer) clearTimeout(tapTimer);
-      tapTimer = setTimeout(function(){ tapCount = 0; }, 1000);
-      if (tapCount >= 3){
-        tapCount = 0; clearTimeout(tapTimer);
-        settingsToggle.classList.toggle('visible');
-        if (!settingsToggle.classList.contains('visible')) settingsMenu.classList.remove('open');
-      }
+  var settingsToggle = document.getElementById('settingsToggle');
+  var settingsMenu = document.getElementById('settingsMenu');
+  var settingsHotzone = document.getElementById('settingsHotzone');
+  var tapCount = 0, tapTimer = null, lastTouchTime = 0;
+  function registerHotzoneTap(){
+    if (state.viewingAs === 'vanya' || state.role === 'vanya') return;
+    tapCount++;
+    if (tapTimer) clearTimeout(tapTimer);
+    tapTimer = setTimeout(function(){ tapCount = 0; }, 1000);
+    if (tapCount >= 3){
+      tapCount = 0; clearTimeout(tapTimer);
+      settingsToggle.classList.toggle('visible');
+      if (!settingsToggle.classList.contains('visible')) settingsMenu.classList.remove('open');
     }
-    if (settingsHotzone){
-      settingsHotzone.addEventListener('touchend', function(e){ lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
-      settingsHotzone.addEventListener('click', function(e){ e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
+  }
+  if (settingsHotzone){
+    settingsHotzone.addEventListener('touchend', function(e){ lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
+    settingsHotzone.addEventListener('click', function(e){ e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
+  }
+  var toggleClickCount = 0, toggleClickTimer = null;
+  if (settingsToggle) settingsToggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    toggleClickCount++;
+    if (toggleClickTimer) clearTimeout(toggleClickTimer);
+    toggleClickTimer = setTimeout(function(){
+      if (toggleClickCount === 1){
+        renderSettingsMenu();
+        var willOpen = !settingsMenu.classList.contains('open');
+        settingsMenu.classList.toggle('open');
+        if (willOpen && state.role === 'nastya') logActivity('settings_open', '⚙️ Открыл настройки');
+      } else if (toggleClickCount >= 2){
+        settingsMenu.classList.remove('open');
+        toggleRoleView();
+      }
+      toggleClickCount = 0;
+    }, 320);
+  });
+  document.addEventListener('click', function(e){ if (settingsMenu && !settingsMenu.contains(e.target) && e.target !== settingsToggle) settingsMenu.classList.remove('open'); });
+
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.tab-btn').forEach(function(x){ x.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      activeEditorTab = b.dataset.tab;
+      document.getElementById('tab-'+activeEditorTab).classList.add('active');
+    };
+  });
+  var addAB = document.getElementById('addActionBtn');
+  if (addAB) addAB.onclick = function(){
+    var v = document.getElementById('newActionInput').value.trim();
+    if (!v) return;
+    if (!state.userAdded[activeEditorTab]) state.userAdded[activeEditorTab] = [];
+    state.userAdded[activeEditorTab].push(v);
+    document.getElementById('newActionInput').value = '';
+    saveState(); renderActionLists(); showToast('✨','Действие добавлено!');
+  };
+
+  var notifClose = document.getElementById('notifClose');
+  if (notifClose) notifClose.onclick = function(){
+    var b = document.getElementById('notificationBanner');
+    var ds = b.dataset.notifDate;
+    if (ds){
+      var d = safeParse(safeGet('dismissed_notifications','[]'), []);
+      if (d.indexOf(ds) === -1){ d.push(ds); safeSet('dismissed_notifications', JSON.stringify(d)); }
     }
-    var toggleClickCount = 0, toggleClickTimer = null;
-    if (settingsToggle) settingsToggle.addEventListener('click', function(e){
-      e.stopPropagation();
-      toggleClickCount++;
-      if (toggleClickTimer) clearTimeout(toggleClickTimer);
-      toggleClickTimer = setTimeout(function(){
-        if (toggleClickCount === 1){
-          renderSettingsMenu();
-          var willOpen = !settingsMenu.classList.contains('open');
-          settingsMenu.classList.toggle('open');
-          if (willOpen && state.role === 'nastya') logActivity('settings_open', '⚙️ Открыл настройки');
-        } else if (toggleClickCount >= 2){
-          settingsMenu.classList.remove('open');
-          toggleRoleView();
-        }
-        toggleClickCount = 0;
-      }, 320);
-    });
-    document.addEventListener('click', function(e){ if (settingsMenu && !settingsMenu.contains(e.target) && e.target !== settingsToggle) settingsMenu.classList.remove('open'); });
+    b.classList.remove('show');
+  };
+  var toastClose = document.getElementById('toastClose');
+  if (toastClose) toastClose.onclick = function(){ document.getElementById('toast').classList.remove('show'); };
 
-    document.querySelectorAll('.tab-btn').forEach(function(b){
-      b.onclick = function(){
-        document.querySelectorAll('.tab-btn').forEach(function(x){ x.classList.remove('active'); });
-        document.querySelectorAll('.tab-content').forEach(function(x){ x.classList.remove('active'); });
-        b.classList.add('active');
-        activeEditorTab = b.dataset.tab;
-        document.getElementById('tab-'+activeEditorTab).classList.add('active');
-      };
-    });
-    var addAB = document.getElementById('addActionBtn');
-    if (addAB) addAB.onclick = function(){
-      var v = document.getElementById('newActionInput').value.trim();
-      if (!v) return;
-      if (!state.userAdded[activeEditorTab]) state.userAdded[activeEditorTab] = [];
-      state.userAdded[activeEditorTab].push(v);
-      document.getElementById('newActionInput').value = '';
-      saveState(); renderActionLists(); showToast('✨','Действие добавлено!');
-    };
-
-    var notifClose = document.getElementById('notifClose');
-    if (notifClose) notifClose.onclick = function(){
-      var b = document.getElementById('notificationBanner');
-      var ds = b.dataset.notifDate;
-      if (ds){
-        var d = safeParse(safeGet('dismissed_notifications','[]'), []);
-        if (d.indexOf(ds) === -1){ d.push(ds); safeSet('dismissed_notifications', JSON.stringify(d)); }
-      }
-      b.classList.remove('show');
-    };
-    var toastClose = document.getElementById('toastClose');
-    if (toastClose) toastClose.onclick = function(){ document.getElementById('toast').classList.remove('show'); };
-
-    var spinBtn = document.getElementById('spinBtn');
-    var respinBtn = document.getElementById('respinBtn');
-    if (spinBtn) spinBtn.onclick = doSpin;
-    if (respinBtn) respinBtn.onclick = doSpin;
-    var doneBtn = document.getElementById('doneBtn');
-    if (doneBtn) doneBtn.onclick = function(){
-      var item = window._currentItem; if (!item) return;
-      if (wheelMode === 'type'){
-        document.getElementById('wheelOverlay').classList.remove('active');
-        state.currentType = item.type;
-        setTimeout(function(){ openWheel(item.type); }, 300); return;
-      }
-      var year = state.currentDate.getFullYear();
-      var month = state.currentDate.getMonth();
-      var day = state.currentDay;
-      var basePts = TYPE_INFO[item.type].points;
-      var events = getCompletedEvents(year, month, day);
-      var isInit = events.some(function(e){ return e.type === item.type; });
-      var pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
-      var _t = new Date(); _t.setHours(0,0,0,0);
-      var _d = new Date(year, month, day); _d.setHours(0,0,0,0);
-      var _isPastOrToday = _d <= _t;
+  var spinBtn = document.getElementById('spinBtn');
+  var respinBtn = document.getElementById('respinBtn');
+  if (spinBtn) spinBtn.onclick = doSpin;
+  if (respinBtn) respinBtn.onclick = doSpin;
+  var doneBtn = document.getElementById('doneBtn');
+  if (doneBtn) doneBtn.onclick = function(){
+    var item = window._currentItem; if (!item) return;
+    if (wheelMode === 'type'){
       document.getElementById('wheelOverlay').classList.remove('active');
-      openPhotoAttach(function(){
-        if (_isPastOrToday) addEventToDay(year, month, day, item.type, item.text, pts, isInit);
-        else planEvent(year, month, day, item.type, item.text, pts, isInit);
-      });
-    };
-
-    function checkYesterdayPlanned(){
-      try {
-        if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        var key = yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate();
-        var plan = state.plannedDays && state.plannedDays[key];
-        if (!plan) return;
-        window._pendingPlanKey = key;
-        var d = new Date(yesterday);
-        var dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0');
-        document.getElementById('confirmYesterdayText').textContent = '«'+plan.text+'» — '+dateStr;
-        document.getElementById('confirmYesterdayOverlay').classList.add('active');
-      } catch(e){}
+      state.currentType = item.type;
+      setTimeout(function(){ openWheel(item.type); }, 300); return;
     }
+    var year = state.currentDate.getFullYear();
+    var month = state.currentDate.getMonth();
+    var day = state.currentDay;
+    var basePts = TYPE_INFO[item.type].points;
+    var events = getCompletedEvents(year, month, day);
+    var isInit = events.some(function(e){ return e.type === item.type; });
+    var pts = isInit ? basePts + INITIATIVE_BONUS : basePts;
+    var _t = new Date(); _t.setHours(0,0,0,0);
+    var _d = new Date(year, month, day); _d.setHours(0,0,0,0);
+    var _isPastOrToday = _d <= _t;
+    document.getElementById('wheelOverlay').classList.remove('active');
+    openPhotoAttach(function(){
+      if (_isPastOrToday) addEventToDay(year, month, day, item.type, item.text, pts, isInit);
+      else planEvent(year, month, day, item.type, item.text, pts, isInit);
+    });
+  };
 
-    var cyb = document.getElementById('confirmYesBtn');
-    if (cyb) cyb.onclick = function(){
-      var key = window._pendingPlanKey;
-      if (!key) return;
-      var plan = state.plannedDays[key];
+  function checkYesterdayPlanned(){
+    try {
+      if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
+      var yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      var key = yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate();
+      var plan = state.plannedDays && state.plannedDays[key];
       if (!plan) return;
-      var parts = key.split('-').map(function(n){ return parseInt(n); });
-      document.getElementById('confirmYesterdayOverlay').classList.remove('active');
-      delete state.plannedDays[key];
-      deleteCloudKeys(['plannedDays.'+key]);
-      window._pendingPlanKey = null;
-      openPhotoAttach(function(){
-        addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
-      });
-    };
-    var cnb = document.getElementById('confirmNoBtn');
-    if (cnb) cnb.onclick = function(){
-      var key = window._pendingPlanKey;
-      if (!key) return;
-      var plan = state.plannedDays[key];
-      if (!plan) return;
-      document.getElementById('confirmYesterdayOverlay').classList.remove('active');
-      window._pendingReschedule = { key: key, plan: plan };
-      var t = new Date();
-      var tomorrow = new Date(t);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      var val = tomorrow.getFullYear()+'-'+String(tomorrow.getMonth()+1).padStart(2,'0')+'-'+String(tomorrow.getDate()).padStart(2,'0');
-      document.getElementById('rescheduleDateInput').min = val;
-      document.getElementById('rescheduleDateInput').value = val;
-      document.getElementById('rescheduleOverlay').classList.add('active');
-    };
-    var rcb = document.getElementById('rescheduleConfirmBtn');
-    if (rcb) rcb.onclick = function(){
-      var v = document.getElementById('rescheduleDateInput').value;
-      if (!v){ alert('Выбери дату'); return; }
-      var parts = v.split('-').map(function(n){ return parseInt(n); });
-      var newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
-      var pr = window._pendingReschedule;
-      if (!pr) return;
-      if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text){
-        if (!confirm('Заменить?')) return;
-      }
-      state.plannedDays[newKey] = pr.plan;
+      window._pendingPlanKey = key;
+      var d = new Date(yesterday);
+      var dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0');
+      document.getElementById('confirmYesterdayText').textContent = '«'+plan.text+'» — '+dateStr;
+      document.getElementById('confirmYesterdayOverlay').classList.add('active');
+    } catch(e){}
+  }
+
+  var cyb = document.getElementById('confirmYesBtn');
+  if (cyb) cyb.onclick = function(){
+    var key = window._pendingPlanKey;
+    if (!key) return;
+    var plan = state.plannedDays[key];
+    if (!plan) return;
+    var parts = key.split('-').map(function(n){ return parseInt(n); });
+    document.getElementById('confirmYesterdayOverlay').classList.remove('active');
+    delete state.plannedDays[key];
+    deleteCloudKeys(['plannedDays.'+key]);
+    window._pendingPlanKey = null;
+    openPhotoAttach(function(){
+      addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
+    });
+  };
+  var cnb = document.getElementById('confirmNoBtn');
+  if (cnb) cnb.onclick = function(){
+    var key = window._pendingPlanKey;
+    if (!key) return;
+    var plan = state.plannedDays[key];
+    if (!plan) return;
+    document.getElementById('confirmYesterdayOverlay').classList.remove('active');
+    window._pendingReschedule = { key: key, plan: plan };
+    var t = new Date();
+    var tomorrow = new Date(t);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var val = tomorrow.getFullYear()+'-'+String(tomorrow.getMonth()+1).padStart(2,'0')+'-'+String(tomorrow.getDate()).padStart(2,'0');
+    document.getElementById('rescheduleDateInput').min = val;
+    document.getElementById('rescheduleDateInput').value = val;
+    document.getElementById('rescheduleOverlay').classList.add('active');
+  };
+  var rcb = document.getElementById('rescheduleConfirmBtn');
+  if (rcb) rcb.onclick = function(){
+    var v = document.getElementById('rescheduleDateInput').value;
+    if (!v){ alert('Выбери дату'); return; }
+    var parts = v.split('-').map(function(n){ return parseInt(n); });
+    var newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
+    var pr = window._pendingReschedule;
+    if (!pr) return;
+    if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text){
+      if (!confirm('Заменить?')) return;
+    }
+    state.plannedDays[newKey] = pr.plan;
+    delete state.plannedDays[pr.key];
+    if (!state.forcedDayTypes) state.forcedDayTypes = {};
+    state.forcedDayTypes[pr.key] = 'free';
+    setCloudForcedType(pr.key, 'free');
+    deleteCloudKeys(['plannedDays.'+pr.key, 'completedDays.'+pr.key]);
+    logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'» с '+pr.key+' на '+newKey);
+    window._pendingReschedule = null;
+    window._pendingPlanKey = null;
+    saveState(); renderCalendar();
+    document.getElementById('rescheduleOverlay').classList.remove('active');
+    showToast('📅', 'Перенесено');
+  };
+  var rcb2 = document.getElementById('rescheduleCancelBtn');
+  if (rcb2) rcb2.onclick = function(){
+    var pr = window._pendingReschedule;
+    if (pr){
       delete state.plannedDays[pr.key];
       if (!state.forcedDayTypes) state.forcedDayTypes = {};
       state.forcedDayTypes[pr.key] = 'free';
       setCloudForcedType(pr.key, 'free');
-      deleteCloudKeys(['plannedDays.'+pr.key, 'completedDays.'+pr.key]);
-      logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'» с '+pr.key+' на '+newKey);
-      window._pendingReschedule = null;
-      window._pendingPlanKey = null;
+      deleteCloudKeys(['plannedDays.'+pr.key]);
+      logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
       saveState(); renderCalendar();
       document.getElementById('rescheduleOverlay').classList.remove('active');
-      showToast('📅', 'Перенесено');
-    };
-    var rcb2 = document.getElementById('rescheduleCancelBtn');
-    if (rcb2) rcb2.onclick = function(){
-      var pr = window._pendingReschedule;
-      if (pr){
-        delete state.plannedDays[pr.key];
-        if (!state.forcedDayTypes) state.forcedDayTypes = {};
-        state.forcedDayTypes[pr.key] = 'free';
-        setCloudForcedType(pr.key, 'free');
-        deleteCloudKeys(['plannedDays.'+pr.key]);
-        logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
-        saveState(); renderCalendar();
-        document.getElementById('rescheduleOverlay').classList.remove('active');
-        showToast('✕', 'План отменён');
-      } else {
-        document.getElementById('rescheduleOverlay').classList.remove('active');
-      }
-      window._pendingReschedule = null;
-      window._pendingPlanKey = null;
-    };
+      showToast('✕', 'План отменён');
+    } else {
+      document.getElementById('rescheduleOverlay').classList.remove('active');
+    }
+    window._pendingReschedule = null;
+    window._pendingPlanKey = null;
+  };
 
-    window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', resizeCanvas);
 
-    document.addEventListener('visibilitychange', function(){
-      try {
-        if (state.role !== 'vanya') return;
-        if (document.hidden) endVanyaSession();
-        else startVanyaSession();
-      } catch(e){}
-    });
-    window.addEventListener('pagehide', function(){ try { if (state.role === 'vanya') endVanyaSession(); } catch(e){} });
-    window.addEventListener('beforeunload', function(){ try { if (state.role === 'vanya') endVanyaSession(); } catch(e){} });
-    setInterval(function(){
-      try {
-        if (state.role !== 'vanya') return;
-        if (document.hidden) return;
-        state.vanyaSession.lastActiveAt = Date.now();
-        state.vanyaSession.online = true;
-        saveState();
-      } catch(e){}
-    }, 60000);
+  document.addEventListener('visibilitychange', function(){
+    try {
+      if (state.role !== 'vanya') return;
+      if (document.hidden) endVanyaSession();
+      else startVanyaSession();
+    } catch(e){}
+  });
+  window.addEventListener('pagehide', function(){ try { if (state.role === 'vanya') endVanyaSession(); } catch(e){} });
+  window.addEventListener('beforeunload', function(){ try { if (state.role === 'vanya') endVanyaSession(); } catch(e){} });
+  setInterval(function(){
+    try {
+      if (state.role !== 'vanya') return;
+      if (document.hidden) return;
+      state.vanyaSession.lastActiveAt = Date.now();
+      state.vanyaSession.online = true;
+      saveState();
+    } catch(e){}
+  }, 60000);
 
-    setTimeout(checkYesterdayPlanned, 2000);
-  } catch(e){ console.warn('startApp fatal:', e); }
+  setTimeout(checkYesterdayPlanned, 2000);
 }
 
 if (document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', startApp);
+  document.addEventListener('DOMContentLoaded', function(){
+    try { startApp(); }
+    catch(e){
+      try {
+        var el = document.createElement('div');
+        el.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#C97A7A;color:#fff;padding:14px;font-size:13px;z-index:999999;font-family:monospace;word-break:break-all;line-height:1.4';
+        el.textContent = 'STARTAPP: ' + (e.message || 'unknown');
+        document.body.appendChild(el);
+      } catch(_){}
+    }
+  });
 } else {
-  startApp();
+  try { startApp(); }
+  catch(e){
+    try {
+      var el2 = document.createElement('div');
+      el2.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#C97A7A;color:#fff;padding:14px;font-size:13px;z-index:999999;font-family:monospace;word-break:break-all;line-height:1.4';
+      el2.textContent = 'STARTAPP: ' + (e.message || 'unknown');
+      document.body.appendChild(el2);
+    } catch(_){}
+  }
 }
 
 })();
