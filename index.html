@@ -187,3 +187,343 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .daily-hint{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:.7;margin-top:20px;border-top:1px solid rgba(201,169,97,.35);padding-top:18px}
 </style>
 </head>
+ <body>
+
+<div class="splash-screen" id="splashScreen">
+  <div class="splash-title">Наши маленькие вещи</div>
+  <div class="splash-sub">приложение для двоих</div>
+</div>
+
+<div class="app" id="appRoot">
+
+<div class="daily-overlay" id="dailyOverlay">
+<div class="daily-card">
+<div class="daily-emoji" id="dailyEmoji">🌸</div>
+<div class="daily-message" id="dailyMessage">Ты — моя самая любимая причина улыбаться.</div>
+<div class="daily-hint">Коснись, чтобы закрыть</div>
+</div>
+</div>
+
+<div class="month-celebration" id="monthCelebration">
+<div class="month-celebration-card">
+<div class="mc-emoji" id="mcEmoji">🎉</div>
+<h2 id="mcTitle">Восхитительно!</h2>
+<p id="mcText">Ты выполнил 15 дней за месяц!</p>
+<div class="mc-bonus" id="mcBonus">+100 баллов</div>
+<div class="daily-hint" style="opacity:.6">Коснись, чтобы закрыть</div>
+</div>
+</div>
+
+<div class="overlay center active" id="roleOverlay">
+<div class="modal">
+<div class="modal-title">Наши маленькие вещи</div>
+<div class="modal-subtitle">Кто открыл приложение?</div>
+<div class="role-buttons">
+<button class="role-btn nastya" id="roleNastya" type="button"><span class="role-emoji">❤️</span><span>Я — Настя</span></button>
+<button class="role-btn vanya" id="roleVanya" type="button"><span class="role-emoji">🍞</span><span>Я — Ваня</span></button>
+</div>
+</div>
+</div>
+
+<div class="overlay center" id="welcomeOverlay">
+<div class="modal">
+<div class="modal-title">❤️ Добро пожаловать</div>
+<div class="modal-subtitle">Наши маленькие вещи</div>
+<div style="text-align:left;font-size:12.5px;line-height:1.9;background:rgba(255,255,255,.5);padding:18px;border-radius:18px;margin:16px 0;border:1px solid rgba(201,169,97,.3);color:var(--dark)">
+<p style="margin-bottom:10px">Привет, сухарь. 🍞</p>
+<p style="margin-bottom:10px">Это приложение — наша маленькая игра.</p>
+<p style="margin-bottom:10px">Крути колесо, выполняй задания, копи баллы. Наберёшь <b>1000</b> — сможешь загадать своё желание в «Тайном саду».</p>
+<p style="margin-bottom:10px">Договорились? ❤️</p>
+<div style="text-align:right;font-style:italic;color:var(--muted);margin-top:6px">Твоя Настя</div>
+</div>
+<button class="btn-gold" id="welcomeAgree" type="button">Готов начать</button>
+</div>
+</div>
+
+<div class="role-badge" id="roleBadge">👁 Режим просмотра</div>
+
+<div class="header">
+<h1 class="header-title">Наши маленькие вещи</h1>
+<div class="header-names">Анастасия &amp; Иван</div>
+<div class="header-subtitle">Давай иногда выбирать друг друга специально</div>
+</div>
+
+<nav class="nav">
+<button class="nav-item active" data-page="calendar" type="button"><span class="nav-icon">✦</span>Месяц</button>
+<button class="nav-item" data-page="history" type="button"><span class="nav-icon">♡</span>История</button>
+<button class="nav-item" data-page="wishes" type="button"><span class="nav-icon">✿</span>Хотелки</button>
+<button class="nav-item" data-page="stats" type="button"><span class="nav-icon">★</span>Баллы</button>
+<button class="nav-item" data-page="system" type="button"><span class="nav-icon">📖</span>Система</button>
+</nav>
+
+<section class="page active" id="page-calendar">
+<div class="month-header">
+<button class="month-arrow" id="prevMonth" type="button">‹</button>
+<div><div class="month-name" id="monthName">Сентябрь</div><div class="month-year" id="monthYear">2026</div></div>
+<button class="month-arrow" id="nextMonth" type="button">›</button>
+</div>
+<div class="weekdays">
+<div class="weekday">ПН</div><div class="weekday">ВТ</div><div class="weekday">СР</div>
+<div class="weekday">ЧТ</div><div class="weekday">ПТ</div><div class="weekday">СБ</div><div class="weekday">ВС</div>
+</div>
+<div class="calendar" id="calendar"></div>
+<div class="legend">
+<div class="legend-item"><span class="legend-dot emotional"></span>💙 Эмоц. +5</div>
+<div class="legend-item"><span class="legend-dot physical"></span>💜 Физ. +10</div>
+<div class="legend-item"><span class="legend-dot lightDate"></span>💗 Лёгкое +50</div>
+<div class="legend-item"><span class="legend-dot bigDate"></span>🏆 Большое +150</div>
+<div class="legend-item"><span class="legend-dot custom"></span>⭐ Своё +30</div>
+</div>
+<div class="manage-panel">
+<div class="manage-panel-title">Хочешь её порадовать? ❤️</div>
+<div class="manage-panel-text">Нажми на любой день, чтобы изменить его или отметить выполненным</div>
+<button class="btn-primary" id="openRandomBtn" type="button">Выбрать сегодня</button>
+</div>
+</section>
+
+<section class="page" id="page-history">
+<div class="section-title">Наша история</div>
+<div class="section-sub">То, что мы уже выбрали друг для друга</div>
+<div class="timeline" id="timelineList"></div>
+</section>
+
+<section class="page" id="page-wishes">
+<div class="section-title">Тайный сад</div>
+<div class="section-sub">Запиши, чего хочешь ты · +15 баллов</div>
+<div class="wish-tier" id="wishTierBlock">
+<button data-tier="small" class="active" type="button">🌱 Мелкое (50)</button>
+<button data-tier="medium" type="button">🌿 Среднее (150)</button>
+<button data-tier="big" type="button">🌳 Крупное (500)</button>
+</div>
+<div class="add-row">
+<input type="text" id="wishInput" placeholder="Например: блинчики с вишней">
+<button id="wishAddBtn" type="button">＋</button>
+</div>
+<div class="garden-wrap" id="wishGarden"></div>
+</section>
+
+<section class="page" id="page-stats">
+<div class="section-title">Мои баллы</div>
+<div class="points-card">
+<div class="points-number" id="pointsNumber">0</div>
+<div class="points-caption">баллов за этот месяц</div>
+<div class="total-points">Всего за всё время: <span id="totalPointsDisplay">0</span></div>
+<div class="level-badge"><span class="emoji" id="levelEmoji">🌿</span><span class="name" id="levelName">Первый шаг</span></div>
+<div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+<div id="pointsToGo" style="color:var(--muted);font-size:10px;margin-top:12px;letter-spacing:1px"></div>
+</div>
+
+<div style="margin-top:20px;padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4)">
+<div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;color:var(--dark);margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed rgba(201,169,97,.4)">✦ Журнал баллов ✦</div>
+<ul id="pointsLogList" style="list-style:none;max-height:420px;overflow-y:auto;padding:0;margin:0"></ul>
+</div>
+
+<div style="margin-top:20px;padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4)">
+<div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;text-align:center;letter-spacing:3px;text-transform:uppercase;color:var(--dark);margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed rgba(201,169,97,.4)">✦ Достижения ✦</div>
+<div class="achievements-grid" id="achievementsGrid"></div>
+</div>
+
+<div class="love-tree-card">
+<div class="love-tree-title">🌳 Наше дерево</div>
+<div class="love-tree-stage" id="treeStage">Семечко</div>
+<div class="love-tree-svg-wrap" id="treeSvgWrap"></div>
+<div class="love-tree-progress-text" id="treeProgressText">До следующей стадии: 5 заданий</div>
+<div class="love-tree-progress-track"><div class="love-tree-progress-fill" id="treeProgressFill"></div></div>
+</div>
+</section>
+
+<section class="page" id="page-system">
+<div class="section-title">Как всё работает</div>
+<div class="section-sub">Гайд по баллам и наградам</div>
+<div style="padding:22px 20px;border-radius:22px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);margin-bottom:18px">
+<h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:8px;letter-spacing:2px;text-transform:uppercase;color:var(--dark)">✦ Наша экономика</h3>
+<p style="font-size:12px;line-height:1.8;color:var(--brown)">Каждое твоё действие превращается в баллы.</p>
+</div>
+<div style="margin-bottom:16px;padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4)">
+<div style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;margin-bottom:14px;border-bottom:1px dashed rgba(201,169,97,.5);padding-bottom:10px;color:var(--dark)">🌿 1. Как заработать</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>💙 Эмоциональная забота</span><span style="color:var(--gold-deep);font-weight:700">+5</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>💜 Физическая забота</span><span style="color:var(--gold-deep);font-weight:700">+10</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>💗 Лёгкое свидание</span><span style="color:var(--gold-deep);font-weight:700">+50</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>🏆 Большое свидание</span><span style="color:var(--gold-deep);font-weight:700">+150</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>⭐ Своя инициатива</span><span style="color:var(--gold-deep);font-weight:700">+30</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>✿ Своя хотелка</span><span style="color:var(--gold-deep);font-weight:700">+15</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:12px"><span>📅 Ежедневный вход</span><span style="color:var(--gold-deep);font-weight:700">+5</span></div>
+</div>
+<div style="margin-bottom:16px;padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4)">
+<div style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;margin-bottom:14px;border-bottom:1px dashed rgba(201,169,97,.5);padding-bottom:10px;color:var(--dark)">🏆 2. Уровни</div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.5);margin-bottom:6px;font-size:12px"><span style="font-size:22px">🌿</span><div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)">Первый шаг</div><div style="font-size:10px;color:var(--muted)">0 — 199</div></div></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.5);margin-bottom:6px;font-size:12px"><span style="font-size:22px">💓</span><div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)">Трепет</div><div style="font-size:10px;color:var(--muted)">200 — 399</div></div></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.5);margin-bottom:6px;font-size:12px"><span style="font-size:22px">✨</span><div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)">Притяжение</div><div style="font-size:10px;color:var(--muted)">400 — 599</div></div></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.5);margin-bottom:6px;font-size:12px"><span style="font-size:22px">🌸</span><div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)">Гармония</div><div style="font-size:10px;color:var(--muted)">600 — 799</div></div></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.5);margin-bottom:6px;font-size:12px"><span style="font-size:22px">🌟</span><div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)">Почти совершенство</div><div style="font-size:10px;color:var(--muted)">800 — 999</div></div></div>
+<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.5);font-size:12px"><span style="font-size:22px">♾️</span><div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark)">Вечность</div><div style="font-size:10px;color:var(--muted)">1000+</div></div></div>
+</div>
+<div style="padding:20px 18px;border-radius:20px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4)">
+<div style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;margin-bottom:14px;border-bottom:1px dashed rgba(201,169,97,.5);padding-bottom:10px;color:var(--dark)">🔥 3. Когда сгорают</div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,169,97,.2);font-size:12px"><span>Баллы «за месяц»</span><span style="color:var(--red);font-weight:700">1-го числа</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;font-size:12px"><span>Баллы «всего»</span><span style="color:#7A8E6E;font-weight:700">Не сгорают</span></div>
+</div>
+</section>
+
+</div>
+
+<div class="overlay" id="choiceOverlay">
+<div class="modal">
+<button class="close-button" data-close="choiceOverlay" type="button">×</button>
+<div class="modal-title" id="choiceTitle">Что для неё?</div>
+<div class="modal-subtitle" id="choiceSubtitle">Выбери направление</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+<button class="role-btn" data-choice="emotional" type="button"><span class="role-emoji">💙</span>Эмоциональная (+5)</button>
+<button class="role-btn" data-choice="physical" type="button"><span class="role-emoji">💜</span>Физическая (+10)</button>
+<button class="role-btn" data-choice="lightDate" type="button"><span class="role-emoji">💗</span>Лёгкое (+50)</button>
+<button class="role-btn" data-choice="bigDate" type="button"><span class="role-emoji">🏆</span>Большое (+150)</button>
+<button class="role-btn" data-choice="random" type="button"><span class="role-emoji">🎲</span>Пусть выберет колесо</button>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="editDayOverlay">
+<div class="modal">
+<button class="close-button" data-close="editDayOverlay" type="button">×</button>
+<div class="modal-title" id="editDayTitle">День</div>
+<div class="modal-subtitle" id="editDaySubtitle"></div>
+<div style="margin-top:20px">
+<div style="padding:16px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(201,169,97,.35);margin-bottom:12px;text-align:center">
+<div style="font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase">Тип дня</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-top:4px;color:var(--dark)" id="typeNameDisplay">Свободный</div>
+</div>
+<ul class="action-list" id="eventListCompact"></ul>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+<button class="btn-gold" id="typeWheelBtn" type="button">📅 Запланировать</button>
+<button class="btn-secondary" id="typeInitiativeBtn" type="button">⭐ Своя инициатива</button>
+<button class="btn-secondary" id="typeClearBtn" type="button" style="display:none;background:#C97A7A;color:#fff;border:none">🗑 Очистить день</button>
+</div>
+<div id="typeInitiativeFields" style="display:none;margin-top:16px">
+<input type="text" class="input-line" id="typeInitiativeTitle" placeholder="Название дела">
+<select class="select-line" id="typeInitiativeCategory">
+<option value="emotional">💙 Эмоциональная (5 б.)</option>
+<option value="physical">💜 Физическая (10 б.)</option>
+<option value="lightDate">💗 Лёгкое (50 б.)</option>
+<option value="bigDate">🏆 Большое (150 б.)</option>
+</select>
+<button class="btn-primary" id="typeInitiativeDone" type="button">Сохранить</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="wheelOverlay">
+<div class="modal">
+<button class="close-button" data-close="wheelOverlay" type="button">×</button>
+<div class="modal-title" id="wheelTitle">Колесо</div>
+<div id="wheelCategory" style="text-align:center;color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:2px;text-transform:uppercase">Категория</div>
+<div style="position:relative;width:min(90vw,360px);height:min(90vw,360px);margin:24px auto">
+<div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid #5A4A3A;z-index:4"></div>
+<canvas id="wheel"></canvas>
+<div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:#FFFDF7;z-index:3;display:flex;align-items:center;justify-content:center;font-size:28px;border:2px solid rgba(201,169,97,.6);color:#C97A7A">♥</div>
+</div>
+<button class="spin-button" id="spinBtn" type="button" style="display:block;margin:0 auto;min-width:240px;padding:16px 28px;border-radius:40px;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:11px;letter-spacing:3px;text-transform:uppercase;border:none;font-family:'Cormorant Garamond',serif">Крутить колесо</button>
+<div id="spinsLeft" style="text-align:center;color:var(--muted);font-size:10px;margin-top:8px"></div>
+<div id="resultBox" style="display:none;margin-top:16px;padding:22px 18px;border-radius:22px;background:rgba(245,221,224,.6);text-align:center;border:1px solid rgba(201,169,97,.4)">
+<div id="resultText" style="font-family:'Cormorant Garamond',serif;font-size:19px;margin-bottom:16px;color:var(--dark)"></div>
+<button class="btn-primary" id="doneBtn" type="button">Запланировать</button>
+<button class="btn-secondary" id="respinBtn" type="button">Перекрутить</button>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="photoAttachOverlay">
+<div class="modal">
+<button class="close-button" data-close="photoAttachOverlay" type="button">×</button>
+<div class="modal-title">📸 Фото момента</div>
+<div style="margin-top:18px">
+<label class="add-photo-btn" style="display:block;text-align:center" for="photoInput">📷 Выбрать фото</label>
+<input type="file" id="photoInput" accept="image/*" style="display:none">
+<div class="photo-preview" id="photoPreview">
+<img id="photoPreviewImg" alt="">
+<button class="remove-photo" id="removePhotoBtn" type="button" style="position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(201,122,122,.95);color:#fff;border:none">✕</button>
+</div>
+<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+<button class="btn-gold" id="photoSaveBtn" type="button" disabled>Сохранить с фото</button>
+<button class="btn-secondary" id="photoSkipBtn" type="button">Сохранить без фото</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="photo-modal" id="photoViewModal"><img id="photoViewImg" alt=""></div>
+
+<div class="overlay" id="actionEditorOverlay">
+<div class="modal">
+<button class="close-button" data-close="actionEditorOverlay" type="button">×</button>
+<div class="modal-title">Управление действиями</div>
+<div class="tabs">
+<button class="tab-btn active" data-tab="emotional" type="button">💙 Эмоц</button>
+<button class="tab-btn" data-tab="physical" type="button">💜 Физ</button>
+<button class="tab-btn" data-tab="lightDate" type="button">💗 Лёгк</button>
+<button class="tab-btn" data-tab="bigDate" type="button">🏆 Больш</button>
+</div>
+<div class="add-row"><input type="text" id="newActionInput" placeholder="Новое задание"><button id="addActionBtn" type="button">＋</button></div>
+<div class="tab-content active" id="tab-emotional"><ul class="action-list" id="list-emotional"></ul></div>
+<div class="tab-content" id="tab-physical"><ul class="action-list" id="list-physical"></ul></div>
+<div class="tab-content" id="tab-lightDate"><ul class="action-list" id="list-lightDate"></ul></div>
+<div class="tab-content" id="tab-bigDate"><ul class="action-list" id="list-bigDate"></ul></div>
+</div>
+</div>
+
+<div class="overlay" id="quarantineOverlay">
+<div class="modal">
+<button class="close-button" data-close="quarantineOverlay" type="button">×</button>
+<div class="modal-title">Карантин</div>
+<div id="quarantineList" style="margin-top:20px"></div>
+</div>
+</div>
+
+<div class="overlay center" id="rescheduleOverlay">
+<div class="modal">
+<div class="modal-title">Перенести 📅</div>
+<input type="date" class="input-line" id="rescheduleDateInput" style="border-radius:14px;margin-top:20px">
+<button class="btn-gold" id="rescheduleConfirmBtn" type="button">Перенести</button>
+<button class="btn-secondary" id="rescheduleCancelBtn" type="button">Отмена</button>
+</div>
+</div>
+
+<div class="overlay center" id="confirmYesterdayOverlay">
+<div class="modal">
+<div class="modal-title">Вчерашний план 📆</div>
+<div style="margin:20px 0;padding:18px;background:rgba(201,169,97,.1);border-radius:16px;border:1px solid rgba(201,169,97,.3)">
+<div id="confirmYesterdayText" style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;text-align:center;color:var(--dark)"></div>
+</div>
+<button class="btn-primary" id="confirmYesBtn" type="button">✓ Да, состоялось</button>
+<button class="btn-secondary" id="confirmNoBtn" type="button">✕ Нет, не состоялось</button>
+</div>
+</div>
+
+<div class="overlay" id="retroOverlay">
+<div class="modal">
+<button class="close-button" data-close="retroOverlay" type="button">×</button>
+<div class="modal-title">📝 Отметить задним числом</div>
+<div style="margin-top:18px">
+<input type="date" class="input-line" id="retroDate" style="border-radius:14px">
+<select class="select-line" id="retroCategory">
+<option value="emotional">💙 Эмоциональная (5 б.)</option>
+<option value="physical">💜 Физическая (10 б.)</option>
+<option value="lightDate">💗 Лёгкое (50 б.)</option>
+<option value="bigDate">🏆 Большое (150 б.)</option>
+</select>
+<select class="select-line" id="retroTask"><option value="">— не выбирать —</option></select>
+<input type="text" class="input-line" id="retroCustomText" placeholder="Или свой текст">
+<button class="btn-gold" id="retroSaveBtn" type="button">Начислить</button>
+</div>
+</div>
+</div>
+
+<div class="settings-hotzone" id="settingsHotzone"></div>
+<button class="settings-toggle" id="settingsToggle" type="button">⚙</button>
+<div class="settings-menu" id="settingsMenu"></div>
+
+<div class="toast" id="toast">
+<span class="emoji" id="toastEmoji">✨</span>
+<span class="text" id="toastText"></span>
+<button class="close-x" id="toastClose" type="button">✕</button>
+</div> 
