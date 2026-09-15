@@ -14,8 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Marck+Script&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-audio,video{display:none!important}
-:root{--cream:#F5EFE0;--cream2:#FAF6EC;--dark:#2E2419;--brown:#5A4A3A;--muted:#8A7A66;--line:#D4C4A8;--gold:#C9A961;--gold-deep:#A8842E;--blue:#B8D0DC;--blue-deep:#8FA9BA;--purple:#D5C4DB;--purple-deep:#B09CBC;--rose:#E8B8BD;--rose-deep:#D4989E;--green:#B5C4A8;--red:#C97A7A;--shadow:0 8px 30px rgba(60,40,20,.18);--shadow-soft:0 3px 14px rgba(60,40,20,.12)}
+:root{--dark:#2E2419;--brown:#5A4A3A;--muted:#8A7A66;--line:#D4C4A8;--gold:#C9A961;--gold-deep:#A8842E;--blue:#B8D0DC;--blue-deep:#8FA9BA;--purple:#D5C4DB;--purple-deep:#B09CBC;--red:#C97A7A;--shadow:0 8px 30px rgba(60,40,20,.18);--shadow-soft:0 3px 14px rgba(60,40,20,.12)}
 html{min-height:100%;background:url('https://i.ibb.co/4Rr0h6XY/IMG-4341.jpg') center center / cover no-repeat;background-color:#3A3028;overscroll-behavior:none}
 body{font-family:'Montserrat',sans-serif;color:var(--dark);min-height:100vh;line-height:1.5;overflow-x:hidden;padding:12px 12px 24px;background:transparent;position:relative;overscroll-behavior:none}
 body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(40,30,20,.35) 0%,rgba(40,30,20,.10) 40%,rgba(40,30,20,.35) 100%)}
@@ -85,7 +84,6 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;back
 .btn-primary:disabled{background:#C4B8A5;cursor:not-allowed;box-shadow:none}
 .btn-secondary{width:100%;padding:13px;border-radius:40px;background:rgba(255,255,255,.4);color:var(--brown);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:1.5px solid rgba(90,74,58,.5);cursor:pointer;font-family:'Cormorant Garamond',serif;margin-top:10px;position:relative;z-index:3}
 .btn-secondary:active{transform:scale(.97);background:rgba(90,74,58,.1)}
-.btn-secondary:disabled{opacity:.4}
 .btn-gold{width:100%;padding:15px;border-radius:40px;background:linear-gradient(145deg,#C9A961,#A8842E);color:#FCF8EE;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;font-family:'Cormorant Garamond',serif;position:relative;z-index:3;box-shadow:0 6px 20px rgba(168,132,46,.35)}
 .btn-gold:active{transform:scale(.97)}
 button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.month-arrow,.close-button,.flower-btn,.tab-btn,.settings-menu button,.add-row button,.del-btn{touch-action:manipulation;-webkit-appearance:none;-webkit-user-select:none;user-select:none;cursor:pointer}
@@ -162,11 +160,9 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .result-box .result-text{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1.4;margin-bottom:16px;font-weight:500;color:var(--dark)}
 .input-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:13px;outline:none;margin-bottom:12px;color:var(--dark)}
 .input-line:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,97,.2)}
-.input-line::placeholder{color:var(--muted);font-size:11px}
 .select-line{width:100%;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:12px;margin-bottom:12px;cursor:pointer;color:var(--dark)}
 .add-row{display:flex;gap:8px;margin-bottom:16px}
 .add-row input{flex:1;padding:14px 18px;border-radius:40px;border:1px solid rgba(201,169,97,.4);background:rgba(255,255,255,.7);font-family:inherit;font-size:13px;outline:none;color:var(--dark)}
-.add-row input::placeholder{font-size:11px;color:var(--muted)}
 .add-row button{padding:0 22px;border-radius:40px;background:linear-gradient(145deg,#5A4A3A,#2E2419);color:#F5EBD5;font-size:20px;cursor:pointer;border:none;font-family:inherit}
 .action-list{list-style:none;max-height:340px;overflow-y:auto;margin-top:8px}
 .action-list li{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,.6);border-radius:14px;margin-bottom:6px;font-size:12px;gap:10px;border:1px solid rgba(201,169,97,.3);color:var(--dark)}
@@ -298,14 +294,13 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 <body>
 
 <script>
-/* Видимая диагностика: любая ошибка покажется красной плашкой сверху */
 window.addEventListener('error', function(e){
   try {
     var el = document.createElement('div');
     el.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#C97A7A;color:#fff;padding:14px;font-size:13px;z-index:999999;font-family:monospace;word-break:break-all;line-height:1.4;box-shadow:0 4px 12px rgba(0,0,0,.4)';
     el.textContent = 'ОШИБКА: ' + (e.message || 'unknown') + ' (строка ' + (e.lineno || '?') + ')';
     if (document.body) document.body.appendChild(el); else document.documentElement.appendChild(el);
-    setTimeout(function(){ try { el.remove(); } catch(_){} }, 15000);
+    setTimeout(function(){ try { el.remove(); } catch(_){} }, 20000);
   } catch(err){}
 }, true);
 </script>
@@ -926,21 +921,21 @@ var saveTimeout = null;
 
 function currentActor(){ return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
 
-function _histKey(h){ return (h.eventDate||0)+'|'+(h.title||'')+'|'+(h.points||0); }
+function _histKey(h){ return (h.eventDate || 0) + '|' + (h.title || '') + '|' + (h.points || 0); }
 function mergeHistory(a, b){
   var map = new Map();
-  (a||[]).forEach(function(h){ map.set(_histKey(h), h); });
-  (b||[]).forEach(function(h){
+  (a || []).forEach(function(h){ map.set(_histKey(h), h); });
+  (b || []).forEach(function(h){
     var k = _histKey(h);
     var ex = map.get(k);
     if (ex && ex.photo && !h.photo) return;
     map.set(k, ex ? Object.assign({}, ex, h, { photo: h.photo || ex.photo }) : h);
   });
-  return Array.from(map.values()).sort(function(x,y){ return (y.eventDate||0)-(x.eventDate||0); });
+  return Array.from(map.values()).sort(function(x,y){ return (y.eventDate || 0) - (x.eventDate || 0); });
 }
 function mergeCompletedDays(a, b){
   var out = {};
-  var keys = new Set([].concat(Object.keys(a||{}), Object.keys(b||{})));
+  var keys = new Set([].concat(Object.keys(a || {}), Object.keys(b || {})));
   keys.forEach(function(k){
     var ev = new Map();
     ((a && a[k]) || []).forEach(function(e){ ev.set(e.timestamp, e); });
@@ -948,47 +943,47 @@ function mergeCompletedDays(a, b){
       var ex = ev.get(e.timestamp);
       ev.set(e.timestamp, ex ? Object.assign({}, ex, e, { photo: e.photo || ex.photo }) : e);
     });
-    out[k] = Array.from(ev.values()).sort(function(x,y){ return x.timestamp-y.timestamp; });
+    out[k] = Array.from(ev.values()).sort(function(x,y){ return x.timestamp - y.timestamp; });
   });
   return out;
 }
 function mergePlannedDays(a, b){
-  var out = Object.assign({}, a||{});
-  for (var k in (b||{})){
+  var out = Object.assign({}, a || {});
+  for (var k in (b || {})){
     var ex = out[k], nw = b[k];
     if (!ex) out[k] = nw;
-    else out[k] = (nw.timestamp||0) > (ex.timestamp||0) ? nw : ex;
+    else out[k] = (nw.timestamp || 0) > (ex.timestamp || 0) ? nw : ex;
   }
   return out;
 }
 function mergeWishes(a, b){
   var map = new Map();
-  (a||[]).forEach(function(w){ map.set(w.createdAt, w); });
-  (b||[]).forEach(function(w){
+  (a || []).forEach(function(w){ map.set(w.createdAt, w); });
+  (b || []).forEach(function(w){
     var ex = map.get(w.createdAt);
     map.set(w.createdAt, ex ? Object.assign({}, ex, w) : w);
   });
-  return Array.from(map.values()).sort(function(x,y){ return (x.createdAt||0)-(y.createdAt||0); });
+  return Array.from(map.values()).sort(function(x,y){ return (x.createdAt || 0) - (y.createdAt || 0); });
 }
 function mergeNotifications(a, b){
   var map = new Map();
-  (a||[]).forEach(function(n){ map.set(n.id, n); });
-  (b||[]).forEach(function(n){
+  (a || []).forEach(function(n){ map.set(n.id, n); });
+  (b || []).forEach(function(n){
     var ex = map.get(n.id);
     map.set(n.id, ex ? Object.assign({}, ex, n) : n);
   });
-  return Array.from(map.values()).sort(function(x,y){ return (y.createdAt||0)-(x.createdAt||0); });
+  return Array.from(map.values()).sort(function(x,y){ return (y.createdAt || 0) - (x.createdAt || 0); });
 }
 function mergeActivityLog(a, b){
   var map = new Map();
-  (a||[]).forEach(function(l){ map.set(l.id, l); });
-  (b||[]).forEach(function(l){ map.set(l.id, l); });
-  return Array.from(map.values()).sort(function(x,y){ return y.timestamp-x.timestamp; }).slice(0, 500);
+  (a || []).forEach(function(l){ map.set(l.id, l); });
+  (b || []).forEach(function(l){ map.set(l.id, l); });
+  return Array.from(map.values()).sort(function(x,y){ return y.timestamp - x.timestamp; }).slice(0, 500);
 }
 function mergePointsLog(a, b){
   var map = new Map();
-  (a||[]).forEach(function(l){ map.set(l.id, l); });
-  (b||[]).forEach(function(l){ map.set(l.id, l); });
+  (a || []).forEach(function(l){ map.set(l.id, l); });
+  (b || []).forEach(function(l){ map.set(l.id, l); });
   return Array.from(map.values()).sort(function(x,y){ return y.timestamp - x.timestamp; }).slice(0, 300);
 }
 function migrateCountersShape(){
@@ -1040,8 +1035,8 @@ function compressImage(file, maxDim, quality){
       var img = new Image();
       img.onload = function(){
         var w = img.width, h = img.height;
-        if (w > h){ if (w > maxDim){ h = Math.round(h*maxDim/w); w = maxDim; } }
-        else { if (h > maxDim){ w = Math.round(w*maxDim/h); h = maxDim; } }
+        if (w > h){ if (w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; } }
+        else { if (h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; } }
         var canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -1065,35 +1060,35 @@ function showToast(emoji, text){
     window._toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 5000);
   } catch(e){}
 }
-function formatTime(ts){ if (!ts) return '—'; var d = new Date(ts); return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
-function formatDuration(sec){ if (!sec || sec < 0) return '0 сек'; var h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60; if (h>0) return h+' ч '+m+' мин'; if (m>0) return m+' мин '+s+' сек'; return s+' сек'; }
-function getDaysWord(n){ if (n%10===1 && n%100!==11) return 'день'; if (n%10>=2 && n%10<=4 && (n%100<10||n%100>=20)) return 'дня'; return 'дней'; }
-function getCurrentMonthKey(){ var n = new Date(); return n.getFullYear()+'-'+n.getMonth(); }
+function formatTime(ts){ if (!ts) return '—'; var d = new Date(ts); return String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth() + 1).padStart(2,'0') + ' · ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
+function formatDuration(sec){ if (!sec || sec < 0) return '0 сек'; var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60; if (h > 0) return h + ' ч ' + m + ' мин'; if (m > 0) return m + ' мин ' + s + ' сек'; return s + ' сек'; }
+function getDaysWord(n){ if (n % 10 === 1 && n % 100 !== 11) return 'день'; if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return 'дня'; return 'дней'; }
+function getCurrentMonthKey(){ var n = new Date(); return n.getFullYear() + '-' + n.getMonth(); }
 function getVanyaTodaySeconds(){
   var todayKey = new Date().toISOString().slice(0,10);
   var base = 0;
   if (state.vanyaSession.todayDate === todayKey) base = state.vanyaSession.todaySeconds || 0;
-  if (state.vanyaSession.sessionStart && state.vanyaSession.online) base += Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
+  if (state.vanyaSession.sessionStart && state.vanyaSession.online) base += Math.floor((Date.now() - state.vanyaSession.sessionStart) / 1000);
   return base;
 }
-function getLevel(p){ for (var i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return LEVELS[LEVELS.length-1]; }
-function getNextLevel(p){ for (var i=0;i<LEVELS.length;i++) if (p<=LEVELS[i].max) return LEVELS[i]; return null; }
+function getLevel(p){ for (var i = 0; i < LEVELS.length; i++) if (p <= LEVELS[i].max) return LEVELS[i]; return LEVELS[LEVELS.length - 1]; }
+function getNextLevel(p){ for (var i = 0; i < LEVELS.length; i++) if (p <= LEVELS[i].max) return LEVELS[i]; return null; }
 function getProgressToNext(p){
   var cur = getLevel(p); var idx = LEVELS.indexOf(cur);
-  if (idx === LEVELS.length-1) return 100;
-  var next = LEVELS[idx+1];
-  var prevMax = idx===0 ? 0 : LEVELS[idx-1].max + 1;
-  return Math.min(100, Math.max(0, ((p-prevMax)/(next.max-prevMax+1))*100));
+  if (idx === LEVELS.length - 1) return 100;
+  var next = LEVELS[idx + 1];
+  var prevMax = idx === 0 ? 0 : LEVELS[idx - 1].max + 1;
+  return Math.min(100, Math.max(0, ((p - prevMax) / (next.max - prevMax + 1)) * 100));
 }
 function makeSparkles(cx, cy, count){
   count = count || 24;
-  for (var i=0;i<count;i++){
+  for (var i = 0; i < count; i++){
     var s = document.createElement('div'); s.className = 'sparkle';
-    var angle = (i/count)*Math.PI*2 + Math.random()*0.4;
-    var dist = 60 + Math.random()*80;
-    s.style.left = cx+'px'; s.style.top = cy+'px';
-    s.style.setProperty('--sx', (Math.cos(angle)*dist)+'px');
-    s.style.setProperty('--sy', (Math.sin(angle)*dist)+'px');
+    var angle = (i / count) * Math.PI * 2 + Math.random() * 0.4;
+    var dist = 60 + Math.random() * 80;
+    s.style.left = cx + 'px'; s.style.top = cy + 'px';
+    s.style.setProperty('--sx', (Math.cos(angle) * dist) + 'px');
+    s.style.setProperty('--sy', (Math.sin(angle) * dist) + 'px');
     document.body.appendChild(s);
     setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(s), 1200);
   }
@@ -1101,30 +1096,30 @@ function makeSparkles(cx, cy, count){
 function makeConfetti(count){
   count = count || 40;
   var colors = ['#C9A961','#E8C88A','#E8B8BD','#F5DDDE','#B09CBC','#B8D0DC','#B5C4A8','#FAF6EC'];
-  for (var i=0;i<count;i++){
+  for (var i = 0; i < count; i++){
     var c = document.createElement('div'); c.className = 'confetti';
-    c.style.left = (Math.random()*100)+'vw';
-    c.style.background = colors[Math.floor(Math.random()*colors.length)];
-    c.style.borderRadius = Math.random()>0.5 ? '50%' : '2px';
-    c.style.width = (6+Math.random()*8)+'px'; c.style.height = (6+Math.random()*8)+'px';
+    c.style.left = (Math.random() * 100) + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.width = (6 + Math.random() * 8) + 'px'; c.style.height = (6 + Math.random() * 8) + 'px';
     document.body.appendChild(c);
     setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(c), 4500);
   }
 }
 function fireBurst(x, y){
-  var ring = document.createElement('div'); ring.className='burst-ring';
-  ring.style.left = x+'px'; ring.style.top = y+'px';
+  var ring = document.createElement('div'); ring.className = 'burst-ring';
+  ring.style.left = x + 'px'; ring.style.top = y + 'px';
   document.body.appendChild(ring);
   setTimeout(function(){ if (ring.parentNode) ring.parentNode.removeChild(ring); }, 750);
-  for (var i=0;i<6;i++){
-    var angle = (i/6)*Math.PI*2 + Math.random()*0.3;
-    var dist = 60 + Math.random()*40;
-    var h = document.createElement('div'); h.className='burst-heart';
-    h.style.left = x+'px'; h.style.top = y+'px';
-    h.style.setProperty('--bx', (Math.cos(angle)*dist)+'px');
-    h.style.setProperty('--by', (Math.sin(angle)*dist)+'px');
-    h.style.setProperty('--br', (360*(Math.random()>0.5?1:-1))+'deg');
-    h.style.width = (24+Math.random()*14)+'px'; h.style.height = h.style.width;
+  for (var i = 0; i < 6; i++){
+    var angle = (i / 6) * Math.PI * 2 + Math.random() * 0.3;
+    var dist = 60 + Math.random() * 40;
+    var h = document.createElement('div'); h.className = 'burst-heart';
+    h.style.left = x + 'px'; h.style.top = y + 'px';
+    h.style.setProperty('--bx', (Math.cos(angle) * dist) + 'px');
+    h.style.setProperty('--by', (Math.sin(angle) * dist) + 'px');
+    h.style.setProperty('--br', (360 * (Math.random() > 0.5 ? 1 : -1)) + 'deg');
+    h.style.width = (24 + Math.random() * 14) + 'px'; h.style.height = h.style.width;
     document.body.appendChild(h);
     setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(h), 1150);
   }
@@ -1134,10 +1129,10 @@ function animateNumber(el, from, to, duration){
   duration = duration || 900;
   var start = performance.now();
   function tick(now){
-    var t = Math.min(1, (now-start)/duration);
-    var eased = 1 - Math.pow(1-t, 3);
-    el.textContent = Math.round(from + (to-from)*eased);
-    if (t<1) requestAnimationFrame(tick); else el.textContent = to;
+    var t = Math.min(1, (now - start) / duration);
+    var eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if (t < 1) requestAnimationFrame(tick); else el.textContent = to;
   }
   requestAnimationFrame(tick);
 }
@@ -1188,13 +1183,13 @@ function startVanyaSession(){
 function isVanyaReallyOnline(){
   if (!state.vanyaSession || !state.vanyaSession.online) return false;
   var last = state.vanyaSession.lastActiveAt || 0;
-  return (Date.now() - last)/1000 < 180;
+  return (Date.now() - last) / 1000 < 180;
 }
 function endVanyaSession(){
   try {
     if (state.vanyaSession.sessionStart){
-      var elapsed = Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
-      state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds||0) + elapsed;
+      var elapsed = Math.floor((Date.now() - state.vanyaSession.sessionStart) / 1000);
+      state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds || 0) + elapsed;
       state.vanyaSession.sessionStart = null;
     }
     state.vanyaSession.online = false;
@@ -1241,8 +1236,8 @@ function deleteCloudKeys(keys){
 function setCloudForcedType(key, val){
   if (!mainDocRef || !FV || !navigator.onLine) return;
   var patch = {};
-  if (val === null) patch['forcedDayTypes.'+key] = FV.delete();
-  else patch['forcedDayTypes.'+key] = val;
+  if (val === null) patch['forcedDayTypes.' + key] = FV.delete();
+  else patch['forcedDayTypes.' + key] = val;
   mainDocRef.update(patch).catch(function(e){ console.warn('forceSet', e); });
 }
 
@@ -1326,19 +1321,19 @@ function subscribeToFirestore(){
         state.wishes         = mergeWishes(state.wishes, d.wishes);
         state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
         state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
-        state.achievements   = Array.from(new Set([].concat(state.achievements||[], d.achievements||[])));
-        state.spinsUsed      = Object.assign({}, state.spinsUsed, d.spinsUsed||{});
-        state.dailyVisits    = Object.assign({}, state.dailyVisits, d.dailyVisits||{});
-        state.quarantine     = Object.assign({}, state.quarantine, d.quarantine||{});
-        state.userAdded      = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userAdded||{}, d.userAdded||{});
-        state.userRemoved    = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userRemoved||{}, d.userRemoved||{});
+        state.achievements   = Array.from(new Set([].concat(state.achievements || [], d.achievements || [])));
+        state.spinsUsed      = Object.assign({}, state.spinsUsed, d.spinsUsed || {});
+        state.dailyVisits    = Object.assign({}, state.dailyVisits, d.dailyVisits || {});
+        state.quarantine     = Object.assign({}, state.quarantine, d.quarantine || {});
+        state.userAdded      = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userAdded || {}, d.userAdded || {});
+        state.userRemoved    = Object.assign({ emotional:[], physical:[], lightDate:[], bigDate:[] }, state.userRemoved || {}, d.userRemoved || {});
         if (d.lastCelebrationMonth) state.lastCelebrationMonth = d.lastCelebrationMonth;
         if (d.vanyaSession) state.vanyaSession = d.vanyaSession;
         if (d.counters) state.counters = d.counters;
         if (d.todayCounters) state.todayCounters = d.todayCounters;
         if (d.lastLevelName){ lastLevelName = d.lastLevelName; safeSet('lastLevelName', lastLevelName); }
         if (d.reachedMilestones){ reachedMilestones = d.reachedMilestones; safeSet('reachedMilestones', JSON.stringify(reachedMilestones)); }
-        if (d.welcomeShown !== undefined) safeSet('welcomeShown', d.welcomeShown ? 'true':'false');
+        if (d.welcomeShown !== undefined) safeSet('welcomeShown', d.welcomeShown ? 'true' : 'false');
         if (d.schedules) for (var key in d.schedules) safeSet(key, d.schedules[key]);
         migrateCountersShape();
         refreshAll(prevPoints);
@@ -1388,16 +1383,16 @@ function applyRoleView(){
     var settingsBtn = document.getElementById('settingsToggle');
     var sm = document.getElementById('settingsMenu');
     if (isVanya){
-      if (hotzone){ hotzone.style.display='none'; hotzone.style.pointerEvents='none'; }
-      if (settingsBtn){ settingsBtn.classList.remove('visible'); settingsBtn.style.display='none'; }
+      if (hotzone){ hotzone.style.display = 'none'; hotzone.style.pointerEvents = 'none'; }
+      if (settingsBtn){ settingsBtn.classList.remove('visible'); settingsBtn.style.display = 'none'; }
       if (sm) sm.classList.remove('open');
     } else {
-      if (hotzone){ hotzone.style.display='block'; hotzone.style.pointerEvents='auto'; }
-      if (settingsBtn) settingsBtn.style.display='';
+      if (hotzone){ hotzone.style.display = 'block'; hotzone.style.pointerEvents = 'auto'; }
+      if (settingsBtn) settingsBtn.style.display = '';
     }
     renderSettingsMenu();
-    if (state.role === 'nastya' && state.viewingAs === 'vanya'){ badge.textContent='👁 Режим просмотра: Ваня'; badge.classList.add('show'); }
-    else if (state.role === 'vanya' && state.viewingAs === 'nastya'){ badge.textContent='👁 Режим просмотра: Настя'; badge.classList.add('show'); }
+    if (state.role === 'nastya' && state.viewingAs === 'vanya'){ badge.textContent = '👁 Режим просмотра: Ваня'; badge.classList.add('show'); }
+    else if (state.role === 'vanya' && state.viewingAs === 'nastya'){ badge.textContent = '👁 Режим просмотра: Настя'; badge.classList.add('show'); }
     else badge.classList.remove('show');
     renderNotificationsForNastya();
     renderCalendar();
@@ -1417,8 +1412,8 @@ function showDailyMessage(){
     if (safeGet('lastDailyMessage') === todayKey) return;
     var now = new Date();
     var start = new Date(now.getFullYear(), 0, 0);
-    var dayOfYear = Math.floor((now-start)/86400000);
-    var idx = ((dayOfYear-1)%DAILY_MESSAGES.length + DAILY_MESSAGES.length)%DAILY_MESSAGES.length;
+    var dayOfYear = Math.floor((now - start) / 86400000);
+    var idx = ((dayOfYear - 1) % DAILY_MESSAGES.length + DAILY_MESSAGES.length) % DAILY_MESSAGES.length;
     var msg = DAILY_MESSAGES[idx];
     document.getElementById('dailyEmoji').textContent = msg.e;
     document.getElementById('dailyMessage').textContent = msg.t;
@@ -1434,11 +1429,11 @@ function renderSettingsMenu(){
     menu.innerHTML = '';
     if (state.role === 'nastya'){
       var add = function(txt, color, fn){
-        var b = document.createElement('button'); b.type='button'; b.textContent = txt;
-        if (color){ b.style.color = color; b.style.fontWeight='600'; }
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = txt;
+        if (color){ b.style.color = color; b.style.fontWeight = '600'; }
         b.onclick = fn; menu.appendChild(b);
       };
-      var div = function(){ var d = document.createElement('div'); d.className='divider'; menu.appendChild(d); };
+      var div = function(){ var d = document.createElement('div'); d.className = 'divider'; menu.appendChild(d); };
       add('🎯 Настроить тип дня','var(--purple-deep)',function(){ menu.classList.remove('open'); openForceDayModal(); });
       add('📝 Отметить задним числом','var(--gold-deep)',function(){ menu.classList.remove('open'); openRetroModal(); });
       add('💌 Показать письмо','var(--gold-deep)',function(){ menu.classList.remove('open'); document.getElementById('welcomeOverlay').classList.add('active'); });
@@ -1448,8 +1443,8 @@ function renderSettingsMenu(){
       div();
       add('✏ Управление действиями',null,function(){ renderActionLists(); document.getElementById('actionEditorOverlay').classList.add('active'); menu.classList.remove('open'); });
       add('⏸ Карантин',null,function(){ openQuarantineList(); menu.classList.remove('open'); });
-      add('↺ Сбросить карантин',null,function(){ if (!confirm('Сбросить карантин?')) return; state.quarantine={}; saveState(); showToast('↺','Карантин сброшен!'); menu.classList.remove('open'); });
-      add('🔄 Сбросить расписание',null,function(){ if (!confirm('Сбросить расписание?')) return; try { Object.keys(localStorage).forEach(function(k){ if (k.indexOf('schedule_')===0) localStorage.removeItem(k); }); } catch(e){} saveState(); location.reload(); });
+      add('↺ Сбросить карантин',null,function(){ if (!confirm('Сбросить карантин?')) return; state.quarantine = {}; saveState(); showToast('↺','Карантин сброшен!'); menu.classList.remove('open'); });
+      add('🔄 Сбросить расписание',null,function(){ if (!confirm('Сбросить расписание?')) return; try { Object.keys(localStorage).forEach(function(k){ if (k.indexOf('schedule_') === 0) localStorage.removeItem(k); }); } catch(e){} saveState(); location.reload(); });
       div();
       add('📤 Копировать данные',null,function(){
         var data = JSON.parse(JSON.stringify(state)); data.currentMonth = getCurrentMonthKey();
@@ -1474,7 +1469,7 @@ function renderSettingsMenu(){
       });
       div();
       var b9 = document.createElement('button');
-      b9.type='button'; b9.textContent='🗑 Сбросить всё'; b9.className='danger';
+      b9.type = 'button'; b9.textContent = '🗑 Сбросить всё'; b9.className = 'danger';
       b9.onclick = function(){
         if (!confirm('УДАЛИТЬ ВСЁ?')) return;
         try { localStorage.clear(); } catch(e){}
@@ -1490,7 +1485,7 @@ function renderSettingsMenu(){
       menu.appendChild(b9);
     } else {
       var notice = document.createElement('div');
-      notice.className='empty-menu-notice';
+      notice.className = 'empty-menu-notice';
       notice.innerHTML = '<span class="big">🌿</span>Здесь пусто<span class="small">Только для Насти</span>';
       menu.appendChild(notice);
     }
@@ -1502,12 +1497,12 @@ function openForceDayModal(){
   var dateInput = document.getElementById('forceDayDate');
   var currentSpan = document.getElementById('forceDayCurrent');
   var today = new Date();
-  dateInput.value = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  dateInput.value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
   function refreshCurrent(){
     var v = dateInput.value; if (!v){ currentSpan.textContent = '—'; return; }
     var p = v.split('-').map(function(n){ return parseInt(n); });
-    var yy = p[0], mm = p[1]-1, dd = p[2];
-    var key = yy+'-'+mm+'-'+dd;
+    var yy = p[0], mm = p[1] - 1, dd = p[2];
+    var key = yy + '-' + mm + '-' + dd;
     var t = getDayType(yy, mm, dd);
     var info = TYPE_INFO[t] || TYPE_INFO.custom;
     var manualMark = (state.forcedDayTypes && state.forcedDayTypes[key]) ? ' (вручную)' : ' (авто)';
@@ -1519,20 +1514,20 @@ function openForceDayModal(){
     b.onclick = function(){
       var v = dateInput.value; if (!v){ alert('Выбери дату'); return; }
       var p = v.split('-').map(function(n){ return parseInt(n); });
-      var yy = p[0], mm = p[1]-1, dd = p[2];
-      var key = yy+'-'+mm+'-'+dd;
+      var yy = p[0], mm = p[1] - 1, dd = p[2];
+      var key = yy + '-' + mm + '-' + dd;
       var choice = b.dataset.force;
       if (!state.forcedDayTypes) state.forcedDayTypes = {};
       if (choice === 'reset'){
         delete state.forcedDayTypes[key];
         setCloudForcedType(key, null);
-        logActivity('force_reset', '↺ Вернул автотип для '+dd+'.'+(mm+1)+'.'+yy);
-        showToast('↺', 'Вернул автотип для '+dd+'.'+(mm+1));
+        logActivity('force_reset', '↺ Вернул автотип для ' + dd + '.' + (mm + 1) + '.' + yy);
+        showToast('↺', 'Вернул автотип для ' + dd + '.' + (mm + 1));
       } else {
         state.forcedDayTypes[key] = choice;
         setCloudForcedType(key, choice);
-        logActivity('force_set', '🎯 Поставил '+(TYPE_INFO[choice]?TYPE_INFO[choice].name:choice)+' на '+dd+'.'+(mm+1)+'.'+yy);
-        showToast('🎯', 'Поставлено: '+(TYPE_INFO[choice]?TYPE_INFO[choice].name:choice));
+        logActivity('force_set', '🎯 Поставил ' + (TYPE_INFO[choice] ? TYPE_INFO[choice].name : choice) + ' на ' + dd + '.' + (mm + 1) + '.' + yy);
+        showToast('🎯', 'Поставлено: ' + (TYPE_INFO[choice] ? TYPE_INFO[choice].name : choice));
       }
       saveState();
       renderCalendar();
@@ -1549,15 +1544,15 @@ function openRetroModal(){
   var taskSelect = document.getElementById('retroTask');
   var customInput = document.getElementById('retroCustomText');
   var pointsSpan = document.getElementById('retroPoints');
-  var y = new Date(); y.setDate(y.getDate()-1);
-  dateInput.value = y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0');
+  var y = new Date(); y.setDate(y.getDate() - 1);
+  dateInput.value = y.getFullYear() + '-' + String(y.getMonth() + 1).padStart(2,'0') + '-' + String(y.getDate()).padStart(2,'0');
   dateInput.max = new Date().toISOString().slice(0,10);
   catSelect.value = 'emotional';
   customInput.value = '';
   function refreshTasks(){
     var cat = catSelect.value;
     var tasks = getTasksForCategory(cat);
-    taskSelect.innerHTML = '<option value="">— не выбирать —</option>' + tasks.map(function(t){ return '<option value="'+encodeURIComponent(t)+'">'+t+'</option>'; }).join('');
+    taskSelect.innerHTML = '<option value="">— не выбирать —</option>' + tasks.map(function(t){ return '<option value="' + encodeURIComponent(t) + '">' + t + '</option>'; }).join('');
   }
   function refreshPoints(){
     var cat = catSelect.value;
@@ -1574,7 +1569,7 @@ function submitRetro(){
     var dateStr = document.getElementById('retroDate').value;
     if (!dateStr){ alert('Выбери дату'); return; }
     var parts = dateStr.split('-').map(function(n){ return parseInt(n); });
-    var yy = parts[0], mm = parts[1]-1, dd = parts[2];
+    var yy = parts[0], mm = parts[1] - 1, dd = parts[2];
     var cat = document.getElementById('retroCategory').value;
     var taskEncoded = document.getElementById('retroTask').value;
     var customText = document.getElementById('retroCustomText').value.trim();
@@ -1583,7 +1578,7 @@ function submitRetro(){
     else if (customText) text = customText;
     if (!text){ alert('Выбери задание из списка или введи свой текст'); return; }
     var points = TYPE_INFO[cat].points;
-    var key = yy+'-'+mm+'-'+dd;
+    var key = yy + '-' + mm + '-' + dd;
     if (!state.completedDays[key]) state.completedDays[key] = [];
     var exists = state.completedDays[key].some(function(e){ return e.text === text; });
     if (exists){
@@ -1592,22 +1587,22 @@ function submitRetro(){
     state.completedDays[key].push({
       type: cat, text: text, points: points, isInitiative: false, timestamp: Date.now(), retro: true
     });
-    var dateNice = String(dd).padStart(2,'0')+'.'+String(mm+1).padStart(2,'0')+'.'+yy;
+    var dateNice = String(dd).padStart(2,'0') + '.' + String(mm + 1).padStart(2,'0') + '.' + yy;
     state.history.unshift({
       date: dateNice, eventDate: new Date(yy, mm, dd).getTime(), title: text,
       category: TYPE_INFO[cat].name + ' (задним числом)',
       emoji: TYPE_INFO[cat].emoji, points: points, photo: null
     });
     applyPointsDelta(points, points, 'retro', text + ' (' + dateNice + ')');
-    logActivity('retro_add', '📝 Отметил задним числом: «'+text+'» ('+dateNice+', +'+points+' б.)');
+    logActivity('retro_add', '📝 Отметил задним числом: «' + text + '» (' + dateNice + ', +' + points + ' б.)');
     renderCalendar(); updateStats(); renderHistory(); renderLoveTree(); renderPointsLog(); checkAchievements();
     document.getElementById('retroOverlay').classList.remove('active');
-    showToast('📝', 'Начислено +'+points+' б. за '+dateNice);
+    showToast('📝', 'Начислено +' + points + ' б. за ' + dateNice);
     makeConfetti(20);
   } catch(e){ console.warn('submitRetro', e); }
 }
 
-function isInQuarantine(taskText, cat){ var q = state.quarantine[taskText]; if (!q) return false; return (Date.now()-q.doneAt)/(1000*60*60*24) < (QUARANTINE_DAYS[cat]||14); }
+function isInQuarantine(taskText, cat){ var q = state.quarantine[taskText]; if (!q) return false; return (Date.now() - q.doneAt) / (1000 * 60 * 60 * 24) < (QUARANTINE_DAYS[cat] || 14); }
 function putInQuarantine(taskText, cat){ state.quarantine[taskText] = { type:cat, doneAt:Date.now() }; saveState(); }
 function openQuarantineList(){
   var list = document.getElementById('quarantineList');
@@ -1619,9 +1614,9 @@ function openQuarantineList(){
   else {
     list.innerHTML = items.map(function(pair){
       var txt = pair[0], q = pair[1];
-      var days = QUARANTINE_DAYS[q.type]||14;
-      var left = Math.ceil(days - (Date.now()-q.doneAt)/(1000*60*60*24));
-      return '<div class="quarantine-item"><span>'+txt+'</span><span class="days">'+left+' дн.</span></div>';
+      var days = QUARANTINE_DAYS[q.type] || 14;
+      var left = Math.ceil(days - (Date.now() - q.doneAt) / (1000 * 60 * 60 * 24));
+      return '<div class="quarantine-item"><span>' + txt + '</span><span class="days">' + left + ' дн.</span></div>';
     }).join('');
   }
   document.getElementById('quarantineOverlay').classList.add('active');
@@ -1637,16 +1632,16 @@ function getAvailableTasks(cat){
   var all = getTasksForCategory(cat);
   var available = all.filter(function(t){ return !isInQuarantine(t, cat); });
   if (available.length === 0){
-    return all.slice().sort(function(a,b){ return (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0); }).slice(0,5);
+    return all.slice().sort(function(a,b){ return (state.quarantine[a] ? state.quarantine[a].doneAt : 0) - (state.quarantine[b] ? state.quarantine[b].doneAt : 0); }).slice(0,5);
   }
   return available;
 }
 
 function generateMonthSchedule(year, month){
-  var key = 'schedule_'+year+'_'+month;
+  var key = 'schedule_' + year + '_' + month;
   var saved = safeGet(key, null);
   if (saved) { var p = safeParse(saved, null); if (p) return p; }
-  var daysInMonth = new Date(year, month+1, 0).getDate();
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
   var allDays = [];
   for (var d = 1; d <= daysInMonth; d++) allDays.push(d);
   var weeksInMonth = daysInMonth / 7;
@@ -1692,54 +1687,52 @@ function generateMonthSchedule(year, month){
 }
 
 function getDayType(year, month, day){
-  var key = year+'-'+month+'-'+day;
-  if (state.completedDays[key] && state.completedDays[key].length>0) return state.completedDays[key][0].type;
+  var key = year + '-' + month + '-' + day;
+  if (state.completedDays[key] && state.completedDays[key].length > 0) return state.completedDays[key][0].type;
   if (state.forcedDayTypes && state.forcedDayTypes[key]) return state.forcedDayTypes[key];
   if (state.plannedDays && state.plannedDays[key]) return state.plannedDays[key].type;
   return generateMonthSchedule(year, month)[day] || 'free';
 }
-function getCompletedEvents(y,m,d){ return state.completedDays[y+'-'+m+'-'+d] || []; }
+function getCompletedEvents(y, m, d){ return state.completedDays[y + '-' + m + '-' + d] || []; }
 
 function renderCalendar(){
-  try {
-    var year = state.currentDate.getFullYear();
-    var month = state.currentDate.getMonth();
-    document.getElementById('monthName').textContent = monthNames[month];
-    document.getElementById('monthYear').textContent = year;
-    var firstDay = new Date(year,month,1);
-    var daysInMonth = new Date(year,month+1,0).getDate();
-    var startDay = firstDay.getDay()-1; if (startDay===-1) startDay=6;
-    var lastDow = new Date(year,month,daysInMonth).getDay();
-    var trailing = lastDow===0 ? 0 : 7-lastDow;
-    var cal = document.getElementById('calendar'); cal.innerHTML = '';
-    for (var i=0;i<startDay;i++){ var e = document.createElement('div'); e.className='calendar-day empty'; cal.appendChild(e); }
-    var today = new Date();
-    var isNastya = state.viewingAs === 'nastya';
-    for (var d=1; d<=daysInMonth; d++){
-      var el = document.createElement('div'); el.className='calendar-day';
-      var events = getCompletedEvents(year,month,d);
-      var isDone = events.length>0;
-      var plannedKey = year+'-'+month+'-'+d;
-      var isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
-      var isForced = state.forcedDayTypes && state.forcedDayTypes[plannedKey];
-      var type = getDayType(year,month,d);
-      if (isDone){
-        var types=[]; events.forEach(function(ev){ if (types.indexOf(ev.type)===-1) types.push(ev.type); });
-        el.classList.add('done-'+types[0]);
-      } else { el.classList.add(type); }
-      if (isPlanned) el.classList.add('planned-day');
-      if (isForced && isNastya) el.classList.add('forced-day');
-      el.dataset.day = d; el.dataset.type = type;
-      var num = document.createElement('span'); num.className='day-number'; num.textContent = d; el.appendChild(num);
-      if (d===today.getDate() && month===today.getMonth() && year===today.getFullYear()) el.classList.add('today');
-      el.onclick = (function(day,t,isD){ return function(){ onDayClick(day,t,isD); }; })(d,type,isDone);
-      cal.appendChild(el);
-    }
-    for (var j=1;j<=trailing;j++){
-      var e2 = document.createElement('div'); e2.className='calendar-day next-month';
-      var n2 = document.createElement('span'); n2.className='day-number'; n2.textContent = j; e2.appendChild(n2); cal.appendChild(e2);
-    }
-  } catch(e){ console.warn('renderCalendar', e); throw e; }
+  var year = state.currentDate.getFullYear();
+  var month = state.currentDate.getMonth();
+  document.getElementById('monthName').textContent = monthNames[month];
+  document.getElementById('monthYear').textContent = year;
+  var firstDay = new Date(year, month, 1);
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var startDay = firstDay.getDay() - 1; if (startDay === -1) startDay = 6;
+  var lastDow = new Date(year, month, daysInMonth).getDay();
+  var trailing = lastDow === 0 ? 0 : 7 - lastDow;
+  var cal = document.getElementById('calendar'); cal.innerHTML = '';
+  for (var i = 0; i < startDay; i++){ var e = document.createElement('div'); e.className = 'calendar-day empty'; cal.appendChild(e); }
+  var today = new Date();
+  var isNastya = state.viewingAs === 'nastya';
+  for (var d = 1; d <= daysInMonth; d++){
+    var el = document.createElement('div'); el.className = 'calendar-day';
+    var events = getCompletedEvents(year, month, d);
+    var isDone = events.length > 0;
+    var plannedKey = year + '-' + month + '-' + d;
+    var isPlanned = !isDone && state.plannedDays && state.plannedDays[plannedKey];
+    var isForced = state.forcedDayTypes && state.forcedDayTypes[plannedKey];
+    var type = getDayType(year, month, d);
+    if (isDone){
+      var types = []; events.forEach(function(ev){ if (types.indexOf(ev.type) === -1) types.push(ev.type); });
+      el.classList.add('done-' + types[0]);
+    } else { el.classList.add(type); }
+    if (isPlanned) el.classList.add('planned-day');
+    if (isForced && isNastya) el.classList.add('forced-day');
+    el.dataset.day = d; el.dataset.type = type;
+    var num = document.createElement('span'); num.className = 'day-number'; num.textContent = d; el.appendChild(num);
+    if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) el.classList.add('today');
+    el.onclick = (function(day, t, isD){ return function(){ onDayClick(day, t, isD); }; })(d, type, isDone);
+    cal.appendChild(el);
+  }
+  for (var j = 1; j <= trailing; j++){
+    var e2 = document.createElement('div'); e2.className = 'calendar-day next-month';
+    var n2 = document.createElement('span'); n2.className = 'day-number'; n2.textContent = j; e2.appendChild(n2); cal.appendChild(e2);
+  }
 }
 function onDayClick(day, type, isDone){
   state.editingDay = { year:state.currentDate.getFullYear(), month:state.currentDate.getMonth(), day:day, type:type, isDone:isDone };
@@ -1750,107 +1743,105 @@ function onDayClick(day, type, isDone){
 function updateTypePointsPreview(){ var c = document.getElementById('typeInitiativeCategory').value; document.getElementById('typeTotalPoints').textContent = TYPE_INFO[c].points + INITIATIVE_BONUS; }
 
 function openEditModal(){
-  try {
-    var ed = state.editingDay;
-    var year=ed.year, month=ed.month, day=ed.day, type=ed.type, isDone=ed.isDone;
-    var _today = new Date(); _today.setHours(0,0,0,0);
-    var _thisDate = new Date(year, month, day); _thisDate.setHours(0,0,0,0);
-    var _isPastOrToday = _thisDate <= _today;
-    var key = year+'-'+month+'-'+day;
-    var overlay = document.getElementById('editDayOverlay');
-    document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
-    document.getElementById('editDaySubtitle').textContent = _isPastOrToday
-      ? 'Этот день уже прошёл или сегодня'
-      : 'Будущий день — можно запланировать';
-    var events = getCompletedEvents(year,month,day);
-    var planned = state.plannedDays && state.plannedDays[key];
-    var ti = TYPE_INFO[type] || TYPE_INFO.custom;
-    document.getElementById('typeNameDisplay').textContent = ti.name;
-    var list = document.getElementById('eventListCompact');
-    var html = '';
-    if (events.length > 0){
-      html += events.map(function(e){
-        var info = TYPE_INFO[e.type]||TYPE_INFO.custom;
-        var photoIcon = e.photo ? ' 📸' : '';
-        return '<li><span>'+info.emoji+' '+e.text+photoIcon+' <em style="color:var(--muted);font-style:normal">✓</em></span><span>+'+e.points+' б.</span></li>';
-      }).join('');
-    }
-    if (planned){
-      var pInfo = TYPE_INFO[planned.type]||TYPE_INFO.custom;
-      html += '<li style="opacity:.85"><span>'+pInfo.emoji+' '+planned.text+' <em style="color:var(--gold-deep);font-style:normal">⏳ план</em></span><span>'+planned.points+' б.</span></li>';
-    }
-    if (!html) html = '<li><span style="color:var(--muted)">Пока ничего</span></li>';
-    list.innerHTML = html;
-    var wheelBtn = document.getElementById('typeWheelBtn');
-    if (_isPastOrToday){ wheelBtn.textContent = '✓ Отметить выполненным'; }
-    else { wheelBtn.textContent = '📅 Запланировать'; }
-    wheelBtn.className = 'btn-gold';
-    wheelBtn.onclick = function(){
+  var ed = state.editingDay;
+  var year = ed.year, month = ed.month, day = ed.day, type = ed.type, isDone = ed.isDone;
+  var _today = new Date(); _today.setHours(0,0,0,0);
+  var _thisDate = new Date(year, month, day); _thisDate.setHours(0,0,0,0);
+  var _isPastOrToday = _thisDate <= _today;
+  var key = year + '-' + month + '-' + day;
+  var overlay = document.getElementById('editDayOverlay');
+  document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
+  document.getElementById('editDaySubtitle').textContent = _isPastOrToday
+    ? 'Этот день уже прошёл или сегодня'
+    : 'Будущий день — можно запланировать';
+  var events = getCompletedEvents(year, month, day);
+  var planned = state.plannedDays && state.plannedDays[key];
+  var ti = TYPE_INFO[type] || TYPE_INFO.custom;
+  document.getElementById('typeNameDisplay').textContent = ti.name;
+  var list = document.getElementById('eventListCompact');
+  var html = '';
+  if (events.length > 0){
+    html += events.map(function(e){
+      var info = TYPE_INFO[e.type] || TYPE_INFO.custom;
+      var photoIcon = e.photo ? ' 📸' : '';
+      return '<li><span>' + info.emoji + ' ' + e.text + photoIcon + ' <em style="color:var(--muted);font-style:normal">✓</em></span><span>+' + e.points + ' б.</span></li>';
+    }).join('');
+  }
+  if (planned){
+    var pInfo = TYPE_INFO[planned.type] || TYPE_INFO.custom;
+    html += '<li style="opacity:.85"><span>' + pInfo.emoji + ' ' + planned.text + ' <em style="color:var(--gold-deep);font-style:normal">⏳ план</em></span><span>' + planned.points + ' б.</span></li>';
+  }
+  if (!html) html = '<li><span style="color:var(--muted)">Пока ничего</span></li>';
+  list.innerHTML = html;
+  var wheelBtn = document.getElementById('typeWheelBtn');
+  if (_isPastOrToday){ wheelBtn.textContent = '✓ Отметить выполненным'; }
+  else { wheelBtn.textContent = '📅 Запланировать'; }
+  wheelBtn.className = 'btn-gold';
+  wheelBtn.onclick = function(){
+    overlay.classList.remove('active');
+    state.currentType = type;
+    state.currentDay = day;
+    openChoiceModal(day + ' ' + monthNames[month], _isPastOrToday ? 'Что сделал?' : 'Что запланировать?');
+  };
+  document.getElementById('typeInitiativeFields').style.display = 'none';
+  document.getElementById('typeInitiativeBtn').onclick = function(){
+    var f = document.getElementById('typeInitiativeFields');
+    var isOpen = f.style.display === 'block';
+    f.style.display = isOpen ? 'none' : 'block';
+    document.getElementById('typeInitiativeDone').textContent = _isPastOrToday ? '✓ Отметить выполненным' : '📅 Запланировать';
+    updateTypePointsPreview();
+    document.getElementById('typeInitiativeCategory').onchange = updateTypePointsPreview;
+  };
+  document.getElementById('typeInitiativeDone').onclick = function(){
+    var t = document.getElementById('typeInitiativeTitle').value.trim();
+    var c = document.getElementById('typeInitiativeCategory').value;
+    if (!t){ alert('Введите название'); return; }
+    var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
+    openPhotoAttach(function(){
+      if (_isPastOrToday) addEventToDay(year, month, day, c, t, p, true);
+      else planEvent(year, month, day, c, t, p, true);
       overlay.classList.remove('active');
-      state.currentType = type;
-      state.currentDay = day;
-      openChoiceModal(day+' '+monthNames[month], _isPastOrToday ? 'Что сделал?' : 'Что запланировать?');
-    };
-    document.getElementById('typeInitiativeFields').style.display = 'none';
-    document.getElementById('typeInitiativeBtn').onclick = function(){
-      var f = document.getElementById('typeInitiativeFields');
-      var isOpen = f.style.display === 'block';
-      f.style.display = isOpen ? 'none' : 'block';
-      document.getElementById('typeInitiativeDone').textContent = _isPastOrToday ? '✓ Отметить выполненным' : '📅 Запланировать';
-      updateTypePointsPreview();
-      document.getElementById('typeInitiativeCategory').onchange = updateTypePointsPreview;
-    };
-    document.getElementById('typeInitiativeDone').onclick = function(){
-      var t = document.getElementById('typeInitiativeTitle').value.trim();
-      var c = document.getElementById('typeInitiativeCategory').value;
-      if (!t){ alert('Введите название'); return; }
-      var p = TYPE_INFO[c].points + INITIATIVE_BONUS;
-      openPhotoAttach(function(){
-        if (_isPastOrToday) addEventToDay(year, month, day, c, t, p, true);
-        else planEvent(year, month, day, c, t, p, true);
-        overlay.classList.remove('active');
-      });
-    };
-    var hasAnything = events.length > 0 || planned;
-    var clearBtn = document.getElementById('typeClearBtn');
-    clearBtn.style.display = hasAnything ? 'block' : 'none';
-    clearBtn.onclick = function(){
-      var refund = events.reduce(function(s,e){ return s + (e.points||0); }, 0);
-      var msg = 'Очистить ' + day + ' ' + monthNames[month] + '?';
-      if (refund > 0) msg += '\n\nИз баллов вернётся: −' + refund;
-      if (!confirm(msg)) return;
-      if (refund > 0){
-        applyPointsDelta(-refund, -refund, 'clearDay', 'Очистка ' + day + '.' + (month+1) + '.' + year);
-      }
-      var dayStart = new Date(year, month, day).getTime();
-      var dayEnd = dayStart + 86400000;
-      state.history = (state.history || []).filter(function(h){
-        return !(h.eventDate >= dayStart && h.eventDate < dayEnd);
-      });
-      events.forEach(function(e){
-        if (state.quarantine && state.quarantine[e.text]) delete state.quarantine[e.text];
-      });
-      delete state.completedDays[key];
-      delete state.plannedDays[key];
-      if (!state.forcedDayTypes) state.forcedDayTypes = {};
-      state.forcedDayTypes[key] = 'free';
-      setCloudForcedType(key, 'free');
-      if (state.notificationsForNastya){
-        state.notificationsForNastya = state.notificationsForNastya.filter(function(n){ return n.dateKey !== key; });
-      }
-      deleteCloudKeys(['completedDays.'+key, 'plannedDays.'+key]);
-      logActivity('day_cleared', '🗑 Очистил день ' + day + '.' + (month+1) + '.' + year);
-      saveState();
-      renderCalendar();
-      updateStats();
-      renderHistory();
-      renderLoveTree();
-      renderPointsLog();
-      overlay.classList.remove('active');
-      showToast('🗑', 'День очищен' + (refund>0 ? ' (−' + refund + ' б.)' : ''));
-    };
-    overlay.classList.add('active');
-  } catch(e){ console.warn('openEditModal', e); }
+    });
+  };
+  var hasAnything = events.length > 0 || planned;
+  var clearBtn = document.getElementById('typeClearBtn');
+  clearBtn.style.display = hasAnything ? 'block' : 'none';
+  clearBtn.onclick = function(){
+    var refund = events.reduce(function(s, e){ return s + (e.points || 0); }, 0);
+    var msg = 'Очистить ' + day + ' ' + monthNames[month] + '?';
+    if (refund > 0) msg += '\n\nИз баллов вернётся: −' + refund;
+    if (!confirm(msg)) return;
+    if (refund > 0){
+      applyPointsDelta(-refund, -refund, 'clearDay', 'Очистка ' + day + '.' + (month + 1) + '.' + year);
+    }
+    var dayStart = new Date(year, month, day).getTime();
+    var dayEnd = dayStart + 86400000;
+    state.history = (state.history || []).filter(function(h){
+      return !(h.eventDate >= dayStart && h.eventDate < dayEnd);
+    });
+    events.forEach(function(e){
+      if (state.quarantine && state.quarantine[e.text]) delete state.quarantine[e.text];
+    });
+    delete state.completedDays[key];
+    delete state.plannedDays[key];
+    if (!state.forcedDayTypes) state.forcedDayTypes = {};
+    state.forcedDayTypes[key] = 'free';
+    setCloudForcedType(key, 'free');
+    if (state.notificationsForNastya){
+      state.notificationsForNastya = state.notificationsForNastya.filter(function(n){ return n.dateKey !== key; });
+    }
+    deleteCloudKeys(['completedDays.' + key, 'plannedDays.' + key]);
+    logActivity('day_cleared', '🗑 Очистил день ' + day + '.' + (month + 1) + '.' + year);
+    saveState();
+    renderCalendar();
+    updateStats();
+    renderHistory();
+    renderLoveTree();
+    renderPointsLog();
+    overlay.classList.remove('active');
+    showToast('🗑', 'День очищен' + (refund > 0 ? ' (−' + refund + ' б.)' : ''));
+  };
+  overlay.classList.add('active');
 }
 function openChoiceModal(title, subtitle){
   document.getElementById('choiceTitle').textContent = title;
@@ -1886,7 +1877,7 @@ function openPhotoAttach(onSave){
 }
 
 function planEvent(year, month, day, type, text, points, isInitiative){
-  var key = year+'-'+month+'-'+day;
+  var key = year + '-' + month + '-' + day;
   if (!state.plannedDays) state.plannedDays = {};
   var event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
   if (state.pendingPhoto) event.photo = state.pendingPhoto;
@@ -1896,32 +1887,32 @@ function planEvent(year, month, day, type, text, points, isInitiative){
     id: Date.now(), type: 'planned', title: text, cost: points, tier: type,
     dateKey: key, seen: false, createdAt: Date.now()
   });
-  logActivity('planned', '🗓 Запланировал: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', '+points+' б.) на '+day+'.'+(month+1)+'.'+year);
+  logActivity('planned', '🗓 Запланировал: «' + text + '» (' + (TYPE_INFO[type] ? TYPE_INFO[type].name : '') + ', ' + points + ' б.) на ' + day + '.' + (month + 1) + '.' + year);
   saveState();
   renderCalendar(); renderHistory();
-  showToast('🗓', 'Запланировано: '+text);
+  showToast('🗓', 'Запланировано: ' + text);
 }
 function addEventToDay(year, month, day, type, text, points, isInitiative){
-  var key = year+'-'+month+'-'+day;
+  var key = year + '-' + month + '-' + day;
   if (!state.completedDays[key]) state.completedDays[key] = [];
   var event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
   if (state.pendingPhoto) event.photo = state.pendingPhoto;
   state.pendingPhoto = null;
   state.completedDays[key].push(event);
-  applyPointsDelta(points, points, 'addEvent', text + ' (' + day + '.' + (month+1) + '.') );
+  applyPointsDelta(points, points, 'addEvent', text + ' (' + day + '.' + (month + 1) + '.') );
   putInQuarantine(text, type);
-  var dateStr = String(day).padStart(2,'0')+'.'+String(month+1).padStart(2,'0')+'.'+year;
+  var dateStr = String(day).padStart(2,'0') + '.' + String(month + 1).padStart(2,'0') + '.' + year;
   state.history.unshift({
     date:dateStr, eventDate:new Date(year,month,day).getTime(), title:text,
-    category:isInitiative?TYPE_INFO[type].name+' (инициатива)':TYPE_INFO[type].name,
-    emoji:isInitiative?'⭐':TYPE_INFO[type].emoji, points:points, photo: event.photo || null
+    category:isInitiative ? TYPE_INFO[type].name + ' (инициатива)' : TYPE_INFO[type].name,
+    emoji:isInitiative ? '⭐' : TYPE_INFO[type].emoji, points:points, photo: event.photo || null
   });
-  logActivity('task_done', '✅ Подтвердил: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', +'+points+' б.)');
+  logActivity('task_done', '✅ Подтвердил: «' + text + '» (' + (TYPE_INFO[type] ? TYPE_INFO[type].name : '') + ', +' + points + ' б.)');
   saveState();
   renderCalendar(); updateStats(); checkUpcomingDates();
   renderHistory(); renderLoveTree(); renderPointsLog();
-  showToast(TYPE_INFO[type].emoji, '+'+points+' баллов! '+text);
-  fireBurst(window.innerWidth/2, window.innerHeight/2);
+  showToast(TYPE_INFO[type].emoji, '+' + points + ' баллов! ' + text);
+  fireBurst(window.innerWidth / 2, window.innerHeight / 2);
   checkAchievements();
   checkMonthCelebration();
 }
@@ -1936,17 +1927,17 @@ function renderHistory(){
     }
     list.innerHTML = state.history.map(function(h, i){
       var emoji = h.emoji || '❤️';
-      var delay = Math.min(i*0.04, 0.8);
-      var photoBlock = h.photo ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+h.photo+'" alt=""></div>' : '';
-      return '<div class="timeline-item" style="animation-delay:'+delay+'s;position:relative;padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);box-shadow:0 4px 14px rgba(60,40,20,.12);display:flex;gap:14px;align-items:flex-start">' +
-        '<div class="tl-icon" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:linear-gradient(145deg,#FAF6EC,#F0E6CE);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(201,169,97,.3)">'+emoji+'</div>' +
+      var delay = Math.min(i * 0.04, 0.8);
+      var photoBlock = h.photo ? '<div class="tl-photo" data-photo-idx="' + i + '"><img src="' + h.photo + '" alt=""></div>' : '';
+      return '<div class="timeline-item" style="animation-delay:' + delay + 's;position:relative;padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);box-shadow:0 4px 14px rgba(60,40,20,.12);display:flex;gap:14px;align-items:flex-start">' +
+        '<div class="tl-icon" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:linear-gradient(145deg,#FAF6EC,#F0E6CE);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(201,169,97,.3)">' + emoji + '</div>' +
         '<div class="tl-body" style="flex:1;min-width:0">' +
-          '<div style="font-family:\'Caveat\',cursive;font-size:15px;color:#6b5a4e;font-weight:600">'+h.date+'</div>' +
-          '<div style="font-size:9px;color:#8A7A66;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;font-weight:600">'+(h.category||'')+'</div>' +
-          '<div style="font-family:\'Cormorant Garamond\',serif;font-size:17px;font-weight:700;color:#2E2419;line-height:1.35;margin-top:4px">'+h.title+'</div>' +
+          '<div style="font-family:\'Caveat\',cursive;font-size:15px;color:#6b5a4e;font-weight:600">' + h.date + '</div>' +
+          '<div style="font-size:9px;color:#8A7A66;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;font-weight:600">' + (h.category || '') + '</div>' +
+          '<div style="font-family:\'Cormorant Garamond\',serif;font-size:17px;font-weight:700;color:#2E2419;line-height:1.35;margin-top:4px">' + h.title + '</div>' +
           photoBlock +
         '</div>' +
-        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:700;color:#A8842E;white-space:nowrap">+'+h.points+'</div>' +
+        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:700;color:#A8842E;white-space:nowrap">+' + h.points + '</div>' +
       '</div>';
     }).join('');
     list.querySelectorAll('.tl-photo').forEach(function(el){
@@ -1986,16 +1977,16 @@ function renderPointsLog(){
       var color = l.delta >= 0 ? '#7A8E6E' : '#C97A7A';
       var label = POINTS_REASON_LABELS[l.reason] || l.reason;
       var actorIcon = l.actor === 'vanya' ? '🍞' : '❤️';
-      var detailLine = l.detail ? '<div style="font-size:11px;color:#5A4A3A;margin-top:3px;line-height:1.35">'+l.detail+'</div>' : '';
+      var detailLine = l.detail ? '<div style="font-size:11px;color:#5A4A3A;margin-top:3px;line-height:1.35">' + l.detail + '</div>' : '';
       var d = new Date(l.timestamp);
-      var dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+' · '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+      var dateStr = String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth() + 1).padStart(2,'0') + ' · ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
       return '<li style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:rgba(255,255,255,.5);border-radius:12px;margin-bottom:6px;border:1px solid rgba(201,169,97,.25)">' +
         '<div style="flex:1;min-width:0">' +
-          '<div style="font-size:12px;font-weight:600;color:#2E2419">'+actorIcon+' '+label+'</div>' +
+          '<div style="font-size:12px;font-weight:600;color:#2E2419">' + actorIcon + ' ' + label + '</div>' +
           detailLine +
-          '<div style="font-size:9px;color:#8A7A66;margin-top:3px">'+dateStr+'</div>' +
+          '<div style="font-size:9px;color:#8A7A66;margin-top:3px">' + dateStr + '</div>' +
         '</div>' +
-        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:700;color:'+color+';white-space:nowrap">'+sign+l.delta+'</div>' +
+        '<div style="font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:700;color:' + color + ';white-space:nowrap">' + sign + l.delta + '</div>' +
       '</li>';
     }).join('');
   } catch(e){ console.warn('renderPointsLog', e); }
@@ -2017,12 +2008,12 @@ function renderWishes(){
       else if (w.activated) statusLabel = '⏳ Ждёт';
       else if (canActivate) btnClass = 'ready';
       var btnDisabled = (w.done || w.activated || !canActivate) ? 'disabled' : '';
-      var actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="'+i+'" type="button">Изменить</button><button data-action="delete" data-idx="'+i+'" type="button">Удалить</button></div>' : '';
-      return '<div class="garden-flower '+(w.done?'done':'')+(w.activated?' activated':'')+'">' +
-        '<span class="flower-emoji">'+flowerEmoji+'</span>' +
-        '<div class="flower-title">'+w.title+'</div>' +
-        '<div class="flower-meta">'+WISH_TIER_LABEL[w.tier]+' · '+w.cost+' б.</div>' +
-        '<button class="flower-btn '+btnClass+'" data-action="activate" data-idx="'+i+'" '+btnDisabled+' type="button">'+statusLabel+'</button>' +
+      var actions = (!w.done && !w.activated) ? '<div class="flower-actions"><button data-action="edit" data-idx="' + i + '" type="button">Изменить</button><button data-action="delete" data-idx="' + i + '" type="button">Удалить</button></div>' : '';
+      return '<div class="garden-flower ' + (w.done ? 'done' : '') + (w.activated ? ' activated' : '') + '">' +
+        '<span class="flower-emoji">' + flowerEmoji + '</span>' +
+        '<div class="flower-title">' + w.title + '</div>' +
+        '<div class="flower-meta">' + WISH_TIER_LABEL[w.tier] + ' · ' + w.cost + ' б.</div>' +
+        '<button class="flower-btn ' + btnClass + '" data-action="activate" data-idx="' + i + '" ' + btnDisabled + ' type="button">' + statusLabel + '</button>' +
         actions +
       '</div>';
     }).join('');
@@ -2030,14 +2021,14 @@ function renderWishes(){
       b.onclick = function(){
         var i = parseInt(b.dataset.idx); var w = state.wishes[i];
         if (!w || w.activated || w.done) return;
-        if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
+        if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно ' + WISH_THRESHOLD + ' баллов всего!'); return; }
         if (state.points < w.cost){ showToast('💔','Недостаточно баллов'); return; }
-        if (!confirm('Активировать «'+w.title+'»?\nСпишется '+w.cost+' баллов.')) return;
+        if (!confirm('Активировать «' + w.title + '»?\nСпишется ' + w.cost + ' баллов.')) return;
         applyPointsDelta(-w.cost, 0, 'wishActivate', w.title);
         state.wishes[i].activated = true;
         state.wishes[i].activatedAt = Date.now();
         state.notificationsForNastya.push({ id:Date.now(), title:w.title, cost:w.cost, tier:w.tier, seen:false, createdAt:Date.now() });
-        logActivity('wish_activate', '💎 Активировал: '+w.title+' (−'+w.cost+' б.)');
+        logActivity('wish_activate', '💎 Активировал: ' + w.title + ' (−' + w.cost + ' б.)');
         saveState(); updateStats(); renderWishes(); renderPointsLog();
         showToast('💎','Желание активировано!'); makeConfetti(25); checkAchievements();
       };
@@ -2059,7 +2050,7 @@ function renderWishes(){
 }
 
 function getAchievementStats(){
-  var emotionalDone=0, physicalDone=0, bigDateDone=0, dateDone=0, initiativeDone=0, totalDone=0;
+  var emotionalDone = 0, physicalDone = 0, bigDateDone = 0, dateDone = 0, initiativeDone = 0, totalDone = 0;
   for (var k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
     state.completedDays[k].forEach(function(e){
@@ -2074,8 +2065,8 @@ function getAchievementStats(){
   return {
     totalDone: totalDone, emotionalDone: emotionalDone, physicalDone: physicalDone,
     bigDateDone: bigDateDone, dateDone: dateDone, initiativeDone: initiativeDone,
-    wishesCount: (state.wishes||[]).length,
-    wishesActivated: (state.wishes||[]).filter(function(w){ return w.activated; }).length,
+    wishesCount: (state.wishes || []).length,
+    wishesActivated: (state.wishes || []).filter(function(w){ return w.activated; }).length,
     totalPoints: state.totalPoints || 0
   };
 }
@@ -2091,7 +2082,7 @@ function checkAchievements(){
     });
     if (unlockedNow.length){
       saveState(); renderAchievements();
-      unlockedNow.forEach(function(a, i){ setTimeout(function(){ showToast(a.emoji, 'Новое достижение: '+a.name+'!'); }, i*700); });
+      unlockedNow.forEach(function(a, i){ setTimeout(function(){ showToast(a.emoji, 'Новое достижение: ' + a.name + '!'); }, i * 700); });
     }
   } catch(e){}
 }
@@ -2101,10 +2092,10 @@ function renderAchievements(){
     if (!grid) return;
     grid.innerHTML = ACHIEVEMENTS.map(function(a){
       var unlocked = state.achievements.indexOf(a.id) !== -1;
-      return '<div class="achievement '+(unlocked?'unlocked':'locked')+'">' +
-        '<span class="ach-emoji">'+a.emoji+'</span>' +
-        '<div class="ach-name">'+a.name+'</div>' +
-        '<div class="ach-desc">'+a.desc+'</div>' +
+      return '<div class="achievement ' + (unlocked ? 'unlocked' : 'locked') + '">' +
+        '<span class="ach-emoji">' + a.emoji + '</span>' +
+        '<div class="ach-name">' + a.name + '</div>' +
+        '<div class="ach-desc">' + a.desc + '</div>' +
       '</div>';
     }).join('');
   } catch(e){}
@@ -2120,29 +2111,29 @@ var TREE_STAGES = [
   { name: "Плодоносящее", min: 120, max: Infinity }
 ];
 function buildTreeSvg(stage){
-  var W = 300, H = 260, cx = W/2, groundY = H-18;
-  var s = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg"><defs>' +
+  var W = 300, H = 260, cx = W / 2, groundY = H - 18;
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg"><defs>' +
     '<radialGradient id="groundGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#B5C4A8" stop-opacity="0.45"/><stop offset="100%" stop-color="#B5C4A8" stop-opacity="0"/></radialGradient>' +
     '<linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5a3d28"/><stop offset="35%" stop-color="#7a5436"/><stop offset="55%" stop-color="#8a6042"/><stop offset="100%" stop-color="#4a3020"/></linearGradient>' +
     '<radialGradient id="crownGrad1" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#B8D4C0"/><stop offset="55%" stop-color="#8DBDAB"/><stop offset="100%" stop-color="#5A8D75"/></radialGradient>' +
     '<radialGradient id="crownGrad2" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#C8DFC5"/><stop offset="60%" stop-color="#9DBDAB"/><stop offset="100%" stop-color="#6B8D75"/></radialGradient>' +
     '<radialGradient id="crownGradDark" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#8DBDAB"/><stop offset="100%" stop-color="#4A7A5C"/></radialGradient>' +
     '</defs>' +
-    '<ellipse cx="'+cx+'" cy="'+(groundY+4)+'" rx="120" ry="18" fill="url(#groundGrad)"/>' +
-    '<ellipse cx="'+cx+'" cy="'+(groundY+2)+'" rx="70" ry="8" fill="#6da892" opacity="0.22"/>';
+    '<ellipse cx="' + cx + '" cy="' + (groundY + 4) + '" rx="120" ry="18" fill="url(#groundGrad)"/>' +
+    '<ellipse cx="' + cx + '" cy="' + (groundY + 2) + '" rx="70" ry="8" fill="#6da892" opacity="0.22"/>';
   if (stage === 1){
-    s += '<ellipse cx="'+cx+'" cy="'+(groundY-6)+'" rx="16" ry="10" fill="#6b4f3a"/>' +
-      '<path d="M '+(cx+2)+' '+(groundY-14)+' q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+    s += '<ellipse cx="' + cx + '" cy="' + (groundY - 6) + '" rx="16" ry="10" fill="#6b4f3a"/>' +
+      '<path d="M ' + (cx + 2) + ' ' + (groundY - 14) + ' q -3 -8 2 -14" stroke="#8aab70" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
   } else if (stage === 2){
-    s += '<path d="M '+cx+' '+groundY+' Q '+(cx-1)+' '+(groundY-30)+' '+cx+' '+(groundY-62)+'" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>' +
-      '<ellipse cx="'+(cx-15)+'" cy="'+(groundY-48)+'" rx="13" ry="7" fill="url(#crownGrad2)"/>' +
-      '<ellipse cx="'+(cx+15)+'" cy="'+(groundY-56)+'" rx="13" ry="7" fill="url(#crownGrad1)"/>';
+    s += '<path d="M ' + cx + ' ' + groundY + ' Q ' + (cx - 1) + ' ' + (groundY - 30) + ' ' + cx + ' ' + (groundY - 62) + '" stroke="url(#trunkGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+      '<ellipse cx="' + (cx - 15) + '" cy="' + (groundY - 48) + '" rx="13" ry="7" fill="url(#crownGrad2)"/>' +
+      '<ellipse cx="' + (cx + 15) + '" cy="' + (groundY - 56) + '" rx="13" ry="7" fill="url(#crownGrad1)"/>';
   } else {
-    var trunkH = 40 + (stage-2)*22, trunkTop = groundY - trunkH, crownR = 22 + (stage-2)*10;
-    s += '<path d="M '+(cx-8)+' '+groundY+' Q '+(cx-5)+' '+(groundY-trunkH/2)+' '+(cx-2)+' '+(trunkTop+crownR*0.3)+' L '+(cx+2)+' '+(trunkTop+crownR*0.3)+' Q '+(cx+5)+' '+(groundY-trunkH/2)+' '+(cx+8)+' '+groundY+' Z" fill="url(#trunkGrad)"/>';
-    s += '<ellipse cx="'+cx+'" cy="'+(trunkTop-crownR*0.15)+'" rx="'+(crownR*1.25)+'" ry="'+(crownR*1.05)+'" fill="url(#crownGradDark)" opacity="0.85"/>';
-    s += '<ellipse cx="'+(cx-crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
-    s += '<ellipse cx="'+(cx+crownR*0.7)+'" cy="'+(trunkTop-crownR*0.35)+'" rx="'+(crownR*0.8)+'" ry="'+(crownR*0.72)+'" fill="url(#crownGrad1)" opacity="0.9"/>';
+    var trunkH = 40 + (stage - 2) * 22, trunkTop = groundY - trunkH, crownR = 22 + (stage - 2) * 10;
+    s += '<path d="M ' + (cx - 8) + ' ' + groundY + ' Q ' + (cx - 5) + ' ' + (groundY - trunkH / 2) + ' ' + (cx - 2) + ' ' + (trunkTop + crownR * 0.3) + ' L ' + (cx + 2) + ' ' + (trunkTop + crownR * 0.3) + ' Q ' + (cx + 5) + ' ' + (groundY - trunkH / 2) + ' ' + (cx + 8) + ' ' + groundY + ' Z" fill="url(#trunkGrad)"/>';
+    s += '<ellipse cx="' + cx + '" cy="' + (trunkTop - crownR * 0.15) + '" rx="' + (crownR * 1.25) + '" ry="' + (crownR * 1.05) + '" fill="url(#crownGradDark)" opacity="0.85"/>';
+    s += '<ellipse cx="' + (cx - crownR * 0.7) + '" cy="' + (trunkTop - crownR * 0.35) + '" rx="' + (crownR * 0.8) + '" ry="' + (crownR * 0.72) + '" fill="url(#crownGrad1)" opacity="0.9"/>';
+    s += '<ellipse cx="' + (cx + crownR * 0.7) + '" cy="' + (trunkTop - crownR * 0.35) + '" rx="' + (crownR * 0.8) + '" ry="' + (crownR * 0.72) + '" fill="url(#crownGrad1)" opacity="0.9"/>';
   }
   s += '</svg>';
   return s;
@@ -2151,21 +2142,21 @@ function renderLoveTree(){
   try {
     var wrap = document.getElementById('treeSvgWrap');
     if (!wrap) return;
-    var count = (state.history||[]).length;
+    var count = (state.history || []).length;
     var stageIdx = 0;
-    for (var i=0;i<TREE_STAGES.length;i++){ if (count>=TREE_STAGES[i].min && count<=TREE_STAGES[i].max){ stageIdx=i; break; } }
-    var stage = stageIdx+1;
+    for (var i = 0; i < TREE_STAGES.length; i++){ if (count >= TREE_STAGES[i].min && count <= TREE_STAGES[i].max){ stageIdx = i; break; } }
+    var stage = stageIdx + 1;
     var info = TREE_STAGES[stageIdx];
-    var next = TREE_STAGES[stageIdx+1] || null;
+    var next = TREE_STAGES[stageIdx + 1] || null;
     document.getElementById('treeStage').textContent = info.name;
     wrap.innerHTML = buildTreeSvg(stage);
     if (next){
       var curMin = info.min, nextMin = next.min;
       var done = count - curMin, total = nextMin - curMin;
-      var pct = Math.max(4, Math.min(100, (done/total)*100));
+      var pct = Math.max(4, Math.min(100, (done / total) * 100));
       var toNext = nextMin - count;
       var word = toNext === 1 ? 'задание' : (toNext >= 2 && toNext <= 4 ? 'задания' : 'заданий');
-      document.getElementById('treeProgressText').textContent = 'До стадии «'+next.name+'» — '+toNext+' '+word;
+      document.getElementById('treeProgressText').textContent = 'До стадии «' + next.name + '» — ' + toNext + ' ' + word;
       document.getElementById('treeProgressFill').style.width = pct + '%';
     } else {
       document.getElementById('treeProgressText').textContent = '✨ Ваше дерево расцвело полностью!';
@@ -2178,23 +2169,23 @@ function checkMonthCelebration(){
   try {
     if (state.viewingAs !== 'vanya') return;
     var now = new Date();
-    var prevMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
-    var prevMonthKey = prevMonth.getFullYear()+'-'+prevMonth.getMonth();
+    var prevMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    var prevMonthKey = prevMonth.getFullYear() + '-' + prevMonth.getMonth();
     if (state.lastCelebrationMonth === prevMonthKey) return;
     var countPrevMonth = 0;
     for (var k in state.completedDays){
       if (!state.completedDays.hasOwnProperty(k)) continue;
       var parts = k.split('-');
       var y = parseInt(parts[0]); var m = parseInt(parts[1]);
-      if (y===prevMonth.getFullYear() && m===prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
+      if (y === prevMonth.getFullYear() && m === prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
     }
     if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
       state.lastCelebrationMonth = prevMonthKey;
       applyPointsDelta(MONTH_CELEBRATION_BONUS, MONTH_CELEBRATION_BONUS, 'monthBonus', 'Прошлый месяц');
       var mc = document.getElementById('monthCelebration');
       document.getElementById('mcTitle').textContent = 'Восхитительно!';
-      document.getElementById('mcText').innerHTML = 'Ты выполнил <b>'+countPrevMonth+'</b> дел за прошлый месяц!';
-      document.getElementById('mcBonus').textContent = '+'+MONTH_CELEBRATION_BONUS+' баллов';
+      document.getElementById('mcText').innerHTML = 'Ты выполнил <b>' + countPrevMonth + '</b> дел за прошлый месяц!';
+      document.getElementById('mcBonus').textContent = '+' + MONTH_CELEBRATION_BONUS + ' баллов';
       mc.classList.add('active');
       saveState();
       setTimeout(function(){ makeConfetti(60); }, 400);
@@ -2208,7 +2199,7 @@ function checkLevelAndMilestones(p){
   try {
     var cur = getLevel(p);
     if (cur.name !== lastLevelName && lastLevelName !== null){
-      showToast(cur.emoji, 'Уровень «'+cur.name+'»!');
+      showToast(cur.emoji, 'Уровень «' + cur.name + '»!');
       makeConfetti(50);
     }
     lastLevelName = cur.name;
@@ -2232,12 +2223,12 @@ function updateStats(prevPoints){
     var lvl = getLevel(state.points);
     document.getElementById('levelEmoji').textContent = lvl.emoji;
     document.getElementById('levelName').textContent = lvl.name;
-    document.getElementById('progressBar').style.width = getProgressToNext(state.points)+'%';
+    document.getElementById('progressBar').style.width = getProgressToNext(state.points) + '%';
     var next = getNextLevel(state.points);
-    if (next && next.max !== Infinity) document.getElementById('pointsToNext').textContent = 'До уровня «'+next.name+'» — '+(next.max-state.points+1)+' б.';
+    if (next && next.max !== Infinity) document.getElementById('pointsToNext').textContent = 'До уровня «' + next.name + '» — ' + (next.max - state.points + 1) + ' б.';
     else document.getElementById('pointsToNext').textContent = '';
     var to1000 = WISH_THRESHOLD - state.points;
-    document.getElementById('pointsToGo').textContent = to1000<=0 ? '✦ Цель 1000 достигнута!' : 'До цели 1000 баллов: '+to1000;
+    document.getElementById('pointsToGo').textContent = to1000 <= 0 ? '✦ Цель 1000 достигнута!' : 'До цели 1000 баллов: ' + to1000;
     checkLevelAndMilestones(state.points);
   } catch(e){}
 }
@@ -2247,27 +2238,27 @@ function checkUpcomingDates(){
     var today = new Date(); today.setHours(0,0,0,0);
     var banner = document.getElementById('notificationBanner');
     var dismissed = safeParse(safeGet('dismissed_notifications','[]'), []);
-    for (var i=0;i<=5;i++){
-      var cd = new Date(today); cd.setDate(today.getDate()+i);
-      var y=cd.getFullYear(), m=cd.getMonth(), d=cd.getDate();
-      var type = getDayType(y,m,d);
-      var key = y+'-'+m+'-'+d;
-      var events = getCompletedEvents(y,m,d);
-      if ((type==='bigDate'||type==='lightDate') && events.length===0 && dismissed.indexOf(key)===-1){
-        var label = i===0 ? 'Сегодня' : 'Через '+i+' '+getDaysWord(i);
-        var tn = type==='bigDate' ? 'Большое' : 'Лёгкое';
-        var em = type==='bigDate' ? '🏆' : '💗';
-        document.getElementById('notifTitle').textContent = em+' '+label+' — '+tn+' свидание!';
+    for (var i = 0; i <= 5; i++){
+      var cd = new Date(today); cd.setDate(today.getDate() + i);
+      var y = cd.getFullYear(), m = cd.getMonth(), d = cd.getDate();
+      var type = getDayType(y, m, d);
+      var key = y + '-' + m + '-' + d;
+      var events = getCompletedEvents(y, m, d);
+      if ((type === 'bigDate' || type === 'lightDate') && events.length === 0 && dismissed.indexOf(key) === -1){
+        var label = i === 0 ? 'Сегодня' : 'Через ' + i + ' ' + getDaysWord(i);
+        var tn = type === 'bigDate' ? 'Большое' : 'Лёгкое';
+        var em = type === 'bigDate' ? '🏆' : '💗';
+        document.getElementById('notifTitle').textContent = em + ' ' + label + ' — ' + tn + ' свидание!';
         document.getElementById('notifSub').textContent = 'Покрути колесо 🎡';
         banner.dataset.notifDate = key;
-        document.getElementById('notifAction').onclick = (function(yy,mm,dd,tt){
+        document.getElementById('notifAction').onclick = (function(yy, mm, dd, tt){
           return function(){
             banner.classList.remove('show');
             document.querySelector('.nav-item[data-page="calendar"]').click();
-            state.currentDate = new Date(yy,mm,dd); renderCalendar();
+            state.currentDate = new Date(yy, mm, dd); renderCalendar();
             state.currentDay = dd; openWheel(tt);
           };
-        })(y,m,d,type);
+        })(y, m, d, type);
         banner.classList.add('show'); return;
       }
     }
@@ -2282,12 +2273,12 @@ function renderNotificationsForNastya(){
     if (planned.length > 0){
       var p = planned[0];
       document.getElementById('notifTitle').textContent = '🗓 Ваня что-то запланировал!';
-      document.getElementById('notifSub').textContent = '«'+p.title+'» · '+p.cost+' б.';
+      document.getElementById('notifSub').textContent = '«' + p.title + '» · ' + p.cost + ' б.';
       document.getElementById('notifAction').textContent = 'Ок';
       document.getElementById('notifAction').onclick = function(){
         var idx = -1;
-        for (var i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id === p.id){ idx=i; break; }
-        if (idx!==-1) state.notificationsForNastya[idx].seen = true;
+        for (var i = 0; i < state.notificationsForNastya.length; i++) if (state.notificationsForNastya[i].id === p.id){ idx = i; break; }
+        if (idx !== -1) state.notificationsForNastya[idx].seen = true;
         saveState(); banner.classList.remove('show'); renderNotificationsForNastya();
       };
       banner.classList.add('show');
@@ -2297,13 +2288,13 @@ function renderNotificationsForNastya(){
     if (fresh.length === 0) return;
     var n = fresh[0];
     document.getElementById('notifTitle').textContent = '💎 Ваня активировал желание!';
-    document.getElementById('notifSub').textContent = '«'+n.title+'» · '+n.cost+' б.';
+    document.getElementById('notifSub').textContent = '«' + n.title + '» · ' + n.cost + ' б.';
     document.getElementById('notifAction').textContent = '✓ Выполнено';
     document.getElementById('notifAction').onclick = function(){
-      var idx=-1;
-      for (var i=0;i<state.notificationsForNastya.length;i++) if (state.notificationsForNastya[i].id===n.id){ idx=i; break; }
-      if (idx!==-1) state.notificationsForNastya[idx].seen = true;
-      saveState(); banner.classList.remove('show'); showToast('❤️', '«'+n.title+'» — выполнено!'); renderNotificationsForNastya();
+      var idx = -1;
+      for (var i = 0; i < state.notificationsForNastya.length; i++) if (state.notificationsForNastya[i].id === n.id){ idx = i; break; }
+      if (idx !== -1) state.notificationsForNastya[idx].seen = true;
+      saveState(); banner.classList.remove('show'); showToast('❤️', '«' + n.title + '» — выполнено!'); renderNotificationsForNastya();
     };
     banner.classList.add('show');
   } catch(e){}
@@ -2315,7 +2306,7 @@ function applyDailyBonus(){
     if (!state.dailyVisits[today]){
       state.dailyVisits[today] = true;
       applyPointsDelta(DAILY_BONUS, DAILY_BONUS, 'daily', 'Ежедневный вход');
-      showToast('📅', '+'+DAILY_BONUS+' баллов за вход сегодня!');
+      showToast('📅', '+' + DAILY_BONUS + ' баллов за вход сегодня!');
     }
   } catch(e){}
 }
@@ -2326,28 +2317,28 @@ function resizeCanvas(){
   try {
     if (!canvas){ canvas = document.getElementById('wheel'); if (canvas) ctx = canvas.getContext('2d'); }
     if (!canvas || !ctx) return;
-    var size = Math.min(window.innerWidth*0.78, 340);
+    var size = Math.min(window.innerWidth * 0.78, 340);
     var dpr = window.devicePixelRatio || 1;
-    canvas.width = size*dpr; canvas.height = size*dpr;
-    canvas.style.width = size+'px'; canvas.style.height = size+'px';
-    ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
+    canvas.width = size * dpr; canvas.height = size * dpr;
+    canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.scale(dpr, dpr);
     drawWheel();
   } catch(e){}
 }
-function lighten(hex, amount){ var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.min(255,Math.round(r+(255-r)*amount))+','+Math.min(255,Math.round(g+(255-g)*amount))+','+Math.min(255,Math.round(b+(255-b)*amount))+')'; }
-function darken(hex, amount){ var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return 'rgb('+Math.max(0,Math.round(r*(1-amount)))+','+Math.max(0,Math.round(g*(1-amount)))+','+Math.max(0,Math.round(b*(1-amount)))+')'; }
+function lighten(hex, amount){ var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16); return 'rgb(' + Math.min(255, Math.round(r + (255 - r) * amount)) + ',' + Math.min(255, Math.round(g + (255 - g) * amount)) + ',' + Math.min(255, Math.round(b + (255 - b) * amount)) + ')'; }
+function darken(hex, amount){ var r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16); return 'rgb(' + Math.max(0, Math.round(r * (1 - amount))) + ',' + Math.max(0, Math.round(g * (1 - amount))) + ',' + Math.max(0, Math.round(b * (1 - amount))) + ')'; }
 function drawWheel(){
   try {
     if (!wheelItems.length || !ctx) return;
     var size = parseInt(canvas.style.width);
-    var cx = size/2, cy = size/2; var r = cx - 24;
-    var step = (Math.PI*2)/wheelItems.length;
-    ctx.clearRect(0,0,size,size);
+    var cx = size / 2, cy = size / 2; var r = cx - 24;
+    var step = (Math.PI * 2) / wheelItems.length;
+    ctx.clearRect(0, 0, size, size);
     wheelItems.forEach(function(item, i){
-      var start = currentAngle + i*step, end = start + step;
-      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,start,end); ctx.closePath();
-      var baseColor = (item.type && TYPE_INFO[item.type]) ? TYPE_INFO[item.type].color : ['#B8D0DC','#D5C4DB','#E8C4CB','#F2E8D5'][i%4];
-      var grad = ctx.createRadialGradient(cx, cy, r*0.15, cx, cy, r);
+      var start = currentAngle + i * step, end = start + step;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
+      var baseColor = (item.type && TYPE_INFO[item.type]) ? TYPE_INFO[item.type].color : ['#B8D0DC','#D5C4DB','#E8C4CB','#F2E8D5'][i % 4];
+      var grad = ctx.createRadialGradient(cx, cy, r * 0.15, cx, cy, r);
       grad.addColorStop(0, lighten(baseColor, 0.7));
       grad.addColorStop(0.5, lighten(baseColor, 0.3));
       grad.addColorStop(1, darken(baseColor, 0.05));
@@ -2382,12 +2373,12 @@ function openWheel(type){
   updateSpinsUI();
 }
 function getSpinsKeyForTarget(){
-  if (state.currentDate && state.currentDay) return 'target-'+state.currentDate.getFullYear()+'-'+state.currentDate.getMonth()+'-'+state.currentDay;
+  if (state.currentDate && state.currentDay) return 'target-' + state.currentDate.getFullYear() + '-' + state.currentDate.getMonth() + '-' + state.currentDay;
   var d = new Date();
-  return 'target-'+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+  return 'target-' + d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 }
 function getSpinsUsed(){ return state.spinsUsed[getSpinsKeyForTarget()] || 0; }
-function getNextSpinPrice(){ var used = getSpinsUsed(); return SPIN_PRICES[Math.min(used, SPIN_PRICES.length-1)]; }
+function getNextSpinPrice(){ var used = getSpinsUsed(); return SPIN_PRICES[Math.min(used, SPIN_PRICES.length - 1)]; }
 function updateSpinsUI(){
   if (wheelMode === 'type'){
     document.getElementById('spinBtn').disabled = false;
@@ -2401,8 +2392,8 @@ function updateSpinsUI(){
   var used = getSpinsUsed();
   var targetDay = state.currentDay;
   if (used === 0){ btn.textContent = 'Крутить колесо'; btn.disabled = false; info.textContent = 'Первая попытка для ' + targetDay + '-го — бесплатно ✨'; }
-  else if (state.points >= price){ btn.textContent = 'Крутить ещё (−'+price+' б.)'; btn.disabled = false; info.textContent = 'Перекрут: −'+price+' б.'; }
-  else { btn.textContent = 'Не хватает '+price+' б.'; btn.disabled = true; info.textContent = 'Нужно '+price+' баллов'; }
+  else if (state.points >= price){ btn.textContent = 'Крутить ещё (−' + price + ' б.)'; btn.disabled = false; info.textContent = 'Перекрут: −' + price + ' б.'; }
+  else { btn.textContent = 'Не хватает ' + price + ' б.'; btn.disabled = true; info.textContent = 'Нужно ' + price + ' баллов'; }
 }
 function animate(){
   if (spinVelocity > 0.0015){
@@ -2411,10 +2402,10 @@ function animate(){
   } else { isSpinning = false; spinVelocity = 0; cancelAnimationFrame(animId); determineWinner(); }
 }
 function determineWinner(){
-  var n = wheelItems.length; var step = (Math.PI*2)/n;
-  var norm = ((Math.PI*2)-(currentAngle%(Math.PI*2)))%(Math.PI*2);
-  var pa = (norm + Math.PI*1.5) % (Math.PI*2);
-  var idx = Math.floor(pa/step)%n; if (idx < 0) idx = 0;
+  var n = wheelItems.length; var step = (Math.PI * 2) / n;
+  var norm = ((Math.PI * 2) - (currentAngle % (Math.PI * 2))) % (Math.PI * 2);
+  var pa = (norm + Math.PI * 1.5) % (Math.PI * 2);
+  var idx = Math.floor(pa / step) % n; if (idx < 0) idx = 0;
   showResult(wheelItems[idx]);
 }
 function showResult(item){
@@ -2427,23 +2418,23 @@ function showResult(item){
 }
 function doSpin(){
   if (isSpinning) return;
-  if (wheelMode === 'type'){ isSpinning = true; spinVelocity = 0.25+Math.random()*0.15; animate(); return; }
+  if (wheelMode === 'type'){ isSpinning = true; spinVelocity = 0.25 + Math.random() * 0.15; animate(); return; }
   var price = getNextSpinPrice();
   if (price > 0){
     if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
     applyPointsDelta(-price, 0, 'respin', 'Перекрут колеса');
-    showToast('🔄','−'+price+' баллов за перекрут');
+    showToast('🔄','−' + price + ' баллов за перекрут');
   }
   var k = getSpinsKeyForTarget();
-  state.spinsUsed[k] = (state.spinsUsed[k]||0)+1;
+  state.spinsUsed[k] = (state.spinsUsed[k] || 0) + 1;
   saveState();
   isSpinning = true;
   document.getElementById('resultBox').style.display = 'none';
-  spinVelocity = 0.28+Math.random()*0.15;
+  spinVelocity = 0.28 + Math.random() * 0.15;
   animate();
   updateSpinsUI();
-  var spinCat = state.currentType ? (TYPE_INFO[state.currentType]?TYPE_INFO[state.currentType].name:'') : '';
-  logActivity('spin', '🎡 Крутил колесо'+(spinCat?' ['+spinCat+']':'')+(price>0?', −'+price+' б.':', бесплатно'));
+  var spinCat = state.currentType ? (TYPE_INFO[state.currentType] ? TYPE_INFO[state.currentType].name : '') : '';
+  logActivity('spin', '🎡 Крутил колесо' + (spinCat ? ' [' + spinCat + ']' : '') + (price > 0 ? ', −' + price + ' б.' : ', бесплатно'));
   renderPointsLog();
 }
 
@@ -2451,10 +2442,10 @@ var activeEditorTab = 'emotional';
 function renderActionLists(){
   try {
     ['emotional','physical','lightDate','bigDate'].forEach(function(cat){
-      var ul = document.getElementById('list-'+cat);
+      var ul = document.getElementById('list-' + cat);
       if (!ul) return;
       var tasks = getTasksForCategory(cat);
-      ul.innerHTML = tasks.map(function(t){ return '<li><span class="txt">'+t+'</span><button class="del-btn" data-cat="'+cat+'" data-text="'+encodeURIComponent(t)+'" type="button">✕</button></li>'; }).join('');
+      ul.innerHTML = tasks.map(function(t){ return '<li><span class="txt">' + t + '</span><button class="del-btn" data-cat="' + cat + '" data-text="' + encodeURIComponent(t) + '" type="button">✕</button></li>'; }).join('');
     });
     document.querySelectorAll('.del-btn').forEach(function(b){
       b.onclick = function(){
@@ -2463,8 +2454,8 @@ function renderActionLists(){
         if (DEFAULT_TASKS[cat].indexOf(txt) !== -1){
           if (!state.userRemoved[cat]) state.userRemoved[cat] = [];
           if (state.userRemoved[cat].indexOf(txt) === -1) state.userRemoved[cat].push(txt);
-        } else { state.userAdded[cat] = (state.userAdded[cat]||[]).filter(function(x){ return x !== txt; }); }
-        logActivity('action_removed', '🗑 Удалил из «'+(TYPE_INFO[cat]?TYPE_INFO[cat].name:cat)+'»: '+txt.slice(0, 60));
+        } else { state.userAdded[cat] = (state.userAdded[cat] || []).filter(function(x){ return x !== txt; }); }
+        logActivity('action_removed', '🗑 Удалил из «' + (TYPE_INFO[cat] ? TYPE_INFO[cat].name : cat) + '»: ' + txt.slice(0, 60));
         saveState(); renderActionLists(); showToast('✓','Действие удалено');
       };
     });
@@ -2486,15 +2477,15 @@ function openVanyaActivity(){
       '<div class="modal-title">Активность Вани</div>' +
       '<div class="modal-subtitle">Только действия Вани</div>' +
       '<div style="margin-top:20px">' +
-        statRow('Сейчас', '<span class="activity-status-dot '+(isOn?'online':'offline')+'"></span>'+(isOn?'Онлайн':'Офлайн')) +
+        statRow('Сейчас', '<span class="activity-status-dot ' + (isOn ? 'online' : 'offline') + '"></span>' + (isOn ? 'Онлайн' : 'Офлайн')) +
         statRow('Последний вход', formatTime(state.vanyaSession.loginAt)) +
         statRow('Сегодня был онлайн', formatDuration(getVanyaTodaySeconds())) +
       '</div>' +
       '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(201,169,97,.4);padding-bottom:10px;color:#2E2419">📊 За сегодня</div>' +
       '<div style="margin-top:14px">' +
-        statRow('Заходил', (t.logins||0)+' раз') +
-        statRow('Крутил колесо', (t.spin||0)+' раз') +
-        statRow('Отметил заданий', (t.task_done||0)+' раз') +
+        statRow('Заходил', (t.logins || 0) + ' раз') +
+        statRow('Крутил колесо', (t.spin || 0) + ' раз') +
+        statRow('Отметил заданий', (t.task_done || 0) + ' раз') +
       '</div>' +
       '<div style="margin-top:20px;font-family:\'Cormorant Garamond\',serif;font-size:18px;font-weight:600;text-transform:uppercase;text-align:center;border-bottom:1px dashed rgba(201,169,97,.4);padding-bottom:10px;color:#2E2419">📜 Последние</div>' +
       '<ul class="activity-log-list">' +
@@ -2506,7 +2497,7 @@ function openVanyaActivity(){
           else if (item.action === 'spin') ico = '🎡';
           else if (item.action === 'planned') ico = '🗓';
           else if (item.action === 'day_open') ico = '📅';
-          return '<li><span class="ico">'+ico+'</span><span class="body"><span class="when">'+formatTime(item.timestamp)+'</span><span class="what">'+item.detail+'</span></span></li>';
+          return '<li><span class="ico">' + ico + '</span><span class="body"><span class="when">' + formatTime(item.timestamp) + '</span><span class="what">' + item.detail + '</span></span></li>';
         }).join('') : '<div class="empty-state" style="color:var(--muted);text-shadow:none">Пока Ваня ничего не делал</div>') +
       '</ul>' +
     '</div>';
@@ -2549,11 +2540,11 @@ function openManualPoints(){
       if (!amount || amount < 1){ alert('Введи число'); return; }
       applyPointsDelta(amount, amount, 'manual', reason);
       var now = new Date();
-      var dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
+      var dateStr = String(now.getDate()).padStart(2,'0') + '.' + String(now.getMonth() + 1).padStart(2,'0') + '.' + now.getFullYear();
       state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
-      logActivity('manual_points', '💌 Настя начислила '+amount+' б.: '+reason);
+      logActivity('manual_points', '💌 Настя начислила ' + amount + ' б.: ' + reason);
       saveState(); updateStats(); renderHistory(); renderPointsLog();
-      showToast('💌', 'Начислено '+amount+' баллов!');
+      showToast('💌', 'Начислено ' + amount + ' баллов!');
       makeConfetti(30);
       overlay.remove();
     };
@@ -2638,26 +2629,26 @@ function startApp(){
       document.querySelectorAll('.nav-item').forEach(function(b){ b.classList.remove('active'); });
       document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
       btn.classList.add('active');
-      document.getElementById('page-'+btn.dataset.page).classList.add('active');
+      document.getElementById('page-' + btn.dataset.page).classList.add('active');
       if (btn.dataset.page === 'history') renderHistory();
       if (btn.dataset.page === 'stats'){ updateStats(); renderAchievements(); renderLoveTree(); renderPointsLog(); }
       if (btn.dataset.page === 'wishes') renderWishes();
-      window.scrollTo(0,0);
-      logActivity('page_'+btn.dataset.page, '📱 Открыл «'+(pageNames[btn.dataset.page]||btn.dataset.page)+'»');
+      window.scrollTo(0, 0);
+      logActivity('page_' + btn.dataset.page, '📱 Открыл «' + (pageNames[btn.dataset.page] || btn.dataset.page) + '»');
     };
   });
 
   var prevM = document.getElementById('prevMonth');
   var nextM = document.getElementById('nextMonth');
   if (prevM) prevM.onclick = function(){
-    state.currentDate.setMonth(state.currentDate.getMonth()-1);
+    state.currentDate.setMonth(state.currentDate.getMonth() - 1);
     renderCalendar();
     var cal = document.getElementById('calendar');
     cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
     cal.classList.add('slide-right');
   };
   if (nextM) nextM.onclick = function(){
-    state.currentDate.setMonth(state.currentDate.getMonth()+1);
+    state.currentDate.setMonth(state.currentDate.getMonth() + 1);
     renderCalendar();
     var cal = document.getElementById('calendar');
     cal.classList.remove('slide-left','slide-right'); void cal.offsetWidth;
@@ -2698,8 +2689,8 @@ function startApp(){
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
     applyPointsDelta(WISH_BONUS, WISH_BONUS, 'wishAdd', v);
-    logActivity('wish_add', '✿ Записал хотелку: «'+v+'»');
-    saveState(); renderWishes(); renderPointsLog(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
+    logActivity('wish_add', '✿ Записал хотелку: «' + v + '»');
+    saveState(); renderWishes(); renderPointsLog(); showToast('✿','+' + WISH_BONUS + ' баллов!'); checkAchievements();
   };
 
   document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
@@ -2727,7 +2718,7 @@ function startApp(){
   }
   if (settingsHotzone){
     settingsHotzone.addEventListener('touchend', function(e){ lastTouchTime = Date.now(); e.stopPropagation(); registerHotzoneTap(); }, { passive:true });
-    settingsHotzone.addEventListener('click', function(e){ e.stopPropagation(); if (Date.now()-lastTouchTime < 500) return; registerHotzoneTap(); });
+    settingsHotzone.addEventListener('click', function(e){ e.stopPropagation(); if (Date.now() - lastTouchTime < 500) return; registerHotzoneTap(); });
   }
   var toggleClickCount = 0, toggleClickTimer = null;
   if (settingsToggle) settingsToggle.addEventListener('click', function(e){
@@ -2755,7 +2746,7 @@ function startApp(){
       document.querySelectorAll('.tab-content').forEach(function(x){ x.classList.remove('active'); });
       b.classList.add('active');
       activeEditorTab = b.dataset.tab;
-      document.getElementById('tab-'+activeEditorTab).classList.add('active');
+      document.getElementById('tab-' + activeEditorTab).classList.add('active');
     };
   });
   var addAB = document.getElementById('addActionBtn');
@@ -2815,13 +2806,13 @@ function startApp(){
       if (state.role !== 'vanya' && state.viewingAs !== 'vanya') return;
       var yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      var key = yesterday.getFullYear()+'-'+yesterday.getMonth()+'-'+yesterday.getDate();
+      var key = yesterday.getFullYear() + '-' + yesterday.getMonth() + '-' + yesterday.getDate();
       var plan = state.plannedDays && state.plannedDays[key];
       if (!plan) return;
       window._pendingPlanKey = key;
       var d = new Date(yesterday);
-      var dateStr = String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0');
-      document.getElementById('confirmYesterdayText').textContent = '«'+plan.text+'» — '+dateStr;
+      var dateStr = String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth() + 1).padStart(2,'0');
+      document.getElementById('confirmYesterdayText').textContent = '«' + plan.text + '» — ' + dateStr;
       document.getElementById('confirmYesterdayOverlay').classList.add('active');
     } catch(e){}
   }
@@ -2835,7 +2826,7 @@ function startApp(){
     var parts = key.split('-').map(function(n){ return parseInt(n); });
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     delete state.plannedDays[key];
-    deleteCloudKeys(['plannedDays.'+key]);
+    deleteCloudKeys(['plannedDays.' + key]);
     window._pendingPlanKey = null;
     openPhotoAttach(function(){
       addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
@@ -2852,7 +2843,7 @@ function startApp(){
     var t = new Date();
     var tomorrow = new Date(t);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    var val = tomorrow.getFullYear()+'-'+String(tomorrow.getMonth()+1).padStart(2,'0')+'-'+String(tomorrow.getDate()).padStart(2,'0');
+    var val = tomorrow.getFullYear() + '-' + String(tomorrow.getMonth() + 1).padStart(2,'0') + '-' + String(tomorrow.getDate()).padStart(2,'0');
     document.getElementById('rescheduleDateInput').min = val;
     document.getElementById('rescheduleDateInput').value = val;
     document.getElementById('rescheduleOverlay').classList.add('active');
@@ -2862,7 +2853,7 @@ function startApp(){
     var v = document.getElementById('rescheduleDateInput').value;
     if (!v){ alert('Выбери дату'); return; }
     var parts = v.split('-').map(function(n){ return parseInt(n); });
-    var newKey = parts[0]+'-'+(parts[1]-1)+'-'+parts[2];
+    var newKey = parts[0] + '-' + (parts[1] - 1) + '-' + parts[2];
     var pr = window._pendingReschedule;
     if (!pr) return;
     if (state.plannedDays[newKey] && state.plannedDays[newKey].text !== pr.plan.text){
@@ -2873,8 +2864,8 @@ function startApp(){
     if (!state.forcedDayTypes) state.forcedDayTypes = {};
     state.forcedDayTypes[pr.key] = 'free';
     setCloudForcedType(pr.key, 'free');
-    deleteCloudKeys(['plannedDays.'+pr.key, 'completedDays.'+pr.key]);
-    logActivity('planned_moved', '📅 Перенёс план «'+pr.plan.text+'» с '+pr.key+' на '+newKey);
+    deleteCloudKeys(['plannedDays.' + pr.key, 'completedDays.' + pr.key]);
+    logActivity('planned_moved', '📅 Перенёс план «' + pr.plan.text + '» с ' + pr.key + ' на ' + newKey);
     window._pendingReschedule = null;
     window._pendingPlanKey = null;
     saveState(); renderCalendar();
@@ -2889,8 +2880,8 @@ function startApp(){
       if (!state.forcedDayTypes) state.forcedDayTypes = {};
       state.forcedDayTypes[pr.key] = 'free';
       setCloudForcedType(pr.key, 'free');
-      deleteCloudKeys(['plannedDays.'+pr.key]);
-      logActivity('planned_cancelled', '✕ Отменил план: «'+pr.plan.text+'»');
+      deleteCloudKeys(['plannedDays.' + pr.key]);
+      logActivity('planned_cancelled', '✕ Отменил план: «' + pr.plan.text + '»');
       saveState(); renderCalendar();
       document.getElementById('rescheduleOverlay').classList.remove('active');
       showToast('✕', 'План отменён');
