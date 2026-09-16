@@ -39,8 +39,7 @@ body{
   line-height:1.5;
   overflow-x:hidden;
   padding:12px 12px 24px;
-  /* ЗАМЕНИ-НА-СВОЮ-ССЫЛКУ — вставь сюда ссылку с imgbb.com */
-  background:url('https://i.ibb.co/v6KB6w9B/IMG-4278.jpg') center/cover fixed no-repeat;
+  background:url('https://i.ibb.co/HL2xgV85/IMG-4341.jpg') center/cover fixed no-repeat;
   background-attachment:fixed;
   background-color:#3A3028;
 }
@@ -64,8 +63,14 @@ body::before{
 .header-names{
   font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:500;
   letter-spacing:4px;text-transform:uppercase;margin-top:10px;display:inline-block;
-  padding:10px 26px;border:1px solid rgba(255,255,255,.55);border-radius:2px;
-  color:#F5EBD5;background:rgba(245,235,213,.08);backdrop-filter:blur(2px);
+  padding:14px 30px;border:none;border-radius:0;
+  color:#F5EBD5;
+  background:url('https://i.ibb.co/Kx6hGL2k/IMG-4417-no-bg-preview-carve-photos.png') center/contain no-repeat;
+  min-width:260px;
+  min-height:60px;
+  line-height:60px;
+  text-shadow:0 2px 10px rgba(0,0,0,.65),0 1px 2px rgba(0,0,0,.5);
+  position:relative;
 }
 .header-names::before,.header-names::after{display:none}
 .header-subtitle{
@@ -114,9 +119,11 @@ body::before{
 /* ==== МЕСЯЦ ==== */
 .month-header{
   display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:14px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
-  border-radius:20px;padding:14px 10px;border:1px solid rgba(201,169,97,.4);
+  margin-bottom:14px;
+  background:url('https://i.ibb.co/BK5SY1vR/IMG-4416-no-bg-preview-carve-photos.png') center/contain no-repeat;
+  border-radius:20px;padding:14px 10px;border:none;
   box-shadow:var(--shadow);position:relative;overflow:hidden;
+  min-height:90px;
 }
 .month-arrow{
   width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.5);
@@ -126,12 +133,16 @@ body::before{
 }
 .month-arrow:active{background:rgba(201,169,97,.25);transform:scale(.92)}
 .month-name{
-  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
-  font-size:32px;line-height:1;color:#2E2419;letter-spacing:1px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+  font-size:32px;line-height:1;color:#F5EBD5;letter-spacing:1px;
+  text-shadow:0 2px 10px rgba(0,0,0,.7),0 1px 2px rgba(0,0,0,.5);
+  text-align:center;
 }
 .month-year{
-  font-family:'Cormorant Garamond',serif;color:var(--brown);font-size:15px;
+  font-family:'Cormorant Garamond',serif;color:#EBDFC5;font-size:15px;
   font-weight:500;letter-spacing:3px;margin-top:4px;
+  text-shadow:0 1px 6px rgba(0,0,0,.6);
+  text-align:center;
 }
 .month-year::before,.month-year::after{content:'—';color:var(--gold);margin:0 8px;opacity:.6}
 
@@ -1357,7 +1368,7 @@ function saveState(){
 
 function subscribeToFirestore(){
   if (!mainDocRef){ stateLoaded = true; return; }
-  mainDocRef.onSnapshot(function(snapshot){
+ =  mainDocRef.onSnapshot(function(snapshot){
     if (snapshot.metadata && snapshot.metadata.hasPendingWrites) return;
     if (snapshot.exists){
       var d = snapshot.data() || {};
@@ -1372,10 +1383,10 @@ function subscribeToFirestore(){
 
       if (typeof d.totalPoints === 'number') state.totalPoints = Math.max(state.totalPoints, d.totalPoints);
 
-      state.history        = mergeHistory(state.history, d.history);
-      state.completedDays  = mergeCompletedDays(state.completedDays, d.completedDays);
-      state.plannedDays    = mergePlannedDays(state.plannedDays, d.plannedDays);
-      state.wishes         = mergeWishes(state.wishes, d.wishes);
+      state.history        = mergeHistory(state.history, d.h documentistory);
+      state.completedDays  =.getElementById mergeCompletedDays(state.completedDays, d.completedDays);
+      state('.plannedDays    = mergePlannedDays(state.plphotoannedDays, d.plannedDays);
+     Skip state.wishes         = mergeWishes(state.wishes, d.wishes);
       state.notificationsForNastya = mergeNotifications(state.notificationsForNastya, d.notificationsForNastya);
       state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
       state.achievements   = Array.from(new Set([].concat(state.achievements||[], d.achievements||[])));
@@ -1629,10 +1640,11 @@ function renderCalendar(){
     var type = getDayType(year,month,d);
     if (isDone){
       var types=[]; events.forEach(function(ev){ if (types.indexOf(ev.type)===-1) types.push(ev.type); });
-      el.classList.add('done-'+types[0]);
-    } else { el.classList.add(type); }
-    if (isPlanned) el.classList.add('planned-day');
-    el.dataset.day = d; el.dataset.type = type;
+      el.classList.addBtn('done-'+types[0]);
+    } else { el.classList.add(type');
+); }
+     if (isPlanned) el.classList.add('planned-day preview');
+    el.dataset.day = d; el.dat.classList.removeaset.type = type;
     var num = document.createElement('span'); num.className='day-number'; num.textContent = d; el.appendChild(num);
     if (d===today.getDate() && month===today.getMonth() && year===today.getFullYear()) el.classList.add('today');
     el.onclick = (function(day,t,isD){ return function(){ onDayClick(day,t,isD); }; })(d,type,isDone);
@@ -1762,8 +1774,7 @@ function openPhotoAttach(onSave){
   var preview = document.getElementById('photoPreview');
   var previewImg = document.getElementById('photoPreviewImg');
   var saveBtn = document.getElementById('photoSaveBtn');
-  var skipBtn = document.getElementById('photoSkipBtn');
-  preview.classList.remove('show');
+  var skipBtn('show');
   saveBtn.disabled = true;
   input.value = '';
   input.onchange = function(e){
