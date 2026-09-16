@@ -792,6 +792,29 @@ setTimeout(function(){
 <input type="date" class="input-line" id="moveDateInputType" style="border-radius:14px">
 <button class="btn-primary" id="moveDayBtnType" type="button">Перенести</button>
 </div>
+
+<div id="nastyaDayControls" style="display:none;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(201,169,97,.4)">
+  <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px">✎ Только для Насти</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <button class="btn-secondary" id="nastyaMakeFreeBtn" type="button" style="color:var(--green);border-color:var(--green)">🌿 Освободить день</button>
+    <button class="btn-secondary" id="nastyaReplaceBtn" type="button">🎨 Заменить тип дня</button>
+  </div>
+  <div id="nastyaReplaceFields" style="display:none;margin-top:12px">
+    <label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Новый тип</label>
+    <select class="select-line" id="nastyaNewType">
+      <option value="free">🌿 Свободный (без цвета)</option>
+      <option value="emotional">💙 Эмоциональная</option>
+      <option value="physical">💜 Физическая</option>
+      <option value="lightDate">💗 Лёгкое свидание</option>
+      <option value="bigDate">🏆 Большое свидание</option>
+    </select>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn-gold" id="nastyaReplaceConfirm" type="button">Применить</button>
+      <button class="btn-secondary" id="nastyaOverrideResetBtn" type="button" style="color:var(--red);border-color:var(--red)">↺ Сбросить моё изменение</button>
+    </div>
+  </div>
+</div>
+
 </div>
 </div>
 </div>
@@ -1052,7 +1075,8 @@ var state = {
   pendingPhoto: null,
   plannedDays: {},
   pendingReschedule: null,
-  pointsLog: []
+  pointsLog: [],
+  dayOverrides: {}
 };
 
 var lastLevelName = localStorage.getItem('lastLevelName') || null;
@@ -1129,6 +1153,15 @@ function mergePointsLog(a, b){
   (b||[]).forEach(function(x){ map.set(x.id, x); });
   return Array.from(map.values()).sort(function(x,y){ return (y.timestamp||0)-(x.timestamp||0); }).slice(0, 300);
 }
+function mergeDayOverrides(a, b){
+  var out = Object.assign({}, a||{});
+  for (var k in (b||{})){
+    var ex = out[k], nw = b[k];
+    if (!ex) out[k] = nw;
+    else out[k] = (nw.at||0) >= (ex.at||0) ? nw : ex;
+  }
+  return out;
+}
 function migrateCountersShape(){
   if (state.counters && !state.counters.nastya && !state.counters.vanya){
     state.counters = { nastya: state.counters || {}, vanya: {} };
@@ -1164,6 +1197,7 @@ function hydrateFromLocalStorage(){
     state.counters       = JSON.parse(g('counters') || '{"nastya":{},"vanya":{}}');
     state.todayCounters  = JSON.parse(g('todayCounters') || 'null') || { nastya:emptyToday(), vanya:emptyToday() };
     state.pointsLog      = JSON.parse(g('pointsLog') || '[]');
+    state.dayOverrides   = JSON.parse(g('dayOverrides') || '{}');
     var vs = JSON.parse(g('vanyaSession') || 'null');
     if (vs) state.vanyaSession = vs;
   } catch(e){ console.error('hydrate:', e); }
@@ -1368,6 +1402,7 @@ function saveState(){
     localStorage.setItem('userRemoved', JSON.stringify(state.userRemoved));
     localStorage.setItem('achievements', JSON.stringify(state.achievements));
     localStorage.setItem('pointsLog', JSON.stringify(state.pointsLog || []));
+    localStorage.setItem('dayOverrides', JSON.stringify(state.dayOverrides || {}));
   } catch(e){ console.warn('ls', e); }
 
   if (!mainDocRef) return;
@@ -1395,7 +1430,8 @@ function saveState(){
       lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
       welcomeShown: localStorage.getItem('welcomeShown') === 'true',
       schedules: schedules,
-      pointsLog: state.pointsLog || []
+      pointsLog: state.pointsLog || [],
+      dayOverrides: state.dayOverrides || {}
     };
     if (!state.history.length) delete data.history;
     if (!Object.keys(state.completedDays).length) delete data.completedDays;
@@ -1434,6 +1470,7 @@ function subscribeToFirestore(){
       state.activityLog    = mergeActivityLog(state.activityLog, d.activityLog);
       state.achievements   = Array.from(new Set([].concat(state.achievements||[], d.achievements||[])));
       state.pointsLog      = mergePointsLog(state.pointsLog, d.pointsLog);
+      state.dayOverrides   = mergeDayOverrides(state.dayOverrides, d.dayOverrides);
 
       state.spinsUsed      = Object.assign({}, state.spinsUsed, d.spinsUsed||{});
       state.dailyVisits    = Object.assign({}, state.dailyVisits, d.dailyVisits||{});
@@ -1548,7 +1585,7 @@ function renderSettingsMenu(){
     add('✏ Управление действиями',null,function(){ renderActionLists(); document.getElementById('actionEditorOverlay').classList.add('active'); menu.classList.remove('open'); });
     add('⏸ Карантин',null,function(){ openQuarantineList(); menu.classList.remove('open'); });
     add('↺ Сбросить карантин',null,function(){ if (!confirm('Сбросить карантин?')) return; state.quarantine={}; saveState(); showToast('↺','Карантин сброшен!'); menu.classList.remove('open'); });
-    add('🔄 Сбросить расписание',null,function(){ if (!confirm('Сбросить расписание?')) return; Object.keys(localStorage).forEach(function(k){ if (k.indexOf('schedule_')===0) localStorage.removeItem(k); }); saveState(); location.reload(); });
+    add('🔄 Сбросить расписание',null,function(){ if (!confirm('Сбросить расписание?')) return; Object.keys(localStorage).forEach(function(k){ if (k.indexOf('schedule_')===0) localStorage.removeItem(k); }); state.dayOverrides={}; saveState(); location.reload(); });
     div();
     add('📤 Копировать данные',null,function(){
       var data = JSON.parse(JSON.stringify(state)); data.currentMonth = getCurrentMonthKey();
@@ -1582,7 +1619,7 @@ function renderSettingsMenu(){
           points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, wishes:[],
           achievements:[], activityLog:[], quarantine:{}, dailyVisits:{}, spinsUsed:{},
           notificationsForNastya:[], counters:{nastya:{},vanya:{}}, todayCounters:{nastya:emptyToday(),vanya:emptyToday()},
-          lastCelebrationMonth:null, welcomeShown:false, schedules:{}, pointsLog:[]
+          lastCelebrationMonth:null, welcomeShown:false, schedules:{}, pointsLog:[], dayOverrides:{}
         }).then(function(){ location.reload(); }).catch(function(){ location.reload(); });
       } else location.reload();
     };
@@ -1657,6 +1694,9 @@ function generateMonthSchedule(year, month){
 }
 function getDayType(year, month, day){
   var key = year+'-'+month+'-'+day;
+  if (state.dayOverrides && state.dayOverrides[key]){
+    return state.dayOverrides[key].type;
+  }
   if (state.completedDays[key] && state.completedDays[key].length>0) return state.completedDays[key][0].type;
   if (state.plannedDays && state.plannedDays[key]) return state.plannedDays[key].type;
   return generateMonthSchedule(year, month)[day] || 'free';
@@ -1718,6 +1758,8 @@ function openEditModal(){
   document.getElementById('editDayTitle').textContent = day + ' ' + monthNames[month];
   var freeBlock = document.getElementById('freeChoiceBlock');
   var typeBlock = document.getElementById('typeBlock');
+  var nastyaControls = document.getElementById('nastyaDayControls');
+  if (nastyaControls) nastyaControls.style.display = 'none';
   if (type === 'free' && !isDone){
     freeBlock.style.display='block'; typeBlock.style.display='none';
     document.getElementById('editDaySubtitle').textContent = _isPastOrToday ? 'Этот день уже прошёл или сегодня' : 'Выбери, как провести день';
@@ -1738,6 +1780,8 @@ function openEditModal(){
         overlay.classList.remove('active');
       });
     };
+    // Настины кнопки override — тоже показать в свободном дне
+    applyNastyaDayControls(year, month, day, type, overlay);
     overlay.classList.add('active'); return;
   }
   freeBlock.style.display='none'; typeBlock.style.display='block';
@@ -1803,8 +1847,64 @@ function openEditModal(){
     if (state.plannedDays[sk]){ state.plannedDays[nk] = state.plannedDays[sk]; delete state.plannedDays[sk]; }
     saveState(); renderCalendar(); overlay.classList.remove('active');
   };
+
+  applyNastyaDayControls(year, month, day, type, overlay);
   overlay.classList.add('active');
 }
+
+function applyNastyaDayControls(year, month, day, type, overlay){
+  var nastyaControls = document.getElementById('nastyaDayControls');
+  if (!nastyaControls) return;
+  var isNastya = (state.role === 'nastya' && state.viewingAs === 'nastya');
+  if (!isNastya){ nastyaControls.style.display = 'none'; return; }
+  nastyaControls.style.display = 'block';
+
+  var dayKey = year+'-'+month+'-'+day;
+  var hasOverride = state.dayOverrides && state.dayOverrides[dayKey];
+  var replaceFields = document.getElementById('nastyaReplaceFields');
+  replaceFields.style.display = 'none';
+  var overrideResetBtn = document.getElementById('nastyaOverrideResetBtn');
+  overrideResetBtn.style.display = hasOverride ? 'flex' : 'none';
+
+  document.getElementById('nastyaMakeFreeBtn').onclick = function(){
+    if (!state.dayOverrides) state.dayOverrides = {};
+    state.dayOverrides[dayKey] = { type: 'free', byNastya: true, at: Date.now() };
+    logActivity('day_override', '🌿 Настя освободила день '+day+' '+monthNames[month]);
+    saveState();
+    renderCalendar();
+    overlay.classList.remove('active');
+    showToast('🌿', 'День освобождён');
+  };
+
+  document.getElementById('nastyaReplaceBtn').onclick = function(){
+    var f = document.getElementById('nastyaReplaceFields');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+    var cur = hasOverride ? state.dayOverrides[dayKey].type : type;
+    document.getElementById('nastyaNewType').value = cur || 'free';
+  };
+
+  document.getElementById('nastyaReplaceConfirm').onclick = function(){
+    var newType = document.getElementById('nastyaNewType').value;
+    if (!state.dayOverrides) state.dayOverrides = {};
+    state.dayOverrides[dayKey] = { type: newType, byNastya: true, at: Date.now() };
+    logActivity('day_override', '🎨 Настя заменила тип дня '+day+' '+monthNames[month]+' → '+newType);
+    saveState();
+    renderCalendar();
+    overlay.classList.remove('active');
+    showToast('🎨', 'Тип дня заменён');
+  };
+
+  overrideResetBtn.onclick = function(){
+    if (!state.dayOverrides) return;
+    delete state.dayOverrides[dayKey];
+    logActivity('day_override_reset', '↺ Настя сбросила override дня '+day+' '+monthNames[month]);
+    saveState();
+    renderCalendar();
+    overlay.classList.remove('active');
+    showToast('↺', 'Изменение снято');
+  };
+}
+
 function openChoiceModal(title, subtitle){
   document.getElementById('choiceTitle').textContent = title;
   document.getElementById('choiceSubtitle').textContent = subtitle;
@@ -2521,10 +2621,16 @@ function openBackdatedPoints(){
     '<div style="margin-top:20px">' +
       '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Дата</label>' +
       '<input type="date" class="input-line" id="bdDate" value="'+todayVal+'" max="'+todayVal+'" style="border-radius:14px">' +
-      '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;margin-top:10px">Что сделал</label>' +
+      '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;margin-top:10px">Категория</label>' +
       '<select class="select-line" id="bdCategory">'+opts+'</select>' +
-      '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;margin-top:6px">Описание (необязательно)</label>' +
-      '<input type="text" class="input-line" id="bdNote" placeholder="Например: Обнимал 20 минут">' +
+      '<div id="bdTaskWrap" style="margin-top:6px">' +
+        '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Что именно</label>' +
+        '<select class="select-line" id="bdTask"></select>' +
+      '</div>' +
+      '<div id="bdCustomWrap" style="display:none;margin-top:6px">' +
+        '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Опиши, что было</label>' +
+        '<input type="text" class="input-line" id="bdCustomText" placeholder="Например: Помог приготовить ужин">' +
+      '</div>' +
       '<div id="bdManualWrap" style="display:none;margin-top:6px">' +
         '<label style="font-size:11px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px">Свои баллы</label>' +
         '<input type="number" class="input-line" id="bdManualPts" placeholder="25" min="1" max="9999">' +
@@ -2537,25 +2643,47 @@ function openBackdatedPoints(){
   document.body.appendChild(overlay);
 
   var catSel = document.getElementById('bdCategory');
-  var noteInp = document.getElementById('bdNote');
+  var taskSel = document.getElementById('bdTask');
+  var taskWrap = document.getElementById('bdTaskWrap');
+  var customWrap = document.getElementById('bdCustomWrap');
+  var customText = document.getElementById('bdCustomText');
   var manualWrap = document.getElementById('bdManualWrap');
   var manualPts = document.getElementById('bdManualPts');
   var preview = document.getElementById('bdPreview');
 
-  function recalc(){
+  function getCatPoints(){
     var opt = catSel.options[catSel.selectedIndex];
-    var base = parseInt(opt.dataset.pts) || 0;
-    if (catSel.value === 'initiative'){
-      preview.textContent = '+30 баллов';
-    } else if (catSel.value === 'wish'){
-      preview.textContent = '+15 баллов';
-    } else if (catSel.value === 'manual'){
-      manualWrap.style.display = 'block';
+    return parseInt(opt.dataset.pts) || 0;
+  }
+
+  function fillTasks(cat){
+    if (cat === 'emotional' || cat === 'physical' || cat === 'lightDate' || cat === 'bigDate'){
+      var tasks = getTasksForCategory(cat);
+      taskSel.innerHTML = tasks.map(function(t){
+        return '<option value="'+encodeURIComponent(t)+'">'+t+'</option>';
+      }).join('');
+      if (!tasks.length){
+        taskSel.innerHTML = '<option value="">— нет доступных —</option>';
+      }
+    }
+  }
+
+  function recalc(){
+    var cat = catSel.value;
+    var isTaskCat = (cat === 'emotional' || cat === 'physical' || cat === 'lightDate' || cat === 'bigDate');
+    taskWrap.style.display = isTaskCat ? 'block' : 'none';
+    customWrap.style.display = (cat === 'initiative' || cat === 'wish') ? 'block' : 'none';
+    manualWrap.style.display = (cat === 'manual') ? 'block' : 'none';
+
+    if (isTaskCat) fillTasks(cat);
+
+    if (cat === 'initiative'){ preview.textContent = '+30 баллов'; }
+    else if (cat === 'wish'){ preview.textContent = '+15 баллов'; }
+    else if (cat === 'manual'){
       var m = parseInt(manualPts.value) || 0;
       preview.textContent = '+'+m+' баллов';
     } else {
-      manualWrap.style.display = 'none';
-      preview.textContent = '+'+base+' баллов';
+      preview.textContent = '+'+getCatPoints()+' баллов';
     }
   }
 
@@ -2571,22 +2699,34 @@ function openBackdatedPoints(){
     if (!dateVal){ alert('Выбери дату'); return; }
 
     var cat = catSel.value;
-    var note = noteInp.value.trim();
     var pts = 0;
     var type = 'custom';
     var emoji = '⭐';
-    var title = note;
+    var title = '';
 
-    if (cat === 'emotional'){ pts = 5;   type = 'emotional'; emoji = '💙'; title = note || 'Эмоциональная забота'; }
-    else if (cat === 'physical'){ pts = 10; type = 'physical'; emoji = '💜'; title = note || 'Физическая забота'; }
-    else if (cat === 'lightDate'){ pts = 50; type = 'lightDate'; emoji = '💗'; title = note || 'Лёгкое свидание'; }
-    else if (cat === 'bigDate'){ pts = 150; type = 'bigDate'; emoji = '🏆'; title = note || 'Большое свидание'; }
-    else if (cat === 'initiative'){ pts = 30; type = 'custom'; emoji = '⭐'; title = note || 'Инициатива'; }
-    else if (cat === 'wish'){ pts = 15; type = 'custom'; emoji = '✿'; title = note || 'Хотелка'; }
+    if (cat === 'emotional' || cat === 'physical' || cat === 'lightDate' || cat === 'bigDate'){
+      var encoded = taskSel.value;
+      if (!encoded){ alert('Нет доступных действий'); return; }
+      title = decodeURIComponent(encoded);
+      pts = getCatPoints();
+      type = cat;
+      emoji = TYPE_INFO[cat].emoji;
+    }
+    else if (cat === 'initiative'){
+      title = customText.value.trim();
+      if (!title){ alert('Опиши, что было'); return; }
+      pts = 30; type = 'custom'; emoji = '⭐';
+    }
+    else if (cat === 'wish'){
+      title = customText.value.trim();
+      if (!title){ alert('Опиши хотелку'); return; }
+      pts = 15; type = 'custom'; emoji = '✿';
+    }
     else if (cat === 'manual'){
       var m = parseInt(manualPts.value);
       if (!m || m < 1){ alert('Введи баллы'); return; }
-      pts = m; type = 'custom'; emoji = '💌'; title = note || 'Подарок от Насти';
+      title = customText.value.trim() || 'Подарок от Насти';
+      pts = m; type = 'custom'; emoji = '💌';
     }
 
     if (!title){ alert('Опиши, что было'); return; }
@@ -2597,7 +2737,6 @@ function openBackdatedPoints(){
     var dateStr = String(d).padStart(2,'0')+'.'+String(m2+1).padStart(2,'0')+'.'+y;
     var key = y+'-'+m2+'-'+d;
 
-    // Запись в completedDays — чтобы появилось в календаре
     if (!state.completedDays[key]) state.completedDays[key] = [];
     state.completedDays[key].push({
       type: type,
@@ -2608,11 +2747,9 @@ function openBackdatedPoints(){
       backdated: true
     });
 
-    // Баллы
     state.points += pts;
     state.totalPoints += pts;
 
-    // Запись в историю
     state.history.unshift({
       date: dateStr,
       eventDate: eventDate,
@@ -2622,7 +2759,6 @@ function openBackdatedPoints(){
       points: pts
     });
 
-    // Журнал баллов
     logPoints(pts, title, '🗓 Задним числом', key, dateStr);
 
     logActivity('backdated', '🗓 Настя начислила +'+pts+' б. за '+dateStr+': '+title);
