@@ -1709,6 +1709,13 @@ function openEditModal(){
 function applyNastyaDayControls(year, month, day, type, overlay){
   var nastyaControls = document.getElementById('nastyaDayControls');
   if (!nastyaControls) return;
+
+  /* ПЕРЕНОСИМ блок в модалку, чтобы он не зависел от typeBlock */
+  var _modal = overlay.querySelector('.modal');
+  if (_modal && nastyaControls.parentNode !== _modal) {
+    _modal.appendChild(nastyaControls);
+  }
+
   var isNastya = (state.role === 'nastya' && state.viewingAs === 'nastya');
   if (!isNastya){ nastyaControls.style.display = 'none'; return; }
   nastyaControls.style.display = 'block';
