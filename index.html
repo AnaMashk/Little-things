@@ -506,6 +506,40 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .garden-flower.done{background:linear-gradient(145deg,#E5D8B8,#D4C4A0);opacity:.85}
 .garden-flower .flower-actions{display:flex;gap:6px;margin-top:10px;justify-content:center}
 .garden-flower .flower-actions button{background:none;border:none;font-size:11px;color:var(--brown);cursor:pointer;padding:2px 6px;font-family:inherit;text-decoration:underline}
+
+/* ==== ПЛАШКА «ЗАБОТА ДЛЯ ВАНИ ОТ НАСТИ» ==== */
+.care-card{
+  display:flex;align-items:center;gap:14px;
+  margin-top:16px;padding:18px 20px;
+  border-radius:20px;text-decoration:none;color:var(--dark);
+  background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));
+  border:1px solid rgba(201,169,97,.45);
+  box-shadow:var(--shadow);cursor:pointer;
+  position:relative;z-index:3;transition:transform .2s;
+}
+.care-card:active{transform:scale(.98)}
+.care-icon{font-size:34px;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.care-body{flex:1;display:flex;flex-direction:column;min-width:0}
+.care-title{
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;
+  letter-spacing:1.5px;color:var(--dark);line-height:1.1;
+}
+.care-sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:4px;text-transform:uppercase}
+.care-arrow{font-size:24px;color:var(--gold-deep);flex-shrink:0;transition:transform .25s}
+.care-card:active .care-arrow{transform:translateX(4px)}
+
+/* ==== МОДАЛКА ДЛЯ АКИНАТОРА (IFRAME) ==== */
+.care-modal{
+  padding:0!important;overflow:hidden!important;
+  max-width:520px;width:100%;
+  height:calc(100vh - 60px);max-height:820px;
+  display:flex;flex-direction:column;
+}
+.care-modal .close-button{background:rgba(255,255,255,.9);z-index:20}
+.care-frame{
+  flex:1;width:100%;border:0;background:#FAF6EC;
+  border-radius:28px;
+}
 </style>
 </head>
 
@@ -613,6 +647,18 @@ setTimeout(function(){
 <div class="weekday">ЧТ</div><div class="weekday">ПТ</div><div class="weekday">СБ</div><div class="weekday">ВС</div>
 </div>
 <div class="calendar" id="calendar"></div>
+
+<!-- ↓↓↓ ПЛАШКА «ЗАБОТА ДЛЯ ВАНИ ОТ НАСТИ» — прямо под днями ↓↓↓ -->
+<a href="akinator.html" class="care-card" id="careCard">
+  <span class="care-icon">🐱</span>
+  <span class="care-body">
+    <span class="care-title">Забота для Вани</span>
+    <span class="care-sub">от Насти ❤️</span>
+  </span>
+  <span class="care-arrow">→</span>
+</a>
+<!-- ↑↑↑ КОНЕЦ ПЛАШКИ ↑↑↑ -->
+
 <div class="legend">
 <div class="legend-item"><span class="legend-dot emotional"></span>💙 Эмоц. +5</div>
 <div class="legend-item"><span class="legend-dot physical"></span>💜 Физ. +10</div>
@@ -869,6 +915,15 @@ setTimeout(function(){
 </div>
 
 <div class="photo-modal" id="photoViewModal"><img id="photoViewImg" alt=""></div>
+
+<!-- ↓↓↓ МОДАЛКА ДЛЯ АКИНАТОРА ↓↓↓ -->
+<div class="overlay center" id="akinatorOverlay">
+  <div class="modal care-modal">
+    <button class="close-button" data-close="akinatorOverlay" type="button">×</button>
+    <iframe id="akinatorFrame" class="care-frame" title="Акинатор"></iframe>
+  </div>
+</div>
+<!-- ↑↑↑ КОНЕЦ МОДАЛКИ ↑↑↑ -->
 
 <div class="overlay" id="wheelOverlay">
 <div class="modal">
@@ -2903,6 +2958,18 @@ function startApp(){
   document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
   document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
   document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
+
+  /* ==== ПЛАШКА «ЗАБОТА ДЛЯ ВАНИ ОТ НАСТИ» ==== */
+  var careCard = document.getElementById('careCard');
+  if (careCard){
+    careCard.addEventListener('click', function(e){
+      e.preventDefault();
+      var frame = document.getElementById('akinatorFrame');
+      if (frame && !frame.src){ frame.src = 'akinator.html'; }
+      document.getElementById('akinatorOverlay').classList.add('active');
+      logActivity('akinator_open', '🐱 Открыл Акинатора');
+    });
+  }
 
   var settingsToggle = document.getElementById('settingsToggle');
   var settingsMenu = document.getElementById('settingsMenu');
