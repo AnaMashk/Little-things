@@ -925,6 +925,7 @@ var stateLoaded = false;
 var pendingSave = false;
 var isSaving = false;
 var saveTimeout = null;
+var initialSyncDone = false;   // ← НОВОЕ: пишем в Firestore только после первого снапшота
 
 function currentActor(){ return state.viewingAs === 'vanya' ? 'vanya' : 'nastya'; }
 
@@ -1222,6 +1223,7 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
+/* ==== ИЗМЕНЕНО: безопасный saveState ==== */
 function saveState(){
   try {
     localStorage.setItem('monthPoints', state.points);
@@ -1248,7 +1250,7 @@ function saveState(){
   } catch(e){ console.warn('ls', e); }
 
   if (!mainDocRef) return;
-  if (!stateLoaded){ pendingSave = true; return; }
+  if (!initialSyncDone) return;   // ← НЕ пишем в Firestore до первого снапшота
   if (!navigator.onLine) return;
   if (saveTimeout) clearTimeout(saveTimeout);
   saveTimeout = setTimeout(function(){
@@ -1258,38 +1260,56 @@ function saveState(){
     var schedules = {};
     for (var key in localStorage) if (key.indexOf('schedule_') === 0) schedules[key] = localStorage.getItem(key);
 
+    var actor = currentActor();
     var data = {
-      points: state.points, totalPoints: state.totalPoints,
-      history: state.history, completedDays: state.completedDays,
-      plannedDays: state.plannedDays,
-      spinsUsed: state.spinsUsed, dailyVisits: state.dailyVisits,
-      quarantine: state.quarantine, userAdded: state.userAdded, userRemoved: state.userRemoved,
-      wishes: state.wishes, notificationsForNastya: state.notificationsForNastya,
-      activityLog: state.activityLog.slice(0,500), achievements: state.achievements,
-      lastCelebrationMonth: state.lastCelebrationMonth, vanyaSession: state.vanyaSession,
-      counters: state.counters, todayCounters: state.todayCounters,
+      spinsUsed: state.spinsUsed,
+      dailyVisits: state.dailyVisits,
+      quarantine: state.quarantine,
+      userAdded: state.userAdded,
+      userRemoved: state.userRemoved,
+      wishes: state.wishes,
+      notificationsForNastya: state.notificationsForNastya,
+      achievements: state.achievements,
       currentMonth: getCurrentMonthKey(),
-      lastLevelName: lastLevelName, reachedMilestones: reachedMilestones,
-      welcomeShown: localStorage.getItem('welcomeShown') === 'true',
       schedules: schedules,
-      pointsLog: state.pointsLog || [],
       dayOverrides: state.dayOverrides || {},
       dayEmojis: state.dayEmojis || {}
     };
-    if (!state.history.length) delete data.history;
-    if (!Object.keys(state.completedDays).length) delete data.completedDays;
-    if (!Object.keys(state.plannedDays).length) delete data.plannedDays;
-    if (!state.wishes.length) delete data.wishes;
-    if (!state.achievements.length) delete data.achievements;
+
+    // Сессию Вани пишет ТОЛЬКО телефон Вани
+    if (actor === 'vanya'){
+      data.vanyaSession = state.vanyaSession;
+    }
+
+    // Счётчики — каждый пишет только свои, через точечную нотацию
+    if (actor === 'nastya'){
+      data['counters.nastya'] = state.counters.nastya || {};
+      data['todayCounters.nastya'] = state.todayCounters.nastya || emptyToday();
+    } else {
+      data['counters.vanya'] = state.counters.vanya || {};
+      data['todayCounters.vanya'] = state.todayCounters.vanya || emptyToday();
+    }
+
+    // Массивы отправляем ТОЛЬКО если непусты — иначе затрём чужие
+    if (state.completedDays && Object.keys(state.completedDays).length) data.completedDays = state.completedDays;
+    if (state.plannedDays && Object.keys(state.plannedDays).length) data.plannedDays = state.plannedDays;
+    if (state.history && state.history.length) data.history = state.history;
+    if (state.activityLog && state.activityLog.length) data.activityLog = state.activityLog.slice(0,500);
+    if (state.pointsLog && state.pointsLog.length) data.pointsLog = state.pointsLog;
 
     mainDocRef.set(data, { merge: true })
       .then(function(){ isSaving = false; })
-      .catch(function(e){ console.warn('fs', e); isSaving = false; });
+      .catch(function(e){
+        isSaving = false;
+        console.error('❌ FIRESTORE WRITE FAILED:', e);
+        showToast('⚠️', 'Не сохранилось: ' + (e.code || e.message || 'ошибка'));
+      });
   }, 250);
 }
+/* ==== КОНЕЦ saveState ==== */
 
 function subscribeToFirestore(){
-  if (!mainDocRef){ stateLoaded = true; return; }
+  if (!mainDocRef){ stateLoaded = true; initialSyncDone = true; return; }
   mainDocRef.onSnapshot(function(snapshot){
     if (snapshot.metadata && snapshot.metadata.hasPendingWrites) return;
     if (snapshot.exists){
@@ -1324,8 +1344,17 @@ function subscribeToFirestore(){
 
       if (d.lastCelebrationMonth) state.lastCelebrationMonth = d.lastCelebrationMonth;
       if (d.vanyaSession) state.vanyaSession = d.vanyaSession;
-      if (d.counters) state.counters = d.counters;
-      if (d.todayCounters) state.todayCounters = d.todayCounters;
+
+      // Счётчики — мержим поглубже, чтобы не затирать чужую половину
+      if (d.counters){
+        state.counters.nastya = Object.assign({}, state.counters.nastya||{}, d.counters.nastya||{});
+        state.counters.vanya  = Object.assign({}, state.counters.vanya||{},  d.counters.vanya||{});
+      }
+      if (d.todayCounters){
+        state.todayCounters.nastya = Object.assign({}, state.todayCounters.nastya||emptyToday(), d.todayCounters.nastya||{});
+        state.todayCounters.vanya  = Object.assign({}, state.todayCounters.vanya||emptyToday(),  d.todayCounters.vanya||{});
+      }
+
       if (d.lastLevelName){ lastLevelName = d.lastLevelName; localStorage.setItem('lastLevelName', lastLevelName); }
       if (d.reachedMilestones){ reachedMilestones = d.reachedMilestones; localStorage.setItem('reachedMilestones', JSON.stringify(reachedMilestones)); }
       if (d.welcomeShown !== undefined) localStorage.setItem('welcomeShown', d.welcomeShown ? 'true':'false');
@@ -1335,12 +1364,19 @@ function subscribeToFirestore(){
       refreshAll(prevPoints);
 
       stateLoaded = true;
+      initialSyncDone = true;
       if (pendingSave){ pendingSave = false; saveState(); }
     } else {
       stateLoaded = true;
+      initialSyncDone = true;
       saveState();
     }
-  }, function(err){ console.warn('snap', err); stateLoaded = true; });
+  }, function(err){
+    console.error('❌ FIRESTORE SNAPSHOT ERROR:', err);
+    stateLoaded = true;
+    // initialSyncDone НЕ ставим — значит писать не будем и не затрём сервер
+    showToast('⚠️', 'Нет связи с сервером: ' + (err.code || err.message));
+  });
 }
 
 function initRole(){
@@ -1574,7 +1610,6 @@ function renderCalendar(){
     if (isPlanned) el.classList.add('planned-day');
     el.dataset.day = d; el.dataset.type = type;
 
-    /* СМАЙЛИК — показывается на ЛЮБОМ дне, если ты его поставила */
     var emojiKey = year+'-'+month+'-'+d;
     if (state.dayEmojis && state.dayEmojis[emojiKey]){
       var emojiEl = document.createElement('span');
@@ -1710,7 +1745,6 @@ function applyNastyaDayControls(year, month, day, type, overlay){
   var nastyaControls = document.getElementById('nastyaDayControls');
   if (!nastyaControls) return;
 
-  /* ПЕРЕНОСИМ блок в модалку, чтобы он не зависел от typeBlock */
   var _modal = overlay.querySelector('.modal');
   if (_modal && nastyaControls.parentNode !== _modal) {
     _modal.appendChild(nastyaControls);
@@ -1744,7 +1778,6 @@ function applyNastyaDayControls(year, month, day, type, overlay){
     document.getElementById('nastyaNewType').value = cur || 'free';
   };
 
-  /* ==== ВЫБОР СМАЙЛИКА — доступен на любом дне ==== */
   var emojiOptionsEl = document.getElementById('nastyaEmojiOptions');
   var currentEmoji = state.dayEmojis && state.dayEmojis[dayKey];
   if (emojiOptionsEl){
@@ -1776,7 +1809,6 @@ function applyNastyaDayControls(year, month, day, type, overlay){
       showToast('✕', 'Смайлик убран');
     };
   }
-  /* ==== КОНЕЦ БЛОКА СМАЙЛИКОВ ==== */
 
   document.getElementById('nastyaReplaceConfirm').onclick = function(){
     var newType = document.getElementById('nastyaNewType').value;
@@ -1874,7 +1906,27 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   checkAchievements();
   checkMonthCelebration();
 }
-function addPoints(amount){ state.points += amount; state.totalPoints += amount; saveState(); }
+
+/* ==== ИЗМЕНЕНО: атомарные addPoints/spendPoints ==== */
+function addPoints(amount){
+  state.points += amount;
+  state.totalPoints += amount;
+  if (mainDocRef){
+    var inc = firebase.firestore.FieldValue.increment(amount);
+    mainDocRef.set({ points: inc, totalPoints: inc }, { merge: true })
+      .catch(function(e){ console.warn('inc+ fail', e); });
+  }
+  saveState();
+}
+function spendPoints(amount){
+  state.points -= amount;
+  if (mainDocRef){
+    mainDocRef.set({ points: firebase.firestore.FieldValue.increment(-amount) }, { merge: true })
+      .catch(function(e){ console.warn('inc- fail', e); });
+  }
+  saveState();
+}
+/* ==== КОНЕЦ ==== */
 
 function renderHistory(){
   var list = document.getElementById('timelineList');
@@ -1940,7 +1992,7 @@ function renderWishes(){
       if (state.totalPoints < WISH_THRESHOLD){ showToast('🔒','Нужно '+WISH_THRESHOLD+' баллов всего!'); return; }
       if (state.points < w.cost){ showToast('💔','Недостаточно баллов'); return; }
       if (!confirm('Активировать «'+w.title+'»?\nСпишется '+w.cost+' баллов.')) return;
-      state.points -= w.cost;
+      spendPoints(w.cost);                                 /* ← ИЗМЕНЕНО */
       logPoints(-w.cost, 'Активирована: '+w.title, '💎 Хотелка', null, new Date().toLocaleDateString('ru-RU'));
       state.wishes[i].activated = true;
       state.wishes[i].activatedAt = Date.now();
@@ -2090,8 +2142,7 @@ function checkMonthCelebration(){
   }
   if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
     state.lastCelebrationMonth = prevMonthKey;
-    state.points += MONTH_CELEBRATION_BONUS;
-    state.totalPoints += MONTH_CELEBRATION_BONUS;
+    addPoints(MONTH_CELEBRATION_BONUS);                    /* ← ИЗМЕНЕНО */
     logPoints(MONTH_CELEBRATION_BONUS, 'Бонус за прошлый месяц', '🎉 Месяц', prevMonthKey, new Date().toLocaleDateString('ru-RU'));
     var mc = document.getElementById('monthCelebration');
     document.getElementById('mcTitle').textContent = 'Восхитительно!';
@@ -2243,7 +2294,7 @@ function applyDailyBonus(){
   var today = new Date().toISOString().slice(0,10);
   if (!state.dailyVisits[today]){
     state.dailyVisits[today] = true;
-    addPoints(DAILY_BONUS);
+    addPoints(DAILY_BONUS);                                /* ← ИЗМЕНЕНО (было state.points += ...) */
     logPoints(DAILY_BONUS, 'Ежедневный вход', '📅 Бонус', today, new Date().toLocaleDateString('ru-RU'));
     saveState(); renderPointsTable();
     showToast('📅', '+'+DAILY_BONUS+' баллов за вход сегодня!');
@@ -2357,7 +2408,8 @@ function doSpin(){
   var price = getNextSpinPrice();
   if (price > 0){
     if (state.points < price){ showToast('💔','Недостаточно баллов'); return; }
-    state.points -= price; updateStats();
+    spendPoints(price);                                    /* ← ИЗМЕНЕНО (было state.points -= price) */
+    updateStats();
     logPoints(-price, 'Перекрут колеса', '🎡 Колесо', null, new Date().toLocaleDateString('ru-RU'));
     renderPointsTable();
     showToast('🔄','−'+price+' баллов за перекрут');
@@ -2469,7 +2521,7 @@ function openManualPoints(){
     var amount = parseInt(document.getElementById('manualAmount').value);
     if (!reason){ alert('Напиши, за что'); return; }
     if (!amount || amount < 1){ alert('Введи число'); return; }
-    state.points += amount; state.totalPoints += amount;
+    addPoints(amount);                                     /* ← ИЗМЕНЕНО */
     var now = new Date();
     var dateStr = String(now.getDate()).padStart(2,'0')+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+now.getFullYear();
     state.history.unshift({ date:dateStr, eventDate:now.getTime(), title:reason, category:'💌 Подарок от Насти', emoji:'💌', points:amount });
@@ -2640,8 +2692,7 @@ function openBackdatedPoints(){
       backdated: true
     });
 
-    state.points += pts;
-    state.totalPoints += pts;
+    addPoints(pts);                                        /* ← ИЗМЕНЕНО */
 
     state.history.unshift({
       date: dateStr,
@@ -2711,9 +2762,7 @@ function startApp(){
 
   subscribeToFirestore();
 
-  setTimeout(function(){
-    if (!stateLoaded){ stateLoaded = true; saveState(); }
-  }, 4000);
+  /* ==== УДАЛЕНО: setTimeout с принудительным saveState через 4 сек ==== */
 
   document.getElementById('roleNastya').onclick = function(){ setRole('nastya'); };
   document.getElementById('roleVanya').onclick = function(){ setRole('vanya'); };
@@ -2787,7 +2836,7 @@ function startApp(){
     if (!v) return;
     state.wishes.push({ title:v, tier:state.currentWishTier, cost:WISH_TIERS[state.currentWishTier], createdAt:Date.now(), activated:false, done:false });
     document.getElementById('wishInput').value = '';
-    addPoints(WISH_BONUS);
+    addPoints(WISH_BONUS);                                 /* ← ИЗМЕНЕНО (было state.points += ...) */
     logPoints(WISH_BONUS, 'Хотелка: '+v, '✿ Хотелка', null, new Date().toLocaleDateString('ru-RU'));
     logActivity('wish_add', '✿ Записал хотелку: «'+v+'»');
     saveState(); renderWishes(); renderPointsTable(); showToast('✿','+'+WISH_BONUS+' баллов!'); checkAchievements();
