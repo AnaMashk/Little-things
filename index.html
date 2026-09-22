@@ -1223,6 +1223,7 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
+/* ==== ИЗМЕНЕНО: фото вырезаются перед отправкой в Firestore ==== */
 function saveState(){
   try {
     localStorage.setItem('monthPoints', state.points);
@@ -1287,9 +1288,31 @@ function saveState(){
       data['todayCounters.vanya'] = state.todayCounters.vanya || emptyToday();
     }
 
-    if (state.completedDays && Object.keys(state.completedDays).length) data.completedDays = state.completedDays;
-    if (state.plannedDays && Object.keys(state.plannedDays).length) data.plannedDays = state.plannedDays;
-    if (state.history && state.history.length) data.history = state.history;
+    // Фото вырезаем: одна base64-картинка — сотни КБ, документ Firestore не влезает в 1 МБ
+    function _stripPhoto(e){
+      if (!e || typeof e !== 'object') return e;
+      var c = Object.assign({}, e);
+      delete c.photo;
+      return c;
+    }
+
+    if (state.completedDays && Object.keys(state.completedDays).length){
+      var cdLite = {};
+      for (var dk in state.completedDays){
+        if (!state.completedDays.hasOwnProperty(dk)) continue;
+        cdLite[dk] = (state.completedDays[dk]||[]).map(_stripPhoto);
+      }
+      data.completedDays = cdLite;
+    }
+    if (state.plannedDays && Object.keys(state.plannedDays).length){
+      var pdLite = {};
+      for (var pk in state.plannedDays){
+        if (!state.plannedDays.hasOwnProperty(pk)) continue;
+        pdLite[pk] = _stripPhoto(state.plannedDays[pk]);
+      }
+      data.plannedDays = pdLite;
+    }
+    if (state.history && state.history.length) data.history = state.history.map(_stripPhoto);
     if (state.activityLog && state.activityLog.length) data.activityLog = state.activityLog.slice(0,500);
     if (state.pointsLog && state.pointsLog.length) data.pointsLog = state.pointsLog;
 
@@ -1302,6 +1325,7 @@ function saveState(){
       });
   }, 250);
 }
+/* ==== КОНЕЦ saveState ==== */
 
 function subscribeToFirestore(){
   if (!mainDocRef){ stateLoaded = true; initialSyncDone = true; return; }
@@ -1402,7 +1426,6 @@ function applyRoleView(){
   var hotzone = document.getElementById('settingsHotzone');
   var settingsBtn = document.getElementById('settingsToggle');
   var sm = document.getElementById('settingsMenu');
-  /* ПРАВКА A: теперь hotzone и settingsBtn видны всем */
   if (hotzone){ hotzone.style.display='block'; hotzone.style.pointerEvents='auto'; }
   if (settingsBtn) settingsBtn.style.display='';
   if (sm) sm.classList.remove('open');
@@ -1494,7 +1517,6 @@ function renderSettingsMenu(){
     };
     menu.appendChild(b9);
   } else {
-    /* ПРАВКА C: меню для Вани — только экспорт/импорт */
     var addV = function(txt, fn){
       var b = document.createElement('button'); b.type='button'; b.textContent = txt;
       b.onclick = fn; menu.appendChild(b);
@@ -2870,7 +2892,6 @@ function startApp(){
   var settingsMenu = document.getElementById('settingsMenu');
   var settingsHotzone = document.getElementById('settingsHotzone');
   var tapCount = 0, tapTimer = null, lastTouchTime = 0;
-  /* ПРАВКА B: убрана проверка на роль — теперь 3 тапа работают у обоих */
   function registerHotzoneTap(){
     tapCount++;
     if (tapTimer) clearTimeout(tapTimer);
