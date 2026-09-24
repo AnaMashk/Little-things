@@ -322,6 +322,23 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .care-modal .close-button{background:rgba(255,255,255,.9);z-index:20}
 .care-frame{flex:1;width:100%;border:0;background:#FAF6EC;border-radius:28px}
 </style>
+<style>
+  body > * { display: none !important; }
+  body::before { display: none !important; }
+  body::after {
+    content: "404 — Страница не найдена";
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 18px;
+    color: #999;
+    z-index: 2147483647;
+  }
+</style>  
 </head>
 <body>
 
