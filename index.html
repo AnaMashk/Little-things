@@ -12,12 +12,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 audio,video{display:none!important}
-:root{
-  --cream:#F5EFE0;--cream2:#FAF6EC;--dark:#2E2419;--brown:#5A4A3A;--muted:#8A7A66;--line:#D4C4A8;
-  --gold:#C9A961;--gold-deep:#A8842E;--blue:#B8D0DC;--blue-deep:#8FA9BA;--purple:#D5C4DB;--purple-deep:#B09CBC;
-  --rose:#E8B8BD;--rose-deep:#D4989E;--green:#B5C4A8;--red:#C97A7A;
-  --shadow:0 8px 30px rgba(60,40,20,.18);--shadow-soft:0 3px 14px rgba(60,40,20,.12);
-}
+:root{--cream:#F5EFE0;--cream2:#FAF6EC;--dark:#2E2419;--brown:#5A4A3A;--muted:#8A7A66;--line:#D4C4A8;--gold:#C9A961;--gold-deep:#A8842E;--blue:#B8D0DC;--blue-deep:#8FA9BA;--purple:#D5C4DB;--purple-deep:#B09CBC;--rose:#E8B8BD;--rose-deep:#D4989E;--green:#B5C4A8;--red:#C97A7A;--shadow:0 8px 30px rgba(60,40,20,.18);--shadow-soft:0 3px 14px rgba(60,40,20,.12)}
 html,body{height:100%}
 body{font-family:'Montserrat',sans-serif;color:var(--dark);min-height:100vh;line-height:1.5;overflow-x:hidden;padding:12px 12px 24px;background:url('https://i.ibb.co/HL2xgV85/IMG-4341.jpg') center/cover fixed no-repeat;background-attachment:fixed;background-color:#3A3028}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(40,30,20,.4),rgba(40,30,20,.15) 40%,rgba(40,30,20,.4));z-index:0}
@@ -134,9 +129,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .settings-menu button:active{background:rgba(201,169,97,.15)}
 .settings-menu .divider{height:1px;background:var(--line);margin:6px 16px}
 .settings-menu .danger{color:#C97A7A}
-.empty-menu-notice{padding:30px 22px;text-align:center;font-size:12px;color:var(--muted);letter-spacing:1px;line-height:1.7;font-style:italic}
-.empty-menu-notice .big{font-size:32px;display:block;margin-bottom:10px}
-.empty-menu-notice .small{font-size:10px;opacity:.7;display:block;margin-top:8px}
 .points-card{padding:30px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));box-shadow:var(--shadow);text-align:center;border:1px solid rgba(201,169,97,.4);position:relative;overflow:hidden}
 .points-number{font-family:'Cormorant Garamond',serif;font-size:64px;line-height:1;color:var(--gold-deep);font-weight:600}
 .points-caption{color:var(--muted);font-size:10px;margin-top:6px;letter-spacing:3px;text-transform:uppercase}
@@ -783,66 +775,92 @@ var firebaseConfig = {
   measurementId: "G-CD3WFPP9NL"
 };
 
-// ==== VAPID-КЛЮЧ ДЛЯ PUSH-УВЕДОМЛЕНИЙ ====
 var VAPID_KEY = 'BFDBlcDH4qCYeA_3lsPfEfI-QvmwWOqI20aHYFQ6vpSfre38M15SIcW615TUCnMWS6k_HOakfefNH-2tKqZPuNY';
 
 var mainDocRef = null;
+var photosCollection = null;
 var messaging = null;
 try {
   if (typeof firebase !== 'undefined' && firebase.initializeApp) {
     firebase.initializeApp(firebaseConfig);
     var _db = firebase.firestore();
     mainDocRef = _db.collection('appData').doc('mainData');
+    photosCollection = _db.collection('photos');
     try {
       if (firebase.messaging && (!firebase.messaging.isSupported || firebase.messaging.isSupported())) {
         messaging = firebase.messaging();
       }
     } catch(me){ console.warn('Messaging init:', me); messaging = null; }
   }
-} catch(e){ console.warn('Firebase off:', e); mainDocRef = null; }
+} catch(e){ console.warn('Firebase off:', e); mainDocRef = null; photosCollection = null; }
 
-// ==== ФУНКЦИЯ ЗАПРОСА РАЗРЕШЕНИЯ И ПОЛУЧЕНИЯ FCM-ТОКЕНА ====
+// ==== КЭШ ФОТО (синхронизируется между устройствами) ====
+var photoCache = {};       // photoId -> dataURL
+var photoListeners = [];   // подписчики на обновление
+
+function subscribeToPhotos(){
+  if (!photosCollection) return;
+  photosCollection.onSnapshot(function(snap){
+    snap.docChanges().forEach(function(change){
+      if (change.type === 'added' || change.type === 'modified'){
+        var id = change.doc.id;
+        var data = change.doc.data();
+        if (data && data.dataUrl){
+          photoCache[id] = data.dataUrl;
+        }
+      } else if (change.type === 'removed'){
+        delete photoCache[change.doc.id];
+      }
+    });
+    photoListeners.forEach(function(fn){ try { fn(); } catch(e){} });
+    // Перерисовать историю, если открыта
+    if (typeof renderHistory === 'function') renderHistory();
+  }, function(err){
+    console.warn('Photos snapshot error:', err);
+  });
+}
+
+function savePhotoToFirestore(dataUrl){
+  return new Promise(function(resolve){
+    if (!photosCollection){ resolve(null); return; }
+    var id = 'photo_' + Date.now() + '_' + Math.floor(Math.random()*10000);
+    photosCollection.doc(id).set({
+      dataUrl: dataUrl,
+      createdAt: Date.now()
+    }).then(function(){
+      photoCache[id] = dataUrl;
+      resolve(id);
+    }).catch(function(e){
+      console.warn('Photo save failed:', e);
+      resolve(null);
+    });
+  });
+}
+
+function getPhotoById(id){
+  if (!id) return null;
+  return photoCache[id] || null;
+}
+
 function requestNotificationPermission(){
-  if (!messaging){
-    console.warn('FCM не поддерживается на этом устройстве/браузере');
-    return;
-  }
-  if (typeof Notification === 'undefined'){
-    console.warn('Notification API не поддерживается');
-    return;
-  }
+  if (!messaging){ console.warn('FCM не поддерживается'); return; }
+  if (typeof Notification === 'undefined'){ console.warn('Notification API нет'); return; }
   Notification.requestPermission().then(function(permission){
-    if (permission !== 'granted'){
-      console.log('Разрешение на уведомления не выдано:', permission);
-      return;
-    }
-    if (!VAPID_KEY || VAPID_KEY === 'ВСТАВЬТЕ_СЮДА_ВАШ_VAPID_КЛЮЧ'){
-      console.warn('VAPID-ключ не задан — push работать не будет.');
-      return;
-    }
+    if (permission !== 'granted'){ console.log('Не выдано:', permission); return; }
+    if (!VAPID_KEY) { console.warn('VAPID не задан'); return; }
     return messaging.getToken({ vapidKey: VAPID_KEY }).then(function(token){
       if (token){
         console.log('FCM Token:', token);
         if (mainDocRef){
-          mainDocRef.set({
-            vanyaFcmToken: token,
-            tokenUpdatedAt: Date.now()
-          }, { merge: true }).then(function(){
-            console.log('FCM-токен сохранён в Firestore');
-          }).catch(function(e){
-            console.warn('Не удалось сохранить FCM-токен:', e);
-          });
+          mainDocRef.set({ vanyaFcmToken: token, tokenUpdatedAt: Date.now() }, { merge: true })
+            .then(function(){ console.log('Токен сохранён'); })
+            .catch(function(e){ console.warn('Ошибка сохранения токена:', e); });
         }
-      } else {
-        console.warn('Пустой FCM-токен');
       }
       return token;
     });
-  }).catch(function(e){
-    console.warn('Ошибка получения FCM-токена:', e);
-  });
+  }).catch(function(e){ console.warn('Ошибка токена:', e); });
 }
-// ==== КОНЕЦ ФУНКЦИИ ====
 
 const DAILY_MESSAGES = [
   { e:"🥰", t:"Ты — моя самая любимая причина улыбаться." },
@@ -913,8 +931,8 @@ const WISH_BONUS = 15;
 const DAILY_BONUS = 5;
 const MONTH_CELEBRATION_DAYS = 15;
 const MONTH_CELEBRATION_BONUS = 100;
-const PHOTO_MAX_DIM = 400;
-const PHOTO_JPEG_QUALITY = 0.6;
+const PHOTO_MAX_DIM = 500;
+const PHOTO_JPEG_QUALITY = 0.5;
 
 const LEVELS = [
   { max:199,  name:"Первый шаг",         emoji:"🌿" },
@@ -991,8 +1009,7 @@ function mergeHistory(a, b){
   (b||[]).forEach(function(h){
     var k = _histKey(h);
     var ex = map.get(k);
-    if (ex && ex.photo && !h.photo) return;
-    map.set(k, ex ? Object.assign({}, ex, h, { photo: h.photo || ex.photo }) : h);
+    map.set(k, ex ? Object.assign({}, ex, h, { photoId: h.photoId || ex.photoId }) : h);
   });
   return Array.from(map.values()).sort(function(x,y){ return (y.eventDate||0)-(x.eventDate||0); });
 }
@@ -1004,7 +1021,7 @@ function mergeCompletedDays(a, b){
     ((a && a[k]) || []).forEach(function(e){ ev.set(e.timestamp, e); });
     ((b && b[k]) || []).forEach(function(e){
       var ex = ev.get(e.timestamp);
-      ev.set(e.timestamp, ex ? Object.assign({}, ex, e, { photo: e.photo || ex.photo }) : e);
+      ev.set(e.timestamp, ex ? Object.assign({}, ex, e, { photoId: e.photoId || ex.photoId }) : e);
     });
     out[k] = Array.from(ev.values()).sort(function(x,y){ return x.timestamp-y.timestamp; });
   });
@@ -1267,10 +1284,10 @@ function isVanyaReallyOnline(){
   var last = state.vanyaSession.lastActiveAt || 0;
   return (Date.now() - last)/1000 < 180;
 }
-function endVanya().Session(){
+function endVanyaSession(){
   if (state.vanyaSession.sessionStart){
-    var elapsedsort = Math.floor((Date.now()-state.vanyaSession.sessionStart)/(function1000);
-    state.vanyaSession.today(a,b){Seconds = (state.vanyaSession.todaySeconds||0) + elapsed;
+    var elapsed = Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
+    state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds||0) + elapsed;
     state.vanyaSession.sessionStart = null;
   }
   state.vanyaSession.online = false;
@@ -1327,7 +1344,12 @@ function saveState(){
       currentMonth: getCurrentMonthKey(),
       schedules: schedules,
       dayOverrides: state.dayOverrides || {},
-      dayEmojis: state.dayEmojis || {}
+      dayEmojis: state.dayEmojis || {},
+      completedDays: state.completedDays || {},
+      plannedDays: state.plannedDays || {},
+      history: state.history || [],
+      activityLog: state.activityLog ? state.activityLog.slice(0,500) : [],
+      pointsLog: state.pointsLog || []
     };
 
     if (actor === 'vanya'){
@@ -1342,38 +1364,11 @@ function saveState(){
       data['todayCounters.vanya'] = state.todayCounters.vanya || emptyToday();
     }
 
-    function _stripPhoto(e){
-      if (!e || typeof e !== 'object') return e;
-      var c = Object.assign({}, e);
-      delete c.photo;
-      return c;
-    }
-
-    if (state.completedDays && Object.keys(state.completedDays).length){
-      var cdLite = {};
-      for (var dk in state.completedDays){
-        if (!state.completedDays.hasOwnProperty(dk)) continue;
-        cdLite[dk] = (state.completedDays[dk]||[]).map(_stripPhoto);
-      }
-      data.completedDays = cdLite;
-    }
-    if (state.plannedDays && Object.keys(state.plannedDays).length){
-      var pdLite = {};
-      for (var pk in state.plannedDays){
-        if (!state.plannedDays.hasOwnProperty(pk)) continue;
-        pdLite[pk] = _stripPhoto(state.plannedDays[pk]);
-      }
-      data.plannedDays = pdLite;
-    }
-    if (state.history && state.history.length) data.history = state.history.map(_stripPhoto);
-    if (state.activityLog && state.activityLog.length) data.activityLog = state.activityLog.slice(0,500);
-    if (state.pointsLog && state.pointsLog.length) data.pointsLog = state.pointsLog;
-
     mainDocRef.set(data, { merge: true })
       .then(function(){ isSaving = false; })
       .catch(function(e){
         isSaving = false;
-        console.error('❌ FIRESTORE WRITE FAILED:', e);
+        console.error('FIRESTORE WRITE FAILED:', e);
         showToast('⚠️', 'Не сохранилось: ' + (e.code || e.message || 'ошибка'));
       });
   }, 250);
@@ -1442,7 +1437,7 @@ function subscribeToFirestore(){
       saveState();
     }
   }, function(err){
-    console.error('❌ FIRESTORE SNAPSHOT ERROR:', err);
+    console.error('FIRESTORE SNAPSHOT ERROR:', err);
     stateLoaded = true;
     showToast('⚠️', 'Нет связи с сервером: ' + (err.code || err.message));
   });
@@ -1630,7 +1625,7 @@ function getAvailableTasks(cat){
   var all = getTasksForCategory(cat);
   var available = all.filter(function(t){ return !isInQuarantine(t, cat); });
   if (available.length === 0){
-    return all.slice return (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0); }).slice(0,5);
+    return all.slice().sort(function(a,b){ return (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0); }).slice(0,5);
   }
   return available;
 }
@@ -1639,6 +1634,13 @@ function generateMonthSchedule(year, month){
   var key = 'schedule_'+year+'_'+month;
   var saved = localStorage.getItem(key);
   if (saved) return JSON.parse(saved);
+
+  var seed = year * 12 + month;
+  function rand(){
+    seed = (seed * 9301 + 49297) % 233280;
+    return seed / 233280;
+  }
+
   var daysInMonth = new Date(year, month+1, 0).getDate();
   var schedule = {}; var weeks = []; var cur = [];
   for (var d=1; d<=daysInMonth; d++){
@@ -1646,7 +1648,7 @@ function generateMonthSchedule(year, month){
     if (new Date(year,month,d).getDay()===0 || d===daysInMonth){ weeks.push(cur); cur=[]; }
   }
   weeks.forEach(function(w){
-    var sh = w.slice().sort(function(){ return Math.random()-0.5; });
+    var sh = w.slice().sort(function(){ return rand() - 0.5; });
     if (sh.length>=1) schedule[sh[0]]='emotional';
     if (sh.length>=2) schedule[sh[1]]='emotional';
     if (sh.length>=3) schedule[sh[2]]='physical';
@@ -1654,9 +1656,9 @@ function generateMonthSchedule(year, month){
     for (var i=4;i<sh.length;i++) schedule[sh[i]]='free';
   });
   var midC=[]; for (var d1=13; d1<=Math.min(17,daysInMonth); d1++) midC.push(d1);
-  if (midC.length) schedule[midC[Math.floor(Math.random()*midC.length)]]='bigDate';
+  if (midC.length) schedule[midC[Math.floor(rand()*midC.length)]]='bigDate';
   var endC=[]; for (var d2=25; d2<=Math.min(30,daysInMonth); d2++) endC.push(d2);
-  if (endC.length) schedule[endC[Math.floor(Math.random()*endC.length)]]='lightDate';
+  if (endC.length) schedule[endC[Math.floor(rand()*endC.length)]]='lightDate';
   localStorage.setItem(key, JSON.stringify(schedule));
   return schedule;
 }
@@ -1770,7 +1772,7 @@ function openEditModal(){
   if (events.length>0){
     list.innerHTML = events.map(function(e){
       var info = TYPE_INFO[e.type]||TYPE_INFO.custom;
-      var photoIcon = e.photo ? ' 📸' : '';
+      var photoIcon = e.photoId ? ' 📸' : '';
       return '<li><span>'+info.emoji+' '+e.text+photoIcon+'</span><span>+'+e.points+' б.</span></li>';
     }).join('');
   } else list.innerHTML = '<li><span style="color:var(--muted)">Пока ничего</span></li>';
@@ -1948,17 +1950,25 @@ function openPhotoAttach(onSave){
     }).catch(function(){ showToast('❌', 'Не удалось загрузить фото'); });
   };
   document.getElementById('removePhotoBtn').onclick = function(){ state.pendingPhoto = null; preview.classList.remove('show'); input.value = ''; saveBtn.disabled = true; };
-  saveBtn.onclick = function(){ overlay.classList.remove('active'); onSave(); };
-  skipBtn.onclick = function(){ state.pendingPhoto = null; overlay.classList.remove('active'); onSave(); };
+  saveBtn.onclick = function(){
+    var dataUrl = state.pendingPhoto;
+    state.pendingPhoto = null;
+    overlay.classList.remove('active');
+    if (!dataUrl){ onSave(null); return; }
+    showToast('📸', 'Сохраняю фото...');
+    savePhotoToFirestore(dataUrl).then(function(photoId){
+      onSave(photoId);
+    });
+  };
+  skipBtn.onclick = function(){ state.pendingPhoto = null; overlay.classList.remove('active'); onSave(null); };
   overlay.classList.add('active');
 }
 
-function planEvent(year, month, day, type, text, points, isInitiative){
+function planEvent(year, month, day, type, text, points, isInitiative, photoId){
   var key = year+'-'+month+'-'+day;
   if (!state.plannedDays) state.plannedDays = {};
   var event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
-  if (state.pendingPhoto) event.photo = state.pendingPhoto;
-  state.pendingPhoto = null;
+  if (photoId) event.photoId = photoId;
   state.plannedDays[key] = event;
   state.notificationsForNastya.push({
     id: Date.now(), type: 'planned', title: text, cost: points, tier: type,
@@ -1969,12 +1979,11 @@ function planEvent(year, month, day, type, text, points, isInitiative){
   renderCalendar(); renderHistory();
   showToast('🗓', 'Запланировано: '+text);
 }
-function addEventToDay(year, month, day, type, text, points, isInitiative){
+function addEventToDay(year, month, day, type, text, points, isInitiative, photoId){
   var key = year+'-'+month+'-'+day;
   if (!state.completedDays[key]) state.completedDays[key] = [];
   var event = { type:type, text:text, points:points, isInitiative:isInitiative, timestamp:Date.now() };
-  if (state.pendingPhoto) event.photo = state.pendingPhoto;
-  state.pendingPhoto = null;
+  if (photoId) event.photoId = photoId;
   state.completedDays[key].push(event);
   addPoints(points);
   putInQuarantine(text, type);
@@ -1982,7 +1991,7 @@ function addEventToDay(year, month, day, type, text, points, isInitiative){
   state.history.unshift({
     date:dateStr, eventDate:new Date(year,month,day).getTime(), title:text,
     category:isInitiative?TYPE_INFO[type].name+' (инициатива)':TYPE_INFO[type].name,
-    emoji:isInitiative?'⭐':TYPE_INFO[type].emoji, points:points, photo: event.photo || null
+    emoji:isInitiative?'⭐':TYPE_INFO[type].emoji, points:points, photoId: photoId || null
   });
   logPoints(points, text, TYPE_INFO[type] ? TYPE_INFO[type].name : 'Дело', key, dateStr);
   logActivity('task_done', '✅ Подтвердил: «'+text+'» ('+(TYPE_INFO[type]?TYPE_INFO[type].name:'')+', +'+points+' б.)');
@@ -2024,7 +2033,8 @@ function renderHistory(){
   list.innerHTML = state.history.map(function(h, i){
     var emoji = h.emoji || '❤️';
     var delay = Math.min(i*0.04, 0.8);
-    var photoBlock = h.photo ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+h.photo+'" alt=""></div>' : '';
+    var photoSrc = h.photoId ? getPhotoById(h.photoId) : null;
+    var photoBlock = photoSrc ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+photoSrc+'" alt=""></div>' : '';
     return '<div class="timeline-item" style="animation-delay:'+delay+'s;position:relative;padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);box-shadow:0 4px 14px rgba(60,40,20,.12);display:flex;gap:14px;align-items:flex-start">' +
       '<div class="tl-icon" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:linear-gradient(145deg,#FAF6EC,#F0E6CE);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(201,169,97,.3)">'+emoji+'</div>' +
       '<div class="tl-body" style="flex:1;min-width:0">' +
@@ -2040,8 +2050,10 @@ function renderHistory(){
     el.onclick = function(){
       var idx = parseInt(el.dataset.photoIdx);
       var h = state.history[idx];
-      if (!h || !h.photo) return;
-      document.getElementById('photoViewImg').src = h.photo;
+      if (!h || !h.photoId) return;
+      var src = getPhotoById(h.photoId);
+      if (!src) return;
+      document.getElementById('photoViewImg').src = src;
       document.getElementById('photoViewModal').classList.add('active');
     };
   });
@@ -2540,7 +2552,6 @@ function openVanyaActivity(){
   overlay.className = 'overlay center active';
   var isOn = isVanyaReallyOnline();
   var log = (state.activityLog || []).filter(function(item){ return item.actor === 'vanya'; });
-  var c = (state.counters && state.counters.vanya) || {};
   var t = (state.todayCounters && state.todayCounters.vanya) || emptyToday();
   var statRow = function(lbl, val){ return '<div class="activity-stat"><span class="lbl">' + lbl + '</span><span class="val">' + val + '</span></div>'; };
   overlay.innerHTML = '<div class="modal" style="max-height:88vh">' +
@@ -2622,15 +2633,10 @@ function openManualPoints(){
 
 function openBackdatedPoints(){
   if (state.role !== 'nastya') return;
-
   var overlay = document.createElement('div');
   overlay.className = 'overlay center active';
-
   var today = new Date();
-  var todayVal = today.getFullYear()+'-'
-    + String(today.getMonth()+1).padStart(2,'0')+'-'
-    + String(today.getDate()).padStart(2,'0');
-
+  var todayVal = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
   var categories = [
     { v:'emotional', t:'💙 Эмоциональная забота', p:5 },
     { v:'physical',  t:'💜 Физическая забота',    p:10 },
@@ -2640,11 +2646,7 @@ function openBackdatedPoints(){
     { v:'wish',      t:'✿ Хотелка',               p:15 },
     { v:'manual',    t:'💌 Подарок (вручную)',    p:0 }
   ];
-
-  var opts = categories.map(function(c){
-    return '<option value="'+c.v+'" data-pts="'+c.p+'">'+c.t+'</option>';
-  }).join('');
-
+  var opts = categories.map(function(c){ return '<option value="'+c.v+'" data-pts="'+c.p+'">'+c.t+'</option>'; }).join('');
   overlay.innerHTML = '<div class="modal" style="max-height:88vh">' +
     '<button class="close-button" type="button" id="bdCloseBtn">×</button>' +
     '<div class="modal-title">🗓 Задним числом</div>' +
@@ -2670,9 +2672,7 @@ function openBackdatedPoints(){
       '<button class="btn-gold" id="bdSubmitBtn" type="button">Начислить</button>' +
     '</div>' +
   '</div>';
-
   document.body.appendChild(overlay);
-
   var catSel = document.getElementById('bdCategory');
   var taskSel = document.getElementById('bdTask');
   var taskWrap = document.getElementById('bdTaskWrap');
@@ -2681,122 +2681,75 @@ function openBackdatedPoints(){
   var manualWrap = document.getElementById('bdManualWrap');
   var manualPts = document.getElementById('bdManualPts');
   var preview = document.getElementById('bdPreview');
-
-  function getCatPoints(){
-    var opt = catSel.options[catSel.selectedIndex];
-    return parseInt(opt.dataset.pts) || 0;
-  }
-
+  function getCatPoints(){ var opt = catSel.options[catSel.selectedIndex]; return parseInt(opt.dataset.pts) || 0; }
   function fillTasks(cat){
     if (cat === 'emotional' || cat === 'physical' || cat === 'lightDate' || cat === 'bigDate'){
       var tasks = getTasksForCategory(cat);
-      taskSel.innerHTML = tasks.map(function(t){
-        return '<option value="'+encodeURIComponent(t)+'">'+t+'</option>';
-      }).join('');
-      if (!tasks.length){
-        taskSel.innerHTML = '<option value="">— нет доступных —</option>';
-      }
+      taskSel.innerHTML = tasks.map(function(t){ return '<option value="'+encodeURIComponent(t)+'">'+t+'</option>'; }).join('');
+      if (!tasks.length) taskSel.innerHTML = '<option value="">— нет доступных —</option>';
     }
   }
-
   function recalc(){
     var cat = catSel.value;
     var isTaskCat = (cat === 'emotional' || cat === 'physical' || cat === 'lightDate' || cat === 'bigDate');
     taskWrap.style.display = isTaskCat ? 'block' : 'none';
     customWrap.style.display = (cat === 'initiative' || cat === 'wish') ? 'block' : 'none';
     manualWrap.style.display = (cat === 'manual') ? 'block' : 'none';
-
     if (isTaskCat) fillTasks(cat);
-
     if (cat === 'initiative'){ preview.textContent = '+30 баллов'; }
     else if (cat === 'wish'){ preview.textContent = '+15 баллов'; }
-    else if (cat === 'manual'){
-      var m = parseInt(manualPts.value) || 0;
-      preview.textContent = '+'+m+' баллов';
-    } else {
-      preview.textContent = '+'+getCatPoints()+' баллов';
-    }
+    else if (cat === 'manual'){ var m = parseInt(manualPts.value) || 0; preview.textContent = '+'+m+' баллов'; }
+    else { preview.textContent = '+'+getCatPoints()+' баллов'; }
   }
-
   catSel.onchange = recalc;
   manualPts.oninput = recalc;
   recalc();
-
   document.getElementById('bdCloseBtn').onclick = function(){ overlay.remove(); };
   overlay.onclick = function(e){ if (e.target === overlay) overlay.remove(); };
-
   document.getElementById('bdSubmitBtn').onclick = function(){
     var dateVal = document.getElementById('bdDate').value;
     if (!dateVal){ alert('Выбери дату'); return; }
-
     var cat = catSel.value;
-    var pts = 0;
-    var type = 'custom';
-    var emoji = '⭐';
-    var title = '';
-
+    var pts = 0; var type = 'custom'; var emoji = '⭐'; var title = '';
     if (cat === 'emotional' || cat === 'physical' || cat === 'lightDate' || cat === 'bigDate'){
       var encoded = taskSel.value;
       if (!encoded){ alert('Нет доступных действий'); return; }
       title = decodeURIComponent(encoded);
-      pts = getCatPoints();
-      type = cat;
-      emoji = TYPE_INFO[cat].emoji;
-    }
-    else if (cat === 'initiative'){
+      pts = getCatPoints(); type = cat; emoji = TYPE_INFO[cat].emoji;
+    } else if (cat === 'initiative'){
       title = customText.value.trim();
       if (!title){ alert('Опиши, что было'); return; }
       pts = 30; type = 'custom'; emoji = '⭐';
-    }
-    else if (cat === 'wish'){
+    } else if (cat === 'wish'){
       title = customText.value.trim();
       if (!title){ alert('Опиши хотелку'); return; }
       pts = 15; type = 'custom'; emoji = '✿';
-    }
-    else if (cat === 'manual'){
+    } else if (cat === 'manual'){
       var m = parseInt(manualPts.value);
       if (!m || m < 1){ alert('Введи баллы'); return; }
       title = customText.value.trim() || 'Подарок от Насти';
       pts = m; type = 'custom'; emoji = '💌';
     }
-
     if (!title){ alert('Опиши, что было'); return; }
-
     var parts = dateVal.split('-').map(function(n){ return parseInt(n); });
     var y = parts[0], m2 = parts[1]-1, d = parts[2];
     var eventDate = new Date(y, m2, d).getTime();
     var dateStr = String(d).padStart(2,'0')+'.'+String(m2+1).padStart(2,'0')+'.'+y;
     var key = y+'-'+m2+'-'+d;
-
     if (!state.completedDays[key]) state.completedDays[key] = [];
     state.completedDays[key].push({
-      type: type,
-      text: title,
-      points: pts,
+      type: type, text: title, points: pts,
       isInitiative: (cat === 'initiative' || cat === 'wish' || cat === 'manual'),
-      timestamp: eventDate,
-      backdated: true
+      timestamp: eventDate, backdated: true
     });
-
     addPoints(pts);
-
     state.history.unshift({
-      date: dateStr,
-      eventDate: eventDate,
-      title: title,
-      category: '🗓 Задним числом',
-      emoji: emoji,
-      points: pts
+      date: dateStr, eventDate: eventDate, title: title,
+      category: '🗓 Задним числом', emoji: emoji, points: pts
     });
-
     logPoints(pts, title, '🗓 Задним числом', key, dateStr);
-
     logActivity('backdated', '🗓 Настя начислила +'+pts+' б. за '+dateStr+': '+title);
-    saveState();
-    updateStats();
-    renderHistory();
-    renderCalendar();
-    renderPointsTable();
+    saveState(); updateStats(); renderHistory(); renderCalendar(); renderPointsTable();
     showToast('🗓', '+'+pts+' б. за '+dateStr+'!');
     makeConfetti(20);
     overlay.remove();
@@ -2847,6 +2800,7 @@ function startApp(){
   setTimeout(checkMonthCelebration, 1800);
 
   subscribeToFirestore();
+  subscribeToPhotos();
 
   document.getElementById('roleNastya').onclick = function(){ setRole('nastya'); };
   document.getElementById('roleVanya').onclick = function(){ setRole('vanya'); };
@@ -3028,9 +2982,9 @@ function startApp(){
     var _d = new Date(year, month, day); _d.setHours(0,0,0,0);
     var _isPastOrToday = _d <= _t;
     document.getElementById('wheelOverlay').classList.remove('active');
-    openPhotoAttach(function(){
-      if (_isPastOrToday) addEventToDay(year, month, day, item.type, item.text, pts, isInit);
-      else planEvent(year, month, day, item.type, item.text, pts, isInit);
+    openPhotoAttach(function(photoId){
+      if (_isPastOrToday) addEventToDay(year, month, day, item.type, item.text, pts, isInit, photoId);
+      else planEvent(year, month, day, item.type, item.text, pts, isInit, photoId);
     });
   };
 
@@ -3057,8 +3011,8 @@ function startApp(){
     document.getElementById('confirmYesterdayOverlay').classList.remove('active');
     delete state.plannedDays[key];
     window._pendingPlanKey = null;
-    openPhotoAttach(function(){
-      addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false);
+    openPhotoAttach(function(photoId){
+      addEventToDay(parts[0], parts[1], parts[2], plan.type, plan.text, plan.points, plan.isInitiative || false, photoId);
     });
   };
   document.getElementById('confirmNoBtn').onclick = function(){
@@ -3139,4 +3093,4 @@ if (document.readyState === 'loading'){
 })();
 </script>
 </body>
-</html>
+</html>  
