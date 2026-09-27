@@ -6,6 +6,8 @@
 <title>Наши маленькие вещи ❤️</title>
 <link rel="apple-touch-icon" sizes="180x180" href="icon180.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon512.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2E2419">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Marck+Script&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -322,23 +324,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .care-modal .close-button{background:rgba(255,255,255,.9);z-index:20}
 .care-frame{flex:1;width:100%;border:0;background:#FAF6EC;border-radius:28px}
 </style>
-<style>
-  body > * { display: none !important; }
-  body::before { display: none !important; }
-  body::after {
-    content: "404 — Страница не найдена";
-    position: fixed;
-    inset: 0;
-    background: #fff;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 18px;
-    color: #999;
-    z-index: 2147483647;
-  }
-</style>  
 </head>
 <body>
 
@@ -783,6 +768,7 @@ setTimeout(function(){
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
 <script>
 (function(){
 'use strict';
@@ -797,14 +783,66 @@ var firebaseConfig = {
   measurementId: "G-CD3WFPP9NL"
 };
 
+// ==== VAPID-КЛЮЧ ДЛЯ PUSH-УВЕДОМЛЕНИЙ ====
+var VAPID_KEY = 'BFDBlcDH4qCYeA_3lsPfEfI-QvmwWOqI20aHYFQ6vpSfre38M15SIcW615TUCnMWS6k_HOakfefNH-2tKqZPuNY';
+
 var mainDocRef = null;
+var messaging = null;
 try {
   if (typeof firebase !== 'undefined' && firebase.initializeApp) {
     firebase.initializeApp(firebaseConfig);
     var _db = firebase.firestore();
     mainDocRef = _db.collection('appData').doc('mainData');
+    try {
+      if (firebase.messaging && (!firebase.messaging.isSupported || firebase.messaging.isSupported())) {
+        messaging = firebase.messaging();
+      }
+    } catch(me){ console.warn('Messaging init:', me); messaging = null; }
   }
 } catch(e){ console.warn('Firebase off:', e); mainDocRef = null; }
+
+// ==== ФУНКЦИЯ ЗАПРОСА РАЗРЕШЕНИЯ И ПОЛУЧЕНИЯ FCM-ТОКЕНА ====
+function requestNotificationPermission(){
+  if (!messaging){
+    console.warn('FCM не поддерживается на этом устройстве/браузере');
+    return;
+  }
+  if (typeof Notification === 'undefined'){
+    console.warn('Notification API не поддерживается');
+    return;
+  }
+  Notification.requestPermission().then(function(permission){
+    if (permission !== 'granted'){
+      console.log('Разрешение на уведомления не выдано:', permission);
+      return;
+    }
+    if (!VAPID_KEY || VAPID_KEY === 'ВСТАВЬТЕ_СЮДА_ВАШ_VAPID_КЛЮЧ'){
+      console.warn('VAPID-ключ не задан — push работать не будет.');
+      return;
+    }
+    return messaging.getToken({ vapidKey: VAPID_KEY }).then(function(token){
+      if (token){
+        console.log('FCM Token:', token);
+        if (mainDocRef){
+          mainDocRef.set({
+            vanyaFcmToken: token,
+            tokenUpdatedAt: Date.now()
+          }, { merge: true }).then(function(){
+            console.log('FCM-токен сохранён в Firestore');
+          }).catch(function(e){
+            console.warn('Не удалось сохранить FCM-токен:', e);
+          });
+        }
+      } else {
+        console.warn('Пустой FCM-токен');
+      }
+      return token;
+    });
+  }).catch(function(e){
+    console.warn('Ошибка получения FCM-токена:', e);
+  });
+}
+// ==== КОНЕЦ ФУНКЦИИ ====
 
 const DAILY_MESSAGES = [
   { e:"🥰", t:"Ты — моя самая любимая причина улыбаться." },
@@ -1229,10 +1267,10 @@ function isVanyaReallyOnline(){
   var last = state.vanyaSession.lastActiveAt || 0;
   return (Date.now() - last)/1000 < 180;
 }
-function endVanyaSession(){
+function endVanya().Session(){
   if (state.vanyaSession.sessionStart){
-    var elapsed = Math.floor((Date.now()-state.vanyaSession.sessionStart)/1000);
-    state.vanyaSession.todaySeconds = (state.vanyaSession.todaySeconds||0) + elapsed;
+    var elapsedsort = Math.floor((Date.now()-state.vanyaSession.sessionStart)/(function1000);
+    state.vanyaSession.today(a,b){Seconds = (state.vanyaSession.todaySeconds||0) + elapsed;
     state.vanyaSession.sessionStart = null;
   }
   state.vanyaSession.online = false;
@@ -1240,7 +1278,6 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
-/* ==== ИЗМЕНЕНО: фото вырезаются перед отправкой в Firestore ==== */
 function saveState(){
   try {
     localStorage.setItem('monthPoints', state.points);
@@ -1305,7 +1342,6 @@ function saveState(){
       data['todayCounters.vanya'] = state.todayCounters.vanya || emptyToday();
     }
 
-    // Фото вырезаем: одна base64-картинка — сотни КБ, документ Firestore не влезает в 1 МБ
     function _stripPhoto(e){
       if (!e || typeof e !== 'object') return e;
       var c = Object.assign({}, e);
@@ -1342,7 +1378,6 @@ function saveState(){
       });
   }, 250);
 }
-/* ==== КОНЕЦ saveState ==== */
 
 function subscribeToFirestore(){
   if (!mainDocRef){ stateLoaded = true; initialSyncDone = true; return; }
@@ -1419,7 +1454,7 @@ function initRole(){
     state.role = savedRole; state.viewingAs = savedRole;
     document.getElementById('roleOverlay').classList.remove('active');
     applyRoleView();
-    if (savedRole === 'vanya') startVanyaSession();
+    if (savedRole === 'vanya'){ startVanyaSession(); requestNotificationPermission(); }
   } else {
     document.getElementById('roleOverlay').classList.add('active');
     renderSettingsMenu();
@@ -1434,6 +1469,7 @@ function setRole(role){
     startVanyaSession();
     if (!localStorage.getItem('welcomeShown')) document.getElementById('welcomeOverlay').classList.add('active');
     setTimeout(showDailyMessage, 800);
+    requestNotificationPermission();
   }
 }
 function applyRoleView(){
@@ -1594,7 +1630,7 @@ function getAvailableTasks(cat){
   var all = getTasksForCategory(cat);
   var available = all.filter(function(t){ return !isInQuarantine(t, cat); });
   if (available.length === 0){
-    return all.slice().sort(function(a,b){ return (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0); }).slice(0,5);
+    return all.slice return (state.quarantine[a]?state.quarantine[a].doneAt:0) - (state.quarantine[b]?state.quarantine[b].doneAt:0); }).slice(0,5);
   }
   return available;
 }
