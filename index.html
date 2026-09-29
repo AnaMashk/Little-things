@@ -791,7 +791,6 @@ try {
   }
 } catch(e){ console.warn('Firebase off:', e); mainDocRef = null; photosCollection = null; }
 
-// ==== КЭШ ФОТО (синхронизируется между устройствами) ====
 var photoCache = {};
 
 function subscribeToPhotos(){
@@ -801,40 +800,27 @@ function subscribeToPhotos(){
       if (change.type === 'added' || change.type === 'modified'){
         var id = change.doc.id;
         var data = change.doc.data();
-        if (data && data.dataUrl){
-          photoCache[id] = data.dataUrl;
-        }
+        if (data && data.dataUrl){ photoCache[id] = data.dataUrl; }
       } else if (change.type === 'removed'){
         delete photoCache[change.doc.id];
       }
     });
     if (typeof renderHistory === 'function') renderHistory();
-  }, function(err){
-    console.warn('Photos snapshot error:', err);
-  });
+  }, function(err){ console.warn('Photos snapshot error:', err); });
 }
 
 function savePhotoToFirestore(dataUrl){
   return new Promise(function(resolve){
     if (!photosCollection){ resolve(null); return; }
     var id = 'photo_' + Date.now() + '_' + Math.floor(Math.random()*10000);
-    photosCollection.doc(id).set({
-      dataUrl: dataUrl,
-      createdAt: Date.now()
-    }).then(function(){
+    photosCollection.doc(id).set({ dataUrl: dataUrl, createdAt: Date.now() }).then(function(){
       photoCache[id] = dataUrl;
       resolve(id);
-    }).catch(function(e){
-      console.warn('Photo save failed:', e);
-      resolve(null);
-    });
+    }).catch(function(e){ console.warn('Photo save failed:', e); resolve(null); });
   });
 }
 
-function getPhotoById(id){
-  if (!id) return null;
-  return photoCache[id] || null;
-}
+function getPhotoById(id){ if (!id) return null; return photoCache[id] || null; }
 
 function requestNotificationPermission(){
   if (!messaging){ console.warn('FCM не поддерживается'); return; }
@@ -1015,7 +1001,7 @@ function mergeCompletedDays(a, b){
     ((a && a[k]) || []).forEach(function(e){ ev.set(e.timestamp, e); });
     ((b && b[k]) || []).forEach(function(e){
       var ex = ev.get(e.timestamp);
-      ev.set(e.timestamp, ex ? Object.assign({}, ex, e, { photoId: e.photoId || ex.photoId }) : e);
+      ev.set(e.timestamp, Object.assign({}, ex || {}, e, { photoId: e.photoId || (ex && ex.photoId) }));
     });
     out[k] = Array.from(ev.values()).sort(function(x,y){ return x.timestamp-y.timestamp; });
   });
@@ -1084,6 +1070,15 @@ function migrateCountersShape(){
   if (!state.todayCounters.vanya)  state.todayCounters.vanya  = emptyToday();
 }
 
+function forceDateObject(){
+  if (typeof state.currentDate === 'string' || !state.currentDate || !state.currentDate.getFullYear){
+    var parsed;
+    try { parsed = new Date(state.currentDate); } catch(e){ parsed = null; }
+    if (!parsed || isNaN(parsed.getTime())) parsed = new Date();
+    state.currentDate = parsed;
+  }
+}
+
 function hydrateFromLocalStorage(){
   var g = function(k){ return localStorage.getItem(k); };
   try {
@@ -1109,6 +1104,7 @@ function hydrateFromLocalStorage(){
     var vs = JSON.parse(g('vanyaSession') || 'null');
     if (vs) state.vanyaSession = vs;
   } catch(e){ console.error('hydrate:', e); }
+  forceDateObject();
   migrateCountersShape();
 }
 
@@ -1192,6 +1188,22 @@ function makeConfetti(count){
   }
 }
 function fireBurst(x, y){
+  var ring = document.createElement('div'); ring.className='burst-ring';
+  ring.style.left = x+'px'; ring.style.top = y+'px';
+  document.body.appendChild(ring);
+  setTimeout(function(){ if (ring.parentNode) ring.parentNode.removeChild(ring); }, 750);
+  for (var i=0;i<6;i++){
+    var angle = (i/6)*Math.PI*2 + Math.random()*0.3;
+    var dist = 60 + Math.random()*40;
+    var h = document.createElement('div'); h.className='burst-heart';
+    h.style.left = x+'px'; h.style.top = y+'px';
+    h.style.setProperty('--bx', (Math.cos(angle)*dist)+'px');
+    h.style.setProperty('--by', (Math.sin(angle)*dist)+'px');
+    h.style.setProperty('--br', (360*(Math.random()>0.5?1:-1))+'deg');
+    h.style.width = (24+Math.random()*14)+'px'; h.style.height = h.style.width;
+    document.body.appendChild(h);
+    setTimeout((function(el){ return function(){ if (el.parentNode) el.parentNode.removeChild(el); }; })(h), 1150);
+  }
   makeSparkles(x, y, 22);
 }
 function animateNumber(el, from, to, duration){
@@ -1276,8 +1288,8 @@ function endVanyaSession(){
   logActivity('logout', 'Закрыл приложение');
 }
 
-/* ЗАЩИТА ОТ ЗАТИРАНИЯ */
 function saveState(){
+  forceDateObject();
   try {
     localStorage.setItem('monthPoints', state.points);
     localStorage.setItem('totalPoints', state.totalPoints);
@@ -1327,10 +1339,7 @@ function saveState(){
       totalPoints: state.totalPoints || 0
     };
 
-    if (actor === 'vanya'){
-      data.vanyaSession = state.vanyaSession;
-    }
-
+    if (actor === 'vanya') data.vanyaSession = state.vanyaSession;
     if (actor === 'nastya'){
       data['counters.nastya'] = state.counters.nastya || {};
       data['todayCounters.nastya'] = state.todayCounters.nastya || emptyToday();
@@ -1350,10 +1359,7 @@ function saveState(){
 
     mainDocRef.set(data, { merge: true })
       .then(function(){ isSaving = false; })
-      .catch(function(e){
-        isSaving = false;
-        console.error('FIRESTORE WRITE FAILED:', e);
-      });
+      .catch(function(e){ isSaving = false; console.error('FIRESTORE WRITE FAILED:', e); });
   }, 400);
 }
 
@@ -1408,6 +1414,7 @@ function subscribeToFirestore(){
       if (d.welcomeShown !== undefined) localStorage.setItem('welcomeShown', d.welcomeShown ? 'true':'false');
       if (d.schedules) for (var key in d.schedules) localStorage.setItem(key, d.schedules[key]);
 
+      forceDateObject();
       migrateCountersShape();
       refreshAll(prevPoints);
 
@@ -1419,10 +1426,7 @@ function subscribeToFirestore(){
       initialSyncDone = true;
       saveState();
     }
-  }, function(err){
-    console.error('FIRESTORE SNAPSHOT ERROR:', err);
-    stateLoaded = true;
-  });
+  }, function(err){ console.error('FIRESTORE SNAPSHOT ERROR:', err); stateLoaded = true; });
 }
 
 function initRole(){
@@ -1524,6 +1528,7 @@ function renderSettingsMenu(){
           if (!data || data.points === undefined){ showToast('❌','Неверный формат'); return; }
           if (!confirm('Импорт заменит текущие данные. Продолжить?')) return;
           for (var k in data){ if (data.hasOwnProperty(k)) state[k] = data[k]; }
+          forceDateObject();
           migrateCountersShape();
           saveState();
           refreshAll();
@@ -1571,6 +1576,7 @@ function renderSettingsMenu(){
           if (!data || data.points === undefined){ showToast('❌','Неверный формат'); return; }
           if (!confirm('Импорт заменит данные. Продолжить?')) return;
           for (var k in data){ if (data.hasOwnProperty(k)) state[k] = data[k]; }
+          forceDateObject();
           migrateCountersShape();
           saveState();
           refreshAll();
@@ -1655,6 +1661,7 @@ function getDayType(year, month, day){
 function getCompletedEvents(y,m,d){ return state.completedDays[y+'-'+m+'-'+d] || []; }
 
 function renderCalendar(){
+  forceDateObject();
   var year = state.currentDate.getFullYear();
   var month = state.currentDate.getMonth();
   document.getElementById('monthName').textContent = monthNames[month];
@@ -2702,6 +2709,7 @@ function openBackdatedPoints(){
 }
 
 function refreshAll(prevPoints){
+  forceDateObject();
   renderCalendar();
   updateStats(prevPoints);
   renderHistory();
@@ -2727,6 +2735,7 @@ function startApp(){
   if (canvas) ctx = canvas.getContext('2d');
 
   hydrateFromLocalStorage();
+  forceDateObject();
 
   initRole();
   renderSettingsMenu();
@@ -2774,6 +2783,7 @@ function startApp(){
   });
 
   document.getElementById('prevMonth').onclick = function(){
+    forceDateObject();
     state.currentDate.setMonth(state.currentDate.getMonth()-1);
     renderCalendar();
     var cal = document.getElementById('calendar');
@@ -2781,6 +2791,7 @@ function startApp(){
     cal.classList.add('slide-right');
   };
   document.getElementById('nextMonth').onclick = function(){
+    forceDateObject();
     state.currentDate.setMonth(state.currentDate.getMonth()+1);
     renderCalendar();
     var cal = document.getElementById('calendar');
@@ -2789,6 +2800,7 @@ function startApp(){
   };
 
   document.getElementById('openRandomBtn').onclick = function(){
+    forceDateObject();
     var t = new Date();
     if (getCompletedEvents(t.getFullYear(), t.getMonth(), t.getDate()).length > 0){ showToast('❤️','Сегодня уже сделано!'); return; }
     state.currentDay = t.getDate();
@@ -2915,6 +2927,7 @@ function startApp(){
       state.currentType = item.type;
       setTimeout(function(){ openWheel(item.type); }, 300); return;
     }
+    forceDateObject();
     var year = state.currentDate.getFullYear();
     var month = state.currentDate.getMonth();
     var day = state.currentDay;
