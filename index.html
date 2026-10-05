@@ -438,12 +438,12 @@ setTimeout(function(){
 </div>
 <div class="manage-panel">
 <div class="manage-panel-title">Хочешь её порадовать? ❤️</div>
-<div class="manage-panel-text">Нажми на любой день, чтобы изменить его или отметить выполненным</div>
-<button class="btn-primary" id="openRandomBtn" type="button">Выбрать сегодня</button>
+<div class="manage-panel-text">Нажми на любой день, чтобы изменить его или отметить выполненным Ос</div>
+<button class="btn-primary" id="openRandomBtn" type="button">Выбрать сегодня</buttonвоб>
 </div>
 </section>
 
-<section class="page" id="page-history">
+<sectionодить день class="page" id="page-history">
 <div class="section-title">Наша история</div>
 <div class="section-sub">То, что мы уже выбрали друг для друга</div>
 <div class="timeline" id="timelineList"></div>
@@ -611,7 +611,7 @@ setTimeout(function(){
 <div id="nastyaDayControls" style="display:none;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(201,169,97,.4)">
   <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px">✎ Только для Насти</div>
   <div style="display:flex;flex-direction:column;gap:8px">
-    <button class="btn-secondary" id="nastyaMakeFreeBtn" type="button" style="color:var(--green);border-color:var(--green)">🌿 Освободить день</button>
+    <button class="btn-secondary" id="nastyaMakeFreeBtn" type="button" style="color:var(--green);border-color:var(--green)">🌿</button>
     <button class="btn-secondary" id="nastyaReplaceBtn" type="button">🎨 Заменить тип дня</button>
   </div>
   <div id="nastyaEmojiBlock" style="margin-top:12px;padding-top:12px;border-top:1px dashed rgba(201,169,97,.3)">
@@ -755,9 +755,39 @@ setTimeout(function(){
 <button class="close-x" id="toastClose" type="button">✕</button>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+<div class="overlay center" id="secretPinOverlay">
+  <div class="modal" style="max-width:360px">
+    <button class="close-button" data-close="secretPinOverlay" type="button">×</button>
+    <div class="modal-title">🔐 Секретный вход</div>
+    <div class="modal-subtitle">Введите PIN-код</div>
+    <div style="margin-top:24px">
+      <input type="password" inputmode="numeric" maxlength="6" class="input-line" id="secretPinInput" placeholder="••••" style="text-align:center;font-size:28px;letter-spacing:12px;font-family:'Cormorant Garamond',serif">
+      <div id="secretPinError" style="color:#C97A7A;font-size:11px;text-align:center;margin-bottom:10px;min-height:16px;letter-spacing:1px"></div>
+      <button class="btn-gold" id="secretPinSubmit" type="button">Войти</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="secretPanelOverlay">
+  <div class="modal">
+    <button class="close-button" data-close="secretPanelOverlay" type="button">×</button>
+    <div class="modal-title">🔐 Панель Насти</div>
+    <div class="modal-subtitle">Только для своих</div>
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
+      <button class="btn-primary" id="secretOpenPoints" type="button">💰 Начислить баллы</button>
+      <button class="btn-primary" id="secretOpenBackdated" type="button">🗓 Начислить задним числом</button>
+      <button class="btn-secondary" id="secretOpenActivity" type="button">👁 Активность Вани</button>
+      <button class="btn-secondary" id="secretOpenActions" type="button">✏ Управление действиями</button>
+      <button class="btn-secondary" id="secretOpenQuarantine" type="button">⏸ Карантин</button>
+      <button class="btn-secondary" id="secretSwitchRole" type="button">🎭 Переключить роль (стать Ваней)</button>
+      <button class="btn-secondary" id="secretOpenData" type="button">📤 Экспорт / Импорт данных</button>
+      <button class="btn-secondary" id="secretResetCelebration" type="button" style="color:#C97A7A;border-color:#C97A7A">↺ Сбросить флаг бонуса месяца</button>
+      <button class="btn-secondary" id="secretFullReset" type="button" style="color:#C97A7A;border-color:#C97A7A">🗑 Полный сброс</button>
+    </div>
+    <div style="text-align:center;font-size:10px;color:#8A7A66;margin-top:20px;letter-spacing:1px">Приложение: Наши маленькие вещи</div>
+  </div>
+</div>
+
 <script>
 (function(){
 'use strict';
@@ -1336,7 +1366,12 @@ function saveState(){
       schedules: schedules,
       dayOverrides: state.dayOverrides || {},
       dayEmojis: state.dayEmojis || {},
-      totalPoints: state.totalPoints || 0
+      totalPoints: state.totalPoints || 0,
+      points: state.points,
+      lastCelebrationMonth: state.lastCelebrationMonth || null,
+      reachedMilestones: reachedMilestones,
+      lastLevelName: lastLevelName,
+      achievements: state.achievements || []
     };
 
     if (actor === 'vanya') data.vanyaSession = state.vanyaSession;
@@ -2185,7 +2220,10 @@ function checkMonthCelebration(){
   var now = new Date();
   var prevMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
   var prevMonthKey = prevMonth.getFullYear()+'-'+prevMonth.getMonth();
+  
+  // ЖЁСТКАЯ ЗАЩИТА: если уже обрабатывали этот месяц — выходим
   if (state.lastCelebrationMonth === prevMonthKey) return;
+  
   var countPrevMonth = 0;
   for (var k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
@@ -2193,8 +2231,11 @@ function checkMonthCelebration(){
     var y = parseInt(parts[0]); var m = parseInt(parts[1]);
     if (y===prevMonth.getFullYear() && m===prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
   }
+  
+  // СРАЗУ помечаем как обработанное — чтобы не начислить дважды
+  state.lastCelebrationMonth = prevMonthKey;
+  
   if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
-    state.lastCelebrationMonth = prevMonthKey;
     addPoints(MONTH_CELEBRATION_BONUS);
     logPoints(MONTH_CELEBRATION_BONUS, 'Бонус за прошлый месяц', '🎉 Месяц', prevMonthKey, new Date().toLocaleDateString('ru-RU'));
     var mc = document.getElementById('monthCelebration');
@@ -2202,13 +2243,12 @@ function checkMonthCelebration(){
     document.getElementById('mcText').innerHTML = 'Ты выполнил <b>'+countPrevMonth+'</b> дел за прошлый месяц!';
     document.getElementById('mcBonus').textContent = '+'+MONTH_CELEBRATION_BONUS+' баллов';
     mc.classList.add('active');
-    saveState();
     setTimeout(function(){ makeConfetti(60); }, 400);
-  } else if (!state.lastCelebrationMonth){
-    state.lastCelebrationMonth = prevMonthKey;
-    saveState();
   }
+  
+  saveState();
 }
+
 function checkLevelAndMilestones(p){
   var cur = getLevel(p);
   if (cur.name !== lastLevelName && lastLevelName !== null){
@@ -3017,6 +3057,137 @@ function startApp(){
     window._pendingReschedule = null;
     window._pendingPlanKey = null;
   };
+
+  // ============ СЕКРЕТНАЯ ПАНЕЛЬ НАСТИ (PIN = 1221) ============
+  var SECRET_PIN = '1221';
+  var titleEl = document.querySelector('.header-title');
+  var secretTapCount = 0;
+  var secretTapTimer = null;
+
+  if (titleEl){
+    titleEl.style.cursor = 'pointer';
+    titleEl.addEventListener('click', function(){
+      secretTapCount++;
+      if (secretTapTimer) clearTimeout(secretTapTimer);
+      secretTapTimer = setTimeout(function(){ secretTapCount = 0; }, 1500);
+
+      if (secretTapCount >= 5){
+        secretTapCount = 0;
+        clearTimeout(secretTapTimer);
+
+        if (state.role === 'nastya'){
+          logActivity('secret_open', '🔐 Открыла секретную панель');
+          document.getElementById('secretPanelOverlay').classList.add('active');
+        } else {
+          document.getElementById('secretPinInput').value = '';
+          document.getElementById('secretPinError').textContent = '';
+          document.getElementById('secretPinOverlay').classList.add('active');
+          setTimeout(function(){ document.getElementById('secretPinInput').focus(); }, 400);
+        }
+      }
+    });
+  }
+
+  var pinInput = document.getElementById('secretPinInput');
+  var pinSubmit = document.getElementById('secretPinSubmit');
+
+  function trySecretPin(){
+    var val = (pinInput.value || '').trim();
+    if (val === SECRET_PIN){
+      document.getElementById('secretPinOverlay').classList.remove('active');
+      state.role = 'nastya';
+      logActivity('secret_unlock', '🔐 Открыла секретную панель по PIN');
+      document.getElementById('secretPanelOverlay').classList.add('active');
+    } else {
+      document.getElementById('secretPinError').textContent = 'Неверный PIN';
+      pinInput.value = '';
+      pinInput.focus();
+    }
+  }
+
+  if (pinSubmit) pinSubmit.onclick = trySecretPin;
+  if (pinInput){
+    pinInput.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') trySecretPin();
+    });
+    pinInput.addEventListener('input', function(){
+      if (pinInput.value.length >= 4) document.getElementById('secretPinError').textContent = '';
+    });
+  }
+
+  document.getElementById('secretOpenPoints').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    openManualPoints();
+  };
+  document.getElementById('secretOpenBackdated').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    openBackdatedPoints();
+  };
+  document.getElementById('secretOpenActivity').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    openVanyaActivity();
+  };
+  document.getElementById('secretOpenActions').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    renderActionLists();
+    document.getElementById('actionEditorOverlay').classList.add('active');
+  };
+  document.getElementById('secretOpenQuarantine').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    openQuarantineList();
+  };
+  document.getElementById('secretSwitchRole').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    state.viewingAs = state.viewingAs === 'vanya' ? 'nastya' : 'vanya';
+    if (state.role !== 'nastya') state.role = 'nastya';
+    localStorage.setItem('userRole', state.role);
+    applyRoleView();
+    showToast('🎭', state.viewingAs === 'vanya' ? 'Режим Вани' : 'Режим Насти');
+  };
+  document.getElementById('secretOpenData').onclick = function(){
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+    var choice = confirm('OK = ЭКСПОРТ (скопировать данные)\nОтмена = ИМПОРТ (вставить из буфера)');
+    if (choice){
+      var data = JSON.parse(JSON.stringify(state)); data.currentMonth = getCurrentMonthKey();
+      var json = JSON.stringify(data);
+      if (navigator.clipboard) navigator.clipboard.writeText(json).then(function(){ showToast('📤','Скопировано!'); }).catch(function(){ prompt('Скопируй:', json); });
+      else prompt('Скопируй:', json);
+    } else {
+      if (!navigator.clipboard){ alert('Буфер недоступен'); return; }
+      navigator.clipboard.readText().then(function(text){
+        try {
+          var data = JSON.parse(text);
+          if (!data || data.points === undefined){ showToast('❌','Неверный формат'); return; }
+          if (!confirm('Импорт заменит текущие данные. Продолжить?')) return;
+          for (var k in data){ if (data.hasOwnProperty(k)) state[k] = data[k]; }
+          forceDateObject(); migrateCountersShape(); saveState(); refreshAll();
+          showToast('📥','Данные восстановлены!');
+          setTimeout(function(){ location.reload(); }, 1500);
+        } catch(e){ showToast('❌','Ошибка: '+e.message); }
+      });
+    }
+  };
+  document.getElementById('secretResetCelebration').onclick = function(){
+    if (!confirm('Сбросить флаг бонуса за прошлый месяц? Это позволит начислить его снова.')) return;
+    state.lastCelebrationMonth = null;
+    saveState();
+    showToast('↺', 'Флаг бонуса сброшен');
+    document.getElementById('secretPanelOverlay').classList.remove('active');
+  };
+  document.getElementById('secretFullReset').onclick = function(){
+    if (!confirm('УДАЛИТЬ ВСЁ? Это необратимо.')) return;
+    if (!confirm('Точно? Данные пропадут.')) return;
+    localStorage.clear();
+    if (mainDocRef){
+      mainDocRef.set({
+        points:0, totalPoints:0, history:[], completedDays:{}, plannedDays:{}, wishes:[],
+        achievements:[], activityLog:[], quarantine:{}, dailyVisits:{}, spinsUsed:{},
+        notificationsForNastya:[], counters:{nastya:{},vanya:{}}, todayCounters:{nastya:emptyToday(),vanya:emptyToday()},
+        lastCelebrationMonth:null, welcomeShown:false, schedules:{}, pointsLog:[], dayOverrides:{}, dayEmojis:{}
+      }).then(function(){ location.reload(); }).catch(function(){ location.reload(); });
+    } else location.reload();
+  };
+  // ============ КОНЕЦ СЕКРЕТНОЙ ПАНЕЛИ ============
 
   window.addEventListener('resize', resizeCanvas);
 
