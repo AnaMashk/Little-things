@@ -255,14 +255,6 @@ button,.btn-primary,.btn-secondary,.btn-gold,.role-btn,.spin-button,.nav-item,.m
 .app.reveal .nav{animation:revealUp .8s .25s cubic-bezier(.34,1.4,.64,1) backwards}
 .app.reveal .page.active{animation:revealUp .9s .4s cubic-bezier(.34,1.4,.64,1) backwards}
 @keyframes revealUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
-.photo-modal{position:fixed;inset:0;z-index:1300;background:rgba(20,15,12,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
-.photo-modal.active{display:flex}
-.photo-modal img{max-width:100%;max-height:90vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.add-photo-btn{margin-top:10px;padding:10px 18px;border-radius:30px;background:rgba(201,169,97,.12);border:1.5px dashed rgba(201,169,97,.5);color:#6b5a4e;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:1.5px}
-.photo-preview{margin-top:10px;display:none;position:relative}
-.photo-preview.show{display:block}
-.photo-preview img{width:100%;max-height:200px;object-fit:cover;border-radius:12px;border:1px solid rgba(201,169,97,.3)}
-.photo-preview .remove-photo{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(201,122,122,.95);color:#fff;font-size:14px;border:none;cursor:pointer;font-family:inherit}
 .love-tree-card{margin-top:22px;padding:22px 18px 20px;border-radius:24px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);text-align:center;position:relative;overflow:hidden}
 .love-tree-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2A2420}
 .love-tree-stage{font-family:'Caveat',cursive;font-size:20px;color:#A8842E;margin-top:4px;font-weight:600}
@@ -353,17 +345,6 @@ setTimeout(function(){
 <p id="mcText">Ты выполнил 15 дней за месяц!</p>
 <div class="mc-bonus" id="mcBonus">+100 баллов</div>
 <div class="daily-hint" style="opacity:.6">Коснись, чтобы закрыть</div>
-</div>
-</div>
-
-<div class="overlay center role-overlay active" id="roleOverlay">
-<div class="modal">
-<div class="modal-title">Наши маленькие вещи</div>
-<div class="modal-subtitle">Кто открыл приложение?</div>
-<div class="role-buttons">
-<button class="role-btn nastya" id="roleNastya" type="button"><span class="role-emoji">❤️</span><span>Я — Настя</span></button>
-<button class="role-btn vanya" id="roleVanya" type="button"><span class="role-emoji">🍞</span><span>Я — Ваня</span></button>
-</div>
 </div>
 </div>
 
@@ -668,28 +649,6 @@ setTimeout(function(){
 </div>
 </div>
 
-<div class="overlay" id="photoAttachOverlay">
-<div class="modal">
-<button class="close-button" data-close="photoAttachOverlay" type="button">×</button>
-<div class="modal-title">📸 Фото момента</div>
-<div class="modal-subtitle">Добавь, если хочешь сохранить момент</div>
-<div style="margin-top:18px">
-<label class="add-photo-btn" style="display:block;text-align:center" for="photoInput">📷 Выбрать фото</label>
-<input type="file" id="photoInput" accept="image/*" style="display:none">
-<div class="photo-preview" id="photoPreview">
-<img id="photoPreviewImg" alt="">
-<button class="remove-photo" id="removePhotoBtn" type="button">✕</button>
-</div>
-<div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
-<button class="btn-gold" id="photoSaveBtn" type="button" disabled>Сохранить с фото</button>
-<button class="btn-secondary" id="photoSkipBtn" type="button">Сохранить без фото</button>
-</div>
-</div>
-</div>
-</div>
-
-<div class="photo-modal" id="photoViewModal"><img id="photoViewImg" alt=""></div>
-
 <div class="overlay center" id="akinatorOverlay">
   <div class="modal care-modal">
     <button class="close-button" data-close="akinatorOverlay" type="button">×</button>
@@ -793,7 +752,6 @@ setTimeout(function(){
 <script>
 (function(){
 'use strict';
-
 var firebaseConfig = {
   apiKey: "AIzaSyBCkGtRJfBlTspGEdoGvHXq5Ig7pQDekTc",
   authDomain: "little-things-b7e6a.firebaseapp.com",
@@ -922,7 +880,6 @@ const DEFAULT_TASKS = {
   lightDate: ["🎬 Сходить в кино.","⛸️ Сходить на коньки.","🎳 Сходить в боулинг.","☕ Кофейня — кофе и десерт.","🍰 Только за десертом.","🍳 Вместе на завтрак.","🍦 За мороженым и погулять.","🛍️ В ТЦ — выбрать ей маленький подарок.","📚 В книжный — купить ей книгу.","🎨 Небольшой творческий мастер-класс.","🌳 Пикник в парке.","🌅 Смотреть закат.","🐶 В приют животных — погулять с ними.","🎮 В игровой зал / аркады.","🎢 В парк аттракционов.","🐠 В океанариум.","🎭 На небольшой спектакль.","🍕 Дома: пицца, свечи, фильм.","🧁 Дегустация десертов дома.","🎲 Вечер настольной игры.","🥞 Домашний завтрак — красиво подать.","🍿 Вечер любимых фильмов.","🌙 Прогулка с кофе по красивому маршруту.","🍕 Новое недорогое кафе.","🧁 Дегустация десертов вслепую."],
   bigDate: ["🍽️ Ресторан — красиво одеться, бронь, вечер вдвоём.","🎭 Хороший спектакль или мюзикл.","🎤 Концерт любимого исполнителя.","🎨 Творческий мастер-класс для двоих.","📸 Профессиональная фотосессия.","🧖‍♀️ SPA-программа для двоих.","🏨 Ночь в красивом отеле.","🌲 Загородная база или отель.","🐎 Конная прогулка для двоих.","🦙 Ферма с альпаками.","🚆 Мини-путешествие в другой город."]
 };
-
 const TYPE_INFO = {
   emotional: { name:"Эмоциональная забота", short:"Эмоциональная", emoji:"💙", points:5 },
   physical:  { name:"Физическая забота",     short:"Физическая",     emoji:"💜", points:10 },
@@ -1138,28 +1095,6 @@ function hydrateFromLocalStorage(){
   } catch(e){ console.error('hydrate:', e); }
   forceDateObject();
   migrateCountersShape();
-}
-
-function compressImage(file, maxDim, quality){
-  return new Promise(function(resolve, reject){
-    var reader = new FileReader();
-    reader.onload = function(e){
-      var img = new Image();
-      img.onload = function(){
-        var w = img.width, h = img.height;
-        if (w > h){ if (w > maxDim){ h = Math.round(h*maxDim/w); w = maxDim; } }
-        else { if (h > maxDim){ w = Math.round(w*maxDim/h); h = maxDim; } }
-        var canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        try { resolve(canvas.toDataURL('image/jpeg', quality)); } catch(err){ reject(err); }
-      };
-      img.onerror = reject;
-      img.src = e.target.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 }
 
 function showToast(emoji, text){
@@ -1399,7 +1334,6 @@ function saveState(){
       .catch(function(e){ isSaving = false; console.error('FIRESTORE WRITE FAILED:', e); });
   }, 400);
 }
-
 function subscribeToFirestore(){
   if (!mainDocRef){ stateLoaded = true; initialSyncDone = true; return; }
   mainDocRef.onSnapshot(function(snapshot){
@@ -1467,28 +1401,18 @@ function subscribeToFirestore(){
 }
 
 function initRole(){
-  var savedRole = localStorage.getItem('userRole');
-  if (savedRole === 'nastya' || savedRole === 'vanya'){
-    state.role = savedRole; state.viewingAs = savedRole;
-    document.getElementById('roleOverlay').classList.remove('active');
-    applyRoleView();
-    if (savedRole === 'vanya'){ startVanyaSession(); requestNotificationPermission(); }
-  } else {
-    document.getElementById('roleOverlay').classList.add('active');
-    renderSettingsMenu();
-  }
+  // Выбор роли убран — всегда «Настя»
+  state.role = 'nastya';
+  state.viewingAs = 'nastya';
+  localStorage.setItem('userRole', 'nastya');
+  applyRoleView();
 }
 function setRole(role){
-  state.role = role; state.viewingAs = role;
-  localStorage.setItem('userRole', role);
-  document.getElementById('roleOverlay').classList.remove('active');
+  // Выбор роли убран — всегда «Настя»
+  state.role = 'nastya';
+  state.viewingAs = 'nastya';
+  localStorage.setItem('userRole', 'nastya');
   applyRoleView();
-  if (role === 'vanya'){
-    startVanyaSession();
-    if (!localStorage.getItem('welcomeShown')) document.getElementById('welcomeOverlay').classList.add('active');
-    setTimeout(showDailyMessage, 800);
-    requestNotificationPermission();
-  }
 }
 function applyRoleView(){
   var isVanya = state.viewingAs === 'vanya';
@@ -1498,7 +1422,7 @@ function applyRoleView(){
   var settingsBtn = document.getElementById('settingsToggle');
   var sm = document.getElementById('settingsMenu');
   if (hotzone){ hotzone.style.display='block'; hotzone.style.pointerEvents='auto'; }
-  if (settingsBtn) settingsBtn.style.display='';
+  if (settingsBtn) settingsBtn.style.display = '';
   if (sm) sm.classList.remove('open');
   renderSettingsMenu();
   if (state.role === 'nastya' && state.viewingAs === 'vanya'){ badge.textContent='👁 Режим просмотра: Ваня'; badge.classList.add('show'); }
@@ -1923,38 +1847,9 @@ function openChoiceModal(title, subtitle){
   document.getElementById('choiceOverlay').classList.add('active');
 }
 
+// Функция загрузки фото убрана — сразу вызываем колбэк без фото
 function openPhotoAttach(onSave){
-  state.pendingPhoto = null;
-  var overlay = document.getElementById('photoAttachOverlay');
-  var input = document.getElementById('photoInput');
-  var preview = document.getElementById('photoPreview');
-  var previewImg = document.getElementById('photoPreviewImg');
-  var saveBtn = document.getElementById('photoSaveBtn');
-  var skipBtn = document.getElementById('photoSkipBtn');
-  preview.classList.remove('show');
-  saveBtn.disabled = true;
-  input.value = '';
-  input.onchange = function(e){
-    var file = e.target.files && e.target.files[0];
-    if (!file) return;
-    compressImage(file, PHOTO_MAX_DIM, PHOTO_JPEG_QUALITY).then(function(dataUrl){
-      state.pendingPhoto = dataUrl;
-      previewImg.src = dataUrl;
-      preview.classList.add('show');
-      saveBtn.disabled = false;
-    }).catch(function(){ showToast('❌', 'Не удалось загрузить фото'); });
-  };
-  document.getElementById('removePhotoBtn').onclick = function(){ state.pendingPhoto = null; preview.classList.remove('show'); input.value = ''; saveBtn.disabled = true; };
-  saveBtn.onclick = function(){
-    var dataUrl = state.pendingPhoto;
-    state.pendingPhoto = null;
-    overlay.classList.remove('active');
-    if (!dataUrl){ onSave(null); return; }
-    showToast('📸', 'Сохраняю фото...');
-    savePhotoToFirestore(dataUrl).then(function(photoId){ onSave(photoId); });
-  };
-  skipBtn.onclick = function(){ state.pendingPhoto = null; overlay.classList.remove('active'); onSave(null); };
-  overlay.classList.add('active');
+  if (typeof onSave === 'function') onSave(null);
 }
 
 function planEvent(year, month, day, type, text, points, isInitiative, photoId){
@@ -2025,32 +1920,17 @@ function renderHistory(){
   }
   list.innerHTML = state.history.map(function(h, i){
     var emoji = h.emoji || '❤️';
-    var photoSrc = h.photoId ? getPhotoById(h.photoId) : null;
-    var photoBlock = photoSrc ? '<div class="tl-photo" data-photo-idx="'+i+'"><img src="'+photoSrc+'" style="max-width:100%;border-radius:12px;margin-top:8px" alt=""></div>' : '';
     return '<div class="timeline-item" style="padding:14px 16px;margin-bottom:14px;border-radius:18px;background:linear-gradient(180deg,rgba(250,246,236,.96),rgba(240,232,214,.94));border:1px solid rgba(201,169,97,.4);display:flex;gap:14px;align-items:flex-start">' +
       '<div class="tl-icon" style="width:44px;height:44px;flex-shrink:0;border-radius:50%;background:linear-gradient(145deg,#FAF6EC,#F0E6CE);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(201,169,97,.3)">'+emoji+'</div>' +
       '<div class="tl-body" style="flex:1;min-width:0">' +
         '<div style="font-family:\'Caveat\',cursive;font-size:15px;color:#6b5a4e;font-weight:600">'+h.date+'</div>' +
         '<div style="font-size:9px;color:#8A7A66;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;font-weight:600">'+(h.category||'')+'</div>' +
         '<div style="font-family:\'Cormorant Garamond\',serif;font-size:17px;font-weight:700;color:#2E2419;line-height:1.35;margin-top:4px">'+h.title+'</div>' +
-        photoBlock +
       '</div>' +
       '<div style="font-family:\'Cormorant Garamond\',serif;font-size:16px;font-weight:700;color:#A8842E;white-space:nowrap">+'+h.points+'</div>' +
     '</div>';
   }).join('');
-  list.querySelectorAll('.tl-photo').forEach(function(el){
-    el.onclick = function(){
-      var idx = parseInt(el.dataset.photoIdx);
-      var h = state.history[idx];
-      if (!h || !h.photoId) return;
-      var src = getPhotoById(h.photoId);
-      if (!src) return;
-      document.getElementById('photoViewImg').src = src;
-      document.getElementById('photoViewModal').classList.add('active');
-    };
-  });
 }
-
 function renderWishes(){
   var garden = document.getElementById('wishGarden');
   if (!garden) return;
@@ -2222,10 +2102,9 @@ function checkMonthCelebration(){
   var now = new Date();
   var prevMonth = new Date(now.getFullYear(), now.getMonth()-1, 1);
   var prevMonthKey = prevMonth.getFullYear()+'-'+prevMonth.getMonth();
-  
-  // ЖЁСТКАЯ ЗАЩИТА: если уже обрабатывали этот месяц — выходим
+
   if (state.lastCelebrationMonth === prevMonthKey) return;
-  
+
   var countPrevMonth = 0;
   for (var k in state.completedDays){
     if (!state.completedDays.hasOwnProperty(k)) continue;
@@ -2233,10 +2112,9 @@ function checkMonthCelebration(){
     var y = parseInt(parts[0]); var m = parseInt(parts[1]);
     if (y===prevMonth.getFullYear() && m===prevMonth.getMonth()) countPrevMonth += state.completedDays[k].length;
   }
-  
-  // СРАЗУ помечаем как обработанное — чтобы не начислить дважды
+
   state.lastCelebrationMonth = prevMonthKey;
-  
+
   if (countPrevMonth >= MONTH_CELEBRATION_DAYS){
     addPoints(MONTH_CELEBRATION_BONUS);
     logPoints(MONTH_CELEBRATION_BONUS, 'Бонус за прошлый месяц', '🎉 Месяц', prevMonthKey, new Date().toLocaleDateString('ru-RU'));
@@ -2247,7 +2125,7 @@ function checkMonthCelebration(){
     mc.classList.add('active');
     setTimeout(function(){ makeConfetti(60); }, 400);
   }
-  
+
   saveState();
 }
 function checkLevelAndMilestones(p){
@@ -2796,9 +2674,6 @@ function startApp(){
   subscribeToFirestore();
   subscribeToPhotos();
 
-  document.getElementById('roleNastya').onclick = function(){ setRole('nastya'); };
-  document.getElementById('roleVanya').onclick = function(){ setRole('vanya'); };
-
   document.getElementById('welcomeAgree').onclick = function(){
     document.getElementById('welcomeOverlay').classList.remove('active');
     localStorage.setItem('welcomeShown', 'true'); saveState();
@@ -2879,7 +2754,6 @@ function startApp(){
 
   document.querySelectorAll('[data-close]').forEach(function(b){ b.onclick = function(){ document.getElementById(b.dataset.close).classList.remove('active'); }; });
   document.querySelectorAll('.overlay').forEach(function(ov){ ov.onclick = function(e){ if (e.target === ov && !ov.classList.contains('center')) ov.classList.remove('active'); }; });
-  document.getElementById('photoViewModal').onclick = function(){ this.classList.remove('active'); };
 
   var careCard = document.getElementById('careCard');
   if (careCard){
@@ -3217,4 +3091,7 @@ if (document.readyState === 'loading'){
 })();
 </script>
 </body>
-</html>
+</html>  
+  
+  
+ 
